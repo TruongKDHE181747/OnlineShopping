@@ -1,9 +1,5 @@
 package dal;
 
-/**
- *
- * @author Thanh Tan
- */
 import model.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;

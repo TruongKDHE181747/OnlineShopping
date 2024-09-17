@@ -1,9 +1,5 @@
 package model;
 
-/**
- *
- * @author Dell
- */
 public class Product {
     int product_id;
     String product_name;
