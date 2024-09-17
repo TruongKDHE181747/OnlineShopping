@@ -37,15 +37,14 @@ public class AccountServlet extends HttpServlet {
 
                 break;
             case "/account/login":
-                showLoginForm();
+                request.getRequestDispatcher("/account/login.jsp").forward(request, response);
                 break;
             case "/account/register":
-                showRegisterForm();
+                request.getRequestDispatcher("/account/register.jsp").forward(request, response);
                 break;
             case "/account/logout":
 
                 break;
-                
 
         }
 
@@ -75,14 +74,4 @@ public class AccountServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
-    private void showLoginForm(){
-        
-    }
-    
-    private void showRegisterForm(){
-        
-    }
-    
-    
 }
