@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -61,17 +62,42 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getServletPath();
 
+        switch (action) {
+            case "/account":
+
+                break;
+            case "/account/login":
+
+                break;
+            case "/account/register":
+                postRegister(request, response);
+                break;
+            case "/account/logout":
+
+                break;
+
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void postRegister(HttpServletRequest request, HttpServletResponse response) {
+
+        UserDAO userDAO = new UserDAO();
+        
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String username = request.getParameter("firstname");
+        String password = request.getParameter("lastname");
+        String confirmPassword = request.getParameter("confirmPassword");
+        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+        String dob = request.getParameter("dob");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+
+        
+        
+        
+    }
 
 }

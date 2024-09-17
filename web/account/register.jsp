@@ -6,7 +6,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Register - Bootstrap Template</title>
+        <title>Register</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -14,7 +14,7 @@
         <!-- Google Fonts Roboto -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
         
-        <link rel="stylesheet" href="registerstyle.css"/>
+        <link rel="stylesheet" href="./css/registerstyle.css"/>
     </head>
 
     <body>
@@ -29,24 +29,8 @@
                                 <h2 class="text-center mb-4">Register</h2>
 
                                 <!-- Form -->
-                                <form>
-                                    <!-- First and Last Name -->
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <div class="form-floating">
-                                                <input type="text" name="firstname" class="form-control" id="firstName" placeholder="First name" required>
-                                                <label for="firstName">First name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-floating">
-                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Last name" required>
-                                                <label for="lastName">Last name</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Username and Password in the same row -->
+                                <form action="/account/register" method="POST">
+                                    
                                     <div class="row mb-4">
                                         <div class="col-md-12">
                                             <div class="form-floating">
@@ -71,17 +55,40 @@
                                         </div>
                                         
                                     </div>
+                                    <div class="mb-4">
+                                        <div class="form-floating">
+                                            <input type="email" name="email" class="form-control" id="email" placeholder="Email address" required>
+                                            <label for="email">Email address</label>
+                                        </div>
+                                    </div>
+                                    <!-- First and Last Name -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" name="firstname" class="form-control" id="firstName" placeholder="First name" required>
+                                                <label for="firstName">First name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Last name" required>
+                                                <label for="lastName">Last name</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                  
 
                                     <!-- Gender and Date of Birth inputs -->
                                     <div class="row mb-4">
                                         <div class="col-md-6 d-flex align-items-center">
                                             <label class="form-label me-3">Gender:</label>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" required checked="">
+                                                <input class="form-check-input" type="radio" name="gender" id="male" value="true" required checked="">
                                                 <label class="form-check-label" for="male">Male</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+                                                <input class="form-check-input" type="radio" name="gender" id="female" value="false" required>
                                                 <label class="form-check-label" for="female">Female</label>
                                             </div>
                                         </div>
@@ -106,12 +113,7 @@
                                     </div>
 
                                     <!-- Email input -->
-                                    <div class="mb-4">
-                                        <div class="form-floating">
-                                            <input type="email" name="email" class="form-control" id="email" placeholder="Email address" required>
-                                            <label for="email">Email address</label>
-                                        </div>
-                                    </div>
+                                    
 
                                     <!-- Centered Submit button -->
                                     <div class="d-grid mb-3">

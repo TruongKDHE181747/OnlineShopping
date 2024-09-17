@@ -16,6 +16,54 @@ import model.User;
 
 public class UserDAO extends DBContext {
 
+    public void insertUser(User user) {
+        String sql = """
+                     INSERT INTO [dbo].[Users]
+                                ([username]
+                                ,[password]
+                                ,[first_name]
+                                ,[last_name]
+                                ,[phone]
+                                ,[email]
+                                ,[gender]
+                                ,[dob]
+                                ,[verification_code]
+                                ,[reset_password_code]
+                                ,[google_id]
+                                ,[profile_picture_url]
+                                ,[is_active]
+                                ,[is_banned]
+                                ,[role_id])
+                          VALUES
+                                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFirst_name());
+            ps.setString(4, user.getLast_name());
+            ps.setString(5, user.getPhone());
+            ps.setString(6, user.getEmail());
+            ps.setBoolean(7, user.isGender());
+            ps.setString(8, user.getDob());
+            ps.setString(9, user.getVerification_code());
+            ps.setString(10, user.getReset_password_code());
+            ps.setString(11, user.getGoogle_id());
+            ps.setString(12, user.getProfile_picture_url());
+            ps.setBoolean(13, user.isIs_active());
+            ps.setBoolean(14, user.isIs_banned());
+            ps.setInt(15, user.getRole().getRole_id());
+            
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public boolean checkExistUsername(String username) {
 
         ResultSet rs = getData("select * from Users where username = '" + username + "'");
@@ -63,13 +111,14 @@ public class UserDAO extends DBContext {
                 String email = rs.getString(7);
                 boolean gender = rs.getBoolean(8);
                 String dob = rs.getString(9);
-                String reset_password_code = rs.getString(10);
-                String google_id = rs.getString(11);
-                String profile_picture_url = rs.getString(12);
-                boolean is_active = rs.getBoolean(13);
-                boolean is_banned = rs.getBoolean(14);
-                Role role = roleDAO.getRoleById(rs.getInt(15));
-                user = new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role);
+                String verification_code = rs.getString(10);
+                String reset_password_code = rs.getString(11);
+                String google_id = rs.getString(12);
+                String profile_picture_url = rs.getString(13);
+                boolean is_active = rs.getBoolean(14);
+                boolean is_banned = rs.getBoolean(15);
+                Role role = roleDAO.getRoleById(rs.getInt(16));
+                user = new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role);
             }
             rs.close();
         } catch (SQLException ex) {
@@ -97,14 +146,15 @@ public class UserDAO extends DBContext {
                 String email = rs.getString(7);
                 boolean gender = rs.getBoolean(8);
                 String dob = rs.getString(9);
-                String reset_password_code = rs.getString(10);
-                String google_id = rs.getString(11);
-                String profile_picture_url = rs.getString(12);
-                boolean is_active = rs.getBoolean(13);
-                boolean is_banned = rs.getBoolean(14);
-                Role role = roleDAO.getRoleById(rs.getInt(15));
+                String verification_code = rs.getString(10);
+                String reset_password_code = rs.getString(11);
+                String google_id = rs.getString(12);
+                String profile_picture_url = rs.getString(13);
+                boolean is_active = rs.getBoolean(14);
+                boolean is_banned = rs.getBoolean(15);
+                Role role = roleDAO.getRoleById(rs.getInt(16));
 
-                listUsers.add(new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role));
+                listUsers.add(new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role));
 
             }
 

@@ -19,6 +19,7 @@ public class User {
     private String email;
     private boolean gender;
     private String dob;
+    private String verification_code;
     private String reset_password_code;
     private String google_id;
     private String profile_picture_url;
@@ -29,7 +30,7 @@ public class User {
     public User() {
     }
 
-    public User(int user_id, String username, String password, String first_name, String last_name, String phone, String email, boolean gender, String dob, String reset_password_code, String google_id, String profile_picture_url, boolean is_active, boolean is_banned, Role role) {
+    public User(int user_id, String username, String password, String first_name, String last_name, String phone, String email, boolean gender, String dob, String verification_code, String reset_password_code, String google_id, String profile_picture_url, boolean is_active, boolean is_banned, Role role) {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
@@ -39,6 +40,7 @@ public class User {
         this.email = email;
         this.gender = gender;
         this.dob = dob;
+        this.verification_code = verification_code;
         this.reset_password_code = reset_password_code;
         this.google_id = google_id;
         this.profile_picture_url = profile_picture_url;
@@ -119,6 +121,14 @@ public class User {
         this.dob = dob;
     }
 
+    public String getVerification_code() {
+        return verification_code;
+    }
+
+    public void setVerification_code(String verification_code) {
+        this.verification_code = verification_code;
+    }
+
     public String getReset_password_code() {
         return reset_password_code;
     }
@@ -167,4 +177,5 @@ public class User {
         this.role = role;
     }
 
+    
 }
