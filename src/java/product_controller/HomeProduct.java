@@ -3,10 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package slider_controller;
+package product_controller;
 
-import dal.ProductDAO;
-import dal.SliderDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,17 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
-import java.util.List;
-import model.Slider;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HomeSlider", urlPatterns={"/homeslider"})
-public class HomeSlider extends HttpServlet {
+@WebServlet(name="HomeProduct", urlPatterns={"/homeproduct"})
+public class HomeProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,12 +30,6 @@ public class HomeSlider extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        SliderDao sld = new SliderDao();
-        ProductDAO pdao = new ProductDAO();
-        List<Slider> sList = sld.getAllSliders();   
-        session.setAttribute("hsList", sList);
-        response.sendRedirect(request.getContextPath()+"/common/home.jsp");
         
     } 
 
