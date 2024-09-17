@@ -9,15 +9,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-/**
- *
- * @author Dell
- */
+
 public class DBContext {
-     protected Connection connection;
-    public DBContext()
-    {
+
+    protected Connection connection;
+
+    public DBContext() {
         //@Students: You are allowed to edit user, pass, url variables to fit 
         //your system configuration
         //You can also add more methods for Database Interaction tasks. 
@@ -36,12 +36,22 @@ public class DBContext {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-  //public static void main(String[] args) {
 
-    //DBContext db = new DBContext();
-    
-    
+    public ResultSet getData(String sql) {
+        ResultSet rs = null;
+        try (Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE)) {
+            rs = statement.executeQuery(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return rs;
+    }
+
+//  public static void main(String[] args) {
+//
+//    DBContext db = new DBContext();
+//    
+//    
 //}
 }
-  
