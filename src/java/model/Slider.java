@@ -10,5 +10,50 @@ package model;
  */
 public class Slider {
     int id;
+    String description;
+    String img;
+    int  status;
+
+    public Slider() {
+    }
+
+    public Slider(int id, String description, String img, int status) {
+        this.id = id;
+        this.description = description;
+        this.img = img;
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     
 }

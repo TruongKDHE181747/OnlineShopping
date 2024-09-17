@@ -4,8 +4,5 @@
         <servlet-name>sliderlist</servlet-name>
         <servlet-class>user_controller.sliderlist</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>sliderlist</servlet-name>
-        <url-pattern>/sliderlist</url-pattern>
-    </servlet-mapping>
+  
 </web-app>
