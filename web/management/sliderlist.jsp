@@ -274,6 +274,7 @@
                                     <th scope="col">Id</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Image</th>
+                                    <th scope="col"> Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -290,6 +291,20 @@
                                         <img src="${s.img}" alt="alt"/>
                                        
                                     </td>
+                                    
+                                    <td>
+                                        <c:if test="${s.status==1}">
+                                            <p style="color: green">Active</p>
+                                        
+                                        </c:if>
+                                               <c:if test="${s.status==0}">
+                                            <p style="color: green">Inactive</p>
+                                        
+                                        </c:if>
+                                        
+                                        
+                                    </td>
+                                    
                                     <td>
                                         <div class="edit">
                                             <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
@@ -324,15 +339,16 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
+                          
+                            <c:forEach begin="1" end="${sessionScope.page}" var="p">
+                                
+                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.cpage==p}">active</c:if>" href="../sliderpaging?p=${p}">${p}</a></li>
+                                
+                            </c:forEach>
                             
-                           
-                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">6</a></li>
+                         
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                                <a class="page-link" href="" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
