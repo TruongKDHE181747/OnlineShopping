@@ -5,6 +5,7 @@
 
 package slider_controller;
 
+import dal.PostDAO;
 import dal.ProductDAO;
 import dal.SliderDao;
 import java.io.IOException;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import java.util.List;
+import model.Post;
+import model.Product;
 import model.Slider;
 
 /**
@@ -39,9 +42,18 @@ public class HomeSlider extends HttpServlet {
         HttpSession session = request.getSession();
         SliderDao sld = new SliderDao();
         ProductDAO pdao = new ProductDAO();
-        List<Slider> sList = sld.getAllSliders();   
+        PostDAO podao = new PostDAO();
+        List<Slider> sList = sld.getAllSliders();  
+        List<Product> pList = pdao.getHotProduct();
+        List<Post> poList = podao.getNewPost();
+        String tabfilter = "hot";
         session.setAttribute("hsList", sList);
+        session.setAttribute("hpList", pList);
+        session.setAttribute("poList", poList);
+        session.setAttribute("tabfilter", tabfilter);
         response.sendRedirect(request.getContextPath()+"/common/home.jsp");
+        
+         
         
     } 
 

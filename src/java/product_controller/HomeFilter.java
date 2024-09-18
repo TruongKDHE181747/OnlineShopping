@@ -5,6 +5,8 @@
 
 package product_controller;
 
+import dal.ProductDAO;
+import dal.SliderDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,13 +14,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import model.Product;
+import model.Slider;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HomeProduct", urlPatterns={"/homeproduct"})
-public class HomeProduct extends HttpServlet {
+@WebServlet(name="HomeFilter", urlPatterns={"/homefilter"})
+public class HomeFilter extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,6 +38,21 @@ public class HomeProduct extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        HttpSession session = request.getSession(); 
+        ProductDAO pdao = new ProductDAO();
+        List<Product> pList = new ArrayList<>();
+        
+        String tabfilter = request.getParameter("tab");
+        if(tabfilter.equals("new")){
+            pList = pdao.getNewProduct();
+        } else if(tabfilter.equals("sale")){
+            pList = pdao.getSaleProduct();
+        }
+
+       
+        session.setAttribute("hpList", pList);
+        session.setAttribute("tabfilter", tabfilter);
+        response.sendRedirect(request.getContextPath()+"/common/home.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
