@@ -99,8 +99,8 @@
                     <div class="col-lg-6 col-md-6">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li class="active"><a href="./index.html">Home</a></li>
-                                <li><a href="./shop.html">Shop</a></li>
+                                <li class="active"><a href="../homeslider">Home</a></li>
+                                <li><a href="../homeproduct">Shop</a></li>
                                 <li><a href="#">Pages</a>
                                     <ul class="dropdown">
                                         <li><a href="./about.html">About Us</a></li>
@@ -118,8 +118,8 @@
                     <div class="col-lg-3 col-md-3">
                         <div class="header__nav__option row" style="padding: 22px 0;">
                             <div class="col-md-10">
-                            <form class="d-flex" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <form class="d-flex" role="search" action="../homeproductsearch">
+                                <input class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
                                 <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
                             </form>
                             
@@ -152,7 +152,7 @@
                                     <h2 style="color: white;"><%=slider.getDescription()%></h2>
                                     <p style="color: white;">A specialist label creating luxury essentials. Ethically crafted with an unwavering
                                         commitment to exceptional quality.</p>
-                                    <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                    <a href="../homeproduct" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                     
                                 </div>
                             </div>
@@ -194,6 +194,7 @@
                 <%
                 for (Product product : pList) {
                 int price =product.getPrice() - product.getPrice()*product.getDiscount()/100;
+                if(product.isIs_active()){
                 %>
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                         <div class="product__item">
@@ -271,6 +272,7 @@
                 
                 <%
                     }
+                }
                 %>
                     
                     
@@ -300,7 +302,7 @@
                     
                     <%
                     for (Post post : poList) {
-
+                    if(post.getIs_active()==1){
                     %>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="blog__item">
@@ -317,6 +319,7 @@
                     i++;
                     if(i==3) break;
                     }
+                   }
                     %>
                     
                     
