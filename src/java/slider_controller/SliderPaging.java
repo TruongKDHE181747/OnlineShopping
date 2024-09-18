@@ -21,8 +21,8 @@ import model.Slider;
  *
  * @author quanpyke
  */
-@WebServlet(name="SliderList", urlPatterns={"/sliderlist"})
-public class SliderList extends HttpServlet {
+@WebServlet(name="SliderPaging", urlPatterns={"/sliderpaging"})
+public class SliderPaging extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,16 +34,15 @@ public class SliderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+     
+        int p=Integer.parseInt(request.getParameter("p"));
         SliderDao sdao=new SliderDao();
-        ArrayList<Slider> list=sdao.getAllSliders();
+        ArrayList<Slider> slist=sdao.getSliderPaging(p);
         
-        ArrayList<Slider> slist=sdao.getSliderPaging(1);
         HttpSession session=request.getSession(true);
-        session.setAttribute("cpage", 1);
         session.setAttribute("slider", slist);
-        session.setAttribute("page", getNumberOfPage(list.size(), 2));
-        response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");
-        
+        session.setAttribute("cpage", p);
+           response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");
         
     } 
 
@@ -81,16 +80,6 @@ public class SliderList extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold> 
-    
-    public int getNumberOfPage(int length, int n)
-    {
-        if(length%n==0) return length/n;
-        else return length/n +1;
-    }
-    
-   
-    
-    
-    
+    }// </editor-fold>
+
 }
