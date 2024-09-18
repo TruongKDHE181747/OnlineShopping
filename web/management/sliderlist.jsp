@@ -334,24 +334,26 @@
                         
                         <nav aria-label="Page navigation example">
                         <ul class="pagination">
+                            <c:if test="${sessionScope.cpage>1}" >
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
+                                <a class="page-link" href="../sliderpaging?p=${sessionScope.cpage-1}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                          
+                          </c:if>
                             <c:forEach begin="1" end="${sessionScope.page}" var="p">
                                 
                                 <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.cpage==p}">active</c:if>" href="../sliderpaging?p=${p}">${p}</a></li>
                                 
                             </c:forEach>
                             
-                         
+                             <c:if test="${sessionScope.cpage<page}" >
                             <li class="page-item">
-                                <a class="page-link" href="" aria-label="Next">
+                                <a class="page-link" href="../sliderpaging?p=${cpage+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
+                            </c:if>
                         </ul>
                     </nav>
                         
