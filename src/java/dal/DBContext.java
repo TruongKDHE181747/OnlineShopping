@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-
 public class DBContext {
 
     protected Connection connection;
@@ -39,19 +38,20 @@ public class DBContext {
 
     public ResultSet getData(String sql) {
         ResultSet rs = null;
-        try (Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                ResultSet.CONCUR_UPDATABLE)) {
+        Statement statement;
+        try {
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
             rs = statement.executeQuery(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        } 
         return rs;
     }
+    
+//    public static void main(String[] args) {
+//        DBContext db = new DBContext();
+//    }
 
-//  public static void main(String[] args) {
-//
-//    DBContext db = new DBContext();
-//    
-//    
-//}
+
 }

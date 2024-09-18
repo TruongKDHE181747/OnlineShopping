@@ -16,7 +16,8 @@ import model.User;
 
 public class UserDAO extends DBContext {
 
-    public void insertUser(User user) {
+    public boolean insertUser(User user) {
+        boolean check = false;
         String sql = """
                      INSERT INTO [dbo].[Users]
                                 ([username]
@@ -54,14 +55,17 @@ public class UserDAO extends DBContext {
             ps.setBoolean(13, user.isIs_active());
             ps.setBoolean(14, user.isIs_banned());
             ps.setInt(15, user.getRole().getRole_id());
-            
-            ps.executeUpdate();
+
+            int exe = ps.executeUpdate();
+            if (exe > 0) {
+                check = true;
+            }
             ps.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return check;
     }
 
     public boolean checkExistUsername(String username) {
