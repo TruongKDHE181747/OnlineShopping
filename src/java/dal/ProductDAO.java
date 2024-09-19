@@ -12,13 +12,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProductDAO extends DBContext{
-    
-    public Product getProductById (int pid) {
-        
-        ResultSet rs = getData("select * from Roles where role_id = " + pid);
 
-        Product product = null;
+    public List<Product> getProductById (int pid) {
+        
+        List<Product> pList = new ArrayList<>();  
+        String sql = "select * from Products where product_id=" + pid;
+        
         try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 int product_id = rs.getInt(1);
                 String product_name = rs.getString(2);
@@ -31,12 +33,13 @@ public class ProductDAO extends DBContext{
                 int rated_star = rs.getInt(9);
                 int brand_id = rs.getInt(10);
                 int product_category_id = rs.getInt(5);
-                product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                Product product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                pList.add(product);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return product;
+        return pList;
     }
     
     

@@ -1,3 +1,5 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,11 +15,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <!-- Google Fonts Roboto -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-        
+
         <link rel="stylesheet" href="./css/registerstyle.css"/>
     </head>
 
     <body>
+
         <!-- Start your project here -->
         <section class="full-height">
             <div class="container">
@@ -27,10 +30,19 @@
                             <div class="card-body">
                                 <!-- Register Title -->
                                 <h2 class="text-center mb-4">Register</h2>
-
+                                <c:if test="${error != null}">
+                                    <div class="alert alert-danger" >
+                                        ${error}
+                                    </div>
+                                </c:if>
+                                <c:if test="${success!=null}">
+                                    <div class="alert alert-success" >
+                                        ${success}
+                                    </div>
+                                </c:if>
                                 <!-- Form -->
-                                <form action="/account/register" method="POST">
-                                    
+                                <form action="./register" method="POST">
+
                                     <div class="row mb-4">
                                         <div class="col-md-12">
                                             <div class="form-floating">
@@ -38,7 +50,7 @@
                                                 <label for="username">Username</label>
                                             </div>
                                         </div>
-                                      
+
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-md-6">
@@ -53,11 +65,11 @@
                                                 <label for="confirmPassword">Confirm password</label>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="mb-4">
                                         <div class="form-floating">
-                                            <input type="email" name="email" class="form-control" id="email" placeholder="Email address" required>
+                                            <input type="email" name="email"  class="form-control" id="email" placeholder="Email address" required>
                                             <label for="email">Email address</label>
                                         </div>
                                     </div>
@@ -65,7 +77,7 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="firstname" class="form-control" id="firstName" placeholder="First name" required>
+                                                <input type="text" name="firstname"  class="form-control" id="firstName" placeholder="First name" required>
                                                 <label for="firstName">First name</label>
                                             </div>
                                         </div>
@@ -77,7 +89,7 @@
                                         </div>
                                     </div>
 
-                                  
+
 
                                     <!-- Gender and Date of Birth inputs -->
                                     <div class="row mb-4">
@@ -105,7 +117,7 @@
                                     <div class="row mb-4">
                                         <div>
                                             <div class="form-floating">
-                                                <input type="tel" name="phone" class="form-control" id="phone" placeholder="Phone number" required>
+                                                <input type="tel" name="phone"  class="form-control" id="phone" placeholder="Phone number" required>
                                                 <label for="phone">Phone</label>
                                             </div>
                                         </div>
@@ -113,7 +125,7 @@
                                     </div>
 
                                     <!-- Email input -->
-                                    
+
 
                                     <!-- Centered Submit button -->
                                     <div class="d-grid mb-3">

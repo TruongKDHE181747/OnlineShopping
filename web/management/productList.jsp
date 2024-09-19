@@ -1,13 +1,8 @@
-<%-- 
-    Document   : admin
-    Created on : May 28, 2024, 9:07:04 PM
-    Author     : Dell
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -103,7 +98,7 @@
             .product-img img{
                 width: 60%;
             }
-            
+
             .dropdown-toggle::after{
                 color: white;
             }
@@ -141,20 +136,20 @@
                         </a>
 
                         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            
+
                         </ul>
 
                         <!-- User check exist -->
-                        
-<!--                        <div class="text-end">
 
-                            <a href="login.jsp" class="btn btn-outline-light me-2" previewlistener="true">Login</a>
-                            <a href="register.jsp" class="btn btn-warning" previewlistener="true">Sign-up</a>
-                        </div>-->
-                     
+                        <!--                        <div class="text-end">
+                        
+                                                    <a href="login.jsp" class="btn btn-outline-light me-2" previewlistener="true">Login</a>
+                                                    <a href="register.jsp" class="btn btn-warning" previewlistener="true">Sign-up</a>
+                                                </div>-->
+
 
                         <div class="text-end" style="display: flex;">
-                            
+
                             <div class="dropdown text-end">
 
                                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -177,7 +172,7 @@
                             </div>
                         </div>
 
-                      
+
 
 
                     </div>
@@ -196,8 +191,8 @@
                      ">
 
                     <hr>
-                    
-                    
+
+
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
                             <a href="#" class="nav-link text-white home-link active" aria-current="page">
@@ -217,21 +212,21 @@
                                 Accounts
                             </a>
                         </li>
-                        
+
                         <li>
                             <a href="#" class="nav-link text-white station-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
                                 Stations
                             </a>
                         </li>
-                        
+
                         <li>
                             <a href="#" class="nav-link text-white contract-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                                 Contracts
                             </a>
                         </li>
-                        
+
                     </ul>
                     <hr>
 
@@ -241,20 +236,20 @@
             <!-- END menu -->
 
             <div class="col-md-10" style="padding: 40px;">
-                
 
-                
+
+
                 <!-- START products -->
                 <div class="product">
                     <div class="container products" >
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Sliders List</h5>
+                                    <h5 class="navbar-brand" href="#">Manage Products</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search">
-                                            <input placeholder="Search by id, name,description,..." name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <input placeholder="Car name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -272,102 +267,97 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col"> Status</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Rating</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                          
-                                <!-- START Product item -->
-                                  <c:forEach var="s" items="${sessionScope.slider}">
-                                <tr>
-                                    <th scope="row">${s.id}</th>
-                                    <td>${s.description}</td>
-                                    <td class="product-img">
-                                        
-                                        <img src="${s.img}" alt="alt"/>
-                                       
-                                    </td>
-                                    
-                                    <td>
-                                        <c:if test="${s.status==1}">
-                                            <p style="color: green">Active</p>
-                                        
-                                        </c:if>
-                                               <c:if test="${s.status==0}">
-                                            <p style="color: green">Inactive</p>
-                                        
-                                        </c:if>
-                                        
-                                        
-                                    </td>
-                                    
-                                    <td>
-                                        <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-                                            
-                                        </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
-                                        </div>
-                                    </td>
 
-                                </tr>
-                                 </c:forEach>
-                                <!-- END Product item -->
-                               
                                 <!-- START Product item -->
-                             
+                                <c:forEach var="p" items="${sessionScope.product_list}">
+                                    <tr>
+                                        <th scope="row">${p.product_id}</th>
+
+                                        <td>${p.product_name}</td>
+
+                                        <td class="product-img">
+                                            <img src="${p.thumbnail}">
+                                        </td>
+
+                                        <td>"$" + ${p.price}</td>
+
+                                        <td>${p.rated_star}</td>
+
+                                        <td>
+                                            <c:if test="${p.is_active==1}">
+                                                <p style="color: green">Available</p>
+                                            </c:if>
+
+                                            <c:if test="${p.is_active==0}">
+                                                <p style="color: Red">Out of Stock</p>  
+                                            </c:if>    
+                                        </td>
+
+                                        <td>
+                                            <div class="edit">
+                                                <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+
+                                            </div>
+                                            <div class="remove">
+                                                <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </c:forEach>
                                 <!-- END Product item -->
 
                             </tbody>
                         </table>
-                             
-                               
-                    <!-- START PAGE -->
-                    
-                    <div style="display: flex;
-                                justify-content: center;">
-                        
-                        <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <c:if test="${sessionScope.cpage>1}" >
-                            <li class="page-item">
-                                <a class="page-link" href="../sliderpaging?p=${sessionScope.cpage-1}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                          </c:if>
-                            <c:forEach begin="1" end="${sessionScope.page}" var="p">
-                                
-                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.cpage==p}">active</c:if>" href="../sliderpaging?p=${p}">${p}</a></li>
-                                
-                            </c:forEach>
-                            
-                             <c:if test="${sessionScope.cpage<page}" >
-                            <li class="page-item">
-                                <a class="page-link" href="../sliderpaging?p=${cpage+1}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                        
-                    </div>
-                    <!-- END PAGE -->
-                                
+
+                        <!-- START PAGE -->
+
+                        <div style="display: flex;
+                             justify-content: center;">
+
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+
+
+                                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link active" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link active" href="#">4</a></li>
+                                    <li class="page-item"><a class="page-link active" href="#">5</a></li>
+                                    <li class="page-item"><a class="page-link active" href="#">6</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                        <!-- END PAGE -->
+
                     </div>
                 </div>
                 <!-- END products -->
-                
-                
+
+
             </div>
         </div>
 
-        
+
     </body>
 </html>
