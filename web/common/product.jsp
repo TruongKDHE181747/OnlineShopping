@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Product"%>
+<%@page import="model.Brand"%>
+<%@page import="model.Size"%>
+<%@page import="model.Price"%>
+<%@page import="model.ProductCategory"%>
 <%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -166,6 +170,14 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Shop Section Begin -->
+    <%
+    String sid = session.getAttribute("fsid")+"";
+    String cid = session.getAttribute("fcid")+"";
+    String bid = session.getAttribute("fbid")+"";
+    if(sid.equals("null")) sid = "";
+    if(cid.equals("null")) cid = "";
+    if(bid.equals("null")) bid = "";
+    %>
     <section class="shop spad">
         <div class="container">
             <div class="row">
@@ -180,17 +192,22 @@
                                     </div>
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
+                                            <%
+                                            List<ProductCategory> pcList = (List<ProductCategory>)session.getAttribute("pcList");
+        
+                                            %>
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
-                                                    <li><a href="#">Men (20)</a></li>
-                                                    <li><a href="#">Women (20)</a></li>
-                                                    <li><a href="#">Bags (20)</a></li>
-                                                    <li><a href="#">Clothing (20)</a></li>
-                                                    <li><a href="#">Shoes (20)</a></li>
-                                                    <li><a href="#">Accessories (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
+                                                    <%
+                                                    for (ProductCategory productCategory : pcList) {
+                                                    if(productCategory.getIs_active()==1){
+                                                    %>
+                                                    
+                                                    <li><a style="color: <%=cid.equals(productCategory.getProduct_category_id()+"")?"black":"#b7b7b7"%>"  href="../productfilter?cid=<%=productCategory.getProduct_category_id()%>"><%=productCategory.getProduct_category_name()%></a></li>
+                                                    <%
+                                                        }
+                                                    }
+                                                    %>
                                                 </ul>
                                             </div>
                                         </div>
@@ -202,12 +219,21 @@
                                     </div>
                                     <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
+                                            <%
+                                            List<Brand> bList = (List<Brand>)session.getAttribute("bList");
+                                            %>
                                             <div class="shop__sidebar__brand">
                                                 <ul>
-                                                    <li><a href="#">Louis Vuitton</a></li>
-                                                    <li><a href="#">Chanel</a></li>
-                                                    <li><a href="#">Hermes</a></li>
-                                                    <li><a href="#">Gucci</a></li>
+                                                    <%
+                                                    for (Brand brand : bList) {
+                                                if(brand.getIs_active()==1){
+
+                                                     %>
+                                                     <li><a style="color: <%=bid.equals(brand.getBrand_id()+"")?"black":"#b7b7b7"%>" href="../productfilter?bid=<%=brand.getBrand_id()%>"><%=brand.getBrand_name()%></a></li>
+                                                     <%
+                                                                }
+                                                      }
+                                                     %>
                                                 </ul>
                                             </div>
                                         </div>
@@ -219,16 +245,39 @@
                                     </div>
                                     <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
+                                            <%
+                                                List<Price> prList = (List<Price>)session.getAttribute("prList");
+                                               
+                                            %>
                                             <div class="shop__sidebar__price">
                                                 <ul>
-                                                    <li><a href="#">$0.00 - $50.00</a></li>
-                                                    <li><a href="#">$50.00 - $100.00</a></li>
-                                                    <li><a href="#">$100.00 - $150.00</a></li>
-                                                    <li><a href="#">$150.00 - $200.00</a></li>
-                                                    <li><a href="#">$200.00 - $250.00</a></li>
-                                                    <li><a href="#">250.00+</a></li>
+                                                    <li><a href="../productfilter?pid=low">Low To High</a></li>
+                                                    <li><a href="../productfilter?pid=high">High To Low</a></li>
+                                                    <%
+                                                     for (Price price : prList) {
+
+                                                    %>
+                                                        <li><a href="../productfilter?pid=<%=price.getPrice_id()%>">₫<%=price.getFrom()%> - ₫<%=price.getTo()%>.000</a></li>
+                                                    <%
+                                                        }
+                                                    %>
                                                 </ul>
                                             </div>
+                                            <form action="">
+                                               <div class="row" style="margin-top: 14px;">
+                                                <div class="col-md-5">
+                                                    <input placeholder="From" style="width: 100%;"> 
+                                                </div>
+                                                   <div class="col-md-2">
+                                                       --
+                                                   </div>
+                                                <div class="col-md-5">
+                                                    <input placeholder="To" style="width: 100%;"> 
+                                                </div>
+                                            </div>
+                                                <button style="margin-top: 10px; 
+                                                        width: 100%;" type="button" class="btn btn-dark">Apply</button> 
+                                            </form>                 
                                         </div>
                                     </div>
                                 </div>
@@ -238,87 +287,21 @@
                                     </div>
                                     <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
-                                            <div class="shop__sidebar__size">
-                                                <label for="xs">xs
-                                                    <input type="radio" id="xs">
-                                                </label>
-                                                <label for="sm">s
-                                                    <input type="radio" id="sm">
-                                                </label>
-                                                <label for="md">m
-                                                    <input type="radio" id="md">
-                                                </label>
-                                                <label for="xl">xl
-                                                    <input type="radio" id="xl">
-                                                </label>
-                                                <label for="2xl">2xl
-                                                    <input type="radio" id="2xl">
-                                                </label>
-                                                <label for="xxl">xxl
-                                                    <input type="radio" id="xxl">
-                                                </label>
-                                                <label for="3xl">3xl
-                                                    <input type="radio" id="3xl">
-                                                </label>
-                                                <label for="4xl">4xl
-                                                    <input type="radio" id="4xl">
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                                    </div>
-                                    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__color">
-                                                <label class="c-1" for="sp-1">
-                                                    <input type="radio" id="sp-1">
-                                                </label>
-                                                <label class="c-2" for="sp-2">
-                                                    <input type="radio" id="sp-2">
-                                                </label>
-                                                <label class="c-3" for="sp-3">
-                                                    <input type="radio" id="sp-3">
-                                                </label>
-                                                <label class="c-4" for="sp-4">
-                                                    <input type="radio" id="sp-4">
-                                                </label>
-                                                <label class="c-5" for="sp-5">
-                                                    <input type="radio" id="sp-5">
-                                                </label>
-                                                <label class="c-6" for="sp-6">
-                                                    <input type="radio" id="sp-6">
-                                                </label>
-                                                <label class="c-7" for="sp-7">
-                                                    <input type="radio" id="sp-7">
-                                                </label>
-                                                <label class="c-8" for="sp-8">
-                                                    <input type="radio" id="sp-8">
-                                                </label>
-                                                <label class="c-9" for="sp-9">
-                                                    <input type="radio" id="sp-9">
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
-                                    </div>
-                                    <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
+                                            <%
+                                            List<Size> sList = (List<Size>)session.getAttribute("sList");
+                                            
+                                            %>
                                             <div class="shop__sidebar__tags">
-                                                <a href="#">Product</a>
-                                                <a href="#">Bags</a>
-                                                <a href="#">Shoes</a>
-                                                <a href="#">Fashio</a>
-                                                <a href="#">Clothing</a>
-                                                <a href="#">Hats</a>
-                                                <a href="#">Accessories</a>
+                                                <%
+                                                for (Size size : sList) {
+
+                                                %>                       
+                                                <a style="color: <%=sid.equals(size.getSize_id()+"")?"black":"#b7b7b7"%>" href="../productfilter?sid=<%=size.getSize_id()%>"><%=size.getSize_name()%></a>
+                                                <%
+                                                }
+                                                %>
+                                                
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -326,6 +309,12 @@
                             </div>
                         </div>
                     </div>
+                                                <%
+                String sql1 =  session.getAttribute("sql")+"";
+                if(sql1.equals("null")) sql1 = "";
+                %>
+                
+                <%=sql1%>
                 </div>
                 
                 
@@ -341,17 +330,20 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Showing <%=curpage*12+1%>–<%=curpage*12+pList.size()%> of <%=totalProduct%> results</p>
+                                    <p>Showing <%=curpage*9+1%>–<%=curpage*9+pList.size()%> of <%=totalProduct%> results</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                    <p>Sort by Price:</p>
-                                    <select>
+                                    <form action="productsort">
+                                        <p>Sort by Price:</p>
+                                        <select name="">
                                         <option value="">Low To High</option>
-                                        <option value="">$0 - $55</option>
-                                        <option value="">$55 - $100</option>
-                                    </select>
+                                        <option value="">High To Low</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-outline-dark">Apply</button>
+                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>

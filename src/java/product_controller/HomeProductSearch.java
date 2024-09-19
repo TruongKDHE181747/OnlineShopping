@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import model.Product;
 
@@ -38,21 +39,21 @@ public class HomeProductSearch extends HttpServlet {
         HttpSession session = request.getSession();
         ProductDAO pdao = new ProductDAO();
         int cpage = 0;
-        if(request.getParameter("cpage")!=null){
-            cpage = Integer.parseInt(request.getParameter("cpage"));
-        }
+        
         String name = request.getParameter("pname");
         
         if(name.length()==0) {
             response.sendRedirect(request.getContextPath()+"/homeproduct");
         } else {
-            List<Product> pList = pdao.getAllProductByName(name);
-        session.setAttribute("ppList", pList);  
-        int totalProduct = pList.size();
-        int npage = pList.size()/12 + 1;
+        List<Product> apList = pdao.getAllProductByName(name);
         
+        int totalProduct = apList.size();
+        int npage = apList.size()/9 + 1;    
+        List<Product> p9List = select9Products(apList, cpage);
+        
+        session.setAttribute("apList", apList);  
+        session.setAttribute("ppList", p9List);  
         session.setAttribute("pname", name);
-        
         session.setAttribute("ppage", npage);
         session.setAttribute("curpage", cpage);
         session.setAttribute("totalProduct", totalProduct);
@@ -61,6 +62,19 @@ public class HomeProductSearch extends HttpServlet {
         
         
     } 
+    
+    public static List<Product> select9Products( List<Product> pList, int pageNum){
+        List<Product> top9List = new ArrayList<>();
+        for(int i = pageNum*9;i<=pageNum*9+8;i++){
+            if(i>=pList.size()) {
+                break;
+            } else {
+                top9List.add(pList.get(i));
+            }
+        }
+        
+        return top9List;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
