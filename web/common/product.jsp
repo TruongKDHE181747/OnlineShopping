@@ -174,9 +174,15 @@
     String sid = session.getAttribute("fsid")+"";
     String cid = session.getAttribute("fcid")+"";
     String bid = session.getAttribute("fbid")+"";
+    String pid = session.getAttribute("fpid")+"";
+    String price1 = session.getAttribute("price1")+"";
+    String price2 = session.getAttribute("price2")+"";
     if(sid.equals("null")) sid = "";
     if(cid.equals("null")) cid = "";
     if(bid.equals("null")) bid = "";
+    if(pid.equals("null")) pid = "";
+    if(price1.equals("null")) price1 = "";
+    if(price2.equals("null")) price2 = "";
     %>
     <section class="shop spad">
         <div class="container">
@@ -247,36 +253,35 @@
                                         <div class="card-body">
                                             <%
                                                 List<Price> prList = (List<Price>)session.getAttribute("prList");
-                                               
+                                                int maxPrice = Integer.parseInt(session.getAttribute("maxPrice")+"");
                                             %>
                                             <div class="shop__sidebar__price">
                                                 <ul>
-                                                    <li><a href="../productfilter?pid=low">Low To High</a></li>
-                                                    <li><a href="../productfilter?pid=high">High To Low</a></li>
                                                     <%
                                                      for (Price price : prList) {
 
                                                     %>
-                                                        <li><a href="../productfilter?pid=<%=price.getPrice_id()%>">₫<%=price.getFrom()%> - ₫<%=price.getTo()%>.000</a></li>
+                                                        <li><a style="color: <%=pid.equals(price.getPrice_id()+"")?"black":"#b7b7b7"%>" href="../productfilter?pid=<%=price.getPrice_id()%>">₫<%=price.getFrom()%>.000 - ₫<%=price.getTo()%>.000</a></li>
                                                     <%
                                                         }
                                                     %>
+                                                        <li><a style="color: <%=pid.equals("max")?"black":"#b7b7b7"%>" href="../productfilter?pid=max">₫<%=maxPrice%>.000+</a></li>
                                                 </ul>
                                             </div>
-                                            <form action="">
+                                            <form action="../productfilter">
                                                <div class="row" style="margin-top: 14px;">
                                                 <div class="col-md-5">
-                                                    <input placeholder="From" style="width: 100%;"> 
+                                                    <input value="<%=price1%>" name="price1" type="number" min="0" required="" placeholder="From" style="width: 100%;"> 
                                                 </div>
                                                    <div class="col-md-2">
                                                        --
                                                    </div>
                                                 <div class="col-md-5">
-                                                    <input placeholder="To" style="width: 100%;"> 
+                                                    <input value="<%=price2%>" name="price2" type="number" min="0" required="" placeholder="To" style="width: 100%;"> 
                                                 </div>
                                             </div>
                                                 <button style="margin-top: 10px; 
-                                                        width: 100%;" type="button" class="btn btn-dark">Apply</button> 
+                                                        width: 100%;" type="submit" class="btn btn-dark">Apply</button> 
                                             </form>                 
                                         </div>
                                     </div>
@@ -335,11 +340,15 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                    <form action="productsort">
+                                    <%
+                                    String sortValue = session.getAttribute("sortValue")+"";
+                                    if(sortValue.equals("null")) sortValue = "";
+                                    %>
+                                    <form action="../productsort">
                                         <p>Sort by Price:</p>
-                                        <select name="">
-                                        <option value="">Low To High</option>
-                                        <option value="">High To Low</option>
+                                        <select name="sortValue">
+                                        <option <%=sortValue.equals("low")?"selected":""%> value="low">Low To High</option>
+                                        <option <%=sortValue.equals("high")?"selected":""%> value="high">High To Low</option>
                                         </select>
                                         <button type="submit" class="btn btn-outline-dark">Apply</button>
                                     </form>

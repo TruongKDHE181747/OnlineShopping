@@ -39,7 +39,7 @@ public class ProductFilter extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        
+        session.setAttribute("sortValue", null);
         ProductDAO pdao = new ProductDAO();
         PriceDAO prdao = new PriceDAO();
         
@@ -91,44 +91,57 @@ public class ProductFilter extends HttpServlet {
             
         }
         
+        
+        
+        String pid = request.getParameter("pid");
+        if(pid==null && session.getAttribute("fpid")!=null) pid = session.getAttribute("fpid")+"";
+        
+        
+        
+        if(request.getParameter("price1")!=null){
+            int price1 = Integer.parseInt(request.getParameter("price1"));
+            int price2 = Integer.parseInt(request.getParameter("price2"));
+            pid = null;
+            session.setAttribute("fpid", null);
+             if(sql.length()>0){
+                    sql+="and (price-price*discount/100)>"+price1+" and (price-price*discount/100)<"+price2;
+                } else {
+                    sql = "select * from Products\n" +
+                            "where (price-price*discount/100)>"+price1+" and (price-price*discount/100)<"+price2;
+                }
+            session.setAttribute("price1", price1);
+            session.setAttribute("price2", price2);
+        }
+        
+        if(pid!=null){
+            session.setAttribute("price1", null);
+            session.setAttribute("price2", null);
+            session.setAttribute("fpid", pid);
+            if(pid.equals("max")){
+                int maxPrice = Integer.parseInt(session.getAttribute("maxPrice")+"");
+                if(sql.length()>0){
+                    sql+="and (price-price*discount/100)>"+maxPrice*1000;
+                } else {
+                    sql = "select * from Products\n" +
+                            "where (price-price*discount/100)>"+maxPrice*1000;
+                }
+            } else {
+                Price p = prdao.getPriceById(pid);
+                if(sql.length()>0){
+                    sql+="and (price-price*discount/100)>"+p.getFrom()*1000+" and (price-price*discount/100)<"+p.getTo()*1000;
+                } else {
+                    sql = "select * from Products\n" +
+                            "where (price-price*discount/100)>"+p.getFrom()*1000+" and (price-price*discount/100)<"+p.getTo()*1000;
+                }
+            }
+                
+                
+            
+        }
         List<Product> apList = pdao.getAllProductFilter(sql);
         int cpage = 0;
         int totalProduct = apList.size();
         int npage = totalProduct/9 + 1;
-        
-        String pid = request.getParameter("pid");
-        if(pid==null && session.getAttribute("fpid")!=null) pid = session.getAttribute("fpid")+"";
-        if(pid!=null){
-            session.setAttribute("fpid", pid);
-            if(pid.equals("low")){
-                apList.sort(new Comparator<Product>() {
-                    @Override
-                    public int compare(Product o1, Product o2) {
-                       return o1.getPrice() - o2.getPrice();
-                    }
-                });
-            } else if(pid.equals("high")){
-                apList.sort(new Comparator<Product>() {
-                    @Override
-                    public int compare(Product o1, Product o2) {
-                       return o2.getPrice() - o1.getPrice();
-                    }
-                });
-            } else {
-                Price p = prdao.getPriceById(pid);
-                if(sql.length()>0){
-                    sql+="and price>"+p.getFrom()*1000+" and price<"+p.getTo()*1000;
-                } else {
-                    sql = "select * from Products\n" +
-                            "where price>"+p.getFrom()*1000+" and price<"+p.getTo()*1000;
-                }
-                apList = pdao.getAllProductFilter(sql);
-            }
-        }
-        
-        cpage = 0;
-        totalProduct = apList.size();
-        npage = totalProduct/9 + 1;
         List<Product> p9List = select9Products(apList, cpage);
         
         session.setAttribute("apList", apList);
