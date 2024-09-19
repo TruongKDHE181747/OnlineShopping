@@ -1,8 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@page import="model.Product"%>
+<%@page import="java.util.*" %>
 
 <!DOCTYPE html>
 <html>
@@ -96,7 +94,7 @@
             }
 
             .product-img img{
-                width: 60%;
+                width: 36%;
             }
 
             .dropdown-toggle::after{
@@ -249,7 +247,7 @@
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search">
-                                            <input placeholder="Car name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <input placeholder="Product name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -279,41 +277,48 @@
 
 
                                 <!-- START Product item -->
-                                <c:forEach var="p" items="${sessionScope.product_list}">
-                                    <tr>
-                                        <th scope="row">${p.product_id}</th>
+                                <%
+                                    List<Product> pList = (ArrayList<Product>) session.getAttribute("product_list");
+                                    for (Product p : pList) {
+                                %>
+                                <tr>
 
-                                        <td>${p.product_name}</td>
+                                    <td><%= p.getProduct_id()%></td>
+                                    
+                                    <td><%= p.getProduct_name()%></td>
 
-                                        <td class="product-img">
-                                            <img src="${p.thumbnail}">
-                                        </td>
+                                    <td class="product-img">
+                                        <img src="../<%= p.getThumbnail()%>">
+                                    </td>
+                                    
+                                    <td>
+                                        <%
+                                            if(p.isIs_active()==true) {   
+                                        %>
+                                        <p style="color: green">Available</p>
+                                        <%
+                                            } else {
+                                        %>
+                                        <p style="color: Red">Out of Stock</p> 
+                                        <% 
+                                            }
+                                        %>   
+                                    </td>
 
-                                        <td>"$" + ${p.price}</td>
+                                    <td><%= p.getPrice()%></td>
 
-                                        <td>${p.rated_star}</td>
+                                    <td><%= p.getRated_star()%></td>
 
-                                        <td>
-                                            <c:if test="${p.is_active==1}">
-                                                <p style="color: green">Available</p>
-                                            </c:if>
+                                    <td>
+                                        <div class="edit">
+                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                        </div>
+                                    </td>
+                                    <%
+                                        }
+                                    %>
 
-                                            <c:if test="${p.is_active==0}">
-                                                <p style="color: Red">Out of Stock</p>  
-                                            </c:if>    
-                                        </td>
-
-                                        <td>
-                                            <div class="edit">
-                                                <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-
-                                            </div>
-                                            <div class="remove">
-                                                <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
-                                            </div>
-                                        </td>
-
-                                    </tr>
+                                </tr>
                                 </c:forEach>
                                 <!-- END Product item -->
 
@@ -327,6 +332,10 @@
 
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
+                                    <%
+                                        int page = session.getAttribute("first_page");
+                                        if()
+                                    %>
                                     <li class="page-item">
                                         <a class="page-link" href="#" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
