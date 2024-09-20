@@ -65,7 +65,7 @@
 
             .edit{
                 display: inline-block;
-                background-color: yellow;
+               
                 padding: 6px 8px;
                 border-radius: 4px;
                 cursor: pointer;
@@ -262,7 +262,7 @@
 
                                     <div class="">
                                         <div class="d-flex add" role="search">
-                                            <a href="#"><i style="color: white;" class="fa-solid fa-plus"></i></a>
+                                            <a href="addslider.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -272,10 +272,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
+                                      <th scope="col">Title</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Image</th>
                                     <th scope="col"> Status</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col" style="width: 14%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -285,10 +286,11 @@
                                   <c:forEach var="s" items="${sessionScope.slider}">
                                 <tr>
                                     <th scope="row">${s.id}</th>
+                                      <td>${s.title}</td>
                                     <td>${s.description}</td>
                                     <td class="product-img">
                                         
-                                        <img src="${s.img}" alt="alt"/>
+                                        <img src="../${s.img}" alt="alt"/>
                                        
                                     </td>
                                     
@@ -298,7 +300,7 @@
                                         
                                         </c:if>
                                                <c:if test="${s.status==0}">
-                                            <p style="color: green">Inactive</p>
+                                            <p style="color: red">Inactive</p>
                                         
                                         </c:if>
                                         
@@ -306,12 +308,33 @@
                                     </td>
                                     
                                     <td>
-                                        <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                        <c:if test="${s.status==1}">
+                                            
+                                        <div class="edit" style="background-color: red">
+                                            
+                                              
+                                                  
+                                              
+                                                
+                                            <a href="updateslider?sid=${s.id}&button=hide"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
                                             
                                         </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
+                                        </c:if>
+                                       
+                                          <c:if test="${s.status==0}">
+                                            
+                                        <div class="edit" style="background-color: greenyellow">
+                                            
+                                              
+                                                  
+                                              
+                                                
+                                            <a href="updateslider?sid=${s.id}&?button=show"><i style="color: black;" class="bi bi-eye-fill"></i></a>
+                                            
+                                        </div>
+                                        </c:if>
+                                        <div class="remove" style="background-color: yellow">
+                                            <a href="updateslider?sid=${s.id}&?button=edit" ><i style="color: black;" class="bi bi-pencil-fill"></i></a>     
                                         </div>
                                     </td>
 
