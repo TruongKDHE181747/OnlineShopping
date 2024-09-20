@@ -22,17 +22,17 @@ public class ProductDAO extends DBContext {
             PreparedStatement pre = connection.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                int product_id = rs.getInt(1);
-                String product_name = rs.getString(2);
-                int price = rs.getInt(3);
-                int total_quantity = rs.getInt(4);
-                int discount = rs.getInt(5);
-                String description = rs.getString(6);
-                String thumbnail = rs.getString(7);
-                boolean is_active = rs.getBoolean(8);
-                int rated_star = rs.getInt(9);
-                int brand_id = rs.getInt(10);
-                int product_category_id = rs.getInt(5);
+                int product_id = rs.getInt("product_id");
+                String product_name = rs.getString("product_name");
+                int price = rs.getInt("price");
+                int total_quantity = rs.getInt("total_quantity");
+                int discount = rs.getInt("discount");
+                String description = rs.getString("description");
+                String thumbnail = rs.getString("thumbnail");
+                boolean is_active = rs.getBoolean("is_active");
+                int rated_star = rs.getInt("rated_star");
+                int brand_id = rs.getInt("brand_id");
+                int product_category_id = rs.getInt("product_category_id");
                 p= new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
             }
         } catch (SQLException ex) {
