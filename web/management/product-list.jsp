@@ -284,13 +284,13 @@
                                 <tr>
 
                                     <td><%= p.getProduct_id()%></td>
-                                    
+
                                     <td><%= p.getProduct_name()%></td>
 
                                     <td class="product-img">
                                         <img src="../<%= p.getThumbnail()%>">
                                     </td>
-                                    
+
                                     <td>
                                         <%
                                             if(p.isIs_active()==true) {   
@@ -332,27 +332,38 @@
 
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
+
                                     <%
-                                        int page = session.getAttribute("first_page");
-                                        if()
+                                     int cur_page = (int) session.getAttribute("cur_page");
+                                     int total_page = (int) session.getAttribute("num_page");
+                                     if(cur_page > 1) {
                                     %>
                                     <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
+                                        <a class="page-link" href="../productlist?p=<%= cur_page-1%>" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
+                                    <%
+                                       }
 
+                                       for (int i = 1; i < total_page; i++) {
+                                    %>
+                                    <li class="page-item <%= (cur_page == i) ? "active" : "" %>">
+                                        <a class="page-link" href="../productpaging?p=<%= i %>"><%= i %></a>
+                                    </li>
+                                    <%
+                                        }
 
-                                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">5</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">6</a></li>
+                                        if (cur_page < total_page) {
+                                    %>
                                     <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
+                                        <a class="page-link" href="../productpaging?p=<%= (cur_page + 1) %>" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
+                                    <%
+                                        }
+                                    %>
                                 </ul>
                             </nav>
 
