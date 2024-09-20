@@ -16,7 +16,7 @@
         <!-- Google Fonts Roboto -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
 
-        <link rel="stylesheet" href="./css/registerstyle.css"/>
+        <link rel="stylesheet" href="./account/css/registerstyle.css"/>
     </head>
 
     <body>
@@ -35,13 +35,8 @@
                                         ${error}
                                     </div>
                                 </c:if>
-                                <c:if test="${success!=null}">
-                                    <div class="alert alert-success" >
-                                        ${success}
-                                    </div>
-                                </c:if>
                                 <!-- Form -->
-                                <form action="./register" method="POST">
+                                <form action="register" method="POST">
 
                                     <div class="row mb-4">
                                         <div class="col-md-12">
@@ -61,7 +56,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+                                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
                                                 <label for="confirmPassword">Confirm password</label>
                                             </div>
                                         </div>
@@ -134,7 +129,7 @@
 
                                     <!-- Register link -->
                                     <p class="text-center">Already have an account?
-                                        <a href="./login" class="custom-link">Login here</a>
+                                        <a href="login" class="custom-link">Login here</a>
                                     </p>
 
                                     <!-- Divider -->
@@ -149,6 +144,7 @@
                                         </a>
                                     </div>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>

@@ -16,6 +16,33 @@ import model.User;
 
 public class UserDAO extends DBContext {
 
+    
+    public boolean activateUser(String username) {
+        boolean check = false;
+        String sql = """
+                     UPDATE [dbo].[Users]
+                        SET [is_active] = ?
+                      WHERE [username] = ?""";
+
+        PreparedStatement ps;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, true);
+            ps.setString(2, username);
+
+            int exe = ps.executeUpdate();
+            if (exe > 0) {
+                check = true;
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return check;
+    }
+
     public boolean insertUser(User user) {
         boolean check = false;
         String sql = """
