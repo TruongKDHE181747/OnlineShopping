@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Product"%>
+<%@page import="java.util.*" %>
+<%@page import="java.text.DecimalFormatSymbols"%>
+<%@page import="java.text.NumberFormat"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -149,6 +153,10 @@
                         </div>
                     </div>
                 </div>
+                <%
+                 Product product = (Product)session.getAttribute("dproduct");
+
+                %>
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
                         <ul class="nav nav-tabs" role="tablist">

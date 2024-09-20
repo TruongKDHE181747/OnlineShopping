@@ -37,8 +37,12 @@ public class HProductDetail extends HttpServlet {
         ProductDAO pdao = new ProductDAO();
         
         String proid = request.getParameter("proid");
+        Product product = pdao.getProductById(Integer.parseInt(proid));
+        session.setAttribute("dproduct", product);
         
         response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
+        
+        //Product product1 = (Product)session.getAttribute("dproduct");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
