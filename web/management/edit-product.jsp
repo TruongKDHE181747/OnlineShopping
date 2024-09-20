@@ -35,35 +35,35 @@
         <div class="container">
             <main>
                 <div class="py-5 text-center" >
-                    <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
+                    <img class="d-block mx-auto mb-4" src="#" alt="" width="72">
                     <h2>Edit Product</h2>
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
                     
                     <%
-                        Product p = session.getAttribute("product_details");
+                        Product p = (Product) session.getAttribute("product_details");
                     %>
                    
 
                     <div class="col-md-8">
                         <form class="needs-validation" action="caredit" method="post" enctype="multipart/form-data">
                             <div class="row g-3">
+                                
                                 <div class="col-sm-6">
-                                    <label for="carid" class="form-label">Product Id</label>
-                                    <input disabled="" value="1" name="carid" type="text" class="form-control" id="carid" required>
-
+                                    <label for="productid" class="form-label">Product Id</label>
+                                    <input disabled="" value="<%= p.getProduct_id()%>" name="carid" type="text" class="form-control" id="carid" required>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="carname" class="form-label">Product Name</label>
-                                    <input  value="Car1" name="carname" type="text" class="form-control" id="carname" required>
-
+                                    <label for="productname" class="form-label">Product Name</label>
+                                    <input  value="<%= p.getProduct_name()%>" name="carname" type="text" class="form-control" id="carname" required>
                                 </div>
+                                    
                                 <div class="col-sm-6">
                                     <label for="image" class="form-label">Product Image</label>
                                     <input name="image" type="file" class="form-control" id="image">
-                                    <img style="margin-top: 10px;" src="img/car1.jpg" alt="alt"/>
+                                    <img style="margin-top: 10px;" src="../<%= p.getThumbnail()%>" alt="alt"/>
                                 </div>
 
 
@@ -71,21 +71,27 @@
                                     <label for="available" class="form-label">Available</label>
                                     <div class="form-check">
                                         <input value="1" id="available" name="available" type="radio" class="form-check-input">
-                                        <label class="form-check-label" for="available">1</label>
+                                        <label class="form-check-label" for="available">Active</label>
                                     </div>
                                     <div class="form-check">
                                         <input id="available1" name="available" type="radio" class="form-check-input">
-                                        <label class="form-check-label" for="available1">0</label>
+                                        <label class="form-check-label" for="available1">Inactive</label>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <label for="priceid" class="form-label">Product Price</label>
-                                    <select name="priceid" class="form-control">
-                                        
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
+                                
+                                <div class="col-sm-6">
+                                    <label for="productid" class="form-label">Price</label>
+                                    <input disabled="" value="<%= p.getPrice()%>" name="carid" type="text" class="form-control" id="carid" required>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <label for="productid" class="form-label">Price</label>
+                                    <input disabled="" value="<%= p.getPrice()%>" name="carid" type="text" class="form-control" id="carid" required>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <label for="productid" class="form-label">Total Quantity</label>
+                                    <input disabled="" value="<%= p.getTotal_quantity()%>" name="carid" type="text" class="form-control" id="carid" required>
                                 </div>
 
                                 <div class="col-12">
@@ -95,19 +101,6 @@
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="numberofseats" class="form-label">Number of Seats</label>
-                                    <input value="5" name="numberofseats" type="number" class="form-control" id="numberofseats" placeholder="5,7,10,...">
-                                </div>
-                                <div class="col-12">
-                                    <label for="numberoflargebags" class="form-label">Number of Large Bags</label>
-                                    <input value="6" name="numberoflargebags" type="number" class="form-control" id="numberoflargebags" placeholder="1,2,3,...">
-                                </div>
-                                <div class="col-12">
-                                    <label for="numberofsmallbags" class="form-label">Number of Small Bags</label>
-                                    <input value="7" name="numberofsmallbags" type="number" class="form-control" id="numberofsmallbags" placeholder="1,2,3,...">
                                 </div>
 
 
