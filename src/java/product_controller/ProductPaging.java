@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import model.Product;
 
@@ -22,8 +21,8 @@ import model.Product;
  *
  * @author Thanh Tan
  */
-@WebServlet(name="ProductList", urlPatterns={"/productlist"})
-public class ProductList extends HttpServlet {
+@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
+public class ProductPaging extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,15 +34,15 @@ public class ProductList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        int p=Integer.parseInt(request.getParameter("p"));
         ProductDAO pdao = new ProductDAO();
-        List<Product> list = pdao.getAllProduct();
+        List<Product> list = pdao.getProductPaging(p);
         HttpSession session = request.getSession();
         
         session.setAttribute("product_list", list);
-        session.setAttribute("cur_page", 1);
-        session.setAttribute("num_page", getNumberOfPage(list.size(), 2));
+        session.setAttribute("cur_page", p);
         response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,10 +80,5 @@ public class ProductList extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-     public int getNumberOfPage(int length, int n)
-    {
-        if(length%n==0) return length/n;
-        else return length/n +1;
-    }
+
 }
