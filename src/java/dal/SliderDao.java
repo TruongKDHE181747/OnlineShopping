@@ -25,10 +25,11 @@ public class SliderDao extends DBContext {
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("slider_id");
+                String title=rs.getString("tittle");
                 String description = rs.getString("description");
                 String img = rs.getString("image_url");
                 int status = rs.getInt("is_active");
-                Slider s = new Slider(id, description, img, status);
+                Slider s=new Slider(id, title, description, img, status);
                 list.add(s);
             }
 
@@ -54,9 +55,10 @@ public class SliderDao extends DBContext {
             while (rs.next()) {
                 int id = rs.getInt("slider_id");
                 String description = rs.getString("description");
+                 String title=rs.getString("tittle");
                 String img = rs.getString("image_url");
                 int status = rs.getInt("is_active");
-                Slider s = new Slider(id, description, img, status);
+               Slider s=new Slider(id, title, description, img, status);
                 list.add(s);
             }
 
@@ -66,10 +68,63 @@ public class SliderDao extends DBContext {
 
         return list;
     }
+    
+     public void insert(Slider s) {
+        try {
+            String sql = "insert into Sliders (description,image_url,is_active,tittle) \n"
+                    + "values\n"
+                    + "(?, ?, ?, ? )"
+                    + "  DBCC CHECKIDENT (YourTableName, RESEED, 4);";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, s.getDescription());
+            pre.setString(2, s.getImg());
+            pre.setInt(3, s.getStatus());
+            pre.setString(4, s.getTitle());
+           pre.executeUpdate();
+
+        } catch (SQLException ex) {
+
+        }
+    }
+    
 //    public static void main(String[] args) {
 //        SliderDao dao=new SliderDao();
-//        ArrayList<Slider> list=dao.getSliderPaging(2);
-//        System.out.println(list.get(0).getImg());
+//        Slider s=new Slider(5, "Woman 2018", "../slider_img/slider9.png", 0);
+//        dao.insert(s);
 //    }
+     
+     
+     public void update(Slider s) {
+        String sql = "UPDATE Sliders SET description=?, image_url=?, is_active=?, tittle=? WHERE sluder_id=? ";
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            
+            pre.setString(1, s.getDescription());
+            pre.setString(2, s.getImg());
+          
+            pre.setInt(3, s.getStatus());
+            pre.setString(4, s.getTitle());
+            pre.setInt(5, s.getId());
+           
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+     public Slider getSliderById(int id)
+     {
+         Slider s=null;
+         ArrayList<Slider> slist=getAllSliders();
+         for(int i=0;i<slist.size();i++)
+         {
+             if(slist.get(i).getId()==id)
+             {
+                 s=slist.get(i);
+                 break;
+             }
+         }
+         return s;
+         
+     }
+     
   
 }
