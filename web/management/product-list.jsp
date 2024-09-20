@@ -193,13 +193,13 @@
 
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white home-link active" aria-current="page">
+                            <a href="#" class="nav-link text-white home-link" aria-current="page">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white product-link">
+                            <a href="#" class="nav-link text-white product-link active">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                                 Products
                             </a>
@@ -295,11 +295,11 @@
                                         <%
                                             if(p.isIs_active()==true) {   
                                         %>
-                                        <p style="color: green">Available</p>
+                                        <p style="color: green">Active</p>
                                         <%
                                             } else {
                                         %>
-                                        <p style="color: Red">Out of Stock</p> 
+                                        <p style="color: Red">Inactive</p> 
                                         <% 
                                             }
                                         %>   
@@ -311,7 +311,7 @@
 
                                     <td>
                                         <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="../productdetails?pid=<%= p.getProduct_id()%>"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                         </div>
                                     </td>
                                     <%
@@ -357,7 +357,7 @@
                                         if (cur_page < total_page) {
                                     %>
                                     <li class="page-item">
-                                        <a class="page-link" href="../productpaging?p=<%= (cur_page + 1) %>" aria-label="Next">
+                                        <a class="page-link" href="../productpaging?p=<%= (cur_page) %>" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>

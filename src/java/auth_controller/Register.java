@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.Role;
 import model.User;
@@ -19,8 +20,8 @@ import utils.Email;
  *
  * @author Admin
  */
-@WebServlet(name = "AccountServlet", urlPatterns = {"/account", "/account/login", "/account/register", "/account/verify"})
-public class AccountServlet extends HttpServlet {
+@WebServlet(name = "Register", urlPatterns = {"/register"})
+public class Register extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -34,23 +35,7 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
-
-        switch (action) {
-            case "/account":
-
-                break;
-            case "/account/login":
-                request.getRequestDispatcher("/account/login.jsp").forward(request, response);
-                break;
-            case "/account/register":
-                request.getRequestDispatcher("/account/register.jsp").forward(request, response);
-                break;
-            case "/account/logout":
-
-                break;
-
-        }
+        request.getRequestDispatcher("/account/register.jsp").forward(request, response);
 
     }
 
@@ -65,30 +50,9 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
 
-        switch (action) {
-            case "/account":
-
-                break;
-            case "/account/login":
-
-                break;
-            case "/account/register":
-                postRegister(request, response);
-                break;
-            case "/account/logout":
-
-                break;
-            case "/account/verify":
-
-                break;
-
-        }
-    }
-
-    private void postRegister(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        HttpSession session = request.getSession(true);
+        
         UserDAO userDAO = new UserDAO();
         Email mail = new Email();
 
@@ -141,22 +105,11 @@ public class AccountServlet extends HttpServlet {
             request.getRequestDispatcher("/account/register.jsp").forward(request, response);
             return;
         }
+        
+        session.setAttribute("registeredAccount", newUser);
 
-        //send mail to user to activate account
-        boolean checkSendMail = mail.sendRegisterEmail(newUser);
-
-//        fail to send email
-        if (!checkSendMail) {
-            String errorMessage = "Cannot sent email!";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/account/register.jsp").forward(request, response);
-            return;
-        }
-
-        String successMessage = "Register successfully, click on the link in your email to activate account!";
-        request.setAttribute("success", successMessage);
-
-        request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+        
+        response.sendRedirect(request.getContextPath()+"/verify");
 
     }
 

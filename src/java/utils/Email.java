@@ -53,7 +53,7 @@ public class Email {
             mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             mess.setSubject("Verification");
-            mess.setText("Verification link: ");
+            mess.setText("Verification link: " + user.getVerification_code());
 
             Transport.send(mess);
             test = true;
