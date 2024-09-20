@@ -15,7 +15,7 @@ public class ProductDAO extends DBContext {
 
     public Product getProductById(int pid) {
 
-        Product p = null;
+        Product p = new Product();
         String sql = "select * from Products where product_id=" + pid;
 
         try {
