@@ -9,6 +9,9 @@
 <%@page import="model.Product"%>
 <%@page import="model.Post"%>
 <%@page import="java.util.*" %>
+<%@page import="java.text.DecimalFormatSymbols"%>
+<%@page import="java.text.NumberFormat"%>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -33,8 +36,8 @@
         <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
-        
-        
+
+
     </head>
 
     <body>
@@ -84,7 +87,7 @@
                                 <div class="header__top__links">
                                     <a href="#">Sign in</a>
                                     <a href="#">Sign up</a>                      
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -121,15 +124,15 @@
                         <div class="header__nav__option row" style="padding: 22px 0;">
                             <div class="col-md-10">
                                 <form class="d-flex" role="search" action="../homeproductsearch">
-                                <input class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
-                            </form>
-                            
+                                    <input class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
+                                    <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
+                                </form>
+
                             </div>
                             <div style="display: flex; align-items: center;" class="col-md-2"><a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a></div>
-                           
-                            
-                            
+
+
+
                         </div>
                     </div>
                 </div>
@@ -154,13 +157,13 @@
                                     <h2 style="color: white;"><%=slider.getTitle()%></h2>
                                     <p style="color: white;"><%=slider.getDescription()%></p>
                                     <a href="../homeproduct" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <%
                  }
                 }
@@ -175,6 +178,13 @@
         <%
         String tab = session.getAttribute("tabfilter")+"";
         List<Product> pList = (List<Product>)session.getAttribute("hpList");
+        Locale locale = new Locale("vi", "VN");
+        Currency currency = Currency.getInstance("VND");
+
+        DecimalFormatSymbols df = DecimalFormatSymbols.getInstance(locale);
+        df.setCurrency(currency);
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+        numberFormat.setCurrency(currency);
         
         %>
         <section class="product spad" style="
@@ -191,17 +201,25 @@
                 </div>
 
                 <div class="row product__filter">
-                    
-                <%
-                for (Product product : pList) {
-                int price =product.getPrice() - product.getPrice()*product.getDiscount()/100;
-                if(product.isIs_active()){
-                %>
+
+                    <%
+                    for (Product product : pList) {
+                    int price =product.getPrice() - product.getPrice()*product.getDiscount()/100;
+                    String cmoney = numberFormat.format(price);
+                    if(product.isIs_active()){
+                    %>
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+
+
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="../<%=product.getThumbnail()%>">                        
+                                <%
+                                if(product.getDiscount()!=0){
+                                %>
+                                <span style="background-color: black; color: white;" class="label">-<%=product.getDiscount()%>%</span>
+                                <% }%>
                                 <ul class="product__hover">
-                                    
+
                                     <li><a href="../hproductdetail?proid=<%=product.getProduct_id()%>"><img src="img/icon/search.png" alt=""></a></li>
                                 </ul>
                             </div>
@@ -210,7 +228,7 @@
                                 <a href="#" class="add-cart">+ Add To Cart</a>
                                 <div class="rating">
                                     <%if(product.getRated_star()<=0){
-                                        %>
+                                    %>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -222,40 +240,35 @@
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
-                                       <% } else if(product.getRated_star()<=2){  %>
+                                    <% } else if(product.getRated_star()<=2){  %>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
-                                       <%} else if(product.getRated_star()<=3){%>
+                                    <%} else if(product.getRated_star()<=3){%>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
-                                        <%} else if(product.getRated_star()<=4){%>
+                                    <%} else if(product.getRated_star()<=4){%>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
-                                        <%} else { %>
+                                    <%} else { %>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
-                                        <%}%>
+                                    <%}%>
                                 </div>
-                                        <h5>₫<%=price%> 
-                                            <%
-                                            if(product.getDiscount()!=0){
-                                            %>
-                                            <span>-<%=product.getDiscount()%>%</span>
-                                         <% }
-                                            %>
-                                        </h5>
+                                <h5><%=cmoney%> 
+
+                                </h5>
                                 <div class="product__color__select">
                                     <label for="pc-1">
                                         <input type="radio" id="pc-1">
@@ -270,13 +283,13 @@
                             </div>
                         </div>
                     </div>
-                
-                <%
+
+                    <%
+                        }
                     }
-                }
-                %>
-                    
-                    
+                    %>
+
+
                 </div>
             </div>
         </section>
@@ -294,13 +307,13 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <%
                 List<Post> poList = (List<Post>)session.getAttribute("poList");
                  int i = 0;
                 %>
                 <div class="row">
-                    
+
                     <%
                     for (Post post : poList) {
                     if(post.getIs_active()==1){
@@ -315,15 +328,15 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <%
                     i++;
                     if(i==3) break;
                     }
                    }
                     %>
-                    
-                    
+
+
                 </div>
             </div>
         </section>

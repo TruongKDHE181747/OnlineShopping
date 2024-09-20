@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import model.Brand;
@@ -54,6 +55,7 @@ public class HomeProduct extends HttpServlet {
         BrandDAO bdao = new BrandDAO();
         SizeDAO sdao = new SizeDAO();
         PriceDAO prdao = new PriceDAO();
+        
         
         
         List<Product> apList = pdao.getAllProduct();
@@ -116,6 +118,7 @@ public class HomeProduct extends HttpServlet {
         return max;
     }
 
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.

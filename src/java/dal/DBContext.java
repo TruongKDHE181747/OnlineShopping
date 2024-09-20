@@ -11,6 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.*;
+
 
 public class DBContext {
 
@@ -53,5 +57,16 @@ public class DBContext {
 //        DBContext db = new DBContext();
 //    }
 
-
+//public static void main(String[] args) {
+//        double price = 2000000;
+//        Locale locale = new Locale("vi", "VN");
+//        Currency currency = Currency.getInstance("VND");
+//
+//        DecimalFormatSymbols df = DecimalFormatSymbols.getInstance(locale);
+//        df.setCurrency(currency);
+//        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+//        numberFormat.setCurrency(currency);
+//        String cmoney = numberFormat.format(price);
+//        
+//    }
 }

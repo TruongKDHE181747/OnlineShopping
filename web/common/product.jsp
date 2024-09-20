@@ -11,6 +11,8 @@
 <%@page import="model.Price"%>
 <%@page import="model.ProductCategory"%>
 <%@page import="java.util.*" %>
+<%@page import="java.text.DecimalFormatSymbols" %>
+<%@page import="java.text.NumberFormat" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -328,6 +330,13 @@
                     int pages = Integer.parseInt(session.getAttribute("ppage")+"");
                     int curpage = Integer.parseInt(session.getAttribute("curpage")+"");
                     int totalProduct = Integer.parseInt(session.getAttribute("totalProduct")+"");
+                    Locale locale = new Locale("vi", "VN");
+                    Currency currency = Currency.getInstance("VND");
+
+                    DecimalFormatSymbols df = DecimalFormatSymbols.getInstance(locale);
+                    df.setCurrency(currency);
+                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+                    numberFormat.setCurrency(currency);
                 %>
                 
                 <div class="col-lg-9">
@@ -367,12 +376,18 @@
                     
                     for (Product product : pList) {
                     int price =product.getPrice() - product.getPrice()*product.getDiscount()/100;
+                    String cmoney = numberFormat.format(price);
                     if(product.isIs_active()){
 
                     %>
                      <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="../<%=product.getThumbnail()%>">
+                                    <%
+                                if(product.getDiscount()!=0){
+                                %>
+                                <span style="background-color: black; color: white;" class="label">-<%=product.getDiscount()%>%</span>
+                                <% }%>
                                     <ul class="product__hover">
                                         <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                         <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
@@ -423,13 +438,7 @@
                                     <i class="fa fa-star"></i>
                                         <%}%>
                                 </div>
-                                        <h5>₫<%=price%> 
-                                            <%
-                                            if(product.getDiscount()!=0){
-                                            %>
-                                            <span>-<%=product.getDiscount()%>%</span>
-                                         <% }
-                                            %>
+                                        <h5><%=cmoney%> 
                                         </h5>
                                     <div class="product__color__select">
                                         <label for="pc-4">

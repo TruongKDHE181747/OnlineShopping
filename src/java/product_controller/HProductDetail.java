@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Product;
 
 /**
  *
@@ -36,6 +37,7 @@ public class HProductDetail extends HttpServlet {
         ProductDAO pdao = new ProductDAO();
         
         String proid = request.getParameter("proid");
+        
         response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
     } 
 
