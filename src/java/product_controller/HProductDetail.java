@@ -14,16 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import model.Product;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HomeProductSearch", urlPatterns={"/homeproductsearch"})
-public class HomeProductSearch extends HttpServlet {
+@WebServlet(name="HProductDetail", urlPatterns={"/hproductdetail"})
+public class HProductDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,52 +32,12 @@ public class HomeProductSearch extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         HttpSession session = request.getSession();
         ProductDAO pdao = new ProductDAO();
-        int cpage = 0;
         
-        String name = request.getParameter("pname");
-        
-        if(name.length()==0) {
-            response.sendRedirect(request.getContextPath()+"/homeproduct");
-        } else {
-        List<Product> apList = pdao.getAllProductByName(name);
-        
-        int totalProduct = apList.size();
-        int npage = apList.size()/9 + 1;    
-        List<Product> p9List = select9Products(apList, cpage);
-        
-        
-        session.setAttribute("sql", null);
-        session.setAttribute("fcid", null);
-        session.setAttribute("fbid", null);
-        session.setAttribute("fsid", null);
-        session.setAttribute("fpid", null);
-        session.setAttribute("apList", apList);  
-        session.setAttribute("ppList", p9List);  
-        session.setAttribute("pname", name);
-        session.setAttribute("ppage", npage);
-        session.setAttribute("curpage", cpage);
-        session.setAttribute("totalProduct", totalProduct);
-        response.sendRedirect(request.getContextPath()+"/common/product.jsp");
-        }
-        
-        
+        String proid = request.getParameter("proid");
+        response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
     } 
-    
-    public static List<Product> select9Products( List<Product> pList, int pageNum){
-        List<Product> top9List = new ArrayList<>();
-        for(int i = pageNum*9;i<=pageNum*9+8;i++){
-            if(i>=pList.size()) {
-                break;
-            } else {
-                top9List.add(pList.get(i));
-            }
-        }
-        
-        return top9List;
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

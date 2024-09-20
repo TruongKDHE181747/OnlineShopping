@@ -33,6 +33,8 @@
         <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
+        
+        
     </head>
 
     <body>
@@ -144,14 +146,13 @@
                 for (Slider slider : sList) {
                     if(slider.getStatus()==1){
                 %>
-                <div class="hero__items set-bg" data-setbg="<%=slider.getImg()%>">
+                <div class="hero__items set-bg" data-setbg="../<%=slider.getImg()%>">
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-5 col-lg-7 col-md-8">
                                 <div class="hero__text">                        
-                                    <h2 style="color: white;"><%=slider.getDescription()%></h2>
-                                    <p style="color: white;">A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                        commitment to exceptional quality.</p>
+                                    <h2 style="color: white;"><%=slider.getTitle()%></h2>
+                                    <p style="color: white;"><%=slider.getDescription()%></p>
                                     <a href="../homeproduct" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                     
                                 </div>
@@ -201,7 +202,7 @@
                             <div class="product__item__pic set-bg" data-setbg="../<%=product.getThumbnail()%>">                        
                                 <ul class="product__hover">
                                     
-                                    <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                    <li><a href="../hproductdetail?proid=<%=product.getProduct_id()%>"><img src="img/icon/search.png" alt=""></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
