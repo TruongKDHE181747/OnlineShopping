@@ -1,0 +1,10 @@
+<script src="./common/js/jquery-3.3.1.min.js"></script>
+<script src="./common/js/bootstrap.min.js"></script>
+<script src="./common/js/jquery.nice-select.min.js"></script>
+<script src="./common/js/jquery.nicescroll.min.js"></script>
+<script src="./common/js/jquery.magnific-popup.min.js"></script>
+<script src="./common/js/jquery.countdown.min.js"></script>
+<script src="./common/js/jquery.slicknav.js"></script>
+<script src="./common/js/mixitup.min.js"></script>
+<script src="./common/js/owl.carousel.min.js"></script>
+<script src="./common/js/main.js"></script>

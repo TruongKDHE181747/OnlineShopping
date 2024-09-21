@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>OTP Input</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+        <%@include file="../common/css.jsp" %>
         <style>
             .otp-input {
                 width: 50px;
@@ -17,14 +18,15 @@
         </style>
     </head>
     <body>
-        <div class="container text-center mt-5">
-            <h2>Enter 6-Digit OTP</h2>
+        <%@include file="../common/header.jsp" %>
+        <div style="margin: 50px auto" class="container text-center mt-5">
+            <h2 style="margin: 30px 0">Enter 6-Digit OTP</h2>
             <c:if test="${error != null}">
-                <div class="alert alert-danger">
+                <div style="width: 350px; margin: 10px auto" class="alert alert-danger">
                     ${error}
                 </div>
             </c:if>
-            <form action="verify" method="POST" id="otpForm">
+            <form action="verify" method="POST" id="otpForm" style="margin: 50px 0;height: 200px">
                 <div class="d-flex justify-content-center">
                     <input type="text" class="form-control otp-input" maxlength="1" required>
                     <input type="text" class="form-control otp-input" maxlength="1" required>
@@ -43,7 +45,11 @@
             </form>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <%@include file="../common/footer.jsp" %>
+        <!-- Bootstrap JS with Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+        <%@include file="../common/js.jsp" %>
+        
         <script>
             const otpInputs = document.querySelectorAll('.otp-input');
             otpInputs.forEach((input, index) => {
