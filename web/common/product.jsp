@@ -303,7 +303,9 @@
                                                 for (Size size : sList) {
 
                                                 %>                       
-                                                <a style="color: <%=sid.equals(size.getSize_id()+"")?"black":"#b7b7b7"%>" href="../productfilter?sid=<%=size.getSize_id()%>"><%=size.getSize_name()%></a>
+                                                <a style="<%=sid.equals(size.getSize_id()+"")?
+                                                "background-color: black; color: white;":
+                                                "color: #b7b7b7;"%>" href="../productfilter?sid=<%=size.getSize_id()%>"><%=size.getSize_name()%></a>
                                                 <%
                                                 }
                                                 %>

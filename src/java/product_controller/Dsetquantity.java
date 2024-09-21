@@ -5,10 +5,6 @@
 
 package product_controller;
 
-import dal.ProductDAO;
-import dal.ProductFeedbackDAO;
-import dal.ProductImageDAO;
-import dal.ProductSizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,17 +14,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Product;
-import model.ProductFeedback;
-import model.ProductImg;
 import model.ProductSize;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HProductDetail", urlPatterns={"/hproductdetail"})
-public class HProductDetail extends HttpServlet {
+@WebServlet(name="Dsetquantity", urlPatterns={"/dsetquantity"})
+public class Dsetquantity extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -41,34 +34,18 @@ public class HProductDetail extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        ProductDAO pdao = new ProductDAO();
-        ProductImageDAO pidao = new ProductImageDAO();
-        ProductFeedbackDAO pfdao = new ProductFeedbackDAO();
-        ProductSizeDAO psdao = new ProductSizeDAO();
-        
-        String proid = request.getParameter("proid");
-        Product product = pdao.getProductById(Integer.parseInt(proid));
-        List<ProductImg> piList = pidao.getAllProductImgById(proid);
-        List<ProductFeedback> pfList = pfdao.getAllFeetBackByProductId(proid);
-        List<ProductSize> psList = psdao.getAllProductSizeById(proid);
-        int dsize = psList.get(0).getSize_id();
-        int quantity = psList.get(0).getQuantity();
-        
-        session.setAttribute("dsize", dsize);
-        session.setAttribute("dquantity", quantity);
-        session.setAttribute("dproduct", product);
-        session.setAttribute("dpiList", piList);
-        session.setAttribute("dpfList", pfList);
-        session.setAttribute("dpsList", psList);
-        
-       
-        
-        
+        int sid = Integer.parseInt(request.getParameter("sid"));
+        List<ProductSize> psList = (List<ProductSize>)session.getAttribute("dpsList");
+        int dquantity = 0;
+        for (ProductSize productSize : psList) {
+            if(productSize.getSize_id()==sid){
+                dquantity = productSize.getQuantity();
+            }
+        }
+        session.setAttribute("dsize", sid);
+        session.setAttribute("dquantity", dquantity);
         response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
         
-         
-       
-        //Product product1 = (Product)session.getAttribute("dproduct");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
