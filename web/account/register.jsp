@@ -5,24 +5,20 @@
 <html lang="en">
 
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Register</title>
-        <!-- Bootstrap CSS -->
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-        <!-- Google Fonts Roboto -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+
+        <%@include file="../common/css.jsp" %>
 
         <link rel="stylesheet" href="./account/css/registerstyle.css"/>
     </head>
 
     <body>
-
+        <%@include file="../common/header.jsp" %>
         <!-- Start your project here -->
-        <section class="full-height">
+        <section style="margin: 40px 0" class="full-height">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-10 col-lg-8">
@@ -144,7 +140,7 @@
                                         </a>
                                     </div>
                                 </form>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -153,8 +149,10 @@
         </section>
         <!-- End your project here -->
 
+        <%@include file="../common/footer.jsp" %>
         <!-- Bootstrap JS with Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+        <%@include file="../common/js.jsp" %>
     </body>
 
 </html>

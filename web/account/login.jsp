@@ -6,21 +6,20 @@
 <html lang="en">
 
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Login</title>
-        <!-- Bootstrap CSS -->
+
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-        <!-- Google Fonts Roboto -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-        
-        <link rel="stylesheet" href="./account/css/loginstyle.css"/>
+
+        <%@include file="../common/css.jsp" %>
+
+
     </head>
 
     <body>
+        <%@include file="../common/header.jsp" %>
+
         <!-- Start your project here -->
         <section class="vh-100">
             <div class="container">
@@ -69,13 +68,13 @@
                                     </p>
 
                                     <!-- Divider -->
-                                    <div class="divider my-4">
+                                    <div  class="d-flex divider my-4 justify-content-center">
                                         <p class="text-muted">OR</p>
                                     </div>
 
                                     <!-- Centered Google login button -->
                                     <div class="d-grid">
-                                        <a class="btn btn-google btn-lg text-white" href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/OnlineShopping/loginGoogle&response_type=code&client_id=450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com&approval_prompt=force" role="button">
+                                        <a style="display: block" class="btn btn-lg btn-danger" href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/OnlineShopping/loginGoogle&response_type=code&client_id=450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com&approval_prompt=force" >
                                             <i class="fab fa-google me-2"></i>Continue with Google
                                         </a>
                                     </div>
@@ -88,8 +87,11 @@
         </section>
         <!-- End your project here -->
 
+        <%@include file="../common/footer.jsp" %>
         <!-- Bootstrap JS with Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+        <%@include file="../common/js.jsp" %>
+
     </body>
 
 </html>

@@ -64,6 +64,47 @@ public class Email {
 
         return test;
     }
+    
+    public boolean sendResetPassEmail(User user) {
+        boolean test = false;
+
+        String toEmail = user.getEmail();
+        String fromEmail = Constants.SENT_EMAIL;
+        String password = Constants.EMAIL_PASSWORD;
+
+        Properties pr = configEmail(new Properties());
+
+        Session session = Session.getInstance(pr, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+
+        });
+        //set email message detail
+        Message mess = new MimeMessage(session);
+        try {
+            
+            mess.setHeader("Content-Type", "text/html; charset=UTF-8");
+
+            mess.setFrom(new InternetAddress(fromEmail));
+
+            mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+
+            mess.setSubject("Reset Password");
+            
+            String resetLink = "<a href='http://localhost:9999/OnlineShopping/resetPassword?userId="+user.getUser_id()+"' >Click me</a>";
+            mess.setText("Reset password link: " + resetLink);
+
+            Transport.send(mess);
+            test = true;
+
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+
+        return test;
+    }
 
     private Properties configEmail(Properties pr) {
         //host email smtp server details
