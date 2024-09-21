@@ -2,62 +2,64 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package auth_controller;
 
-package slider_controller;
-
-import dal.PostDAO;
-import dal.ProductDAO;
-import dal.SliderDao;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Post;
-import model.Product;
-import model.Slider;
+import java.io.IOException;
+import utils.Constants;
 
 /**
  *
- * @author Dell
+ * @author Admin
  */
-@WebServlet(name="HomeSlider", urlPatterns={"/homeslider"})
-public class HomeSlider extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+@WebServlet(name = "Logout", urlPatterns = {"/logout"})
+public class Logout extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        SliderDao sld = new SliderDao();
-        ProductDAO pdao = new ProductDAO();
-        PostDAO podao = new PostDAO();
-        List<Slider> sList = sld.getAllSliders();  
-        List<Product> pList = pdao.getHotProduct();
-        List<Post> poList = podao.getNewPost();
-        String tabfilter = "hot";
-        session.setAttribute("hsList", sList);
-        session.setAttribute("hpList", pList);
-        session.setAttribute("poList", poList);
-        session.setAttribute("tabfilter", tabfilter);
-        response.sendRedirect(request.getContextPath()+"/common/home.jsp");
-        
-         
-        
-    } 
+
+        HttpSession session = request.getSession(false);
+
+        session.removeAttribute("account");
+
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {               
+                if(Constants.COOKIE_REMEMBER.equals(cookie.getName())){
+                    //remove cookie
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    break;
+                }
+                
+            }
+        }
+
+        response.sendRedirect(request.getContextPath() + "/homeslider");
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -65,12 +67,13 @@ public class HomeSlider extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -78,12 +81,13 @@ public class HomeSlider extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

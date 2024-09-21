@@ -15,8 +15,120 @@ import model.Role;
 import model.User;
 
 public class UserDAO extends DBContext {
-
     
+    public boolean deleteVerifyCode(int userId){
+        String sql = """
+                     UPDATE [dbo].[Users]
+                        SET [verification_code] = null
+                      WHERE [user_id] = ?""";
+        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userId);
+            int exe = ps.executeUpdate();
+            if (exe > 0) {
+                return true;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+
+    public boolean updateGoogleId(String googleId, String email) {
+
+        String sql = """
+                     UPDATE [dbo].[Users]
+                        SET [google_id] = ?
+                      WHERE [email] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, googleId);
+            ps.setString(2, email);
+            int exe = ps.executeUpdate();
+            if (exe > 0) {
+                return true;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public User loginGoogle(String googleId) {
+        RoleDAO roleDAO = new RoleDAO();
+        String sql = "select * from Users where google_id = ?";
+        User user = null;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, googleId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int user_id = rs.getInt(1);
+                String username = rs.getString(2);
+                String password = rs.getString(3);
+                String first_name = rs.getString(4);
+                String last_name = rs.getString(5);
+                String phone = rs.getString(6);
+                String email = rs.getString(7);
+                boolean gender = rs.getBoolean(8);
+                String dob = rs.getString(9);
+                String verification_code = rs.getString(10);
+                String reset_password_code = rs.getString(11);
+                String google_id = rs.getString(12);
+                String profile_picture_url = rs.getString(13);
+                boolean is_active = rs.getBoolean(14);
+                boolean is_banned = rs.getBoolean(15);
+                Role role = roleDAO.getRoleById(rs.getInt(16));
+                user = new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+
+    public User login(String username, String password) {
+
+        String sql = "select * from Users where username = ? and password = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return getUserByUsername(username);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public boolean checkExistGoogleId(String google_id) {
+
+        ResultSet rs = getData("select * from Users where google_id = '" + google_id + "'");
+
+        try {
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+
+    }
+
     public boolean activateUser(String username) {
         boolean check = false;
         String sql = """
@@ -43,8 +155,8 @@ public class UserDAO extends DBContext {
         return check;
     }
 
-    public boolean insertUser(User user) {
-        boolean check = false;
+    public Integer insertUser(User user) {
+        Integer userId = null;
         String sql = """
                      INSERT INTO [dbo].[Users]
                                 ([username]
@@ -66,7 +178,7 @@ public class UserDAO extends DBContext {
                                 (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""";
 
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFirst_name());
@@ -83,16 +195,18 @@ public class UserDAO extends DBContext {
             ps.setBoolean(14, user.isIs_banned());
             ps.setInt(15, user.getRole().getRole_id());
 
-            int exe = ps.executeUpdate();
-            if (exe > 0) {
-                check = true;
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                userId = rs.getInt(1);
             }
+
             ps.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return check;
+        return userId;
     }
 
     public boolean checkExistUsername(String username) {
@@ -130,6 +244,38 @@ public class UserDAO extends DBContext {
     public User getUserById(int id) {
         RoleDAO roleDAO = new RoleDAO();
         ResultSet rs = getData("select * from Users where user_id = " + id);
+        User user = null;
+        try {
+            if (rs.next()) {
+                int user_id = rs.getInt(1);
+                String username = rs.getString(2);
+                String password = rs.getString(3);
+                String first_name = rs.getString(4);
+                String last_name = rs.getString(5);
+                String phone = rs.getString(6);
+                String email = rs.getString(7);
+                boolean gender = rs.getBoolean(8);
+                String dob = rs.getString(9);
+                String verification_code = rs.getString(10);
+                String reset_password_code = rs.getString(11);
+                String google_id = rs.getString(12);
+                String profile_picture_url = rs.getString(13);
+                boolean is_active = rs.getBoolean(14);
+                boolean is_banned = rs.getBoolean(15);
+                Role role = roleDAO.getRoleById(rs.getInt(16));
+                user = new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+
+    }
+
+    public User getUserByUsername(String uname) {
+        RoleDAO roleDAO = new RoleDAO();
+        ResultSet rs = getData("select * from Users where username = '" + uname + "'");
         User user = null;
         try {
             if (rs.next()) {

@@ -70,23 +70,17 @@ public class Register extends HttpServlet {
         boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
 
         if (checkExistUsername) {
-            String errorMessage = "Username is existed!";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+            sendErrorMessage("Username is existed!", request, response);
             return;
         }
 
         if (checkExistEmail) {
-            String errorMessage = "Email is existed!";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+            sendErrorMessage("Email is existed!", request, response);
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            String errorMessage = "Password and Confirm password are not matched!";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+            sendErrorMessage("Password and Confirm password are not matched!", request, response);
             return;
         }
 
@@ -97,20 +91,22 @@ public class Register extends HttpServlet {
         User newUser = new User(username, password, firstname, lastname, phone, userEmail, gender, dob, verificationCode, null, null, null, false, false, new Role(5));
 
 //        insert to database
-        boolean checkInsertUser = userDAO.insertUser(newUser);
+        Integer userId = userDAO.insertUser(newUser);
 
-        if (!checkInsertUser) {
-            String errorMessage = "Something went wrong!";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+        if (userId == null) {
+            sendErrorMessage("Register fail!", request, response);
             return;
         }
         
-        session.setAttribute("registeredAccount", newUser);
+        //session.setAttribute("activateAccount", userId);
 
-        
-        response.sendRedirect(request.getContextPath()+"/verify");
+        request.getRequestDispatcher("/verify?userId="+userId).forward(request, response);
 
+    }
+    
+    private void sendErrorMessage(String error, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("error", error);
+        request.getRequestDispatcher("/account/register.jsp").forward(request, response);
     }
 
 }
