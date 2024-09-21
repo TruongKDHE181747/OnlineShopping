@@ -12,9 +12,9 @@ public class Constants {
     
     public static final String EMAIL_PASSWORD = "afux tpky avpr vqpa";
 
-    public static final String GOOGLE_CLIENT_ID = "";
+    public static final String GOOGLE_CLIENT_ID = "450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com";
 
-    public static final String GOOGLE_CLIENT_SECRET = "";
+    public static final String GOOGLE_CLIENT_SECRET = "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";
 
     public static final String GOOGLE_REDIRECT_URI = "http://localhost:9999/OnlineShopping/loginGoogle";
 
