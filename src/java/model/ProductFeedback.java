@@ -11,6 +11,7 @@ package model;
 public class ProductFeedback {
     int feedback_id, customer_id, order_id,product_id;
     String review;
+    String thumbnail;
     int rating, is_active;
 
     public ProductFeedback() {
@@ -25,6 +26,27 @@ public class ProductFeedback {
         this.rating = rating;
         this.is_active = is_active;
     }
+
+    public ProductFeedback(int feedback_id, int customer_id, int order_id, int product_id, String review, String thumbnail, int rating, int is_active) {
+        this.feedback_id = feedback_id;
+        this.customer_id = customer_id;
+        this.order_id = order_id;
+        this.product_id = product_id;
+        this.review = review;
+        this.thumbnail = thumbnail;
+        this.rating = rating;
+        this.is_active = is_active;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+    
+    
 
     public int getFeedback_id() {
         return feedback_id;

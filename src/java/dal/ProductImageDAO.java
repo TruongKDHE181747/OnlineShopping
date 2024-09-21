@@ -21,7 +21,7 @@ import model.ProductImg;
 public class ProductImageDAO extends DBContext{
     public List<ProductImg> getAllProductImgById(String id) {
         List<ProductImg> pList = new ArrayList<>();
-        String sql = "select * from Product_Images where product_id = "+id;
+        String sql = "select top 4 * from Product_Images where is_active = 1 and product_id = "+id;
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);

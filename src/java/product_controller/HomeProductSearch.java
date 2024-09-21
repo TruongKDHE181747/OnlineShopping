@@ -5,7 +5,11 @@
 
 package product_controller;
 
+import dal.BrandDAO;
+import dal.PriceDAO;
+import dal.ProductCategoryDAO;
 import dal.ProductDAO;
+import dal.SizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,7 +20,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import model.Brand;
+import model.Price;
 import model.Product;
+import model.ProductCategory;
+import model.Size;
 
 /**
  *
@@ -63,6 +71,23 @@ public class HomeProductSearch extends HttpServlet {
         session.setAttribute("ppage", npage);
         session.setAttribute("curpage", cpage);
         session.setAttribute("totalProduct", totalProduct);
+        
+        
+        //Set up for filter:
+        ProductCategoryDAO pcdao = new ProductCategoryDAO();
+        BrandDAO bdao = new BrandDAO();
+        SizeDAO sdao = new SizeDAO();
+        PriceDAO prdao = new PriceDAO();
+        List<ProductCategory> pcList = pcdao.getAllProductCategory();
+        List<Brand> bList = bdao.getAllBrand();
+        List<Size> sList = sdao.getAllSize();
+        List<Price> prList = prdao.getAllPrice();
+        int max = getMaxPrice(prList);
+        session.setAttribute("maxPrice", max);
+        session.setAttribute("prList", prList);
+        session.setAttribute("bList", bList);
+        session.setAttribute("sList", sList);
+        session.setAttribute("pcList", pcList);
         response.sendRedirect(request.getContextPath()+"/common/product.jsp");
         }
         
@@ -80,6 +105,18 @@ public class HomeProductSearch extends HttpServlet {
         }
         
         return top9List;
+    }
+    
+   
+    
+    
+    public static int getMaxPrice(List<Price> pList){
+        int max = 0;
+        for (Price price : pList) {
+            if(price.getTo()>max) max = price.getTo();
+        }
+        
+        return max;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

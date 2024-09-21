@@ -32,9 +32,10 @@ public class ProductFeedbackDAO extends DBContext{
                 int order_id = rs.getInt("order_id");
                 int product_id = rs.getInt("product_id");
                 String review = rs.getString("review");
+                String thumbnail = rs.getString("thumbnail");
                 int rating = rs.getInt("rating");
                 int is_active = rs.getInt("is_active");
-                ProductFeedback pf = new ProductFeedback(feedback_id, customer_id, order_id, product_id, review, rating, is_active);
+                ProductFeedback pf = new ProductFeedback(feedback_id, customer_id, order_id, product_id, review, thumbnail, rating, is_active);
                 pList.add(pf);
                 
             }

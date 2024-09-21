@@ -5,10 +5,6 @@
 
 package product_controller;
 
-import dal.ProductDAO;
-import dal.ProductFeedbackDAO;
-import dal.ProductImageDAO;
-import dal.ProductSizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,17 +15,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import model.Product;
 import model.ProductFeedback;
-import model.ProductImg;
-import model.ProductSize;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HProductDetail", urlPatterns={"/hproductdetail"})
-public class HProductDetail extends HttpServlet {
+@WebServlet(name="FBpagination", urlPatterns={"/fbpagination"})
+public class FBpagination extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -42,44 +35,18 @@ public class HProductDetail extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        ProductDAO pdao = new ProductDAO();
-        ProductImageDAO pidao = new ProductImageDAO();
-        ProductFeedbackDAO pfdao = new ProductFeedbackDAO();
-        ProductSizeDAO psdao = new ProductSizeDAO();
-        
-        String proid = request.getParameter("proid");
-        Product product = pdao.getProductById(Integer.parseInt(proid));
-        List<ProductImg> piList = pidao.getAllProductImgById(proid);
-        List<ProductFeedback> alldpfList = pfdao.getAllFeetBackByProductId(proid);
-        List<ProductSize> psList = psdao.getAllProductSizeById(proid);
-        int dsize = psList.get(0).getSize_id();
-        int quantity = psList.get(0).getQuantity();
-        String dcontent = "pdescription";
-        int dfeedbackpage = 0;
-        List<ProductFeedback> pf2List = select2Products(alldpfList, dfeedbackpage);
-        List<Product> prlList = pdao.getAllRelatedProduct(proid);
-        
-        
+        List<ProductFeedback> alldpfList = (List<ProductFeedback>)session.getAttribute("alldpfList");
+        int cpage = Integer.parseInt(request.getParameter("cpage"));
+        List<ProductFeedback> pf2List = select2Products(alldpfList, cpage);
+        String dcontent = "pfeedback";
         session.setAttribute("dcontent", dcontent);
-        session.setAttribute("dfeedbackpage", dfeedbackpage);
-        session.setAttribute("dsize", dsize);
-        session.setAttribute("dquantity", quantity);
-        session.setAttribute("dproduct", product);
-        session.setAttribute("dpiList", piList);
         session.setAttribute("pf2List", pf2List);
-        session.setAttribute("alldpfList", alldpfList);
-        session.setAttribute("dpsList", psList);
-        session.setAttribute("prlList", prlList);
-       
-        
-        
+        session.setAttribute("dfeedbackpage", cpage);
         response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
-        
          
-       
-        //Product product1 = (Product)session.getAttribute("dproduct");
+        
+        
     } 
-    
     
     public static List<ProductFeedback> select2Products( List<ProductFeedback> pList, int pageNum){
         List<ProductFeedback> top2List = new ArrayList<>();
