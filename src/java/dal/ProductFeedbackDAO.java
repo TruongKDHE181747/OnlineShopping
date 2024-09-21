@@ -12,27 +12,30 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Product;
-import model.ProductImg;
+import model.ProductFeedback;
 
 /**
  *
  * @author Dell
  */
-public class ProductImageDAO extends DBContext{
-    public List<ProductImg> getAllProductImgById(String id) {
-        List<ProductImg> pList = new ArrayList<>();
-        String sql = "select * from Product_Images where product_id = "+id;
+public class ProductFeedbackDAO extends DBContext{
+    public List<ProductFeedback> getAllFeetBackByProductId(String id) {
+        List<ProductFeedback> pList = new ArrayList<>();
+        String sql = "select * from Feedbacks where product_id = "+id+" and is_active = 1;";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                int product_image_id = rs.getInt("product_image_id");
+                int feedback_id = rs.getInt("feedback_id");
+                int customer_id = rs.getInt("customer_id");
+                int order_id = rs.getInt("order_id");
                 int product_id = rs.getInt("product_id");
-                String image_url = rs.getString("image_url");
+                String review = rs.getString("review");
+                int rating = rs.getInt("rating");
                 int is_active = rs.getInt("is_active");
-                ProductImg pi = new ProductImg(product_image_id, product_id, image_url, is_active);
-                pList.add(pi);
+                ProductFeedback pf = new ProductFeedback(feedback_id, customer_id, order_id, product_id, review, rating, is_active);
+                pList.add(pf);
                 
             }
         } catch (SQLException ex) {
@@ -40,6 +43,4 @@ public class ProductImageDAO extends DBContext{
         }
         return pList;
     }
-    
-   
 }

@@ -6,6 +6,8 @@
 package product_controller;
 
 import dal.ProductDAO;
+import dal.ProductFeedbackDAO;
+import dal.ProductImageDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,7 +16,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Product;
+import model.ProductFeedback;
+import model.ProductImg;
 
 /**
  *
@@ -35,13 +40,21 @@ public class HProductDetail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         ProductDAO pdao = new ProductDAO();
+        ProductImageDAO pidao = new ProductImageDAO();
+        ProductFeedbackDAO pfdao = new ProductFeedbackDAO();
+        
         
         String proid = request.getParameter("proid");
         Product product = pdao.getProductById(Integer.parseInt(proid));
+        List<ProductImg> piList = pidao.getAllProductImgById(proid);
+        List<ProductFeedback> pfList = pfdao.getAllFeetBackByProductId(proid);
         session.setAttribute("dproduct", product);
-        
+        session.setAttribute("dpiList", piList);
+        session.setAttribute("dpfList", pfList);
         response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
         
+         
+       
         //Product product1 = (Product)session.getAttribute("dproduct");
     } 
 
