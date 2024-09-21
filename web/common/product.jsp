@@ -273,13 +273,13 @@
                                             <form action="../productfilter">
                                                <div class="row" style="margin-top: 14px;">
                                                 <div class="col-md-5">
-                                                    <input value="<%=price1%>" name="price1" type="number" min="0" required="" placeholder="From" style="width: 100%;"> 
+                                                    <input value="<%=price1%>" name="price1" type="number" min="0" max="1000000000" required="" placeholder="From" style="width: 100%;"> 
                                                 </div>
                                                    <div class="col-md-2">
                                                        --
                                                    </div>
                                                 <div class="col-md-5">
-                                                    <input value="<%=price2%>" name="price2" type="number" min="0" required="" placeholder="To" style="width: 100%;"> 
+                                                    <input value="<%=price2%>" name="price2" type="number" min="0" max="1000000000" required="" placeholder="To" style="width: 100%;"> 
                                                 </div>
                                             </div>
                                                 <button style="margin-top: 10px; 
@@ -321,7 +321,7 @@
                 if(sql1.equals("null")) sql1 = "";
                 %>
                 
-                <%=sql1%>
+                <%--<%=sql1%>--%>
                 </div>
                 
                 
