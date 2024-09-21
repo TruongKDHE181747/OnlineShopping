@@ -93,6 +93,10 @@
     <div class="container">
         <h1>Add Slider</h1>
         <form action="../addslider" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                <label for="title">Title</label>
+                <textarea id="title" name="title" rows="2" cols="50"></textarea> <!-- Tăng kích thước textarea -->
+            </div>
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea id="description" name="description" rows="6" cols="50"></textarea> <!-- Tăng kích thước textarea -->
@@ -109,7 +113,7 @@
                  
                 </div>
             </div>
-            <button type="submit">Gửi</button>
+            <button type="submit">Add</button>
         </form>
     </div>
    

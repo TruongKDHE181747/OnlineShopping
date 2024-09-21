@@ -42,12 +42,13 @@ public class AddSlider extends HttpServlet {
           String imgfileName = file.getSubmittedFileName();    
             
      
-         String img = " ../slider_img/"+imgfileName;
+         String img = "slider_img/"+imgfileName;
+         String title=request.getParameter("title");
          String description=request.getParameter("description");
          int status=   Integer.parseInt( request.getParameter("status"));
          
          SliderDao sdao=new SliderDao();
-         sdao.insert(new Slider(description, img, status));
+         sdao.insert(new Slider(title,description, img, status));
         response.sendRedirect("sliderlist");
          
     } 

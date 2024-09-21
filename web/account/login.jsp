@@ -1,5 +1,6 @@
 
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,9 +30,13 @@
                             <div class="card-body">
                                 <!-- Login Title -->
                                 <h2 class="text-center mb-4">Sign In</h2>
-
+                                <c:if test="${error != null}">
+                                    <div class="alert alert-danger" >
+                                        ${error}
+                                    </div>
+                                </c:if> 
                                 <!-- Form -->
-                                <form>
+                                <form method="post" action="./login">
                                     <!-- Username input -->
                                     <div class="form-floating mb-3">
                                         <input type="text" name="username" class="form-control" id="userInput" placeholder="Username" required>
@@ -70,7 +75,7 @@
 
                                     <!-- Centered Google login button -->
                                     <div class="d-grid">
-                                        <a class="btn btn-google btn-lg text-white" href="#!" role="button">
+                                        <a class="btn btn-google btn-lg text-white" href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/OnlineShopping/loginGoogle&response_type=code&client_id=450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com&approval_prompt=force" role="button">
                                             <i class="fab fa-google me-2"></i>Continue with Google
                                         </a>
                                     </div>

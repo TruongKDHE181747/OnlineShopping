@@ -34,17 +34,33 @@ public class SliderPaging extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-     
+      HttpSession session=request.getSession(true);
+        if(request.getParameter("p")!=null)
+        {
         int p=Integer.parseInt(request.getParameter("p"));
         SliderDao sdao=new SliderDao();
         ArrayList<Slider> slist=sdao.getSliderPaging(p);
         
-        HttpSession session=request.getSession(true);
+       
         session.setAttribute("slider", slist);
         session.setAttribute("cpage", p);
-           response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");
+           response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");}
+        else
+        {
+            int p=(int)session.getAttribute("cpage");
+            SliderDao sdao=new SliderDao();
+        ArrayList<Slider> slist=sdao.getSliderPaging(p);
         
-    } 
+       
+        session.setAttribute("slider", slist);
+        session.setAttribute("cpage", p);
+         response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");}
+
+        }
+        
+        
+        
+     
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

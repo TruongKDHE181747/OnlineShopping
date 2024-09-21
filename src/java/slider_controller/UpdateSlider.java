@@ -9,10 +9,13 @@ import dal.SliderDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import model.Slider;
 
 /**
@@ -20,6 +23,7 @@ import model.Slider;
  * @author quanpyke
  */
 @WebServlet(name="UpdateSlider", urlPatterns={"/updateslider"})
+@MultipartConfig(maxFileSize = 16177215)
 public class UpdateSlider extends HttpServlet {
    
     /** 
@@ -32,7 +36,10 @@ public class UpdateSlider extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+         HttpSession session=request.getSession(true);
+         
+         if(request.getParameter("button")!=null)
+         {
         String button=request.getParameter("button");
         int sid=Integer.parseInt(request.getParameter("sid"));
         if(button.equals("hide"))
@@ -41,10 +48,37 @@ public class UpdateSlider extends HttpServlet {
             Slider s=sdao.getSliderById(sid);
             s.setStatus(0);
             sdao.update(s);
-            
+           request.getRequestDispatcher("sliderpaging").forward(request, response);
             
             
         }
+         else if(button.equals("show"))
+        {
+            SliderDao sdao=new SliderDao();
+            Slider s=sdao.getSliderById(sid);
+            s.setStatus(1);
+            sdao.update(s);
+              
+
+           request.getRequestDispatcher("sliderpaging").forward(request, response);
+            
+            
+        }
+        else
+          {
+              
+                  
+                    SliderDao sdao=new SliderDao();
+                    Slider s=sdao.getSliderById(sid);
+                    session.setAttribute("s", s);
+                  response.sendRedirect(request.getContextPath()+"/management/updateslider.jsp");
+              
+              
+          }
+        
+         }
+         
+//         
         
         
         
@@ -75,7 +109,47 @@ public class UpdateSlider extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       
+         
+         HttpSession session=request.getSession(true);
+             
+             SliderDao sdao=new SliderDao();
+             int id=Integer.parseInt(request.getParameter("id"));
+             Slider s=sdao.getSliderById(id);
+            
+             String title=request.getParameter("title");
+             String description= request.getParameter("description");
+             String img=s.getImg();
+//             if(request.getPart("img")==null)
+//             {
+//                 img=s.getImg();
+//             }
+//             else
+//             {
+//                  Part file=request.getPart("img");
+//          String imgfileName = file.getSubmittedFileName();    
+//            
+//     
+//                 img = "slider_img/"+imgfileName;
+//             }
+//          
+try {
+             Part file=request.getPart("img");
+          String imgfileName = file.getSubmittedFileName();    
+              
+                img = "slider_img/"+imgfileName;
+             if(imgfileName.isEmpty()) throw new Exception();
+        } catch (Exception e) {
+            img=s.getImg();
+        }
+
+             s.setDescription(description);
+             s.setTitle(title);
+          
+             s.setImg(img);
+             sdao.update(s);
+             response.sendRedirect("sliderlist");
+         
     }
 
     /** 

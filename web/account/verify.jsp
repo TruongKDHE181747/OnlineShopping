@@ -5,7 +5,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>OTP Input</title>
-        <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
             .otp-input {
@@ -21,7 +20,7 @@
         <div class="container text-center mt-5">
             <h2>Enter 6-Digit OTP</h2>
             <c:if test="${error != null}">
-                <div class="alert alert-danger" >
+                <div class="alert alert-danger">
                     ${error}
                 </div>
             </c:if>
@@ -35,11 +34,15 @@
                     <input type="text" class="form-control otp-input" maxlength="1" required>
                 </div>
                 <input type="hidden" name="otp" id="otpHiddenInput">
-                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                <input type="hidden" name="userId" value="${requestScope.userId}">
+
+                <a style="width: 150px" class="btn btn-primary mt-4" href="verify?userId=${requestScope.userId}">Resend OTP</a>
+
+                <button style="width: 150px" type="submit" class="btn btn-primary mt-4">Verify</button>
+
             </form>
         </div>
 
-        <!-- Bootstrap JS and dependencies -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             const otpInputs = document.querySelectorAll('.otp-input');
@@ -60,14 +63,29 @@
             document.getElementById('otpForm').addEventListener('submit', function (event) {
                 const otpInputs = document.querySelectorAll('.otp-input');
                 let otpValue = '';
-
                 otpInputs.forEach(input => {
-                    otpValue += input.value;  // Combine the values of all inputs
+                    otpValue += input.value;
                 });
-
-                document.getElementById('otpHiddenInput').value = otpValue;  // Set the hidden input with the combined value
+                document.getElementById('otpHiddenInput').value = otpValue;
             });
 
+            document.getElementById('resendOtpButton').addEventListener('click', function () {
+                const userId = document.querySelector('input[name="userId"]').value;
+                // Make an AJAX request to resend the OTP
+                fetch('resendOtp?userId=' + userId)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('OTP resent successfully!');
+                            } else {
+                                alert('Failed to resend OTP. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred. Please try again later.');
+                        });
+            });
         </script>
     </body>
 </html>

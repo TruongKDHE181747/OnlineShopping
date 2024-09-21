@@ -36,12 +36,16 @@ public class Verify extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        
+        UserDAO userDAO = new UserDAO();      
         Email mail = new Email();
         
-        User user = (User) session.getAttribute("registeredAccount");
+        //User user = (User) session.getAttribute("activateAccount");
+        
+        int userId = Integer.parseInt(request.getParameter("userId")) ;
+        User user = userDAO.getUserById(userId);
         
         if(user == null){
+            response.sendRedirect(request.getContextPath()+"/register");
             return;
         }
         //send mail to user to activate account
@@ -55,6 +59,7 @@ public class Verify extends HttpServlet {
             return;
         }
 
+        request.setAttribute("userId", userId);
         request.getRequestDispatcher("/account/verify.jsp").forward(request, response);
     }
 
@@ -75,8 +80,9 @@ public class Verify extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         String otp = request.getParameter("otp");
-
-        User user = (User) session.getAttribute("registeredAccount");
+        int userId = Integer.parseInt(request.getParameter("userId")) ;
+        User user = userDAO.getUserById(userId);
+        //User user = (User) session.getAttribute("activateAccount");
 
         if(user == null){
             response.sendRedirect(request.getContextPath()+"/register");
@@ -89,13 +95,10 @@ public class Verify extends HttpServlet {
             return;
         }
 
-        boolean check = userDAO.activateUser(user.getUsername());
+        userDAO.activateUser(user.getUsername());
+        userDAO.deleteVerifyCode(userId);
         
-        if(!check){
-            response.sendRedirect(request.getContextPath()+"/login");
-        }
-
-        //response.sendRedirect(request.getContextPath()+"/login");
+        response.sendRedirect(request.getContextPath()+"/login");
 
     }
 
