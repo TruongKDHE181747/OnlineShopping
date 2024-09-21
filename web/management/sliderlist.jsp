@@ -316,7 +316,7 @@
                                                   
                                               
                                                 
-                                            <a href="updateslider?sid=${s.id}&button=hide"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
+                                            <a href="../updateslider?sid=${s.id}&button=hide" onclick="return confirm('Hide this slider?')"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
                                             
                                         </div>
                                         </c:if>
@@ -329,12 +329,15 @@
                                                   
                                               
                                                 
-                                            <a href="updateslider?sid=${s.id}&?button=show"><i style="color: black;" class="bi bi-eye-fill"></i></a>
+                                           <a href="../updateslider?sid=${s.id}&button=show" onclick="return confirm('Show this slider?')">
+    <i style="color: black;" class="bi bi-eye-fill"></i>
+</a>
+
                                             
                                         </div>
                                         </c:if>
                                         <div class="remove" style="background-color: yellow">
-                                            <a href="updateslider?sid=${s.id}&?button=edit" ><i style="color: black;" class="bi bi-pencil-fill"></i></a>     
+                                            <a href="../updateslider?sid=${s.id}&button=edit"><i style="color: black;" class="bi bi-pencil-fill"></i></a>     
                                         </div>
                                     </td>
 

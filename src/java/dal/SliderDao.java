@@ -87,15 +87,10 @@ public class SliderDao extends DBContext {
         }
     }
     
-//    public static void main(String[] args) {
-//        SliderDao dao=new SliderDao();
-//        Slider s=new Slider(5, "Woman 2018", "../slider_img/slider9.png", 0);
-//        dao.insert(s);
-//    }
-     
+
      
      public void update(Slider s) {
-        String sql = "UPDATE Sliders SET description=?, image_url=?, is_active=?, tittle=? WHERE sluder_id=? ";
+        String sql = "UPDATE Sliders SET description=?, image_url=?, is_active=?, tittle=? WHERE slider_id=? ";
         try (PreparedStatement pre = connection.prepareStatement(sql)) {
             
             pre.setString(1, s.getDescription());
