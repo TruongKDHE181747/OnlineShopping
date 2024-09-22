@@ -14,15 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import model.Product;
 
 /**
  *
  * @author Thanh Tan
  */
-@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
-public class ProductPaging extends HttpServlet {
+@WebServlet(name="UpdateProduct", urlPatterns={"/updateproduct"})
+public class UpdateProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,25 +34,13 @@ public class ProductPaging extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        ProductDAO pdao = new ProductDAO();
+        Product p = pdao.getProductById(pid);
         HttpSession session = request.getSession();
-        if (request.getParameter("p") != null) {
-            int p = Integer.parseInt(request.getParameter("p"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
 
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        } else {
-            int p = Integer.parseInt(request.getParameter("cur_page"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
-            
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        }
-        
+        session.setAttribute("pdetail", p);
+        response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -282,31 +282,33 @@ public class ProductDAO extends DBContext {
         return pList;
     }
 
-    public ArrayList<Product> getProductPaging(int index) {
-        ArrayList<Product> list = new ArrayList<>();
+    public List<Product> getProductPaging(int index) {
+        List<Product> list = new ArrayList<>();
         String sql = "Select * from Products\n"
                 + " order by product_id\n"
                 + " offset ? rows\n"
-                + " fetch first  2 rows only";
+                + " fetch first 5 rows only";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
 
-            pre.setInt(1, (index - 1) * 2);
+            pre.setInt(1, (index - 1) * 5);
             ResultSet rs = pre.executeQuery();
 
-            int product_id = rs.getInt("product_id");
-            String product_name = rs.getString("product_name");
-            int price = rs.getInt("price");
-            int total_quantity = rs.getInt("total_quantity");
-            int discount = rs.getInt("discount");
-            String description = rs.getString("description");
-            String thumbnail = rs.getString("thumbnail");
-            boolean is_active = rs.getBoolean("is_active");
-            int rated_star = rs.getInt("rated_star");
-            int brand_id = rs.getInt("brand_id");
-            int product_category_id = rs.getInt("product_category_id");
-            Product product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
-            list.add(product);
+            while (rs.next()) {
+                int product_id = rs.getInt("product_id");
+                String product_name = rs.getString("product_name");
+                int price = rs.getInt("price");
+                int total_quantity = rs.getInt("total_quantity");
+                int discount = rs.getInt("discount");
+                String description = rs.getString("description");
+                String thumbnail = rs.getString("thumbnail");
+                boolean is_active = rs.getBoolean("is_active");
+                int rated_star = rs.getInt("rated_star");
+                int brand_id = rs.getInt("brand_id");
+                int product_category_id = rs.getInt("product_category_id");
+                Product product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                list.add(product);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -315,7 +317,7 @@ public class ProductDAO extends DBContext {
 
 //    public static void main(String[] args) {
 //        ProductDAO pdao = new ProductDAO();
-//        List<Product> pList = pdao.getAllProduct();
+//        List<Product> pList = pdao.getProductPaging(1);
 //        System.out.println(pList.size());
 //    }
 }

@@ -45,7 +45,7 @@ public class SliderDao extends DBContext {
         String sql = "Select * from Sliders\n"
                 + " order by slider_id\n"
                 + " offset ? rows\n"
-                + " fetch first  2 rows only";
+                + " fetch first 2 rows only";
         try {
             //thuc thi cau truy van
             PreparedStatement pre = connection.prepareStatement(sql);

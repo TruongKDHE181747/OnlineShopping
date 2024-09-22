@@ -311,7 +311,7 @@
 
                                     <td>
                                         <div class="edit">
-                                            <a href="../productdetails?pid=<%= p.getProduct_id()%>"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="../updateproduct?pid=<%= p.getProduct_id()%>"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                         </div>
                                     </td>
                                     <%
@@ -339,7 +339,7 @@
                                      if(cur_page > 1) {
                                     %>
                                     <li class="page-item">
-                                        <a class="page-link" href="../productlist?p=<%= cur_page-1%>" aria-label="Previous">
+                                        <a class="page-link" href="../productpaging?p=<%= cur_page - 1%>" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
@@ -357,7 +357,7 @@
                                         if (cur_page < total_page) {
                                     %>
                                     <li class="page-item">
-                                        <a class="page-link" href="../productpaging?p=<%= (cur_page) %>" aria-label="Next">
+                                        <a class="page-link" href="../productpaging?p=<%= cur_page + 1 %>" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>

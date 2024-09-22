@@ -5,7 +5,6 @@
 
 package product_controller;
 
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Product;
 
 /**
  *
  * @author Thanh Tan
  */
-@WebServlet(name="ProductDetails", urlPatterns={"/productdetails"})
-public class ProductDetails extends HttpServlet {
+@WebServlet(name="AddProduct", urlPatterns={"/addproduct"})
+public class AddProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,13 +31,6 @@ public class ProductDetails extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int pid = Integer.parseInt(request.getParameter("pid"));
-        ProductDAO pdao = new ProductDAO();
-        Product p = pdao.getProductById(pid);
-        HttpSession session = request.getSession();
-        
-        request.setAttribute("product_details", p);
-        response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

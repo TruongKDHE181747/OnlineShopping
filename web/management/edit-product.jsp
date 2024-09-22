@@ -23,7 +23,7 @@
 
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="../product-list.jsp" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <a href="../productlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <i style="margin-right: 10px;
                        font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
                     <span class="fs-4">Back</span>
@@ -42,22 +42,22 @@
                 <div class="row g-5" style="justify-content: center;">
                     
                     <%
-                        Product p = (Product) session.getAttribute("product_details");
+                        Product p = (Product)session.getAttribute("pdetail");
                     %>
                    
 
                     <div class="col-md-8">
-                        <form class="needs-validation" action="caredit" method="post" enctype="multipart/form-data">
+                        <form class="needs-validation" action="../updateproduct" method="post" enctype="multipart/form-data">
                             <div class="row g-3">
                                 
                                 <div class="col-sm-6">
                                     <label for="productid" class="form-label">Product Id</label>
-                                    <input disabled="" value="<%= p.getProduct_id()%>" name="carid" type="text" class="form-control" id="carid" required>
+                                    <input disabled="" value="<%= p.getProduct_id()%>" name="productid" type="text" class="form-control" id="productid" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="productname" class="form-label">Product Name</label>
-                                    <input  value="<%= p.getProduct_name()%>" name="carname" type="text" class="form-control" id="carname" required>
+                                    <input  value="<%= p.getProduct_name()%>" name="productname" type="text" class="form-control" id="productname" required>
                                 </div>
                                     
                                 <div class="col-sm-6">
@@ -80,28 +80,22 @@
                                 </div>
                                 
                                 <div class="col-sm-6">
-                                    <label for="productid" class="form-label">Price</label>
-                                    <input disabled="" value="<%= p.getPrice()%>" name="carid" type="text" class="form-control" id="carid" required>
+                                    <label for="price" class="form-label">Price</label>
+                                    <input value="<%= p.getPrice()%>" name="price" type="text" class="form-control" id="price" required>
                                 </div>
                                 
                                 <div class="col-sm-6">
-                                    <label for="productid" class="form-label">Price</label>
-                                    <input disabled="" value="<%= p.getPrice()%>" name="carid" type="text" class="form-control" id="carid" required>
+                                    <label for="quantity" class="form-label">Total Quantity</label>
+                                    <input disabled="" value="<%= p.getTotal_quantity()%>" name="quantity" type="text" class="form-control" id="quantity" required>
                                 </div>
                                 
                                 <div class="col-sm-6">
-                                    <label for="productid" class="form-label">Total Quantity</label>
-                                    <input disabled="" value="<%= p.getTotal_quantity()%>" name="carid" type="text" class="form-control" id="carid" required>
-                                </div>
+                                    <label for="discount" class="form-label">Discount</label>
+                                    <input value="<%= p.getDiscount()%>" name="discount" type="text" class="form-control" id="discount" required>
+                                </div>                   
+                               
 
-                                <div class="col-12">
-                                    <label for="stationid" class="form-label">Station Id</label>
-                                    <select name="stationid" class="form-control">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </div>
+                                
 
 
                             </div>
