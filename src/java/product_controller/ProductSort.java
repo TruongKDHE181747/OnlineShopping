@@ -5,6 +5,7 @@
 
 package product_controller;
 
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -37,7 +38,8 @@ public class ProductSort extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
        HttpSession session = request.getSession();
        List<Product> apList = (List<Product>)session.getAttribute("apList");
-       
+        ProductDAO pdao = new ProductDAO();
+        
        String sortValue = request.getParameter("sortValue");
        if(sortValue.equals("low")){
            apList.sort(new Comparator<Product>() {
@@ -46,13 +48,27 @@ public class ProductSort extends HttpServlet {
                    return (o1.getPrice()-o1.getPrice()*o1.getDiscount()/100)-(o2.getPrice()-o2.getPrice()*o2.getDiscount()/100);
                }
            });
-       } else {
+       } else if(sortValue.equals("high")){
           apList.sort(new Comparator<Product>() {
                @Override
                public int compare(Product o1, Product o2) {
                    return (o2.getPrice()-o2.getPrice()*o2.getDiscount()/100)-(o1.getPrice()-o1.getPrice()*o1.getDiscount()/100);
                }
            }); 
+       } else if(sortValue.equals("rate")){
+           apList.sort(new Comparator<Product>() {
+               @Override
+               public int compare(Product o1, Product o2) {
+                   return (o2.getRated_star()-o1.getRated_star());
+               }
+           }); 
+       } else if(sortValue.equals("best")){
+           String s = "";
+           for (Product product : apList) {
+               s+=product.getProduct_id()+","; 
+           }
+           s = s.substring(0, s.length()-1);
+           apList = pdao.getAllHotProduct(s);
        }
        int totalProduct = apList.size();
         int npage = totalProduct/9 + 1;

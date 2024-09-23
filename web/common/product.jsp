@@ -323,7 +323,7 @@
                 if(sql1.equals("null")) sql1 = "";
                 %>
                 
-                <%--<%=sql1%>--%>
+                <!-- <%=sql1%> --> 
                 </div>
                 
                 
@@ -356,10 +356,12 @@
                                     if(sortValue.equals("null")) sortValue = "";
                                     %>
                                     <form action="../productsort">
-                                        <p>Sort by Price:</p>
+                                        <p>Sort by:</p>
                                         <select name="sortValue">
-                                        <option <%=sortValue.equals("low")?"selected":""%> value="low">Low To High</option>
-                                        <option <%=sortValue.equals("high")?"selected":""%> value="high">High To Low</option>
+                                        <option <%=sortValue.equals("low")?"selected":""%> value="low">Price: Low To High</option>
+                                        <option <%=sortValue.equals("high")?"selected":""%> value="high">Price: High To Low</option>
+                                        <option <%=sortValue.equals("rate")?"selected":""%> value="rate">Rating</option>
+                                        <option <%=sortValue.equals("best")?"selected":""%> value="best">Best Seller</option>
                                         </select>
                                         <button type="submit" class="btn btn-outline-dark">Apply</button>
                                     </form>

@@ -223,11 +223,77 @@ public class ProductDAO extends DBContext {
         }
         return pList;
     }
+    
+    
+    public List<Product> getAllHotProduct(String s) {
+        List<Product> pList = new ArrayList<>();
+        String sql = "select p.product_id, p.product_name,p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id, sum(od.TotalPrice) as TotalPrice\n" +
+                    "from Products as p\n" +
+                    "left join Order_Details as od on p.product_id = od.product_id\n" +
+                    "left join Orders as o on od.order_id = o.order_id\n" +
+                    "and o.payment_status_id = 2\n" +
+                    "where p.product_id in ("+s+")\n" +
+                    "group by p.product_id, p.product_name, p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id\n" +
+                    "order by sum(od.TotalPrice) desc, p.product_id";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int product_id = rs.getInt("product_id");
+                String product_name = rs.getString("product_name");
+                int price = rs.getInt("price");
+                int total_quantity = rs.getInt("total_quantity");
+                int discount = rs.getInt("discount");
+                String description = rs.getString("description");
+                String thumbnail = rs.getString("thumbnail");
+                boolean is_active = rs.getBoolean("is_active");
+                int rated_star = rs.getInt("rated_star");
+                int brand_id = rs.getInt("brand_id");
+                int product_category_id = rs.getInt("product_category_id");
+                Product product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                pList.add(product);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
 
     public List<Product> getNewProduct() {
         List<Product> pList = new ArrayList<>();
         String sql = "select top 8 * from Products\n"
                 + "order by product_id desc";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int product_id = rs.getInt("product_id");
+                String product_name = rs.getString("product_name");
+                int price = rs.getInt("price");
+                int total_quantity = rs.getInt("total_quantity");
+                int discount = rs.getInt("discount");
+                String description = rs.getString("description");
+                String thumbnail = rs.getString("thumbnail");
+                boolean is_active = rs.getBoolean("is_active");
+                int rated_star = rs.getInt("rated_star");
+                int brand_id = rs.getInt("brand_id");
+                int product_category_id = rs.getInt("product_category_id");
+                Product product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                pList.add(product);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    
+    
+    public List<Product> getRatingProduct() {
+        List<Product> pList = new ArrayList<>();
+        String sql = "select * from Products\n" +
+                    "order by rated_star desc";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
