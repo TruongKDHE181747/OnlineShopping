@@ -11,15 +11,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import model.User;
-import utils.Email;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ResetPassword", urlPatterns = {"/resetPassword"})
-public class ResetPassword extends HttpServlet {
+@WebServlet(name = "ResetPasswordRequest", urlPatterns = {"/resetPasswordRequest"})
+public class ResetPasswordRequest extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -32,23 +32,6 @@ public class ResetPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Email em = new Email();
-        UserDAO userDAO = new UserDAO();
-        String email = request.getParameter("email");
-
-        String resetCode = em.getRandom();
-
-        userDAO.updateResetPassCode(email, resetCode);
-
-        User user = userDAO.getUserByEmail(email);
-
-        if (user != null) {
-            em.sendResetPassEmail(user);
-            request.setAttribute("success", "Check your email for the reset password link.");
-        } else {
-            request.setAttribute("error", "Email could not be found!");
-        }
-
         request.getRequestDispatcher("/account/emailReset.jsp").forward(request, response);
     }
 
@@ -66,20 +49,18 @@ public class ResetPassword extends HttpServlet {
 
         UserDAO userDAO = new UserDAO();
 
+        String resetCode = request.getParameter("resetCode");
         String email = request.getParameter("email");
-        String newPassword = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
 
-        if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("error", "Password and Confirm password are not matched!");
-            request.getRequestDispatcher("/account/resetPassword.jsp").forward(request, response);
+        ArrayList<User> users = userDAO.getUsers("select * from Users where email = '" + email + "' and reset_password_code = '" + resetCode + "'");
+
+        if (users.isEmpty()) {
             return;
         }
 
-        if (userDAO.updatePassword(email, newPassword)) {
-            userDAO.deleteResetCode(email);
-        }
-        response.sendRedirect(request.getContextPath() + "/login");
+        request.setAttribute("email", email);
+        request.getRequestDispatcher("/account/resetPassword.jsp").forward(request, response);
+
     }
 
 }

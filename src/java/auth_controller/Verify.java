@@ -10,7 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.User;
 import utils.Email;
@@ -34,32 +33,42 @@ public class Verify extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        UserDAO userDAO = new UserDAO();      
+
+        UserDAO userDAO = new UserDAO();
         Email mail = new Email();
-        
-        //User user = (User) session.getAttribute("activateAccount");
-        
-        int userId = Integer.parseInt(request.getParameter("userId")) ;
-        User user = userDAO.getUserById(userId);
-        
-        if(user == null){
-            response.sendRedirect(request.getContextPath()+"/register");
-            return;
-        }
-        //send mail to user to activate account
-        boolean checkSendMail = mail.sendRegisterEmail(user);
+
+        try {
+
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            
+            String verifyCode = mail.getRandom();
+            userDAO.updateVerifyCode(userId, verifyCode);     
+            
+            User user = userDAO.getUserById(userId);
+
+            if (user == null) {
+                return;
+            }
+            
+            //send mail to user to activate account
+            boolean checkSendMail = mail.sendVerifyEmail(user);
 
 //        fail to send email
-        if (!checkSendMail) {
-            String errorMessage = "Cannot sent email!";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+            if (!checkSendMail) {
+                String errorMessage = "Cannot sent email!";
+                request.setAttribute("error", errorMessage);
+                request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+                return;
+            }
+
+            request.setAttribute("userId", userId);
+
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath()+"/login");
             return;
         }
-
-        request.setAttribute("userId", userId);
+        
+        
         request.getRequestDispatcher("/account/verify.jsp").forward(request, response);
     }
 
@@ -75,17 +84,14 @@ public class Verify extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(true);
-
         UserDAO userDAO = new UserDAO();
 
         String otp = request.getParameter("otp");
-        int userId = Integer.parseInt(request.getParameter("userId")) ;
+        int userId = Integer.parseInt(request.getParameter("userId"));
         User user = userDAO.getUserById(userId);
-        //User user = (User) session.getAttribute("activateAccount");
-
-        if(user == null){
-            response.sendRedirect(request.getContextPath()+"/register");
+        
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/register");
             return;
         }
         if (!otp.equals(user.getVerification_code())) {
@@ -97,8 +103,8 @@ public class Verify extends HttpServlet {
 
         userDAO.activateUser(user.getUsername());
         userDAO.deleteVerifyCode(userId);
-        
-        response.sendRedirect(request.getContextPath()+"/login");
+
+        response.sendRedirect(request.getContextPath() + "/login");
 
     }
 

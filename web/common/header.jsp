@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Page Preloder -->
 <div id="preloder">
     <div class="loader"></div>
@@ -40,9 +41,14 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
-                            <a href="#">Sign in</a>
-                            <a href="#">Sign up</a>                      
-
+                            <c:if test="${sessionScope.account eq null}">
+                            <a href="./login">Sign in</a>
+                            <a href="./register">Sign up</a>                      
+                            </c:if>
+                            <c:if test="${sessionScope.account ne null}">
+                                <a href="">Hello ${sessionScope.account.username}</a>
+                            <a href="./logout">Logout</a>                      
+                            </c:if>
                         </div>
                     </div>
                 </div>

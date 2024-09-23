@@ -54,7 +54,7 @@
                                             <input class="form-check-input" name="rememberMe" type="checkbox" id="rememberMe" />
                                             <label class="form-check-label" for="rememberMe"> Remember me </label>
                                         </div>
-                                        <a href="#!" class="custom-link">Forgot password?</a>
+                                        <a href="./resetPasswordRequest" class="custom-link">Forgot password?</a>
                                     </div>
 
                                     <!-- Centered Submit button -->
