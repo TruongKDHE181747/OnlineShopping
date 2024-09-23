@@ -255,7 +255,7 @@
 
                                     <div class="">
                                         <div class="d-flex add" role="search">
-                                            <a href="#"><i style="color: white;" class="fa-solid fa-plus"></i></a>
+                                            <a href="add-product.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>

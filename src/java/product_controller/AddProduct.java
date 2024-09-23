@@ -5,6 +5,7 @@
 
 package product_controller;
 
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import model.Product;
 
 /**
  *
@@ -31,6 +34,27 @@ public class AddProduct extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        Part file=request.getPart("img");
+        String imgfileName = file.getSubmittedFileName();
+        boolean is_active = false;
+        
+        String name = request.getParameter("name");
+        int price = Integer.parseInt(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        int discount = Integer.parseInt(request.getParameter("discount"));
+        String description = request.getParameter("description");
+        String img = "product_img/"+imgfileName;
+        int status = Integer.parseInt(request.getParameter("status"));
+        int rated_star = 0;
+        int brand = Integer.parseInt(request.getParameter("brand"));
+        int category = Integer.parseInt(request.getParameter("category"));
+        
+        if(status == 1) {
+            is_active = true;
+        }
+        
+        ProductDAO pdao = new ProductDAO();
+        pdao.addProduct(new Product(0, name, price, quantity, discount, description, name, is_active, rated_star, brand, category));
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

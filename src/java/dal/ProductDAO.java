@@ -287,11 +287,11 @@ public class ProductDAO extends DBContext {
         String sql = "Select * from Products\n"
                 + " order by product_id\n"
                 + " offset ? rows\n"
-                + " fetch first 5 rows only";
+                + " fetch first 3 rows only";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
 
-            pre.setInt(1, (index - 1) * 5);
+            pre.setInt(1, (index - 1) * 3);
             ResultSet rs = pre.executeQuery();
 
             while (rs.next()) {
@@ -313,6 +313,26 @@ public class ProductDAO extends DBContext {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    
+    public void addProduct(Product p) {
+        String sql = "insert into Products(product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id)\n"
+                + "values \n"
+                + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, p.getProduct_name());
+            pre.setInt(2, p.getPrice());
+            pre.setInt(3, p.getTotal_quantity());
+            pre.setInt(4, p.getDiscount());
+            pre.setString(5, p.getDescription());
+            pre.setString(6, p.getThumbnail());
+            pre.setBoolean(7, p.isIs_active());
+            pre.setInt(8, p.getRated_star());
+            pre.setInt(9, p.getBrand_id());
+            pre.setInt(10, p.getProduct_category_id());
+        } catch (Exception e) {
+        }
     }
 
 //    public static void main(String[] args) {
