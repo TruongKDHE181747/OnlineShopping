@@ -163,7 +163,7 @@
                                 <ul class="dropdown-menu text-small">
 
                                     <li>
-                                        <a class="dropdown-item" href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item d-block link-body-emphasis text-decoration-none dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">
                                             <img src="img/user.png" alt="mdo" width="32" height="32" class="rounded-circle"> admin  
                                         </a>
 
@@ -324,7 +324,7 @@
                                           <c:if test="${s.status==0}">
                                             
                                         <div class="edit" style="background-color: greenyellow">
-                                            
+                                      
                                               
                                                   
                                               
@@ -339,9 +339,15 @@
                                         <div class="remove" style="background-color: yellow">
                                             <a href="../updateslider?sid=${s.id}&button=edit"><i style="color: black;" class="bi bi-pencil-fill"></i></a>     
                                         </div>
+                                         <div class="remove" style="background-color: orangered">
+                                            <a href="../deleteslider?sid=${s.id}" onclick="return confirm('Remove this slider?')"><i style="color: black;" class="bi bi-trash"></i></a>     
+                                        </div>
                                     </td>
-
+                                    
                                 </tr>
+                                  
+                                
+                                
                                  </c:forEach>
                                 <!-- END Product item -->
                                

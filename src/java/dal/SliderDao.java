@@ -120,6 +120,16 @@ public class SliderDao extends DBContext {
          return s;
          
      }
-     
+      public void delete(int id) {
+        String sql = "Delete from Sliders WHERE slider_id=? ";
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            
+            pre.setInt(1, id);
+           
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
   
 }
