@@ -22,7 +22,7 @@ import model.Product;
 public class PostDAO extends DBContext{
     public List<Post> getAllPost () {
         List<Post> pList = new ArrayList<>();
-       String sql = "select * from Posts";
+       String sql = "select * from Posts where is_active = 1;";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
