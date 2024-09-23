@@ -285,8 +285,10 @@
                                 <h3><%=cmoney%></h3>
                                 <p><%=product.getDescription()%></p>
                                 <div class="product__details__option">
+                                    
                                     <div class="product__details__option__size">
                                         <span>Size:</span>
+                                        
                                         <div class="shop__sidebar__tags">
                                             <%
                                      int dsize = Integer.parseInt(session.getAttribute("dsize")+"");
@@ -308,13 +310,19 @@
 
                                 </div>
                                 <div class="product__details__cart__option">
-                                    <div class="quantity">
+                                    
+                                    <form action="#">
+                                        <span style="margin-right: 12px;
+                                        font-weight: bold;">In stock: <%=dquantity%></span>
+                                        <div class="quantity">
                                         <div class="pro-qty">
+                                            
                                             <input value="1" type="number" min="1" max="<%=dquantity%>">
                                         </div>
                                     </div>
                                     <a href="#" class="primary-btn">add to cart</a>
                                     <a href="#" class="primary-btn">Checkout</a>
+                                    </form>
                                 </div>
 
 
