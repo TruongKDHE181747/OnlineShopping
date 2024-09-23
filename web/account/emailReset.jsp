@@ -9,13 +9,13 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-        <%@include file="../common/css.jsp" %>
+        <jsp:include page="../common/css.jsp" />
 
-
+        <link rel="stylesheet" href="./account/css/registerstyle.css"/>
     </head>
 
     <body>
-        <%@include file="../common/header.jsp" %>
+        <jsp:include page="../common/header.jsp" />
 
         <!-- Start your project here -->
         <section style="margin: 50px 0">
@@ -69,10 +69,10 @@
         </section>
         <!-- End your project here -->
 
-        <%@include file="../common/footer.jsp" %>
+        <jsp:include page="../common/footer.jsp" />
         <!-- Bootstrap JS with Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
-        <%@include file="../common/js.jsp" %>
+        <jsp:include page="../common/js.jsp" />
 
     </body>
 
