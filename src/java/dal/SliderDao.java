@@ -130,6 +130,37 @@ public class SliderDao extends DBContext {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }
+       
   
 }
+        public ArrayList<Slider> searchSlider(String search) {
+        ArrayList<Slider> list = new ArrayList<>();
+        String sql = "select * from Sliders\n "
+                + "where tittle like ? OR description like ? ";
+        try {
+            //thuc thi cau truy van
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, "%"+search+"%");
+            pre.setString(2, "%"+search+"%");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("slider_id");
+                String title=rs.getString("tittle");
+                String description = rs.getString("description");
+                String img = rs.getString("image_url");
+                int status = rs.getInt("is_active");
+                Slider s=new Slider(id, title, description, img, status);
+                list.add(s);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("e");
+        }
+
+        return list;
+    }
+        
+       
+        
+}
+    
