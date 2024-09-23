@@ -18,3 +18,15 @@
 <link rel="stylesheet" href="./common/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="./common/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="./common/css/style.css" type="text/css">
+
+<style>
+    .custom-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    .custom-link:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+</style>

@@ -26,7 +26,7 @@ public class Email {
     }
 
     //send email to user to verify account register
-    public boolean sendRegisterEmail(User user) {
+    public boolean sendVerifyEmail(User user) {
         boolean test = false;
 
         String toEmail = user.getEmail();
@@ -45,7 +45,7 @@ public class Email {
         //set email message detail
         Message mess = new MimeMessage(session);
         try {
-            
+
             mess.setHeader("Content-Type", "text/plain; charset=UTF-8");
 
             mess.setFrom(new InternetAddress(fromEmail));
@@ -64,7 +64,7 @@ public class Email {
 
         return test;
     }
-    
+
     public boolean sendResetPassEmail(User user) {
         boolean test = false;
 
@@ -84,7 +84,7 @@ public class Email {
         //set email message detail
         Message mess = new MimeMessage(session);
         try {
-            
+
             mess.setHeader("Content-Type", "text/html; charset=UTF-8");
 
             mess.setFrom(new InternetAddress(fromEmail));
@@ -92,9 +92,14 @@ public class Email {
             mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             mess.setSubject("Reset Password");
-            
-            String resetLink = "<a href='http://localhost:9999/OnlineShopping/resetPassword?userId="+user.getUser_id()+"' >Click me</a>";
-            mess.setText("Reset password link: " + resetLink);
+
+            String resetLink = "<form action='http://localhost:9999/OnlineShopping/resetPasswordRequest' method='POST'>"
+                    + "<input type='hidden' name='email' value='" + user.getEmail()+ "'>"
+                    + "<input type='hidden' name='resetCode' value='" + user.getReset_password_code()+ "'>"
+                    + "<button type='submit'>Click here to reset your password</button>"
+                    + "</form>";
+
+            mess.setContent("Reset password link: " + resetLink,"text/html; charset=UTF-8");
 
             Transport.send(mess);
             test = true;
@@ -116,8 +121,7 @@ public class Email {
         pr.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         return pr;
     }
-    
-    
+
 //    public static void main(String[] args) {
 //        Email em = new Email();
 //        User user = new User("", "", "", "", "", "mnhduc3012@gmail.com", true, "", "113113", "", "", "", true, true, new Role(5, ""));

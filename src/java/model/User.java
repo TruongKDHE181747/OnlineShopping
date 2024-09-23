@@ -197,5 +197,10 @@ public class User {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "user_id=" + user_id + ", username=" + username + ", password=" + password + ", first_name=" + first_name + ", last_name=" + last_name + ", phone=" + phone + ", email=" + email + ", gender=" + gender + ", dob=" + dob + ", verification_code=" + verification_code + ", reset_password_code=" + reset_password_code + ", google_id=" + google_id + ", profile_picture_url=" + profile_picture_url + ", is_active=" + is_active + ", is_banned=" + is_banned + ", role=" + role + '}';
+    }
+
     
 }
