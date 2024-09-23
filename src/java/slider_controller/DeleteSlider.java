@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package slider_controller;
 
-import dal.ProductDAO;
+import dal.SliderDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Product;
 
 /**
  *
- * @author Thanh Tan
+ * @author quanpyke
  */
-@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
-public class ProductPaging extends HttpServlet {
+@WebServlet(name="DeleteSlider", urlPatterns={"/deleteslider"})
+public class DeleteSlider extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,25 +31,12 @@ public class ProductPaging extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+       int id=Integer.parseInt(request.getParameter("sid"));
+        SliderDao sdao=new SliderDao();
+        sdao.delete(id);
+        response.sendRedirect("sliderlist");
+       
         
-        HttpSession session = request.getSession();
-        if (request.getParameter("p") != null) {
-            int p = Integer.parseInt(request.getParameter("p"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
-
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        } else {
-            int p = Integer.parseInt(request.getParameter("cur_page"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
-            
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        }
         
     } 
 

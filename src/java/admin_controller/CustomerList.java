@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package admin_controller;
 
-import dal.ProductDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Product;
+import java.util.ArrayList;
+import model.User;
 
 /**
  *
- * @author Thanh Tan
+ * @author quanpyke
  */
-@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
-public class ProductPaging extends HttpServlet {
+@WebServlet(name="CustomerList", urlPatterns={"/customerlist"})
+public class CustomerList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,26 +34,12 @@ public class ProductPaging extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession();
-        if (request.getParameter("p") != null) {
-            int p = Integer.parseInt(request.getParameter("p"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
-
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        } else {
-            int p = Integer.parseInt(request.getParameter("cur_page"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
-            
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        }
-        
+       String sql= "Select * from Users where role_id=5 ";
+        UserDAO udao=new UserDAO();
+        ArrayList<User> clist=udao.getUsers(sql);
+        HttpSession session=request.getSession(true);
+        session.setAttribute("clist", clist);
+        response.sendRedirect(request.getContextPath()+"/management/customerlist.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,5 +77,11 @@ public class ProductPaging extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    public static void main(String[] args) {
+        UserDAO udao=new UserDAO();
+        ArrayList<User> list=udao.getUsers("Select * from Users where role_id=5 ");
+        System.out.println(list.get(0).getDob());
+    }
+    
 
 }

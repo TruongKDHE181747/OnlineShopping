@@ -1,121 +1,110 @@
+<%-- 
+    Document   : profile
+    Created on : May 24, 2024, 1:21:04 PM
+    Author     : Dell
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
-
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form với Slider</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Edit Car Page</title>
+        <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <!-- CSS Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+              crossorigin="anonymous">
+        <!-- Script Link Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
-        .container {
-            background-color: #fff;
-            padding: 30px; /* Tăng padding */
-            border-radius: 12px; /* Tăng độ bo tròn */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Tăng độ bóng */
-            width: 500px; /* Tăng chiều rộng */
-        }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px; /* Tăng khoảng cách dưới tiêu đề */
-        }
+    </head>
+    <body class="bg-body-tertiary">
 
-        .form-group {
-            margin-bottom: 20px; /* Tăng khoảng cách giữa các nhóm trường */
-        }
+        <div class="container">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                <a href="admin.jsp" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <i style="margin-right: 10px;
+                       font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
+                    <span class="fs-4">Back to home</span>
+                </a>                
+            </header>
+        </div>
 
-        label {
-            display: block;
-            margin-bottom: 10px; /* Tăng khoảng cách dưới nhãn */
-            font-size: 18px; /* Tăng kích thước chữ của nhãn */
-        }
 
-        textarea {
-            width: 100%;
-            padding: 12px; /* Tăng padding */
-            border: 1px solid #ddd;
-            border-radius: 6px; /* Tăng độ bo tròn */
-            font-size: 16px; /* Tăng kích thước chữ trong textarea */
-            box-sizing: border-box;
-        }
-
-        input[type="file"] {
-            display: block;
-            margin-top: 10px; /* Thêm khoảng cách trên */
-        }
-
-        .slider-container {
-            display: flex;
-            align-items: center;
-        }
-
-        input[type="range"] {
-            flex: 1;
-            margin-right: 15px; /* Tăng khoảng cách bên phải của thanh trượt */
-            height: 10px; /* Tăng chiều cao của thanh trượt */
-        }
-
-        #status-label {
-            font-size: 18px; /* Tăng kích thước chữ của nhãn trạng thái */
-        }
-
-        button {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 15px 20px; /* Tăng padding của nút */
-            border-radius: 6px; /* Tăng độ bo tròn của nút */
-            cursor: pointer;
-            font-size: 18px; /* Tăng kích thước chữ của nút */
-            width: 100%; /* Đặt chiều rộng nút bằng với chiều rộng của khối chứa */
-            box-sizing: border-box;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Add Slider</h1>
-        <form action="../addslider" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                <label for="title">Title</label>
-                <textarea id="title" name="title" rows="2" cols="50"></textarea> <!-- Tăng kích thước textarea -->
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="6" cols="50"></textarea> <!-- Tăng kích thước textarea -->
-            </div>
-            <div class="form-group">
-                <label for="img">Image:</label>
-                <input type="file" id="img" name="img" required="">
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <div class="slider-container">
-                    <input type="radio" name="status" value="1">Show
-                      <input type="radio" name="status" value="0">Hidden
-                 
+        <div class="container">
+            <main>
+                <div class="py-5 text-center" >
+                    <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
+                    <h2>Add Sliders</h2>
                 </div>
-            </div>
-            <button type="submit">Add</button>
-        </form>
-    </div>
-   
-</body>
+
+                <div class="row g-5" style="justify-content: center;">
+
+                  
+                   
+
+                    <div class="col-md-8">
+                        <form class="needs-validation" action="../addslider" method="post" enctype="multipart/form-data">
+                            <div class="row g-3">
+                               
+                            
+                                <div class="col-sm-6">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input  name="title" type="text" class="form-control" id="title" required>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="img" class="form-label"> Image</label>
+                                    <input name="img" type="file" class="form-control" id="img">
+                                   
+                                </div>
+
+
+                                <div class="my-3 col-sm-6">
+                                    <label for="status" class="form-label">Status</label>
+                                    <div class="form-check">
+                                        <input value="1" id="status" name="status" type="radio" class="form-check-input"  >
+                                        <label class="form-check-label" for="status">Active</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input value="0" id="status" name="status" type="radio" class="form-check-input" >
+                                        <label class="form-check-label" for="status">Inactive</label>
+                                    </div>
+                                </div>
+                                
+                              <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label for="description" class="form-label">Description</label>
+                                    <input   name="description" type="text" class="form-control" id="id" required>
+
+                                </div>
+                             
+
+
+                            </div>
+
+                            <hr class="my-4">
+                            <!-- Error check Username and Password -->
+                            
+
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+
+            </footer>
+        </div>
+
+    </body>
 </html>

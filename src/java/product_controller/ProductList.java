@@ -37,9 +37,10 @@ public class ProductList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ProductDAO pdao = new ProductDAO();
         List<Product> list = pdao.getAllProduct();
+        List<Product> plist = pdao.getProductPaging(1);
         HttpSession session = request.getSession();
         
-        session.setAttribute("product_list", list);
+        session.setAttribute("product_list", plist);
         session.setAttribute("cur_page", 1);
         session.setAttribute("num_page", getNumberOfPage(list.size(), 2));
         response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");

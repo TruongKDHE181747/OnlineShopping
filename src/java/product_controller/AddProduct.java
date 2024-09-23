@@ -13,16 +13,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
+import jakarta.servlet.http.Part;
 import model.Product;
 
 /**
  *
  * @author Thanh Tan
  */
-@WebServlet(name="ProductDetails", urlPatterns={"/productdetails"})
-public class ProductDetails extends HttpServlet {
+@WebServlet(name="AddProduct", urlPatterns={"/addproduct"})
+public class AddProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,13 +34,27 @@ public class ProductDetails extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int pid = Integer.parseInt(request.getParameter("pid"));
-        ProductDAO pdao = new ProductDAO();
-        Product p = pdao.getProductById(pid);
-        HttpSession session = request.getSession();
+        Part file=request.getPart("img");
+        String imgfileName = file.getSubmittedFileName();
+        boolean is_active = false;
         
-        request.setAttribute("product_details", p);
-        response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+        String name = request.getParameter("name");
+        int price = Integer.parseInt(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        int discount = Integer.parseInt(request.getParameter("discount"));
+        String description = request.getParameter("description");
+        String img = "product_img/"+imgfileName;
+        int status = Integer.parseInt(request.getParameter("status"));
+        int rated_star = 0;
+        int brand = Integer.parseInt(request.getParameter("brand"));
+        int category = Integer.parseInt(request.getParameter("category"));
+        
+        if(status == 1) {
+            is_active = true;
+        }
+        
+        ProductDAO pdao = new ProductDAO();
+        pdao.addProduct(new Product(0, name, price, quantity, discount, description, name, is_active, rated_star, brand, category));
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

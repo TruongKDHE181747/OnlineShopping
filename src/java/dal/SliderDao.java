@@ -45,7 +45,7 @@ public class SliderDao extends DBContext {
         String sql = "Select * from Sliders\n"
                 + " order by slider_id\n"
                 + " offset ? rows\n"
-                + " fetch first  2 rows only";
+                + " fetch first 2 rows only";
         try {
             //thuc thi cau truy van
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -120,6 +120,47 @@ public class SliderDao extends DBContext {
          return s;
          
      }
-     
+      public void delete(int id) {
+        String sql = "Delete from Sliders WHERE slider_id=? ";
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            
+            pre.setInt(1, id);
+           
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+       
   
 }
+        public ArrayList<Slider> searchSlider(String search) {
+        ArrayList<Slider> list = new ArrayList<>();
+        String sql = "select * from Sliders\n "
+                + "where tittle like ? OR description like ? ";
+        try {
+            //thuc thi cau truy van
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, "%"+search+"%");
+            pre.setString(2, "%"+search+"%");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("slider_id");
+                String title=rs.getString("tittle");
+                String description = rs.getString("description");
+                String img = rs.getString("image_url");
+                int status = rs.getInt("is_active");
+                Slider s=new Slider(id, title, description, img, status);
+                list.add(s);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("e");
+        }
+
+        return list;
+    }
+        
+       
+        
+}
+    

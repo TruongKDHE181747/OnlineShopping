@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package dal;
 
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +13,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Product;
+import java.util.ArrayList;
+import model.Slider;
 
 /**
  *
- * @author Thanh Tan
+ * @author quanpyke
  */
-@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
-public class ProductPaging extends HttpServlet {
+@WebServlet(name="SearchSlider", urlPatterns={"/searchslider"})
+public class SearchSlider extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,25 +34,12 @@ public class ProductPaging extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession();
-        if (request.getParameter("p") != null) {
-            int p = Integer.parseInt(request.getParameter("p"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
-
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        } else {
-            int p = Integer.parseInt(request.getParameter("cur_page"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
-            
-            session.setAttribute("product_list", list);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        }
-        
+        String search=request.getParameter("search");
+        SliderDao sdao=new SliderDao();
+        ArrayList<Slider> searchslider=sdao.searchSlider(search);
+        HttpSession session=request.getSession(true);
+        session.setAttribute("searchslider", searchslider);
+       response.sendRedirect(request.getContextPath()+"/management/searchslider.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

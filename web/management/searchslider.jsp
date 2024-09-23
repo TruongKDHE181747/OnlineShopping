@@ -250,7 +250,7 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Sliders List</h5>
+                                    <h5 class="navbar-brand" >Search Result</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchslider" method="get">
@@ -281,9 +281,9 @@
                             </thead>
                             <tbody>
 
-                          
+                                <c:if test="${ !empty sessionScope.searchslider}">
                                 <!-- START Product item -->
-                                  <c:forEach var="s" items="${sessionScope.slider}">
+                                <c:forEach var="s" items="${sessionScope.searchslider}">
                                 <tr>
                                     <th scope="row">${s.id}</th>
                                       <td>${s.title}</td>
@@ -349,6 +349,14 @@
                                 
                                 
                                  </c:forEach>
+                                </c:if>
+                                <c:if test="${ empty sessionScope.searchslider}">
+                                      
+                                  <p>No found any item</p>
+                                      
+                                      
+                                  </c:if>
+                                
                                 <!-- END Product item -->
                                
                                 <!-- START Product item -->
@@ -364,31 +372,7 @@
                     <div style="display: flex;
                                 justify-content: center;">
                         
-                        <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <c:if test="${sessionScope.cpage>1}" >
-                            <li class="page-item">
-                                <a class="page-link" href="../sliderpaging?p=${sessionScope.cpage-1}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                          </c:if>
-                            <c:forEach begin="1" end="${sessionScope.page}" var="p">
-                                
-                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.cpage==p}">active</c:if>" href="../sliderpaging?p=${p}">${p}</a></li>
-                                
-                            </c:forEach>
-                            
-                             <c:if test="${sessionScope.cpage<page}" >
-                            <li class="page-item">
-                                <a class="page-link" href="../sliderpaging?p=${cpage+1}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                        
+                  
                     </div>
                     <!-- END PAGE -->
                                 

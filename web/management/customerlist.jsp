@@ -250,99 +250,59 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Sliders List</h5>
+                                    <h5 class="navbar-brand" >Customer List</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchslider" method="get">
-                                            <input placeholder="Search by id, name,description,..." name="search" class="form-control me-2" type="search"  aria-label="Search">
+                                            <input placeholder="Search..." name="search" class="form-control me-2" type="search"  aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
 
 
-                                    <div class="">
-                                        <div class="d-flex add" role="search">
-                                            <a href="addslider.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </nav>
                         </div>
-                        <table class="table">
+                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                      <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col"> Status</th>
-                                    <th scope="col" style="width: 14%">Action</th>
+                                      <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col"> Email</th>
+                                       <th scope="col"> Gender</th>
+                                      <th scope="col"> Date Of Birth</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
-
+                          
                           
                                 <!-- START Product item -->
-                                  <c:forEach var="s" items="${sessionScope.slider}">
+                                  <c:forEach var="s" items="${sessionScope.clist}">
                                 <tr>
-                                    <th scope="row">${s.id}</th>
-                                      <td>${s.title}</td>
-                                    <td>${s.description}</td>
-                                    <td class="product-img">
-                                        
-                                        <img src="../${s.img}" alt="alt"/>
-                                       
-                                    </td>
-                                    
-                                    <td>
-                                        <c:if test="${s.status==1}">
-                                            <p style="color: green">Active</p>
-                                        
-                                        </c:if>
-                                               <c:if test="${s.status==0}">
-                                            <p style="color: red">Inactive</p>
-                                        
-                                        </c:if>
-                                        
-                                        
-                                    </td>
-                                    
-                                    <td>
-                                        <c:if test="${s.status==1}">
-                                            
-                                        <div class="edit" style="background-color: red">
-                                            
-                                              
-                                                  
-                                              
-                                                
-                                            <a href="../updateslider?sid=${s.id}&button=hide" onclick="return confirm('Hide this slider?')"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
-                                            
-                                        </div>
-                                        </c:if>
-                                       
-                                          <c:if test="${s.status==0}">
-                                            
-                                        <div class="edit" style="background-color: greenyellow">
+                                    <th scope="row">${s.user_id}</th>
+                                      <td>${s.first_name}</td>
+                                    <td>${s.last_name}</td>
+                                      <td>${s.phone}</td>
+                                      <td>${s.email}</td>
+                                      <td>
+                                          <c:if test="${s.gender=='true'}"><i class="bi bi-gender-male" style="color:blue"></i>
+</c:if>
+                                          <c:if test="${s.gender=='false'}"><i class="bi bi-gender-female" style="color: palevioletred"></i>
+</c:if>
+                                          
+                                      </td> 
+                                             
+                                          
                                       
-                                              
-                                                  
-                                              
-                                                
-                                           <a href="../updateslider?sid=${s.id}&button=show" onclick="return confirm('Show this slider?')">
-    <i style="color: black;" class="bi bi-eye-fill"></i>
-</a>
-
-                                            
-                                        </div>
-                                        </c:if>
-                                        <div class="remove" style="background-color: yellow">
-                                            <a href="../updateslider?sid=${s.id}&button=edit"><i style="color: black;" class="bi bi-pencil-fill"></i></a>     
-                                        </div>
-                                         <div class="remove" style="background-color: orangered">
-                                            <a href="../deleteslider?sid=${s.id}" onclick="return confirm('Delete this slider?')"><i style="color: black;" class="bi bi-trash"></i></a>     
-                                        </div>
-                                    </td>
+                                    
+                                 
+                                    
+                                       <td>${s.dob}</td> 
+                                       
                                     
                                 </tr>
                                   
