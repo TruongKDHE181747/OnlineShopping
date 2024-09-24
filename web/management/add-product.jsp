@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dal.BrandDAO"%>
+<%@page import="model.Brand"%>
+<%@page import="java.util.*"%>
+<%@page import="dal.ProductCategoryDAO"%>
+<%@page import="model.ProductCategory"%>
+<%@page import="dal.ProductSizeDAO"%>
+<%@page import="model.ProductSize"%>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -9,17 +16,16 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        
+
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a href="../productlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                    <i style="margin-right: 10px;
-                       font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
+                    <i style="margin-right: 10px; font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
                     <span class="fs-4">Back</span>
                 </a>                
             </header>
         </div>
-        
+
         <div class="container">
             <main>
                 <div class="py-5 text-center">
@@ -38,17 +44,14 @@
 
                                 <div class="col-sm-6">
                                     <label for="price" class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" required>
+                                    <!-- Added step value for better control over increments -->
+                                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" required min="0" max="10000000" step="100000">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="quantity" class="form-label">Total Quantity</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter total quantity" required>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="discount" class="form-label">Discount</label>
-                                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Enter discount (in %)" required>
+                                    <label for="discount" class="form-label">Discount (%)</label>
+                                    <!-- Added step value for 1% increment -->
+                                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Enter discount (in %)" required min="0" max="100" step="5">
                                 </div>
 
                                 <div class="col-12">
@@ -76,20 +79,54 @@
                                 <div class="col-12">
                                     <label for="brand" class="form-label">Brand</label>
                                     <select class="form-select" id="brand" name="brand" required>
-                                        <option value="1">4man</option>
-                                        <option value="2">Coolmate</option>
-                                        <option value="3">Uniqlo</option>
+                                        <%
+                                            BrandDAO bdao = new BrandDAO();
+                                            List<Brand> brand = bdao.getAllBrand();
+                                            for (Brand b : brand) {
+                                        %>
+                                        <option value="<%= b.getBrand_id()%>"><%= b.getBrand_name()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
                                 </div>
 
                                 <div class="col-12">
                                     <label for="category" class="form-label">Category</label>
                                     <select class="form-select" id="category" name="category" required>
-                                        <option value="1">Dress Shirt</option>
-                                        <option value="2">T-shirt</option>
-                                        <option value="3">Jeans</option>
-                                        <option value="4">Dresses</option>
+                                        <%
+                                            ProductCategoryDAO pcdao = new ProductCategoryDAO();
+                                            List<ProductCategory> pc = pcdao.getAllProductCategory();
+                                            for (ProductCategory p : pc) {
+                                        %>
+                                        <option value="<%= p.getProduct_category_id()%>"><%= p.getProduct_category_name()%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
+                                </div>
+
+                                <!-- Quantity for 5 Sizes -->
+                                <div class="col-12">
+                                    <label for="sizes" class="form-label">Quantity for Each Size</label>
+                                    <%
+                                        ProductSizeDAO sdao = new ProductSizeDAO();
+                                        List<ProductSize> sizes = sdao.getAllProductSize();
+                                        for (ProductSize size : sizes) {
+                                    %>
+                                    <div class="mb-3">
+                                        <label for="size_<%= size.getSize_id() %>" class="form-label">Size <%= size.getSize_name() %></label>
+                                        <!-- Changed to select input for quantity choice -->
+                                        <select class="form-select" id="size_<%= size.getSize_id() %>" name="quantity_<%= size.getSize_id() %>" required>
+                                            <option value="">Select Quantity</option>
+                                            <% for (int i = 0; i <= 100; i++) { %>
+                                            <option value="<%= i %>"><%= i %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <%
+                                        }
+                                    %>
                                 </div>
                             </div>
 
