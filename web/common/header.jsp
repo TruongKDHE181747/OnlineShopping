@@ -65,11 +65,15 @@
                     <a href="./index.html"><img src="./common/img/logo.png" alt=""></a>
                 </div>
             </div>
+            <%
+            String mainpage = session.getAttribute("mainpage")+"";
+            if(mainpage.equals("null")) mainpage = "home";
+            %>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="<%=s%>/homeslider">Home</a></li>
-                        <li><a href="<%=s%>/homeproduct">Shop</a></li>
+                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Home</a></li>
+                        <li class="<%=mainpage.equals("shop")?"active":""%>"><a href="<%=s%>/homeproduct">Shop</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="#">About Us</a></li>
@@ -79,7 +83,7 @@
                                 <li><a href="#">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="<%=s%>/hpostlist">Blog</a></li>
+                        <li class="<%=mainpage.equals("blog")?"active":""%>"><a href="<%=s%>/hpostlist">Blog</a></li>
                         <li><a href="#">Contacts</a></li>
                     </ul>
                 </nav>

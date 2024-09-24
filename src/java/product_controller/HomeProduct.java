@@ -82,7 +82,7 @@ public class HomeProduct extends HttpServlet {
         session.setAttribute("curpage", cpage);
         session.setAttribute("pname", "");
         session.setAttribute("totalProduct", totalProduct);
-        
+        session.setAttribute("mainpage", "shop");
         session.setAttribute("fcid", null);
         session.setAttribute("fbid", null);
         session.setAttribute("fsid", null);

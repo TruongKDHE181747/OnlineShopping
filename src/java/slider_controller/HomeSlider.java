@@ -45,6 +45,8 @@ public class HomeSlider extends HttpServlet {
         List<Product> pList = pdao.getHotProduct();
         List<Post> poList = podao.getNewPost();
         String tabfilter = "hot";
+        
+        session.setAttribute("mainpage", "home");
         session.setAttribute("hsList", sList);
         session.setAttribute("hpList", pList);
         session.setAttribute("poList", poList);
