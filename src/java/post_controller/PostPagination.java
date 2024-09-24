@@ -5,8 +5,6 @@
 
 package post_controller;
 
-import dal.PostCategoryDAO;
-import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,15 +16,13 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Post;
-import model.PostCategory;
-import model.ProductFeedback;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HPostList", urlPatterns={"/hpostlist"})
-public class HPostList extends HttpServlet {
+@WebServlet(name="PostPagination", urlPatterns={"/postpagination"})
+public class PostPagination extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,36 +35,18 @@ public class HPostList extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        PostDAO pdao = new PostDAO();
-        PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<Post> pList = pdao.getAllPost();
-        List<Post> top6post = select6Post(pList, 0);
-        List<PostCategory> pcList = pcdao.getAllPostCategory();
+        List<Post> allpostlist = (List<Post>)session.getAttribute("allpostlist");
+        int cpage = Integer.parseInt(request.getParameter("cpage"));
+        List<Post> top6post = select6Post(allpostlist, cpage);
         
-        session.setAttribute("allpostlist", pList);
+        
+        
         session.setAttribute("top6post", top6post);
-        session.setAttribute("postcategorylist", pcList);
-        session.setAttribute("cpostpage", 0);
+        session.setAttribute("cpostpage", cpage);
         
-        
-        //Reset
-         
-        session.setAttribute("pobegin", "");
-        session.setAttribute("poend", "");
-        session.setAttribute("author", "");
-        session.setAttribute("title", "");
-        session.setAttribute("sortPostValue", "");
         
         response.sendRedirect(request.getContextPath()+"/common/post.jsp");
-        
-        
-//        List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("postcategorylist");
-//        for (PostCategory postCategory : postcategorylist) {
-//            
-//        }
-        
     } 
-    
     
     public static List<Post> select6Post( List<Post> pList, int pageNum){
         List<Post> top6List = new ArrayList<>();

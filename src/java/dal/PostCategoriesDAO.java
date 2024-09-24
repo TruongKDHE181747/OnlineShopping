@@ -11,27 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Product;
-import model.ProductCategory;
+import model.PostCategories;
 
 /**
  *
- * @author Dell
+ * @author 84983
  */
-public class ProductCategoryDAO extends DBContext{
-    public List<ProductCategory> getAllProductCategory() {
-        List<ProductCategory> pList = new ArrayList<>();
-        String sql = "select * from Product_Categories";
+public class PostCategoriesDAO extends DBContext{
+    public List<PostCategories> getAllPostCategory() {
+        List<PostCategories> pList = new ArrayList<>();
+        String sql = "select * from Post_Categories";
 
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                int product_category_id = rs.getInt("product_category_id");
-                String product_category_name = rs.getString("product_category_name");
+                int post_category_id = rs.getInt("post_category_id");
+                String post_category_name = rs.getString("post_category_name");
                 int is_active = rs.getInt("is_active");
-                ProductCategory p = new ProductCategory(product_category_id, product_category_name, is_active);
+                PostCategories p = new PostCategories(post_category_id, post_category_name, is_active);
                 pList.add(p);
                 
             }
@@ -40,12 +39,12 @@ public class ProductCategoryDAO extends DBContext{
         }
         return pList;
     }
-    public void addproductcate(ProductCategory p){
+    public void addpostcate(PostCategories p){
         try {
-            String sql = "insert into Product_Categories( product_category_name, is_active) values   \n" +
+            String sql = "insert into Post_Categories ( post_category_name, is_active) values   \n" +
 "		   (? , ?)";
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, p.getProduct_category_name());
+            pre.setString(1, p.getPost_category_name());
             pre.setInt(2, p.getIs_active());
            pre.executeUpdate();
 
@@ -53,4 +52,5 @@ public class ProductCategoryDAO extends DBContext{
 
         }
     }
+    
 }

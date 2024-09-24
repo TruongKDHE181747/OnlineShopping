@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package post_controller;
+package admin_controller;
 
-import dal.PostCategoryDAO;
+import dal.PostCategoriesDAO;
 import dal.PostDAO;
+import dal.ProductCategoryDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,18 +17,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import model.Post;
-import model.PostCategory;
-import model.ProductFeedback;
+import model.PostCategories;
+import model.ProductCategory;
 
 /**
  *
- * @author Dell
+ * @author 84983
  */
-@WebServlet(name="HPostList", urlPatterns={"/hpostlist"})
-public class HPostList extends HttpServlet {
+@WebServlet(name="AddSettingList", urlPatterns={"/addsettinglist"})
+public class AddSettingList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,50 +37,23 @@ public class HPostList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        PostDAO pdao = new PostDAO();
-        PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<Post> pList = pdao.getAllPost();
-        List<Post> top6post = select6Post(pList, 0);
-        List<PostCategory> pcList = pcdao.getAllPostCategory();
-        
-        session.setAttribute("allpostlist", pList);
-        session.setAttribute("top6post", top6post);
-        session.setAttribute("postcategorylist", pcList);
-        session.setAttribute("cpostpage", 0);
+        HttpSession session= request.getSession();
+        ProductCategoryDAO pdao=new ProductCategoryDAO();
+        PostCategoriesDAO podao=new PostCategoriesDAO();
+        String name =request.getParameter("name");
+        String classification=request.getParameter("classification");
         
         
-        //Reset
-         
-        session.setAttribute("pobegin", "");
-        session.setAttribute("poend", "");
-        session.setAttribute("author", "");
-        session.setAttribute("title", "");
-        session.setAttribute("sortPostValue", "");
-        
-        response.sendRedirect(request.getContextPath()+"/common/post.jsp");
-        
-        
-//        List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("postcategorylist");
-//        for (PostCategory postCategory : postcategorylist) {
-//            
-//        }
-        
-    } 
-    
-    
-    public static List<Post> select6Post( List<Post> pList, int pageNum){
-        List<Post> top6List = new ArrayList<>();
-        for(int i = pageNum*6;i<=pageNum*6+5;i++){
-            if(i>=pList.size()) {
-                break;
-            } else {
-                top6List.add(pList.get(i));
-            }
+        int status= Integer.parseInt( request.getParameter("status"));
+        if(classification.equals("product")){
+            ProductCategory p=new ProductCategory(0, name, status);
+            pdao.addproductcate(p);
+        }else if(classification.equals("post")){
+            PostCategories p=new PostCategories(0, name, status);
+            podao.addpostcate(p);
         }
-        
-        return top6List;
-    }
+        response.sendRedirect("settinglist");
+            } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

@@ -3,30 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package post_controller;
+package admin_controller;
 
-import dal.PostCategoryDAO;
-import dal.PostDAO;
+import dal.PostCategoriesDAO;
+import dal.ProductCategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
-import model.Post;
-import model.PostCategory;
-import model.ProductFeedback;
+import model.PostCategories;
+import model.ProductCategory;
 
 /**
  *
- * @author Dell
+ * @author 84983
  */
-@WebServlet(name="HPostList", urlPatterns={"/hpostlist"})
-public class HPostList extends HttpServlet {
+public class SettingList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,49 +35,14 @@ public class HPostList extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        PostDAO pdao = new PostDAO();
-        PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<Post> pList = pdao.getAllPost();
-        List<Post> top6post = select6Post(pList, 0);
-        List<PostCategory> pcList = pcdao.getAllPostCategory();
-        
-        session.setAttribute("allpostlist", pList);
-        session.setAttribute("top6post", top6post);
-        session.setAttribute("postcategorylist", pcList);
-        session.setAttribute("cpostpage", 0);
-        
-        
-        //Reset
-         
-        session.setAttribute("pobegin", "");
-        session.setAttribute("poend", "");
-        session.setAttribute("author", "");
-        session.setAttribute("title", "");
-        session.setAttribute("sortPostValue", "");
-        
-        response.sendRedirect(request.getContextPath()+"/common/post.jsp");
-        
-        
-//        List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("postcategorylist");
-//        for (PostCategory postCategory : postcategorylist) {
-//            
-//        }
-        
+        PostCategoriesDAO postdao=new PostCategoriesDAO();
+        ProductCategoryDAO pdao= new ProductCategoryDAO();
+        List<PostCategories> postlist= postdao.getAllPostCategory();
+        List<ProductCategory> plist= pdao.getAllProductCategory();
+        session.setAttribute("postlist", postlist);
+        session.setAttribute("plist", plist);
+        response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
     } 
-    
-    
-    public static List<Post> select6Post( List<Post> pList, int pageNum){
-        List<Post> top6List = new ArrayList<>();
-        for(int i = pageNum*6;i<=pageNum*6+5;i++){
-            if(i>=pList.size()) {
-                break;
-            } else {
-                top6List.add(pList.get(i));
-            }
-        }
-        
-        return top6List;
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
