@@ -19,9 +19,9 @@ import model.User;
  * @author Admin
  */
 @WebServlet(name = "Profile", urlPatterns = {"/profile"})
+
 public class Profile extends HttpServlet {
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -33,17 +33,16 @@ public class Profile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession(true);
         UserDAO userDAO = new UserDAO();
-        
-        
+
         User account = (User) session.getAttribute("account");
-        
+
         User profile = userDAO.getUserByUsername(account.getUsername());
-        
+
         request.setAttribute("profile", profile);
-        
+
         request.getRequestDispatcher("/account/profile.jsp").forward(request, response);
     }
 
@@ -58,24 +57,23 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession(true);
         UserDAO userDAO = new UserDAO();
-        
+
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         String dob = request.getParameter("dob");
         String phone = request.getParameter("phone");
-        
-        User account = (User) session.getAttribute("account");
-        
-        User profile = new User(account.getUser_id(), firstname, lastname, phone, phone, gender, dob);
-        
-        userDAO.updateUserProfile(profile);
-        
-        response.sendRedirect(request.getContextPath()+"/profile");
-    }
 
+        User account = (User) session.getAttribute("account");
+
+        User profile = new User(account.getUser_id(), firstname, lastname, phone, gender, dob);
+
+        userDAO.updateUserProfile(profile);
+
+        response.sendRedirect(request.getContextPath() + "/profile");
+    }
 
 }

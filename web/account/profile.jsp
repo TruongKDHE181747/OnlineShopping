@@ -13,7 +13,7 @@
         <div class="container-xl px-4 mt-4">
             <!-- Account page navigation-->
             <nav class="nav nav-borders">
-                <a class="nav-link  ms-0" href="#" target="__blank">Profile</a>
+                <a class="nav-link  ms-0" href="./profile" target="__blank">Profile</a>
                 <a class="nav-link" href="#" target="__blank">Order History</a>
                 <a class="nav-link active" href="#" target="__blank">Security</a>
             </nav>
@@ -29,10 +29,13 @@
                                  src="<c:if test="${profile.profile_picture_url == null}">${pageContext.request.contextPath}/profile_img/default.jpg</c:if>
                                  <c:if test="${profile.profile_picture_url != null}">${profile.profile_picture_url}</c:if>"
                                      alt="">
-                                 <!-- Profile picture help block-->
-                                 <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                 
+
                                  <!-- Profile picture upload button-->
-                                 <button class="btn btn-primary" type="button">Upload new image</button>
+                                 <form action="./uploadProfileImage" method="post" enctype="multipart/form-data">
+                                     <input style="margin-left: 40px;"  type="file" name="profileImage" accept="image/*">                                 
+                                     <button class="btn btn-primary mt-2" type="submit">Upload new image</button>
+                                 </form>
                             </div>
                         </div>
                     </div>

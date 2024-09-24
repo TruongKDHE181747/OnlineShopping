@@ -30,15 +30,16 @@ public class User {
     public User() {
     }
 
-    public User(int user_id, String first_name, String last_name, String phone, String email, boolean gender, String dob) {
+    public User(int user_id, String first_name, String last_name, String phone, boolean gender, String dob) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone = phone;
-        this.email = email;
         this.gender = gender;
         this.dob = dob;
     }
+
+    
     
     
 
