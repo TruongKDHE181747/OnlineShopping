@@ -299,15 +299,13 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
-                                    <td>${ul.rolename}</td>
+                                    <td>${ul.role.rolename}</td>
                                     <td>
                                         <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="../detailuser?uid=${ul.user_id}"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                             
                                         </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
-                                        </div>
+                                        
                                     </td>
 
                                 </tr>

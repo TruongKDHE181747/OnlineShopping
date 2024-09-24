@@ -16,9 +16,40 @@ import model.Role;
 import model.User;
 
 public class UserDAO extends DBContext {
-    
-    
-    
+
+    public boolean updateUserProfile(User user) {
+        String sql = """
+                     UPDATE [dbo].[Users]
+                        SET [first_name] = ?
+                           ,[last_name] = ?
+                           ,[phone] = ?
+                           ,[email] = ?
+                           ,[gender] = ?
+                           ,[dob] = ?
+                           
+                      WHERE [user_id] = ?""";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, user.getFirst_name());
+            ps.setString(2, user.getLast_name());
+            ps.setString(3, user.getPhone());
+            ps.setString(4, user.getEmail());
+            ps.setBoolean(5, user.isGender());
+            ps.setString(6, user.getDob());
+            ps.setInt(7, user.getUser_id());
+
+            int exe = ps.executeUpdate();
+            if (exe > 0) {
+                return true;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+        
+    }
+
     public boolean deleteResetCode(String email) {
         String sql = """
                      UPDATE [dbo].[Users]
@@ -28,7 +59,7 @@ public class UserDAO extends DBContext {
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, email);
-            
+
             int exe = ps.executeUpdate();
             if (exe > 0) {
                 return true;
@@ -83,7 +114,7 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-    
+
     public boolean updateVerifyCode(int user_id, String verifyCode) {
         String sql = """
                      UPDATE [dbo].[Users]
@@ -93,7 +124,7 @@ public class UserDAO extends DBContext {
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, verifyCode);
-                ps.setInt(2, user_id);
+            ps.setInt(2, user_id);
 
             int exe = ps.executeUpdate();
             if (exe > 0) {
@@ -361,7 +392,7 @@ public class UserDAO extends DBContext {
         return user;
 
     }
-    
+
     public User getUserByEmail(String uemail) {
         RoleDAO roleDAO = new RoleDAO();
         ResultSet rs = getData("select * from Users where email = '" + uemail + "'");
@@ -497,4 +528,34 @@ public class UserDAO extends DBContext {
         return list;
            
        }
+    public void edituser(User u){
+        try {
+            String sql = "Update Users set \n" +
+                            "username = ?, \n" +
+                            "first_name=?, \n" +
+                            "last_name=?,\n" +
+                            "phone=?,\n" +
+                            "email=?,\n" +
+                            "gender=?,\n" +
+                            "dob=?,\n" +
+                            "profile_picture_url=?,\n" +
+                            "role_id=?\n" +
+                            "where user_id=?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, u.getUsername());
+            pre.setString(2, u.getFirst_name());
+            pre.setString(3, u.getLast_name());
+            pre.setString(4, u.getPhone());
+            pre.setString(5, u.getEmail());
+            pre.setBoolean(6, u.isGender());
+            pre.setString(7, u.getDob());
+            pre.setString(8, u.getProfile_picture_url());
+            pre.setInt(9, u.getRole().getRole_id());
+            pre.setInt(10, u.getUser_id());
+           pre.executeUpdate();
+
+        } catch (SQLException ex) {
+
+        }
+    }
 }
