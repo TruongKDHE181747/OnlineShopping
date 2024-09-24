@@ -14,7 +14,7 @@ public class Constants {
 
     public static final String GOOGLE_CLIENT_ID = "450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com";
 
-    public static final String GOOGLE_CLIENT_SECRET = "";
+    public static final String GOOGLE_CLIENT_SECRET = "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";
 
     public static final String GOOGLE_REDIRECT_URI = "http://localhost:9999/OnlineShopping/loginGoogle";
 
