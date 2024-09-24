@@ -114,11 +114,11 @@
                                  <div class="col-sm-6">
                                     <label for="role" class="form-label">Role</label>
                                         <select id="role" name="role" class="form-select">
-                                            <option value="1" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>Admin</option>
-                                            <option value="2" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>sale manager</option>
-                                            <option value="3" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>saler</option>
-                                            <option value="4" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>marketer</option>
-                                            <option value="5" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>user</option>
+                                            <option value="admin" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>Admin</option>
+                                            <option value="sale manager" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>sale manager</option>
+                                            <option value="saler" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>saler</option>
+                                            <option value="marketer" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>marketer</option>
+                                            <option value="user" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>user</option>
                                         </select>
                                 </div>  
                                 

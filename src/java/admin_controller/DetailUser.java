@@ -37,6 +37,7 @@ public class DetailUser extends HttpServlet {
         int uid=Integer.parseInt(request.getParameter("uid"));
         UserDAO udao =new UserDAO();
         User u=udao.getUserById(uid);
+        session.setAttribute("userid", u.getUser_id());
         session.setAttribute("u", u);
         response.sendRedirect(request.getContextPath()+"/management/detailuser.jsp");
        
