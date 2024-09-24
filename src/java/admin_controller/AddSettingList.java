@@ -5,22 +5,27 @@
 
 package admin_controller;
 
-import dal.UserDAO;
+import dal.PostCategoriesDAO;
+import dal.PostDAO;
+import dal.ProductCategoryDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.User;
+import model.PostCategories;
+import model.ProductCategory;
 
 /**
  *
  * @author 84983
  */
-public class AdminUser extends HttpServlet {
+@WebServlet(name="AddSettingList", urlPatterns={"/addsettinglist"})
+public class AddSettingList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,12 +37,23 @@ public class AdminUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        UserDAO udao= new UserDAO();
-        List<User> ulist=udao.getALlUser();
-        session.setAttribute("ulist", ulist);
-        response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
-    } 
+        HttpSession session= request.getSession();
+        ProductCategoryDAO pdao=new ProductCategoryDAO();
+        PostCategoriesDAO podao=new PostCategoriesDAO();
+        String name =request.getParameter("name");
+        String classification=request.getParameter("classification");
+        
+        
+        int status= Integer.parseInt( request.getParameter("status"));
+        if(classification.equals("product")){
+            ProductCategory p=new ProductCategory(0, name, status);
+            pdao.addproductcate(p);
+        }else if(classification.equals("post")){
+            PostCategories p=new PostCategories(0, name, status);
+            podao.addpostcate(p);
+        }
+        response.sendRedirect("settinglist");
+            } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

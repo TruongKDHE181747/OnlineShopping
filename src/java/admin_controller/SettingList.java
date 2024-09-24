@@ -5,7 +5,8 @@
 
 package admin_controller;
 
-import dal.UserDAO;
+import dal.PostCategoriesDAO;
+import dal.ProductCategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,13 +15,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.User;
+import model.PostCategories;
+import model.ProductCategory;
 
 /**
  *
  * @author 84983
  */
-public class AdminUser extends HttpServlet {
+public class SettingList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +35,13 @@ public class AdminUser extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        UserDAO udao= new UserDAO();
-        List<User> ulist=udao.getALlUser();
-        session.setAttribute("ulist", ulist);
-        response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
+        PostCategoriesDAO postdao=new PostCategoriesDAO();
+        ProductCategoryDAO pdao= new ProductCategoryDAO();
+        List<PostCategories> postlist= postdao.getAllPostCategory();
+        List<ProductCategory> plist= pdao.getAllProductCategory();
+        session.setAttribute("postlist", postlist);
+        session.setAttribute("plist", plist);
+        response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
