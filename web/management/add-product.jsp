@@ -4,8 +4,8 @@
 <%@page import="java.util.*"%>
 <%@page import="dal.ProductCategoryDAO"%>
 <%@page import="model.ProductCategory"%>
-<%@page import="dal.ProductSizeDAO"%>
-<%@page import="model.ProductSize"%>
+<%@page import="dal.SizeDAO"%>
+<%@page import="model.Size"%>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -106,28 +106,26 @@
                                     </select>
                                 </div>
 
-                                <!-- Quantity for 5 Sizes -->
+                                <!-- Quantity for Each Size -->
                                 <div class="col-12">
                                     <label for="sizes" class="form-label">Quantity for Each Size</label>
-                                    <%
-                                        ProductSizeDAO sdao = new ProductSizeDAO();
-                                        List<ProductSize> sizes = sdao.getAllProductSize();
-                                        for (ProductSize size : sizes) {
-                                    %>
-                                    <div class="mb-3">
-                                        <label for="size_<%= size.getSize_id() %>" class="form-label">Size <%= size.getSize_name() %></label>
-                                        <!-- Changed to select input for quantity choice -->
-                                        <select class="form-select" id="size_<%= size.getSize_id() %>" name="quantity_<%= size.getSize_id() %>" required>
-                                            <option value="">Select Quantity</option>
-                                            <% for (int i = 0; i <= 100; i++) { %>
-                                            <option value="<%= i %>"><%= i %></option>
-                                            <% } %>
-                                        </select>
+                                    <div class="row">
+                                        <%
+                                            SizeDAO sdao = new SizeDAO();
+                                            List<Size> sizes = sdao.getAllSize();
+            
+                                            for (Size size : sizes) {
+                                        %>
+                                        <div class="col-sm-6">
+                                            <label for="size_<%= size.getSize_id() %>" class="form-label">Size: <%= size.getSize_name() %></label>
+                                            <input type="number" class="form-control" id="size_<%= size.getSize_id() %>" name="size_<%= size.getSize_id() %>" placeholder="Enter quantity for size <%= size.getSize_name() %>" required min="0" max="100">
+                                        </div>
+                                        <%
+                                            }
+                                        %>     
                                     </div>
-                                    <%
-                                        }
-                                    %>
                                 </div>
+                                    
                             </div>
 
                             <hr class="my-4">

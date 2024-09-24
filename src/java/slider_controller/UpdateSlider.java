@@ -120,6 +120,7 @@ public class UpdateSlider extends HttpServlet {
              String title=request.getParameter("title");
              String description= request.getParameter("description");
              String img=s.getImg();
+             int status=Integer.parseInt(request.getParameter("status"));
 //             if(request.getPart("img")==null)
 //             {
 //                 img=s.getImg();
@@ -145,7 +146,7 @@ try {
 
              s.setDescription(description);
              s.setTitle(title);
-          
+          s.setStatus(status);
              s.setImg(img);
              sdao.update(s);
              response.sendRedirect("sliderlist");

@@ -52,7 +52,7 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        
+
         UserDAO userDAO = new UserDAO();
         Email mail = new Email();
 
@@ -97,13 +97,12 @@ public class Register extends HttpServlet {
             sendErrorMessage("Register fail!", request, response);
             return;
         }
-        
-        //session.setAttribute("activateAccount", userId);
 
-        request.getRequestDispatcher("/verify?userId="+userId).forward(request, response);
+        //request.getRequestDispatcher("/verify?userId=" + userId).forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/verify?userId=" + userId);
 
     }
-    
+
     private void sendErrorMessage(String error, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("error", error);
         request.getRequestDispatcher("/account/register.jsp").forward(request, response);
