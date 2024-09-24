@@ -46,8 +46,65 @@ public class PostDAO extends DBContext{
         return pList;
     }
     
+    public List<Post> getTop6Post (int n) {
+        List<Post> pList = new ArrayList<>();
+       String sql = "select * from Posts\n" +
+                    "where is_active = 1\n" +
+                    "order by post_id\n" +
+                    "offset "+n+" rows fetch next 6 rows only";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_id = rs.getInt("post_id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String thumbnail = rs.getString("thumbnail");
+                int author_id = rs.getInt("author_id");
+                int is_active = rs.getInt("is_active");
+                Date created_at = rs.getDate("created_at");
+               Date modified_at = rs.getDate("modified_at");
+                int post_category_id = rs.getInt("post_category_id");
+                
+                Post post = new Post(post_id, title, content, thumbnail, author_id, is_active, created_at, modified_at, post_category_id);
+                pList.add(post);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    
     
     public List<Post> getAllPostByFilter(String sql) {
+        List<Post> pList = new ArrayList<>();
+       
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_id = rs.getInt("post_id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String thumbnail = rs.getString("thumbnail");
+                int author_id = rs.getInt("author_id");
+                int is_active = rs.getInt("is_active");
+                Date created_at = rs.getDate("created_at");
+               Date modified_at = rs.getDate("modified_at");
+                int post_category_id = rs.getInt("post_category_id");
+                
+                Post post = new Post(post_id, title, content, thumbnail, author_id, is_active, created_at, modified_at, post_category_id);
+                pList.add(post);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    
+    
+    
+    public List<Post> getTop6ByFilter(String sql) {
         List<Post> pList = new ArrayList<>();
        
         try {
