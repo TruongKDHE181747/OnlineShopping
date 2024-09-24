@@ -74,14 +74,16 @@
 
                                 <div class="my-3 col-sm-6">
                                     <label for="status" class="form-label">Status</label>
-                                    <div class="form-check">
-                                        <input value="1" id="status" name="status" type="radio" class="form-check-input" <c:if test="${s.status}==1"> checked</c:if> >
-                                        <label class="form-check-label" for="status">Active</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input id="status" name="status" type="radio" class="form-check-input" <c:if test="${s.status}==1"> checked</c:if>>
-                                        <label class="form-check-label" for="status">Inactive</label>
-                                    </div>
+                                   <div class="form-check">
+    <input value="1" id="status" name="status" type="radio" class="form-check-input"
+        <c:if test="${s.status == 1}"> checked</c:if>>
+    <label class="form-check-label" for="status">Active</label>
+</div>
+<div class="form-check">
+    <input value="0" id="status" name="status" type="radio" class="form-check-input"
+        <c:if test="${s.status == 0}"> checked</c:if>>
+    <label class="form-check-label" for="status">Inactive</label>
+</div>
                                 </div>
                                 
                               <div class="row g-3">
