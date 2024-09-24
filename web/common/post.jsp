@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Post"%>
+<%@page import="model.PostCategory"%>
 <%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -108,8 +109,8 @@
                     <div class="col-lg-6 col-md-6">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a href="./index.html">Home</a></li>
-                                <li><a href="./shop.html">Shop</a></li>
+                                <li><a href="../homeslider">Home</a></li>
+                                <li><a href="../homeproduct">Shop</a></li>
                                 <li><a href="#">Pages</a>
                                     <ul class="dropdown">
                                         <li><a href="./about.html">About Us</a></li>
@@ -119,7 +120,7 @@
                                         <li><a href="./blog-details.html">Blog Details</a></li>
                                     </ul>
                                 </li>
-                                <li class="active"><a href="./blog.html">Blog</a></li>
+                                <li class="active"><a href="../hpostlist">Blog</a></li>
                                 <li><a href="./contact.html">Contacts</a></li>
                             </ul>
                         </nav>
@@ -141,11 +142,11 @@
         <%
         List<Post> top6post = (List<Post>)session.getAttribute("top6post");
             List<Post> allpostlist = (List<Post>)session.getAttribute("allpostlist");
-             String postThumbnail = allpostlist.get(0).getThumbnail();
+             
         
         %>
         <!-- Breadcrumb Section Begin -->
-        <section class="breadcrumb-blog set-bg" data-setbg="../<%=postThumbnail%>">
+        <section class="breadcrumb-blog set-bg" data-setbg="../post_img/post1.jpg">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -162,53 +163,99 @@
         <!-- Blog Section Begin -->
         <section class="blog spad">
 
+            <%
+            String begin = session.getAttribute("pobegin")+"";
+        String end = session.getAttribute("poend")+"";
+        String author = session.getAttribute("author")+"";
+        String title = session.getAttribute("title")+"";
+        if(begin.equals("null")) begin = "";
+        if(end.equals("null")) end = "";
+        if(author.equals("null")) author = "";
+        if(title.equals("null")) title = "";
+        
+            %>
             <div class="container">
-                <div class="shop__product__option">
+                <form action="../hpostfilter">
+                    <div class="shop__product__option">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <form action="../productfilter">
+                        
+                             <div class="col-lg-6 col-md-6 col-sm-6">
+                            
                                 <div class="row" style="margin-top: 14px;">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="input-group mb-3">
-                                            <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">From</span>
+                                            <input value="<%=begin%>" name="begin" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">Author</span>
+                                            <input value="<%=author%>" name="author" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         --
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-5">
                                         <div class="input-group mb-3">
-                                            <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">To</span>
+                                            <input value="<%=end%>" name="end" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">Post tittle</span>
+                                            <input value="<%=title%>" name="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <button style="width: 100%;" type="submit" class="btn btn-dark">Apply</button> 
+
                                     </div>
                                 </div>
-
-                            </form>   
+                               
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__product__option__right" style="margin-top: 15px;">
+                            <div class="shop__product__option__right" style="margin-top: 15px; padding: 10px 0;">
                                 <%
-                                String sortValue = session.getAttribute("sortValue")+"";
+                                 List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("postcategorylist");
+                                
+                                String sortValue = session.getAttribute("sortPostValue")+"";
                                 if(sortValue.equals("null")) sortValue = "";
                                 %>
-                                <form action="../productsort">
+                                
                                     <p>Sort by:</p>
                                     <select name="sortValue">
-                                        <option <%=sortValue.equals("low")?"selected":""%> value="low">Price: Low To High</option>
-                                        <option <%=sortValue.equals("high")?"selected":""%> value="high">Price: High To Low</option>
-                                        <option <%=sortValue.equals("rate")?"selected":""%> value="rate">Rating</option>
-                                        <option <%=sortValue.equals("best")?"selected":""%> value="best">Best Seller</option>
+                                        <option <%=sortValue.equals("new")?"selected":""%> value="new">Newest</option>
+                                        <option <%=sortValue.equals("old")?"selected":""%> value="old">Oldest</option>
+                                        <%
+                                            for (PostCategory postCategory : postcategorylist) {
+
+                                
+                                        %>
+                                        <option <%=sortValue.equals(postCategory.getPost_category_id()+"")?"selected":""%> value="<%=postCategory.getPost_category_id()%>">Tag: <%=postCategory.getPost_category_name()%></option>
+                                        <%
+                                            }
+                                        %>
+
                                     </select>
-                                    <button type="submit" class="btn btn-outline-dark">Apply</button>
-                                </form>
+
+                                
 
                             </div>
+                            <button  style="width: 100%;
+                                     margin-top: 8px;" type="submit" class="btn btn-outline-dark">Apply</button>
+                        <%
+                        String loi = session.getAttribute("ploi")+"";
+                        String postsql = session.getAttribute("postsql")+"";
+                        if(loi.equals("null")) loi = "";
+                        %>
+                        <div style="color: red;">
+                            <%=loi%>
                         </div>
+                        </div>
+                       
+                       <!--<%=postsql%>-->
                     </div>
                 </div>
+                </form>
+                
                 <div class="row">
                     <%
                     for (Post post : top6post) {

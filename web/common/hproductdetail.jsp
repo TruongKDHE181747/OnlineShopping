@@ -128,7 +128,7 @@
                                         <li><a href="./blog-details.html">Blog Details</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="./blog.html">Blog</a></li>
+                                <li><a href="../hpostlist">Blog</a></li>
                                 <li><a href="./contact.html">Contacts</a></li>
                             </ul>
                         </nav>
