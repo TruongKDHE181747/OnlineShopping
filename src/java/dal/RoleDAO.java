@@ -32,7 +32,25 @@ public class RoleDAO extends DBContext {
         }
         return role;
     }
-    
+    public Role getRolebyname(String rolename){
+        Role role= null;
+        String sql="select * from Roles where rolename=?";
+        try {
+            PreparedStatement pre= connection.prepareStatement(sql);
+            pre.setString(1, rolename);
+            ResultSet rs=pre.executeQuery();
+            while (rs.next()) {
+                rolename = rs.getString("rolename");
+                
+                int role_id= rs.getInt("role_id"); 
+                role= new Role(role_id, rolename);
+                
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return role;
+    }
     
 
 }

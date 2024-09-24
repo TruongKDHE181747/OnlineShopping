@@ -41,8 +41,6 @@ public class Verify extends HttpServlet {
 
             int userId = Integer.parseInt(request.getParameter("userId"));
             
-            String verifyCode = mail.getRandom();
-            userDAO.updateVerifyCode(userId, verifyCode);     
             
             User user = userDAO.getUserById(userId);
 

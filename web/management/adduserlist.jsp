@@ -40,7 +40,7 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                    <h2>Detail user </h2>
+                    <h2>Add user </h2>
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
@@ -53,31 +53,28 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="user_id" class="form-label">User ID</label>
-                                    <input disabled="" value="${sessionScope.u.user_id}" name="user_id" type="text" class="form-control" id="user_id" required>
+                                    <input  value="" name="user_id" type="text" class="form-control" id="user_id" required>
 
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="username" class="form-label">Username</label>
-                                    <input  value="${sessionScope.u.username}" name="username" type="text" class="form-control" id="username" required>
+                                    <input  value="" name="username" type="text" class="form-control" id="username" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="first_name" class="form-label">First name</label>
-                                    <input  value="${sessionScope.u.first_name}" name="first_name" type="text" class="form-control" id="first_name" required>
+                                    <input  value="" name="first_name" type="text" class="form-control" id="first_name" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="last_name" class="form-label">Last name</label>
-                                    <input  value="${sessionScope.u.last_name}" name="last_name" type="text" class="form-control" id="last_name" required>
+                                    <input  value="" name="last_name" type="text" class="form-control" id="last_name" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="profile_picture_url" class="form-label">Profile Image</label>
                                     <input name="profile_picture_url" type="file" class="form-control" id="profile_picture_url">
-                                    <img style="margin-top: 10px;" 
-                                         src="${sessionScope.u.profile_picture_url != null ? sessionScope.u.profile_picture_url : 'img/user.png'}" 
-                                         alt="Profile Image"/>
                                 </div>
 
 
@@ -85,43 +82,46 @@
                                     <label for="gender" class="form-label">Gender</label>
                                     <div class="form-check">
                                         <input value="true" id="male" name="gender" type="radio" class="form-check-input"
-                                            <c:if test="${sessionScope.u.gender == true}">checked</c:if>>
+                                           
                                         <label class="form-check-label" for="male">Male</label>
                                     </div>
                                     <div class="form-check">
                                         <input value="false" id="female" name="gender" type="radio" class="form-check-input"
-                                            <c:if test="${sessionScope.u.gender == false}">checked</c:if>>
+                                            
                                         <label class="form-check-label" for="female">Female</label>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="phone" class="form-label">Phone number</label>
-                                    <input  value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" required>
+                                    <input  value="" name="phone" type="text" class="form-control" id="phone" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input  value="${sessionScope.u.email}" name="email" type="text" class="form-control" id="email" required>
+                                    <input  value="" name="email" type="text" class="form-control" id="email" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="dob" class="form-label">Date of birth</label>
-                                    <input  value="${sessionScope.u.dob}" name="dob" type="text" class="form-control" id="dob" required>
+                                    <input  value="" name="dob" type="text" class="form-control" id="dob" required>
 
                                 </div>
-
+                                
                                  <div class="col-sm-6">
                                     <label for="role" class="form-label">Role</label>
                                         <select id="role" name="role" class="form-select">
-                                            <option value="admin" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>Admin</option>
-                                            <option value="sale manager" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>sale manager</option>
-                                            <option value="saler" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>saler</option>
-                                            <option value="marketer" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>marketer</option>
-                                            <option value="user" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>user</option>
+                                            <option value="1" >Admin</option>
+                                            <option value="2" >sale manager</option>
+                                            <option value="3" >saler</option>
+                                            <option value="4" >marketer</option>
+                                            <option value="5" >user</option>
                                         </select>
                                 </div>  
-                                
+                                <div class="col-12">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input value="" name="password" type="text" class="form-control" id="password" required="">
+                                </div>
                             </div>
 
                             <hr class="my-4">

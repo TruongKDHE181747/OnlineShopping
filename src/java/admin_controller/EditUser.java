@@ -40,19 +40,19 @@ public class EditUser extends HttpServlet {
         
         RoleDAO rdao= new RoleDAO();
         UserDAO userDAO = new UserDAO();
-        int user_id=Integer.parseInt(request.getParameter("user_id"));
+        int user_id=(int) session.getAttribute("userid");
         String username = request.getParameter("username");
         String userEmail = request.getParameter("email");
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
+        String firstname = request.getParameter("first_name");
+        String lastname = request.getParameter("last_name");
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         String dob = request.getParameter("dob");
         String phone = request.getParameter("phone");
         String profilepic=request.getParameter("profile_picture_url");
-        int role_id=Integer.parseInt(request.getParameter("role"));
+        String rolename=request.getParameter("role");
         boolean checkExistUsername = userDAO.checkExistUsername(username);
         boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
-        Role role=rdao.getRoleById(role_id);
+        Role role=rdao.getRolebyname(rolename);
         
         User oldu= userDAO.getUserById(user_id);
         User newu=new User(user_id, username, oldu.getPassword(), firstname, lastname, phone, userEmail, gender, dob, null, null, null, profilepic, true, false, role);
@@ -91,6 +91,9 @@ public class EditUser extends HttpServlet {
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */
-    
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }
