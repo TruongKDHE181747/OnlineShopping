@@ -10,14 +10,14 @@
       rel="stylesheet">
 
 <!-- Css Styles -->
-<link rel="stylesheet" href="./common/css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="./common/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="./common/css/elegant-icons.css" type="text/css">
-<link rel="stylesheet" href="./common/css/magnific-popup.css" type="text/css">
-<link rel="stylesheet" href="./common/css/nice-select.css" type="text/css">
-<link rel="stylesheet" href="./common/css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet" href="./common/css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="./common/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/style.css" type="text/css">
 
 <style>
     .custom-link {
