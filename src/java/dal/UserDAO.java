@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Role;
@@ -462,5 +463,38 @@ public class UserDAO extends DBContext {
         }
         return listUsers;
     }
-
+    public List<User> getALlUser(){
+           List<User> list=new ArrayList();
+           RoleDAO roledao =new RoleDAO();
+           String sql="select u.*,r.rolename from Users u join Roles r\n" +
+                    "on u.role_id=r.role_id";
+        try{
+            // thực thi câu truy vấn
+            PreparedStatement pre= connection.prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            while(rs.next()){
+                int user_id = rs.getInt("user_id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                boolean gender = rs.getBoolean("gender");
+                String dob = rs.getString("dob");
+                String verification_code = rs.getString("verification_code");
+                String reset_password_code = rs.getString("reset_password_code");
+                String google_id = rs.getString("google_id");
+                String profile_picture_url = rs.getString("profile_picture_url");
+                boolean is_active = rs.getBoolean("is_active");
+                boolean is_banned = rs.getBoolean("is_banned");
+                Role role = roledao.getRoleById(rs.getInt("role_id"));
+                list.add(new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role));
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return list;
+           
+       }
 }
