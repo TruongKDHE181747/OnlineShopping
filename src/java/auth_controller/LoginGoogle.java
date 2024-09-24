@@ -62,7 +62,7 @@ public class LoginGoogle extends HttpServlet {
 
             } else {
                 //username is google id
-                User newUser = new User(ggUser.getId(), null, ggUser.getFamily_name(), ggUser.getGiven_name(), null, ggUser.getEmail(), true, null, null, null, ggUser.getId(), ggUser.getPicture(), true, false, new Role(5));
+                User newUser = new User(ggUser.getId(), null, ggUser.getGiven_name(), ggUser.getFamily_name(), null, ggUser.getEmail(), true, null, null, null, ggUser.getId(), ggUser.getPicture(), true, false, new Role(5));
 
                 userDAO.insertUser(newUser);
             }
