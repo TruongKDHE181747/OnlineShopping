@@ -43,8 +43,8 @@ public class EditUser extends HttpServlet {
         int user_id=Integer.parseInt(request.getParameter("user_id"));
         String username = request.getParameter("username");
         String userEmail = request.getParameter("email");
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
+        String firstname = request.getParameter("first_name");
+        String lastname = request.getParameter("last_name");
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         String dob = request.getParameter("dob");
         String phone = request.getParameter("phone");
