@@ -16,6 +16,30 @@ import model.Role;
 import model.User;
 
 public class UserDAO extends DBContext {
+    
+    
+    public boolean updateProfileImage(int userId, String img) {
+        String sql = """
+                     UPDATE [dbo].[Users]
+                        SET [profile_picture_url] = ?
+                      WHERE [user_id] = ?""";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, img);
+            ps.setInt(2, userId);
+
+            int exe = ps.executeUpdate();
+            if (exe > 0) {
+                return true;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+        
+    }
+    
 
     public boolean updateUserProfile(User user) {
         String sql = """
