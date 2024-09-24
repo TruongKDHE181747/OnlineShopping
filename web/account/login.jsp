@@ -75,7 +75,7 @@
 
                                     <!-- Centered Google login button -->
                                     <div class="d-grid">
-                                        <a style="display: block" class="btn btn-lg btn-danger" href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/OnlineShopping/loginGoogle&response_type=code&client_id=450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com&approval_prompt=force" >
+                                        <a style="display: block" class="btn btn-lg btn-danger" href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:8080/OnlineShopping/loginGoogle&response_type=code&client_id=450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com&approval_prompt=force" >
                                             <i class="fab fa-google me-2"></i>Continue with Google
                                         </a>
                                     </div>
