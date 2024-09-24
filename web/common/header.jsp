@@ -65,8 +65,8 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="./homeslider">Home</a></li>
-                        <li><a href="./homeproduct">Shop</a></li>
+                        <li class="active"><a href="../homeslider">Home</a></li>
+                        <li><a href="../homeproduct">Shop</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="./about.html">About Us</a></li>
@@ -76,7 +76,7 @@
                                 <li><a href="./blog-details.html">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="./blog.html">Blog</a></li>
+                        <li><a href="../hpostlist">Blog</a></li>
                         <li><a href="./contact.html">Contacts</a></li>
                     </ul>
                 </nav>
