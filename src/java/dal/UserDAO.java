@@ -497,4 +497,34 @@ public class UserDAO extends DBContext {
         return list;
            
        }
+    public void edituser(User u){
+        try {
+            String sql = "Update Users set \n" +
+                            "username = ?, \n" +
+                            "first_name=?, \n" +
+                            "last_name=?,\n" +
+                            "phone=?,\n" +
+                            "email=?,\n" +
+                            "gender=?,\n" +
+                            "dob=?,\n" +
+                            "profile_picture_url=?,\n" +
+                            "role_id=?\n" +
+                            "where user_id=?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, u.getUsername());
+            pre.setString(2, u.getFirst_name());
+            pre.setString(3, u.getLast_name());
+            pre.setString(4, u.getPhone());
+            pre.setString(5, u.getEmail());
+            pre.setBoolean(6, u.isGender());
+            pre.setString(7, u.getDob());
+            pre.setString(8, u.getProfile_picture_url());
+            pre.setInt(9, u.getRole().getRole_id());
+            pre.setInt(10, u.getUser_id());
+           pre.executeUpdate();
+
+        } catch (SQLException ex) {
+
+        }
+    }
 }

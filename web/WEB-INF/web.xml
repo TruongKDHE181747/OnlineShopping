@@ -4,5 +4,20 @@
         <servlet-name>sliderlist</servlet-name>
         <servlet-class>user_controller.sliderlist</servlet-class>
     </servlet>
-  
+    <servlet>
+        <servlet-name>SettingList</servlet-name>
+        <servlet-class>admin_controller.SettingList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminUser</servlet-name>
+        <servlet-class>admin_controller.AdminUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SettingList</servlet-name>
+        <url-pattern>/settinglist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminUser</servlet-name>
+        <url-pattern>/adminuser</url-pattern>
+    </servlet-mapping>
 </web-app>
