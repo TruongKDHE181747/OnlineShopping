@@ -4,13 +4,15 @@
  */
 package auth_controller;
 
+import dal.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import model.User;
 
 /**
  *
@@ -19,25 +21,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "Profile", urlPatterns = {"/profile"})
 public class Profile extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        
-        
-        
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -49,7 +33,18 @@ public class Profile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession(true);
+        UserDAO userDAO = new UserDAO();
+        
+        
+        User account = (User) session.getAttribute("account");
+        
+        User profile = userDAO.getUserByUsername(account.getUsername());
+        
+        request.setAttribute("profile", profile);
+        
+        request.getRequestDispatcher("/account/profile.jsp").forward(request, response);
     }
 
     /**
@@ -63,17 +58,24 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession(true);
+        UserDAO userDAO = new UserDAO();
+        
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+        String dob = request.getParameter("dob");
+        String phone = request.getParameter("phone");
+        
+        User account = (User) session.getAttribute("account");
+        
+        User profile = new User(account.getUser_id(), firstname, lastname, phone, phone, gender, dob);
+        
+        userDAO.updateUserProfile(profile);
+        
+        response.sendRedirect(request.getContextPath()+"/profile");
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

@@ -46,7 +46,7 @@
                             <a href="./register">Sign up</a>                      
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
-                                <a href="">Hello ${sessionScope.account.username}</a>
+                                <a href="./profile">Hello ${sessionScope.account.username}</a>
                             <a href="./logout">Logout</a>                      
                             </c:if>
                         </div>
