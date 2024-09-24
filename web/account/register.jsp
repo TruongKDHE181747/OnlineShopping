@@ -135,7 +135,7 @@
 
                                     <!-- Centered Google sign-in button -->
                                     <div class="d-grid">
-                                        <a class="btn btn-google btn-lg text-white" href="#!" role="button">
+                                        <a class="btn btn-google btn-lg text-white" href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:8080/OnlineShopping/loginGoogle&response_type=code&client_id=450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com&approval_prompt=force" role="button">
                                             <i class="fab fa-google me-2"></i>Sign in with Google
                                         </a>
                                     </div>
