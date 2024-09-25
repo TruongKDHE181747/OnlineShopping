@@ -47,20 +47,17 @@ public class UserDAO extends DBContext {
                         SET [first_name] = ?
                            ,[last_name] = ?
                            ,[phone] = ?
-                           ,[email] = ?
                            ,[gender] = ?
-                           ,[dob] = ?
-                           
+                           ,[dob] = ?       
                       WHERE [user_id] = ?""";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getFirst_name());
             ps.setString(2, user.getLast_name());
             ps.setString(3, user.getPhone());
-            ps.setString(4, user.getEmail());
-            ps.setBoolean(5, user.isGender());
-            ps.setString(6, user.getDob());
-            ps.setInt(7, user.getUser_id());
+            ps.setBoolean(4, user.isGender());
+            ps.setString(5, user.getDob());
+            ps.setInt(6, user.getUser_id());
 
             int exe = ps.executeUpdate();
             if (exe > 0) {
