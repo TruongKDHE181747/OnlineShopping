@@ -91,7 +91,8 @@ public class Verify extends HttpServlet {
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/register");
             return;
-        }
+        }                
+        
         if (!otp.equals(user.getVerification_code())) {
             String errorMessage = "Wrong verification code!";
             request.setAttribute("userId", userId);

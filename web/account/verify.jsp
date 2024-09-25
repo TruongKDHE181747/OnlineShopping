@@ -28,7 +28,7 @@
                     ${error}
                 </div>
             </c:if>
-            <form action="verify" method="POST" id="otpForm" style="margin: 50px 0;height: 200px">
+            <form action="./verify" method="POST" id="otpForm" style="margin: 50px 0;height: 200px">
                 <div class="d-flex justify-content-center">
                     <input type="text" class="form-control otp-input" maxlength="1" required>
                     <input type="text" class="form-control otp-input" maxlength="1" required>
@@ -37,7 +37,7 @@
                     <input type="text" class="form-control otp-input" maxlength="1" required>
                     <input type="text" class="form-control otp-input" maxlength="1" required>
                 </div>
-                <input type="hidden" name="otp" id="otpHiddenInput" value="">
+                <input type="hidden" name="otp" id="otpHiddenInput">
                 <input type="hidden" name="userId" value="${requestScope.userId}">
 
                 <a style="width: 150px" class="btn btn-primary mt-4" href="verify?userId=${requestScope.userId}">Resend OTP</a>
