@@ -56,7 +56,7 @@ public class HProductDetail extends HttpServlet {
         int quantity = psList.get(0).getQuantity();
         String dcontent = "pdescription";
         int dfeedbackpage = 0;
-        List<ProductFeedback> pf2List = select2Products(alldpfList, dfeedbackpage);
+        List<ProductFeedback> pf2List = pfdao.get2FeetBackByProductId(proid, 0);
         List<Product> prlList = pdao.getAllRelatedProduct(proid);
         
         
@@ -81,7 +81,7 @@ public class HProductDetail extends HttpServlet {
     } 
     
     
-    public static List<ProductFeedback> select2Products( List<ProductFeedback> pList, int pageNum){
+    public static List<ProductFeedback> select2ProductsFeedback( List<ProductFeedback> pList, int pageNum){
         List<ProductFeedback> top2List = new ArrayList<>();
         for(int i = pageNum*2;i<=pageNum*2+1;i++){
             if(i>=pList.size()) {

@@ -5,6 +5,7 @@
 
 package product_controller;
 
+import dal.ProductFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import model.Product;
 import model.ProductFeedback;
 
 /**
@@ -35,9 +37,11 @@ public class FBpagination extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        ProductFeedbackDAO pfdao = new ProductFeedbackDAO();
+        Product product = (Product)session.getAttribute("dproduct");
         List<ProductFeedback> alldpfList = (List<ProductFeedback>)session.getAttribute("alldpfList");
         int cpage = Integer.parseInt(request.getParameter("cpage"));
-        List<ProductFeedback> pf2List = select2Products(alldpfList, cpage);
+        List<ProductFeedback> pf2List = pfdao.get2FeetBackByProductId(product.getProduct_id()+"", cpage*2);
         String dcontent = "pfeedback";
         session.setAttribute("dcontent", dcontent);
         session.setAttribute("pf2List", pf2List);
