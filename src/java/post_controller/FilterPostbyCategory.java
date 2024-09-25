@@ -19,14 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Post;
 import model.PostCategory;
-import model.ProductFeedback;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HPostList", urlPatterns={"/hpostlist"})
-public class HPostList extends HttpServlet {
+@WebServlet(name="FilterPostbyCategory", urlPatterns={"/filterpostbycategory"})
+public class FilterPostbyCategory extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -41,28 +40,21 @@ public class HPostList extends HttpServlet {
         HttpSession session = request.getSession();
         PostDAO pdao = new PostDAO();
         PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<Post> pList = pdao.getAllPost();
+        
+        String cid = request.getParameter("cid");
+        List<Post> pList = pdao.getAllPostByCategoryId(cid);
         List<Post> top6post = select6Post(pList, 0);
         List<PostCategory> pcList = pcdao.getAllPostCategory();
-        
+        session.setAttribute("mainpage", "blog");
         session.setAttribute("allpostlist", pList);
         session.setAttribute("top6post", top6post);
         session.setAttribute("postcategorylist", pcList);
         session.setAttribute("cpostpage", 0);
-        
-        
-        //Reset
-         Reset(session);
-        
+        Reset(session);
+        session.setAttribute("sortPostValue", cid);
         response.sendRedirect(request.getContextPath()+"/common/post.jsp");
-        
-        
-//        List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("postcategorylist");
-//        for (PostCategory postCategory : postcategorylist) {
-//            
-//        }
-        
     } 
+
     
     public static void Reset(HttpSession session){
         session.setAttribute("pobegin", "");
@@ -73,7 +65,6 @@ public class HPostList extends HttpServlet {
         session.setAttribute("mainpage", "blog");
         session.setAttribute("ploi", "");
     }
-    
     public static List<Post> select6Post( List<Post> pList, int pageNum){
         List<Post> top6List = new ArrayList<>();
         for(int i = pageNum*6;i<=pageNum*6+5;i++){
@@ -86,7 +77,6 @@ public class HPostList extends HttpServlet {
         
         return top6List;
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
