@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package post_controller;
 
-import dal.ProductFeedbackDAO;
+import dal.PostCategoryDAO;
+import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,17 +15,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
-import model.Product;
-import model.ProductFeedback;
+import model.Post;
+import model.PostCategories;
+import model.PostCategory;
+import model.User;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="FBpagination", urlPatterns={"/fbpagination"})
-public class FBpagination extends HttpServlet {
+@WebServlet(name="HPostDetail", urlPatterns={"/hpostdetail"})
+public class HPostDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,34 +38,26 @@ public class FBpagination extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        ProductFeedbackDAO pfdao = new ProductFeedbackDAO();
-        Product product = (Product)session.getAttribute("dproduct");
-        List<ProductFeedback> alldpfList = (List<ProductFeedback>)session.getAttribute("alldpfList");
-        int cpage = Integer.parseInt(request.getParameter("cpage"));
-        List<ProductFeedback> pf2List = pfdao.get2FeetBackByProductId(product.getProduct_id()+"", cpage*2);
-        String dcontent = "pfeedback";
-        session.setAttribute("dcontent", dcontent);
-        session.setAttribute("pf2List", pf2List);
-        session.setAttribute("dfeedbackpage", cpage);
-        response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
-         
+         HttpSession session = request.getSession();
+        PostDAO pdao = new PostDAO();
+        PostCategoryDAO pcdao = new PostCategoryDAO();
         
+        String bid = request.getParameter("bid");
+        Post p = pdao.getPostByID(bid);
+        PostCategory pc = pdao.getPostCategoryByPostID(bid);
+        User u = pdao.getUserByPostID(bid);
+        List<PostCategory> pcList = pcdao.getAllPostCategory();
+        
+        
+        session.setAttribute("postcategorylist", pcList);
+        session.setAttribute("ppostdetail", p);
+        session.setAttribute("ppostcategory", pc);
+        session.setAttribute("ppostauthor", u);
+        
+        
+        response.sendRedirect(request.getContextPath()+"/common/hblogdetail.jsp");
         
     } 
-    
-    public static List<ProductFeedback> select2Products( List<ProductFeedback> pList, int pageNum){
-        List<ProductFeedback> top2List = new ArrayList<>();
-        for(int i = pageNum*2;i<=pageNum*2+1;i++){
-            if(i>=pList.size()) {
-                break;
-            } else {
-                top2List.add(pList.get(i));
-            }
-        }
-        
-        return top2List;
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

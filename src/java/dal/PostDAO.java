@@ -13,7 +13,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Post;
+import model.PostCategories;
+import model.PostCategory;
 import model.Product;
+import model.Role;
+import model.User;
 
 /**
  *
@@ -103,7 +107,98 @@ public class PostDAO extends DBContext{
     }
     
     
+    public Post getPostByID(String id) {
+        Post p = new Post();
+       String sql = "select * from Posts\n" +
+                    "where post_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, id);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_id = rs.getInt("post_id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String thumbnail = rs.getString("thumbnail");
+                int author_id = rs.getInt("author_id");
+                int is_active = rs.getInt("is_active");
+                Date created_at = rs.getDate("created_at");
+               Date modified_at = rs.getDate("modified_at");
+                int post_category_id = rs.getInt("post_category_id");
+                
+                p = new Post(post_id, title, content, thumbnail, author_id, is_active, created_at, modified_at, post_category_id);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
+    }
     
+    public PostCategory getPostCategoryByPostID(String id) {
+        PostCategory p = new PostCategory();
+       String sql = "select * from Post_Categories\n" +
+                    "where post_category_id = (\n" +
+                    "select post_category_id\n" +
+                    "from Posts where post_id = ?\n" +
+                    ") and is_active = 1";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, id);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_category_id = rs.getInt("post_category_id");
+                String post_category_name = rs.getString("post_category_name");
+                int is_active = rs.getInt("is_active");
+                p = new PostCategory(post_category_id, post_category_name, is_active);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
+    }
+    
+    
+    public User getUserByPostID(String id) {
+        RoleDAO roleDAO = new RoleDAO();
+        User u = new User();
+       String sql = "select * from Users\n" +
+                    "where user_id = (\n" +
+                    "select author_id\n" +
+                    "from Posts where post_id = ?\n" +
+                    ") and is_active=1";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, id);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int user_id = rs.getInt("user_id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                boolean gender = rs.getBoolean("gender");
+                String dob = rs.getString("dob");
+                String verification_code = rs.getString("verification_code");
+                String reset_password_code = rs.getString("reset_password_code");
+                String google_id = rs.getString("google_id");
+                String profile_picture_url = rs.getString("profile_picture_url");
+                boolean is_active = rs.getBoolean("is_active");
+                boolean is_banned = rs.getBoolean("is_banned");
+                Role role = roleDAO.getRoleById(rs.getInt(16));
+                u = new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role);
+                
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return u;
+    }
+   
     public List<Post> getTop6ByFilter(String sql) {
         List<Post> pList = new ArrayList<>();
        
@@ -157,4 +252,12 @@ public class PostDAO extends DBContext{
         }
         return pList;
     }
+    
+//    public static void main(String[] args) {
+//        PostDAO pdao = new PostDAO();
+//        Post p = pdao.getPostByID("1");
+//        System.out.println(p.getTitle());
+//        PostCategories pc = pdao.getPostCategoryByPostID("1");
+//        System.out.println(pc.getPost_category_name());
+//    }
 }

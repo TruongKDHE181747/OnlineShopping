@@ -166,7 +166,7 @@
                             <div class="blog__item__text">
                                 <span><img src="img/icon/calendar.png" alt=""> <%=post.getModified_at()%></span>
                                 <h5><%=post.getTitle()%></h5>
-                                <a href="#">Read More</a>
+                                <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
                             </div>
                         </div>
                     </div>
