@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="../common/img/logo.png" alt=""></a>
+                    <a href="./index.html"><img src="<%=s%>/common/img/logo.png" alt=""></a>
                 </div>
             </div>
             <%
