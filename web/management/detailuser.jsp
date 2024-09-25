@@ -53,7 +53,7 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="user_id" class="form-label">User ID</label>
-                                    <input disabled="" value="${sessionScope.u.user_id}" name="user_id" type="text" class="form-control" id="user_id" required>
+                                    <input disabled="" value="${sessionScope.userid}" name="user_id" type="text" class="form-control" id="user_id" required>
 
                                 </div>
 
