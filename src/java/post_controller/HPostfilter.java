@@ -98,19 +98,19 @@ public class HPostfilter extends HttpServlet {
         if(sortPostValue.length()>0){
             session.setAttribute("sortPostValue", sortPostValue);
             if(sortPostValue.equals("new")){
-                sql+="order by DATEDIFF(DAY, modified_at, GETDATE()) asc";
+                sql+="order by DATEDIFF(DAY, modified_at, GETDATE()) asc ";
             } else if(sortPostValue.equals("old")){
-                 sql+="order by DATEDIFF(DAY, modified_at, GETDATE()) desc";
+                 sql+="order by DATEDIFF(DAY, modified_at, GETDATE()) desc ";
             } else {
-                sql += "and p.post_category_id = "+sortPostValue;
+                sql += "and p.post_category_id = "+sortPostValue+" ";
             }
             
-        }
-        
+        } 
+               
         List<Post> pList = pdao.getAllPostByFilter(sql);
         List<Post> top6post = select6Post(pList, 0);
         
-         session.setAttribute("allpostlist", pList);
+        session.setAttribute("allpostlist", pList);
         session.setAttribute("top6post", top6post);
         session.setAttribute("cpostpage", 0);
         session.setAttribute("postsql", sql);

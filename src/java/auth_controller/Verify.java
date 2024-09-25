@@ -94,6 +94,7 @@ public class Verify extends HttpServlet {
         }
         if (!otp.equals(user.getVerification_code())) {
             String errorMessage = "Wrong verification code!";
+            request.setAttribute("userId", userId);
             request.setAttribute("error", errorMessage);
             request.getRequestDispatcher("/account/verify.jsp").forward(request, response);
             return;

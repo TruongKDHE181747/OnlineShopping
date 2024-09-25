@@ -88,6 +88,7 @@ public class HomeProductSearch extends HttpServlet {
         session.setAttribute("bList", bList);
         session.setAttribute("sList", sList);
         session.setAttribute("pcList", pcList);
+        session.setAttribute("mainpage", "shop");
         response.sendRedirect(request.getContextPath()+"/common/product.jsp");
         }
         

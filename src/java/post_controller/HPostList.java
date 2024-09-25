@@ -58,7 +58,8 @@ public class HPostList extends HttpServlet {
         session.setAttribute("author", "");
         session.setAttribute("title", "");
         session.setAttribute("sortPostValue", "");
-        
+        session.setAttribute("mainpage", "blog");
+        session.setAttribute("ploi", "");
         response.sendRedirect(request.getContextPath()+"/common/post.jsp");
         
         

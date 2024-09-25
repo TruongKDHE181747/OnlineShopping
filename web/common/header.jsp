@@ -36,18 +36,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-7">
-
+                    
                 </div>
+                <%
+                String s = request.getContextPath();;
+                %>
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
                             <c:if test="${sessionScope.account eq null}">
-                            <a href="./login">Sign in</a>
-                            <a href="./register">Sign up</a>                      
+                            <a href="<%=s%>/login">Sign in</a>
+                            <a href="<%=s%>/register">Sign up</a>                      
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
-                                <a href="./profile">Hello ${sessionScope.account.username}</a>
-                            <a href="./logout">Logout</a>                      
+                                <a href="<%=s%>/profile">Hello ${sessionScope.account.username}</a>
+                            <a href="<%=s%>/logout">Logout</a>                      
                             </c:if>
                         </div>
                     </div>
@@ -59,38 +62,46 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="./common/img/logo.png" alt=""></a>
+                    <a href="<%=s%>/homeslider"><img src="<%=s%>/common/img/logo.png" alt=""></a>
                 </div>
             </div>
+            <%
+            String mainpage = session.getAttribute("mainpage")+"";
+            if(mainpage.equals("null")) mainpage = "home";
+            %>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="./homeslider">Home</a></li>
-                        <li><a href="./homeproduct">Shop</a></li>
+                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Home</a></li>
+                        <li class="<%=mainpage.equals("shop")?"active":""%>"><a href="<%=s%>/homeproduct">Shop</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
-                                <li><a href="./about.html">About Us</a></li>
-                                <li><a href="./shop-details.html">Shop Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./checkout.html">Check Out</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Shop Details</a></li>
+                                <li><a href="#">Shopping Cart</a></li>
+                                <li><a href="#">Check Out</a></li>
+                                <li><a href="#">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contacts</a></li>
+                        <li class="<%=mainpage.equals("blog")?"active":""%>"><a href="<%=s%>/hpostlist">Blog</a></li>
+                        <li><a href="#">Contacts</a></li>
                     </ul>
                 </nav>
             </div>
+                        <%
+                    String pname = session.getAttribute("pname")+"";
+                    if(pname.equals("null")) pname= "";
+                    %>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option row" style="padding: 22px 0;">
                     <div class="col-md-10">
-                        <form class="d-flex" role="search" action="./homeproductsearch">
-                            <input class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
+                        <form class="d-flex" role="search" action="<%=s%>/homeproductsearch">
+                            <input value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
                         </form>
 
                     </div>
-                    <div style="display: flex; align-items: center;" class="col-md-2"><a href="#"><img src="./common/img/icon/cart.png" alt=""> <span>0</span></a></div>
+                    <div style="display: flex; align-items: center;" class="col-md-2"><a href="#"><img src="<%=s%>/common/img/icon/cart.png" alt=""> <span>0</span></a></div>
 
 
 

@@ -72,7 +72,7 @@ public class HProductDetail extends HttpServlet {
         session.setAttribute("prlList", prlList);
        
         
-        
+        session.setAttribute("mainpage", "shop");
         response.sendRedirect(request.getContextPath()+"/common/hproductdetail.jsp");
         
          
