@@ -184,7 +184,7 @@
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    position: absolute;
                      width: 16%;
                      top: 80px;
-                     height: 120%;
+                     height: 140%;
                      bottom: 0;
                      ">
 
