@@ -20,13 +20,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/style.css" type="text/css">
 
 <style>
-    .custom-link {
+    a {
         color: #007bff;
         text-decoration: none;
     }
     
-    .custom-link:hover {
-        color: #0056b3;
-        text-decoration: underline;
+    a:hover {
+        color: #f7941d;
     }
 </style>

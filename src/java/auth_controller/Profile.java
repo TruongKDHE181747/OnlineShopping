@@ -41,7 +41,7 @@ public class Profile extends HttpServlet {
 
         User profile = userDAO.getUserByUsername(account.getUsername());
 
-        request.setAttribute("profile", profile);
+        session.setAttribute("profile", profile);
 
         request.getRequestDispatcher("/account/profile.jsp").forward(request, response);
     }
@@ -66,6 +66,20 @@ public class Profile extends HttpServlet {
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         String dob = request.getParameter("dob");
         String phone = request.getParameter("phone");
+
+        if (dob.isEmpty()) {
+            dob = null;
+        }
+        if(firstname.isBlank()){
+            firstname = null;
+        }
+        if(lastname.isBlank()){
+            lastname = null;
+        }
+        if(phone.isBlank()){
+            phone = null;
+        }
+
 
         User account = (User) session.getAttribute("account");
 

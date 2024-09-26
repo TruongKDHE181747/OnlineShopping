@@ -11,14 +11,10 @@
         <jsp:include page="../common/header.jsp" />
 
         <div class="container-xl px-4 mt-4">
-            <!-- Account page navigation-->
-            <nav class="nav nav-borders">
-                <a class="nav-link  ms-0" href="./profile" target="__blank">Profile</a>
-                <a class="nav-link" href="#" target="__blank">Order History</a>
-                <a class="nav-link active" href="./changePassword" target="__blank">Security</a>
-            </nav>
+            
             <hr class="mt-0 mb-4">
             <div class="row">
+                <jsp:include page="../account/profile-nav.jsp"/>
                 <div class="col-lg-8">
                     <!-- Change password card-->
                     <div class="card mb-4">
