@@ -442,7 +442,6 @@ public class ProductDAO extends DBContext {
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, "%"+s+"%");
-            pre.setString(2, "%"+s+"%");
             ResultSet rs = pre.executeQuery();
 
             while (rs.next()) {
@@ -468,7 +467,7 @@ public class ProductDAO extends DBContext {
 
 //    public static void main(String[] args) {
 //        ProductDAO pdao = new ProductDAO();
-//        List<Product> pList = pdao.getProductPaging(1);
+//        List<Product> pList = pdao.searchProduct("polo");
 //        System.out.println(pList.size());
 //    }
 }

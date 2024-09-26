@@ -9,6 +9,7 @@ import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import model.Product;
  * @author Thanh Tan
  */
 @WebServlet(name="EditProduct", urlPatterns={"/editproduct"})
+@MultipartConfig(maxFileSize = 16177215)
 public class EditProduct extends HttpServlet {
    
     /** 
