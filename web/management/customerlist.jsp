@@ -253,8 +253,8 @@
                                     <h5 class="navbar-brand" >Customer List</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchslider" method="get">
-                                            <input placeholder="Search..." name="search" class="form-control me-2" type="search"  aria-label="Search">
+                                        <form class="d-flex" role="search" action="../customerlist" method="get">
+                                            <input placeholder="Search..." name="searchcustomer" class="form-control me-2" type="search"  aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
