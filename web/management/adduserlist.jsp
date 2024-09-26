@@ -49,13 +49,9 @@
                    
 
                     <div class="col-md-8">
-                        <form class="needs-validation" action="../edituser" enctype="multipart/form-data">
+                        <form class="needs-validation" action="../adduserlist" enctype="multipart/form-data">
                             <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <label for="user_id" class="form-label">User ID</label>
-                                    <input  value="" name="user_id" type="text" class="form-control" id="user_id" required>
-
-                                </div>
+                                
 
                                 <div class="col-sm-6">
                                     <label for="username" class="form-label">Username</label>
@@ -71,6 +67,11 @@
                                     <label for="last_name" class="form-label">Last name</label>
                                     <input  value="" name="last_name" type="text" class="form-control" id="last_name" required>
 
+                                </div>
+                                <div class="col-sm-6">
+                                      <label for="password" class="form-label">Password</label>
+                                    <input value="" name="password" type="text" class="form-control" id="password" required="">
+                                
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="profile_picture_url" class="form-label">Profile Image</label>
@@ -104,7 +105,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="dob" class="form-label">Date of birth</label>
-                                    <input  value="" name="dob" type="text" class="form-control" id="dob" required>
+                                    <input  value="" name="dob" type="date" class="form-control" id="dob" required>
 
                                 </div>
                                 
@@ -118,10 +119,7 @@
                                             <option value="5" >user</option>
                                         </select>
                                 </div>  
-                                <div class="col-12">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input value="" name="password" type="text" class="form-control" id="password" required="">
-                                </div>
+                                
                             </div>
 
                             <hr class="my-4">

@@ -50,14 +50,15 @@ public class EditUser extends HttpServlet {
         String phone = request.getParameter("phone");
         String profilepic=request.getParameter("profile_picture_url");
         String rolename=request.getParameter("role");
+        String password=request.getParameter("password");
+                
         boolean checkExistUsername = userDAO.checkExistUsername(username);
         boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
         Role role=rdao.getRolebyname(rolename);
         
-        User oldu= userDAO.getUserById(user_id);
-        User newu=new User(user_id, username, oldu.getPassword(), firstname, lastname, phone, userEmail, gender, dob, null, null, null, profilepic, true, false, role);
+        User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, profilepic, true, false, role);
         userDAO.edituser(newu);
-        response.sendRedirect("detailuser");
+        response.sendRedirect("adminuser");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
