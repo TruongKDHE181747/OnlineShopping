@@ -9,6 +9,7 @@
 <%@page import="model.Post"%>
 <%@page import="model.PostCategory"%>
 <%@page import="model.User"%>
+<%@page import="model.PostFeedback"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -41,8 +42,15 @@
 
         <%
         Post ppostdetail = (Post)session.getAttribute("ppostdetail");
+        Post afterPost = (Post)session.getAttribute("afterPost");
+        Post beforePost = (Post)session.getAttribute("beforePost");
             PostCategory ppostcategory = (PostCategory)session.getAttribute("ppostcategory");
             User ppostauthor = (User)session.getAttribute("ppostauthor");
+            
+        List<PostFeedback> top3postfblist = (List<PostFeedback>)session.getAttribute("top3postfblist");
+        List<PostFeedback> allpostfblist = (List<PostFeedback>)session.getAttribute("allpostfblist");
+        
+        
         %>
         <!-- Blog Details Hero Begin -->
         <section class="blog-hero spad">
@@ -54,7 +62,7 @@
                             <ul>
                                 <li>By <%=ppostauthor.getFirst_name()%> <%=ppostauthor.getLast_name()%></li>
                                 <li><%=ppostdetail.getModified_at()%></li>
-                                <li>8 Comments</li>
+                                <li><%=allpostfblist.size()%> Comments</li>
                             </ul>
                         </div>
                     </div>
@@ -123,7 +131,7 @@
                                             %>
                                             <a style="color: <%=ppostcategory.getPost_category_id()==postCategory.getPost_category_id()?"black":
                                                 "#b7b7b7;"%>" 
-                                               href="#?cid=<%=postCategory.getPost_category_id()%>">
+                                               href="../filterpostbycategory?cid=<%=postCategory.getPost_category_id()%>">
                                                 #<%=postCategory.getPost_category_name()%></a>
                                                 <%
                                                     }
@@ -134,18 +142,32 @@
                             </div>
 
                             <div class="blog__details__btns">
-                                <div class="row">
+                                <div class="row">                                  
                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <a href="" class="blog__details__btns__item">
+                                        <%
+                                        if(beforePost!=null) {
+                                        %>
+                                        <a href="../hpostdetail?bid=<%=beforePost.getPost_id()%>" class="blog__details__btns__item">
                                             <p><span class="arrow_left"></span> Previous Pod</p>
-                                            <h5>It S Classified How To Utilize Free Classified Ad Sites</h5>
+                                            <h5><%=beforePost.getTitle()%></h5>
                                         </a>
+                                        <%
+                                            }
+                                        %>
+                                        
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <a href="" class="blog__details__btns__item blog__details__btns__item--next">
+                                        <%
+                                        if(afterPost!=null){
+                                        %>
+                                        <a href="../hpostdetail?bid=<%=afterPost.getPost_id()%>" class="blog__details__btns__item blog__details__btns__item--next">
                                             <p>Next Pod <span class="arrow_right"></span></p>
-                                            <h5>Tips For Choosing The Perfect Gloss For Your Lips</h5>
+                                            <h5><%=afterPost.getTitle()%></h5>
                                         </a>
+                                        <%
+                                            }
+                                        %>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -153,15 +175,7 @@
                                 <h4>Leave A Comment</h4>
                                 <form action="#">
                                     <div class="row">
-                                        <div class="col-lg-4 col-md-4">
-                                            <input type="text" placeholder="Name">
-                                        </div>
-                                        <div class="col-lg-4 col-md-4">
-                                            <input type="text" placeholder="Email">
-                                        </div>
-                                        <div class="col-lg-4 col-md-4">
-                                            <input type="text" placeholder="Phone">
-                                        </div>
+                                        
                                         <div class="col-lg-12 text-center">
                                             <textarea placeholder="Comment"></textarea>
                                             <button type="submit" class="site-btn">Post Comment</button>
@@ -170,50 +184,52 @@
                                 </form>
                             </div>
 
-                                        <div class="row" style="margin-top: 24px;">
+                            <%
+                            int cpfpage = 0;
+                            if(session.getAttribute("pofpage")!=null) cpfpage = Integer.parseInt(session.getAttribute("pofpage")+"");
+        
+                            %>
+                            <div class="row" style="margin-top: 24px;">
                                 <div class="blog__details__option" style="width: 100%;">
                                     <div class="row">
+                                        
+                                        <%
+                                        for (PostFeedback postFeedback : top3postfblist) {
+            
+        
+                                        %>
                                         <div class="col-md-12 row" style="margin: 5px 0;">
                                             <div class="blog__details__author col-md-12 row">
                                                 <div class="blog__details__author__pic col-md-2">
-                                                    <img src="img/blog/details/blog-author.jpg" alt="">
+                                                    <img src="../<%=postFeedback.getProfile_picture_url()%>" alt="">
                                                 </div>
                                                 <div class="blog__details__author__text col-md-9">
-                                                    <h5>Aiden Blair</h5>
-                                                    <p>Aiden Blair comment this line</p>
+                                                    <h5><%=postFeedback.getUsername()%></h5>
+                                                    <p><%=postFeedback.getReview()%></p>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
+                                        <%
+                                            }
+                                        %>
                                         
-                                        
-                                        <div class="col-md-12 row" style="margin: 5px 0;">
-                                            <div class="blog__details__author col-md-12 row">
-                                                <div class="blog__details__author__pic col-md-2">
-                                                    <img src="img/blog/details/blog-author.jpg" alt="">
-                                                </div>
-                                                <div class="blog__details__author__text col-md-9">
-                                                    <h5>Aiden Blair</h5>
-                                                    <p>Aiden Blair comment this line</p>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
 
                                     </div>
                                     <div class="row">
-                    <div class="col-lg-12">
-                        <div class="product__pagination">
-                            <%
-                            for (int i = 0; i < 2; i++) {
-                            %>
-                            <a class="<%=i==0?"active":""%>" href="#?cpage=<%=i%>"><%=i+1%> </a>
-                            <%
-                                }
-                            %>
-                        </div>
-                    </div>
-                </div>
+                                        <div class="col-lg-12">
+                                            <div class="product__pagination">
+                                                <%
+                                                int npage = allpostfblist.size()/3+1;
+                                                for (int i = 0; i < npage; i++) {
+                                                %>
+                                                <a class="<%=i==cpfpage?"active":""%>" href="../postfbpagination?cpage=<%=i%>"><%=i+1%> </a>
+                                                <%
+                                                    }
+                                                %>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -232,42 +248,38 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title">
-                            <span>Latest News</span>
-                            <h2>Fashion New Trends</h2>
+                            <span>Related News</span>
+                            <h2>Similar <%=ppostcategory.getPost_category_name()%> Posts </h2>
                         </div>
                     </div>
                 </div>
+                        
+                        <%
+                        List<Post> relatedPostList = (List<Post>)session.getAttribute("relatedPostList");
+        
+                        %>
                 <div class="row">
+                    
+                    <%
+                    for (Post post : relatedPostList) {
+            
+        
+                    %>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="blog__item">
-                            <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-1.jpg"></div>
+                            <div class="blog__item__pic set-bg" data-setbg="../<%=post.getThumbnail()%>"></div>
                             <div class="blog__item__text">
-                                <span><img src="img/icon/calendar.png" alt=""> 16 February 2020</span>
-                                <h5>What Curling Irons Are The Best Ones</h5>
-                                <a href="#">Read More</a>
+                                <span><img src="img/icon/calendar.png" alt=""> <%=post.getModified_at()%></span>
+                                <h5><%=post.getTitle()%></h5>
+                                <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="blog__item">
-                            <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-2.jpg"></div>
-                            <div class="blog__item__text">
-                                <span><img src="img/icon/calendar.png" alt=""> 21 February 2020</span>
-                                <h5>Eternity Bands Do Last Forever</h5>
-                                <a href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="blog__item">
-                            <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-3.jpg"></div>
-                            <div class="blog__item__text">
-                                <span><img src="img/icon/calendar.png" alt=""> 28 February 2020</span>
-                                <h5>The Health Benefits Of Sunglasses</h5>
-                                <a href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
+                    <%
+                        }
+                    %>
+                    
+                    
                 </div>
             </div>
         </section>

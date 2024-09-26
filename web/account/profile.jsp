@@ -13,9 +13,9 @@
         <div class="container-xl px-4 mt-4">
             <!-- Account page navigation-->
             <nav class="nav nav-borders">
-                <a class="nav-link  ms-0" href="./profile" target="__blank">Profile</a>
-                <a class="nav-link" href="#" target="__blank">Order History</a>
-                <a class="nav-link active" href="#" target="__blank">Security</a>
+                <a class="nav-link  ms-0" href="./profile" >Profile</a>
+                <a class="nav-link" href="#" >Order History</a>
+                <a class="nav-link active" href="./changePassword" >Security</a>
             </nav>
             <hr class="mt-0 mb-4">
             <div class="row">
