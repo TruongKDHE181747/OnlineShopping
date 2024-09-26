@@ -6,6 +6,7 @@
 package product_controller;
 
 import dal.ProductDAO;
+import dal.SizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,7 +15,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.util.List;
 import model.Product;
+import model.Size;
 
 /**
  *
@@ -34,14 +37,17 @@ public class AddProduct extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        SizeDAO sdao = new SizeDAO();
+        List<Size> sizes = sdao.getAllSize();
+        
         Part file=request.getPart("img");
         String imgfileName = file.getSubmittedFileName();
         boolean is_active = false;
         
         String name = request.getParameter("name");
         int price = Integer.parseInt(request.getParameter("price"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
         int discount = Integer.parseInt(request.getParameter("discount"));
+        int total_quantity = 0;
         String description = request.getParameter("description");
         String img = "product_img/"+imgfileName;
         int status = Integer.parseInt(request.getParameter("status"));
@@ -49,12 +55,17 @@ public class AddProduct extends HttpServlet {
         int brand = Integer.parseInt(request.getParameter("brand"));
         int category = Integer.parseInt(request.getParameter("category"));
         
+        for (Size size : sizes) {
+            int quantity = Integer.parseInt(request.getParameter("size_") + size.getSize_id());
+            total_quantity += quantity;
+        }
+        
         if(status == 1) {
             is_active = true;
         }
         
         ProductDAO pdao = new ProductDAO();
-        pdao.addProduct(new Product(0, name, price, quantity, discount, description, name, is_active, rated_star, brand, category));
+        pdao.addProduct(new Product(0, name, price, total_quantity, discount, description, name, is_active, rated_star, brand, category));
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

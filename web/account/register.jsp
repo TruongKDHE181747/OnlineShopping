@@ -32,7 +32,7 @@
                                     </div>
                                 </c:if>
                                 <!-- Form -->
-                                <form action="./register" method="POST">
+                                <form action="../register" method="POST">
 
                                     <div class="row mb-4">
                                         <div class="col-md-12">

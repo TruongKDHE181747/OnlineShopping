@@ -53,23 +53,23 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="user_id" class="form-label">User ID</label>
-                                    <input disabled="" value="${sessionScope.userid}" name="user_id" type="text" class="form-control" id="user_id" required>
+                                    <input disabled="" value="${sessionScope.userid}" name="user_id" type="text" class="form-control" id="user_id" >
 
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="username" class="form-label">Username</label>
-                                    <input  value="${sessionScope.u.username}" name="username" type="text" class="form-control" id="username" required>
+                                    <input  value="${sessionScope.u.username}" name="username" type="text" class="form-control" id="username" >
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="first_name" class="form-label">First name</label>
-                                    <input  value="${sessionScope.u.first_name}" name="first_name" type="text" class="form-control" id="first_name" required>
+                                    <input  value="${sessionScope.u.first_name}" name="first_name" type="text" class="form-control" id="first_name" >
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="last_name" class="form-label">Last name</label>
-                                    <input  value="${sessionScope.u.last_name}" name="last_name" type="text" class="form-control" id="last_name" required>
+                                    <input  value="${sessionScope.u.last_name}" name="last_name" type="text" class="form-control" id="last_name" >
 
                                 </div>
                                 <div class="col-sm-6">
@@ -97,17 +97,17 @@
 
                                 <div class="col-sm-6">
                                     <label for="phone" class="form-label">Phone number</label>
-                                    <input  value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" required>
+                                    <input  value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" >
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input  value="${sessionScope.u.email}" name="email" type="text" class="form-control" id="email" required>
+                                    <input  value="${sessionScope.u.email}" name="email" type="text" class="form-control" id="email" >
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="dob" class="form-label">Date of birth</label>
-                                    <input  value="${sessionScope.u.dob}" name="dob" type="text" class="form-control" id="dob" required>
+                                    <input  value="${sessionScope.u.dob}" name="dob" type="date" class="form-control" id="dob" >
 
                                 </div>
 
@@ -121,7 +121,8 @@
                                             <option value="user" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>user</option>
                                         </select>
                                 </div>  
-                                
+                                <input disabled="" value="${sessionScope.u.password}" name="password" type="hidden" class="form-control" id="password" >
+
                             </div>
 
                             <hr class="my-4">

@@ -194,37 +194,52 @@
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
                             <a href="#" class="nav-link text-white home-link" aria-current="page">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                                Home
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="../home"/></svg>
+                                Dashboard
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white product-link active">
+                            <a href="../productlist" class="nav-link text-white product-link active">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                                Products
+                                Product
                             </a>
                         </li>
+                        
                         <li>
-                            <a href="#" class="nav-link text-white account-link">
+                            <a href="../sliderlist" class="nav-link text-white account-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Accounts
+                                Slider
                             </a>
                         </li>
 
                         <li>
-                            <a href="#" class="nav-link text-white station-link">
+                            <a href="../customerlist" class="nav-link text-white station-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Stations
+                                Customer
                             </a>
                         </li>
 
                         <li>
                             <a href="#" class="nav-link text-white contract-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                                Contracts
+                                Post
                             </a>
                         </li>
-
+                        
+                        <li>
+                            <a href="#" class="nav-link text-white contract-link">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                                Product Feedback
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="nav-link text-white contract-link">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                                Post Feedback
+                            </a>
+                        </li>
+                        
                     </ul>
                     <hr>
 

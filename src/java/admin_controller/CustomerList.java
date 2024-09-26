@@ -34,12 +34,25 @@ public class CustomerList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        if(request.getParameter("searchcustomer")==null)
+        {
        String sql= "Select * from Users where role_id=5 ";
         UserDAO udao=new UserDAO();
         ArrayList<User> clist=udao.getUsers(sql);
         HttpSession session=request.getSession(true);
         session.setAttribute("clist", clist);
-        response.sendRedirect(request.getContextPath()+"/management/customerlist.jsp");
+        response.sendRedirect(request.getContextPath()+"/management/customerlist.jsp");}
+        
+        else
+        {
+     
+        UserDAO udao=new UserDAO();
+        ArrayList<User> clist=udao.searchCustomer(request.getParameter("searchcustomer"));
+        HttpSession session=request.getSession(true);
+        session.setAttribute("clist", clist);
+        response.sendRedirect(request.getContextPath()+"/management/customerlist.jsp");}
+         
+            
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,11 +90,7 @@ public class CustomerList extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    public static void main(String[] args) {
-        UserDAO udao=new UserDAO();
-        ArrayList<User> list=udao.getUsers("Select * from Users where role_id=5 ");
-        System.out.println(list.get(0).getDob());
-    }
+    
     
 
 }

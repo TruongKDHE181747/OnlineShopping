@@ -3,31 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package slider_controller;
+package admin_controller;
 
-import dal.SliderDao;
+import dal.RoleDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import model.Slider;
+import jakarta.servlet.http.HttpSession;
+import model.Role;
+import model.User;
 
 /**
  *
- * @author quanpyke
+ * @author 84983
  */
-@WebServlet(name="AddSlider", urlPatterns={"/addslider"})
-@MultipartConfig(maxFileSize = 16177215)
-
-public class AddSlider extends HttpServlet {
+@WebServlet(name="AddUserList", urlPatterns={"/adduserlist"})
+public class AddUserList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,34 +35,24 @@ public class AddSlider extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-//         Part file=request.getPart("img");
-//          String imgfileName = file.getSubmittedFileName();    
-//            
-//     
-//         String img = "slider_img/"+imgfileName;
-//         
-         
-         
-          Part filePart = request.getPart("img"); 
-        String fileName = filePart.getSubmittedFileName();
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "slider_img";
-
-
-        // Save the uploaded file to the specified path
-        filePart.write(uploadPath + File.separator + fileName);
-
-          String img = "slider_img/"+fileName;
-        
-         
-         
-         String title=request.getParameter("title");
-         String description=request.getParameter("description");
-         int status=   Integer.parseInt( request.getParameter("status"));
-         
-         SliderDao sdao=new SliderDao();
-         sdao.insert(new Slider(title,description, img, status));
-        response.sendRedirect("sliderlist");
-         
+        HttpSession session= request.getSession();
+        UserDAO ud= new UserDAO();
+        RoleDAO rd=new RoleDAO();
+        String username=request.getParameter("username");
+        String password=request.getParameter("password");
+        String firstname= request.getParameter("first_name");
+        String lastname=request.getParameter("last_name");
+        String picture=request.getParameter("profile_picture_url");
+        String gender=request.getParameter("gender");
+        String phone=request.getParameter("phone");
+        String email=request.getParameter("email");
+        String dob=request.getParameter("dob");
+        String role=request.getParameter("role");
+        int role_id=Integer.parseInt(role);
+        Role r=rd.getRoleById(role_id);
+        User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, picture, true, false, r);
+        ud.addUser(u);
+        response.sendRedirect("adminuser");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
