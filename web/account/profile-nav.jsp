@@ -9,8 +9,8 @@
         <div class="card-body text-center">
             <!-- Profile picture image-->
             <img style=" height: 10rem; width: 10rem" class="img-account-profile rounded-circle mb-2" 
-                 src="<c:if test="${profile.profile_picture_url == null}">${pageContext.request.contextPath}/profile_img/default.jpg</c:if>
-                 <c:if test="${profile.profile_picture_url != null}">${profile.profile_picture_url}</c:if>"
+                 src="<c:if test="${account.profile_picture_url == null}">${pageContext.request.contextPath}/profile_img/default.jpg</c:if>
+                 <c:if test="${account.profile_picture_url != null}">${account.profile_picture_url}</c:if>"
                      alt="">
 
 

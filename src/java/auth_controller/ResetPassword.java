@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.User;
 import utils.Email;
@@ -64,6 +65,9 @@ public class ResetPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+        User account = (User) session.getAttribute("account");
+
         UserDAO userDAO = new UserDAO();
 
         String email = request.getParameter("email");
@@ -79,7 +83,14 @@ public class ResetPassword extends HttpServlet {
         if (userDAO.updatePassword(email, newPassword)) {
             userDAO.deleteResetCode(email);
         }
-        response.sendRedirect(request.getContextPath() + "/login");
+
+        if (account != null) {
+            request.setAttribute("success", "Set password successfully.");
+            request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);        
+        } else {
+            response.sendRedirect(request.getContextPath() + "/login");
+        }
+
     }
 
 }

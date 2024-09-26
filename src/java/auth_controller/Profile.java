@@ -41,7 +41,7 @@ public class Profile extends HttpServlet {
 
         User profile = userDAO.getUserByUsername(account.getUsername());
 
-        session.setAttribute("profile", profile);
+        session.setAttribute("account", profile);
 
         request.getRequestDispatcher("/account/profile.jsp").forward(request, response);
     }
