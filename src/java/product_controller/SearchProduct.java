@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package dal;
+package product_controller;
 
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import model.Slider;
+import java.util.List;
+import model.Product;
 
 /**
  *
- * @author quanpyke
+ * @author Thanh Tan
  */
-@WebServlet(name="SearchSlider", urlPatterns={"/searchslider"})
-public class SearchSlider extends HttpServlet {
+@WebServlet(name="SearchProduct", urlPatterns={"/searchproduct"})
+public class SearchProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,12 +35,12 @@ public class SearchSlider extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String search=request.getParameter("search");
-        SliderDao sdao=new SliderDao();
-        ArrayList<Slider> searchslider=sdao.searchSlider(search);
-        HttpSession session=request.getSession(true);
-        session.setAttribute("searchslider", searchslider);
-       response.sendRedirect(request.getContextPath()+"/management/searchslider.jsp");
+        HttpSession session = request.getSession();
+        String search = request.getParameter("search");
+        ProductDAO pdao = new ProductDAO();
+        List<Product> plist = pdao.searchProduct(search);
+        session.setAttribute("search_product", plist);
+        response.sendRedirect(request.getContextPath()+"/management/search-product.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

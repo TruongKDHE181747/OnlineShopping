@@ -261,8 +261,8 @@
                                     <h5 class="navbar-brand" href="#">Manage Products</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search">
-                                            <input placeholder="Product name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <form class="d-flex" role="search" action="../searchproduct" method="get">
+                                            <input placeholder="Search products" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
