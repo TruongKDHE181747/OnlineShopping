@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.File;
 import model.Slider;
 
 /**
@@ -135,11 +136,17 @@ public class UpdateSlider extends HttpServlet {
 //             }
 //          
 try {
-             Part file=request.getPart("img");
-          String imgfileName = file.getSubmittedFileName();    
-              
-                img = "slider_img/"+imgfileName;
-             if(imgfileName.isEmpty()) throw new Exception();
+          
+          Part filePart = request.getPart("img"); 
+        String fileName = filePart.getSubmittedFileName();
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "slider_img";
+
+
+        // Save the uploaded file to the specified path
+        filePart.write(uploadPath + File.separator + fileName);
+
+           img = "slider_img/"+fileName;
+             if(fileName.isEmpty()) throw new Exception();
         } catch (Exception e) {
             img=s.getImg();
         }
