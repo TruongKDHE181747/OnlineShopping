@@ -43,17 +43,18 @@ public class UploadProfileImage extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         User account = (User) session.getAttribute("account");
 
-        Part filePart = request.getPart("profileImage"); 
+        Part filePart = request.getPart("profileImage");
         String fileName = filePart.getSubmittedFileName();
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "profile_img";
 
+        if (!fileName.isEmpty()) {
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "profile_img";
 
-        // Save the uploaded file to the specified path
-        filePart.write(uploadPath + File.separator + fileName);
+            // Save the uploaded file to the specified path
+            filePart.write(uploadPath + File.separator + fileName);
 
-        userDAO.updateProfileImage(account.getUser_id(), "profile_img/" + fileName);
-        
-        
+            userDAO.updateProfileImage(account.getUser_id(), "profile_img/" + fileName);
+
+        }
         response.sendRedirect(request.getContextPath() + "/profile");
 
     }

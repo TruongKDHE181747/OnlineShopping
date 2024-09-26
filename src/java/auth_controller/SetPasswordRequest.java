@@ -13,14 +13,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.User;
+import utils.Email;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "Profile", urlPatterns = {"/profile"})
-
-public class Profile extends HttpServlet {
+@WebServlet(name = "SetPasswordRequest", urlPatterns = {"/setPasswordRequest"})
+public class SetPasswordRequest extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,16 +34,23 @@ public class Profile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
+        Email em = new Email();
         UserDAO userDAO = new UserDAO();
 
         User account = (User) session.getAttribute("account");
 
-        User profile = userDAO.getUserByUsername(account.getUsername());
+        String resetCode = em.getRandom();
 
-        session.setAttribute("account", profile);
+        userDAO.updateResetPassCode(account.getEmail(), resetCode);
 
-        request.getRequestDispatcher("/account/profile.jsp").forward(request, response);
+        User user = userDAO.getUserByEmail(account.getEmail());
+        
+        em.sendResetPassEmail(user);
+
+        request.setAttribute("success", "Check your email for the reset password link.");
+
+        request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
     }
 
     /**
@@ -58,36 +65,6 @@ public class Profile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(true);
-        UserDAO userDAO = new UserDAO();
-
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-        String dob = request.getParameter("dob");
-        String phone = request.getParameter("phone");
-
-        if (dob.isEmpty()) {
-            dob = null;
-        }
-        if(firstname.isBlank()){
-            firstname = null;
-        }
-        if(lastname.isBlank()){
-            lastname = null;
-        }
-        if(phone.isBlank()){
-            phone = null;
-        }
-
-
-        User account = (User) session.getAttribute("account");
-
-        User profile = new User(account.getUser_id(), firstname, lastname, phone, gender, dob);
-
-        userDAO.updateUserProfile(profile);
-
-        response.sendRedirect(request.getContextPath() + "/profile");
     }
 
 }
