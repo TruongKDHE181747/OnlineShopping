@@ -17,14 +17,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Role;
 import model.User;
-import utils.Email;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="EditUser", urlPatterns={"/edituser"})
-public class EditUser extends HttpServlet {
+@WebServlet(name="AddUserList", urlPatterns={"/adduserlist"})
+public class AddUserList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,28 +35,23 @@ public class EditUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        
-        RoleDAO rdao= new RoleDAO();
-        UserDAO userDAO = new UserDAO();
-        int user_id=(int) session.getAttribute("userid");
-        String username = request.getParameter("username");
-        String userEmail = request.getParameter("email");
-        String firstname = request.getParameter("first_name");
-        String lastname = request.getParameter("last_name");
-        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-        String dob = request.getParameter("dob");
-        String phone = request.getParameter("phone");
-        String profilepic=request.getParameter("profile_picture_url");
-        String rolename=request.getParameter("role");
+        HttpSession session= request.getSession();
+        UserDAO ud= new UserDAO();
+        RoleDAO rd=new RoleDAO();
+        String username=request.getParameter("username");
         String password=request.getParameter("password");
-                
-        boolean checkExistUsername = userDAO.checkExistUsername(username);
-        boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
-        Role role=rdao.getRolebyname(rolename);
-        
-        User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, profilepic, true, false, role);
-        userDAO.edituser(newu);
+        String firstname= request.getParameter("first_name");
+        String lastname=request.getParameter("last_name");
+        String picture=request.getParameter("profile_picture_url");
+        String gender=request.getParameter("gender");
+        String phone=request.getParameter("phone");
+        String email=request.getParameter("email");
+        String dob=request.getParameter("dob");
+        String role=request.getParameter("role");
+        int role_id=Integer.parseInt(role);
+        Role r=rd.getRoleById(role_id);
+        User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, picture, true, false, r);
+        ud.addUser(u);
         response.sendRedirect("adminuser");
     } 
 
