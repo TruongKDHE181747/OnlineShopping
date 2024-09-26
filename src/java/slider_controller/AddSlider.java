@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import model.Slider;
@@ -38,11 +39,26 @@ public class AddSlider extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         Part file=request.getPart("img");
-          String imgfileName = file.getSubmittedFileName();    
-            
-     
-         String img = "slider_img/"+imgfileName;
+//         Part file=request.getPart("img");
+//          String imgfileName = file.getSubmittedFileName();    
+//            
+//     
+//         String img = "slider_img/"+imgfileName;
+//         
+         
+         
+          Part filePart = request.getPart("img"); 
+        String fileName = filePart.getSubmittedFileName();
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "slider_img";
+
+
+        // Save the uploaded file to the specified path
+        filePart.write(uploadPath + File.separator + fileName);
+
+          String img = "slider_img/"+fileName;
+        
+         
+         
          String title=request.getParameter("title");
          String description=request.getParameter("description");
          int status=   Integer.parseInt( request.getParameter("status"));
