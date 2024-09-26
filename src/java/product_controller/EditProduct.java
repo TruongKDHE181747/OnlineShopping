@@ -20,8 +20,8 @@ import model.Product;
  *
  * @author Thanh Tan
  */
-@WebServlet(name="UpdateProduct", urlPatterns={"/updateproduct"})
-public class UpdateProduct extends HttpServlet {
+@WebServlet(name="EditProduct", urlPatterns={"/editproduct"})
+public class EditProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.

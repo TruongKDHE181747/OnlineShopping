@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Marketing Page</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -284,6 +284,7 @@
                                     <th scope="col">Image</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Price</th>
+                                    <th scope="col">Discount</th>
                                     <th scope="col">Rating</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -321,12 +322,14 @@
                                     </td>
 
                                     <td><%= p.getPrice()%></td>
+                                    
+                                    <td><%= p.getDiscount()%></td>
 
                                     <td><%= p.getRated_star()%></td>
 
                                     <td>
                                         <div class="edit">
-                                            <a href="../updateproduct?pid=<%= p.getProduct_id()%>"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                         </div>
                                     </td>
                                     <%
@@ -361,7 +364,7 @@
                                     <%
                                        }
 
-                                       for (int i = 1; i < total_page; i++) {
+                                       for (int i = 1; i <= total_page; i++) {
                                     %>
                                     <li class="page-item <%= (cur_page == i) ? "active" : "" %>">
                                         <a class="page-link" href="../productpaging?p=<%= i %>"><%= i %></a>

@@ -353,10 +353,9 @@ public class ProductDAO extends DBContext {
         String sql = "Select * from Products\n"
                 + " order by product_id\n"
                 + " offset ? rows\n"
-                + " fetch first 3 rows only";
+                + " fetch next 3 rows only";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-
             pre.setInt(1, (index - 1) * 3);
             ResultSet rs = pre.executeQuery();
 

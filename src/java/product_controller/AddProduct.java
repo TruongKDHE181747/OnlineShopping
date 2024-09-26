@@ -10,6 +10,7 @@ import dal.SizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import model.Size;
  * @author Thanh Tan
  */
 @WebServlet(name="AddProduct", urlPatterns={"/addproduct"})
+@MultipartConfig(maxFileSize = 16177215)
 public class AddProduct extends HttpServlet {
    
     /** 

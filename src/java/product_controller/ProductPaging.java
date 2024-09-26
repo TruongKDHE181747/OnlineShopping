@@ -39,17 +39,17 @@ public class ProductPaging extends HttpServlet {
         if (request.getParameter("p") != null) {
             int p = Integer.parseInt(request.getParameter("p"));
             ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
+            List<Product> plist = pdao.getProductPaging(p);
 
-            session.setAttribute("product_list", list);
+            session.setAttribute("product_list", plist);
             session.setAttribute("cur_page", p);
             response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
         } else {
-            int p = Integer.parseInt(request.getParameter("cur_page"));
+            int p = (int) session.getAttribute("cur_page");
             ProductDAO pdao = new ProductDAO();
-            List<Product> list = pdao.getProductPaging(p);
+            List<Product> plist = pdao.getProductPaging(p);
             
-            session.setAttribute("product_list", list);
+            session.setAttribute("product_list", plist);
             session.setAttribute("cur_page", p);
             response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
         }
