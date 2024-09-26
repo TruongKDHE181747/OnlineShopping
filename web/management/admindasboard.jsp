@@ -134,7 +134,7 @@
                     position: relative;">
                 <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="admin.jsp" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                        <a href="admindasboard.jsp" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                             <i style="font-size: 32px" class="bi bi-house-door-fill"></i>
                         </a>
 
@@ -198,38 +198,23 @@
                     
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white home-link active" aria-current="page">
+                            <a href="../admindasboard" class="nav-link text-white home-link active" aria-current="page">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                                Home
+                                Dasboard
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white product-link">
+                            <a href="../adminuser" class="nav-link text-white product-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                                Products
+                                User list
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white account-link">
+                            <a href="../settinglist" class="nav-link text-white account-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Accounts
+                                Setting list
                             </a>
                         </li>
-                        
-                        <li>
-                            <a href="#" class="nav-link text-white station-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Stations
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="#" class="nav-link text-white contract-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                                Contracts
-                            </a>
-                        </li>
-                        
                     </ul>
                     <hr>
 

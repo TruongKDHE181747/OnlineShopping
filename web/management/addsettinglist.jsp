@@ -1,102 +1,89 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form với Slider</title>
+    <title>Add setting</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
         }
-
-        .container {
+        .form-container {
             background-color: #fff;
-            padding: 30px; /* Tăng padding */
-            border-radius: 12px; /* Tăng độ bo tròn */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Tăng độ bóng */
-            width: 500px; /* Tăng chiều rộng */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
         }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px; /* Tăng khoảng cách dưới tiêu đề */
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #333;
         }
-
         .form-group {
-            margin-bottom: 20px; /* Tăng khoảng cách giữa các nhóm trường */
+            margin-bottom: 15px;
         }
-
         label {
             display: block;
-            margin-bottom: 10px; /* Tăng khoảng cách dưới nhãn */
-            font-size: 18px; /* Tăng kích thước chữ của nhãn */
+            font-weight: bold;
+            margin-bottom: 5px;
         }
+        input[type="text"], select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+                box-sizing: border-box; /* Quan trọng để padding không ảnh hưởng đến kích thước tổng */
+            }
 
-        textarea {
-            width: 100%;
-            padding: 12px; /* Tăng padding */
-            border: 1px solid #ddd;
-            border-radius: 6px; /* Tăng độ bo tròn */
-            font-size: 16px; /* Tăng kích thước chữ trong textarea */
-            box-sizing: border-box;
+        input[type="radio"] {
+            margin-right: 10px;
         }
-
-        input[type="file"] {
-            display: block;
-            margin-top: 10px; /* Thêm khoảng cách trên */
-        }
-
-        .slider-container {
+        .form-group.radio-group {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
         }
-
-        input[type="range"] {
-            flex: 1;
-            margin-right: 15px; /* Tăng khoảng cách bên phải của thanh trượt */
-            height: 10px; /* Tăng chiều cao của thanh trượt */
+        .form-group.radio-group label {
+            font-weight: normal;
         }
-
-        #status-label {
-            font-size: 18px; /* Tăng kích thước chữ của nhãn trạng thái */
-        }
-
-        button {
-            background-color: #28a745;
-            color: #fff;
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
             border: none;
-            padding: 15px 20px; /* Tăng padding của nút */
-            border-radius: 6px; /* Tăng độ bo tròn của nút */
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 18px; /* Tăng kích thước chữ của nút */
-            width: 100%; /* Đặt chiều rộng nút bằng với chiều rộng của khối chứa */
-            box-sizing: border-box;
+            font-size: 16px;
+            width: 100%;
         }
-
-        button:hover {
-            background-color: #218838;
+        input[type="submit"]:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Add setting list</h1>
+
+    <div class="form-container">
+        <button>
+            <a href="../settinglist">
+            <i class="fas fa-arrow-left"></i> Back</a>
+        </button>
+        <h1>Add setting</h1>
         <form action="../addsettinglist" enctype="multipart/form-data">
+            <!-- Name field -->
             <div class="form-group">
                 <label for="name">Name</label>
-                <input id="name" name="name" type="text" > <!-- Tăng kích thước textarea -->
+                <input type="text" id="name" name="name" required>
             </div>
+
+            <!-- Classification select -->
             <div class="form-group">
                 <label for="classification">Classification:</label>
                         <select id="classification" name="classification">
@@ -105,17 +92,20 @@
                           
                         </select>
             </div>
-            <div class="form-group">
+
+            <!-- Status radio buttons -->
+            <div class="form-group radio-group">
                 <label>Status</label>
-                <div class="slider-container">
-                    <input type="radio" name="status" value="1">Show
-                    <input type="radio" name="status" value="0">Hidden
+                
+                <label><input type="radio" name="status" value="1">Show</label>
+                <label><input type="radio" name="status" value="0">Hidden</label>
                  
-                </div>
+                
             </div>
-            <button type="submit">Gửi</button>
+
+            <input type="submit" value="Thêm">
         </form>
     </div>
-   
+
 </body>
 </html>
