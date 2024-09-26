@@ -33,7 +33,9 @@
                                         ${error}
                                     </div>
                                 </c:if>
-
+                                <div class="form-floating mb-3">
+                                    <h6>Your account: ${requestScope.email}</h6>
+                                </div>
                                 <!-- Form for Reset Password -->
                                 <form method="post" action="./resetPassword">
                                     <!-- New Password input -->
