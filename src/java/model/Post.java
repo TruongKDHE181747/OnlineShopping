@@ -16,6 +16,7 @@ public class Post {
     int author_id, is_active;
     Date created_at, modified_at;
     int post_category_id;
+    String author_name;
 
     public Post() {
     }
@@ -31,6 +32,29 @@ public class Post {
         this.modified_at = modified_at;
         this.post_category_id = post_category_id;
     }
+
+    public Post(int post_id, String title, String content, String thumbnail, int author_id, int is_active, Date created_at, Date modified_at, int post_category_id, String author_name) {
+        this.post_id = post_id;
+        this.title = title;
+        this.content = content;
+        this.thumbnail = thumbnail;
+        this.author_id = author_id;
+        this.is_active = is_active;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+        this.post_category_id = post_category_id;
+        this.author_name = author_name;
+    }
+
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
+    
+    
 
     public int getPost_id() {
         return post_id;

@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Post"%>
+<%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -75,7 +77,7 @@
             .remove{
                 color: white;
                 display: inline-block;
-                background-color: red;
+                background-color: #a0a1e0;
                 padding: 6px 8px;
                 border-radius: 4px;
                 cursor: pointer;
@@ -97,11 +99,11 @@
             }
 
             .product-img{
-                width: 40%;
+                width: 30%;
             }
 
             .product-img img{
-                width: 60%;
+                width: 80%;
             }
             
             .dropdown-toggle::after{
@@ -126,6 +128,10 @@
                 margin-top: 10px;
                 padding: 16px 0;
             }
+            .post-title{
+                width: 16%;
+                    
+            }
         </style>
         
     </head>
@@ -134,11 +140,9 @@
         <div class="row">
             <!-- START menu -->
             <div class="col-md-2">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    position: absolute;
-                     width: 16%;
-                     top: 80px;
-                     height: 120%;
-                     bottom: 0;
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    
+                         width: 100%;
+                        height: 100%;
                      ">
 
                     <hr>
@@ -146,7 +150,7 @@
                     
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white home-link active" aria-current="page">
+                            <a href="#" class="nav-link text-white home-link" aria-current="page">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
                                 Home
                             </a>
@@ -158,9 +162,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white account-link">
+                            <a href="#" class="nav-link text-white account-link active">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Accounts
+                                Post
                             </a>
                         </li>
                         
@@ -188,7 +192,14 @@
 
             <div class="col-md-10" style="padding: 40px;">
                 
-
+                <%
+                 List<Post> top3postmarketing = (List<Post>)session.getAttribute("top3postmarketing");
+            List<Post> listpostmarketing = (List<Post>)session.getAttribute("listpostmarketing");
+            
+            int npage = listpostmarketing.size()/3+1;
+                int cpostpage = 0;
+            if(session.getAttribute("cpostmkt")!=null) cpostpage = Integer.parseInt(session.getAttribute("cpostmkt")+"");
+                %>
                 
                 <!-- START products -->
                 <div class="product">
@@ -196,7 +207,7 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Products</h5>
+                                    <h5 class="navbar-brand" href="#">Manage Post</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search">
@@ -218,53 +229,57 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">Title</th>
                                     <th scope="col">Image</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Created Day</th>
+                                    <th scope="col">Modified Day</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
+                                <%
+                                int i = 1;
+                                for (Post post : top3postmarketing) {
+                                
+                                %>
                                 
                                 <!-- START Product item -->
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Car1</td>
+                                    <th scope="row"><%=i%></th>
+                                    <td class="post-title"><%=post.getTitle()%></td>
                                     <td class="product-img">
-                                        <img src="img/car1.jpg">
+                                        <img src="../<%=post.getThumbnail()%>">
                                     </td>
+                                    <td><%=post.getAuthor_name()%></td>
+                                    <td><%=post.getCreated_at()%></td>
+                                    <td><%=post.getModified_at()%></td>
                                     <td>
                                         <div class="edit">
                                             <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-                                            
                                         </div>
                                         <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
+                                            <a style="color: white;"onclick="return confirm('Do you want to delete carID 1')" href="#"><i class="fa-solid fa-circle-info"></i></a> 
+                                            
+                                        </div>
+                                        <div class="remove" style="background-color: greenyellow">                               
+                                           <a href="#?sid=1&button=show" onclick="return confirm('Show this slider?')">
+                                             <i style="color: black;" class="bi bi-eye-fill"></i>
+                                           </a>    
                                         </div>
                                     </td>
 
                                 </tr>
                                 <!-- END Product item -->
-                               
-                                <!-- START Product item -->
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Car1</td>
-                                    <td class="product-img">
-                                        <img src="img/car1.jpg">
-                                    </td>
-                                    <td>
-                                        <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-                                            
-                                        </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
-                                        </div>
-                                    </td>
+                                
+                                
+                                <%
+                                    i++;
+                                    }
+                                %>
+                                
 
-                                </tr>
-                                <!-- END Product item -->
 
                             </tbody>
                         </table>
@@ -272,7 +287,8 @@
                     <!-- START PAGE -->
                     
                     <div style="display: flex;
-                                justify-content: center;">
+                                justify-content: center;
+                                margin-bottom: 16px;">
                         
                         <nav aria-label="Page navigation example">
                         <ul class="pagination">
@@ -284,10 +300,10 @@
                             
                            
                             <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">6</a></li>
+                            <li class="page-item"><a class="page-link " href="#">2</a></li>
+                            <li class="page-item"><a class="page-link " href="#">4</a></li>
+                            <li class="page-item"><a class="page-link " href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#">6</a></li>
                             <li class="page-item">
                                 <a class="page-link" href="#" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
