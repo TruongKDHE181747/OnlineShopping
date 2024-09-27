@@ -24,6 +24,7 @@
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        <jsp:include page="../common/css.jsp" />
         <style>
             .criteria{
                 border: 1px solid #bb9797;
@@ -123,65 +124,11 @@
                 padding: 16px 0;
             }
         </style>
+        
     </head>
     <body>
+        <jsp:include page="../common/header.jsp" />
         <div class="row">
-            <!-- START HEADER -->
-
-            <header class="p-3 text-bg-dark" style="z-index: 1;
-                    position: relative;">
-                <div class="container">
-                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="admin.jsp" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                            <i style="font-size: 32px" class="bi bi-house-door-fill"></i>
-                        </a>
-
-                        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            
-                        </ul>
-
-                        <!-- User check exist -->
-                        
-<!--                        <div class="text-end">
-
-                            <a href="login.jsp" class="btn btn-outline-light me-2" previewlistener="true">Login</a>
-                            <a href="register.jsp" class="btn btn-warning" previewlistener="true">Sign-up</a>
-                        </div>-->
-                     
-
-                        <div class="text-end" style="display: flex;">
-                            
-                            <div class="dropdown text-end">
-
-                                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="img/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                                </a>
-                                <ul class="dropdown-menu text-small">
-
-                                    <li>
-                                        <a class="dropdown-item" href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="img/user.png" alt="mdo" width="32" height="32" class="rounded-circle"> admin  
-                                        </a>
-
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                                    <li><a class="dropdown-item" href="#">Change password</a></li>
-                                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                      
-
-
-                    </div>
-                </div>
-            </header>
-
-            <!-- END HEADER -->
-
             <!-- START menu -->
             <div class="col-md-2">
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    position: absolute;
