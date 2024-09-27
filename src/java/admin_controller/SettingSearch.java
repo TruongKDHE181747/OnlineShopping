@@ -5,6 +5,7 @@
 
 package admin_controller;
 
+import dal.PostCategoriesDAO;
 import dal.ProductCategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,8 +15,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
-import model.ResultSearch;
+import model.PostCategory;
+import model.ProductCategory;
 
 /**
  *
@@ -37,8 +40,18 @@ public class SettingSearch extends HttpServlet {
         HttpSession session=request.getSession();
         String psearch= request.getParameter("psearch");
         ProductCategoryDAO pdao=new ProductCategoryDAO();
-        List<ResultSearch> rs=pdao.searchCategory(psearch);
-        session.setAttribute("plist", rs);
+        PostCategoriesDAO pd=new PostCategoriesDAO();
+        List<ProductCategory> plist=pdao.searchCategory(psearch);
+        List<PostCategory> pl=pd.searchCategory2(psearch);
+        if(plist!=null){
+            
+            session.setAttribute("plist", plist);
+            session.setAttribute("postlist", pl);
+        }else{
+            session.setAttribute("plist", plist);
+            session.setAttribute("postlist", pl);
+        }
+        
         response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
         
     } 

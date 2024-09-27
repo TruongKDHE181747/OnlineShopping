@@ -258,6 +258,7 @@
                                     <th scope="col">Id</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Classification</th>
+                                    <th scope="col"> Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -271,6 +272,15 @@
                                     <th scope="row">${counter}</th>
                                     <td>${pl.product_category_name}</td>
                                     <td>Product</td>
+                                    <td>
+                                    <c:if test="${pl.is_active==1}">
+                                            <p style="color: green">Active</p>
+                                        
+                                        </c:if>
+                                               <c:if test="${pl.is_active==0}">
+                                            <p style="color: red">Inactive</p>
+                                        
+                                        </c:if></td>
                                     <td>
                                         <div class="edit">
                                             <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
@@ -289,6 +299,15 @@
                                     <th scope="row">${counter}</th>
                                     <td>${p.post_category_name}</td>
                                     <td>Post</td>
+                                    <td>
+                                    <c:if test="${p.is_active==1}">
+                                            <p style="color: green">Active</p>
+                                        
+                                        </c:if>
+                                               <c:if test="${p.is_active==0}">
+                                            <p style="color: red">Inactive</p>
+                                        
+                                        </c:if></td>
                                     <td>
                                         <div class="edit">
                                             <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
