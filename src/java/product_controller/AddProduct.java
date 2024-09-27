@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.io.File;
 import java.util.List;
 import model.Product;
 import model.ProductSize;
@@ -46,7 +47,9 @@ public class AddProduct extends HttpServlet {
         ProductSizeDAO psdao = new ProductSizeDAO();
         
         Part file = request.getPart("img");
-        String imgfileName = file.getSubmittedFileName();
+        String fileName = file.getSubmittedFileName();
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "product_img";
+        file.write(uploadPath + File.separator + fileName);
         boolean is_active = false;
         
         String name = request.getParameter("name");
@@ -54,7 +57,7 @@ public class AddProduct extends HttpServlet {
         int discount = Integer.parseInt(request.getParameter("discount"));
         int total_quantity = 0;
         String description = request.getParameter("description");
-        String img = "product_img/"+imgfileName;
+        String img = "product_img/" + fileName;
         int status = Integer.parseInt(request.getParameter("status"));
         int rated_star = 0;
         int brand = Integer.parseInt(request.getParameter("brand"));
@@ -70,12 +73,13 @@ public class AddProduct extends HttpServlet {
         }
         
         ProductDAO pdao = new ProductDAO();
-        pdao.addProduct(new Product(0, name, price, total_quantity, discount, description, img, is_active, rated_star, brand, category));
+        pdao.addProduct(new Product(name, price, total_quantity, discount, description, img, is_active, rated_star, brand, category));
         for (Size size : sizes) {
             Product product = pdao.getHighestId();
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
             psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity));
         }
+        response.sendRedirect("productlist");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
