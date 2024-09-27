@@ -1,12 +1,10 @@
 <%-- 
-    Document   : admin
-    Created on : May 28, 2024, 9:07:04 PM
+    Document   : listpostmarketing
+    Created on : Sep 27, 2024, 9:37:00 PM
     Author     : Dell
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-
 <!DOCTYPE html>
 <html>
     <head>
