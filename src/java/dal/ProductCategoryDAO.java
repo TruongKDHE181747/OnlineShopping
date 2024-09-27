@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Product;
 import model.ProductCategory;
+import model.ResultSearch;
 
 /**
  *
@@ -52,5 +53,39 @@ public class ProductCategoryDAO extends DBContext{
         } catch (SQLException ex) {
 
         }
+    }
+    public List<ResultSearch> searchCategory(String search){
+        List<ResultSearch> pList = new ArrayList<>();
+        String sql = "(SELECT 'Product_Categories' AS type, product_category_id as pid, product_category_name AS pname, is_active\n" +
+                            " FROM Product_Categories\n" +
+                            " WHERE product_category_name LIKE ?) \n" +
+                            "UNION\n" +
+                            "(SELECT 'Post_Categories' AS type, post_category_id as pid, post_category_name AS pname, is_active \n" +
+                            " FROM Post_Categories\n" +
+                            " WHERE post_category_name LIKE ?)";
+
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, "%"+search+"%");
+            pre.setString(2, "%"+search+"%");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int pid = rs.getInt("pid");
+                String pname = rs.getString("pname");
+                int is_active = rs.getInt("is_active");
+                ResultSearch p =new ResultSearch(pid, pname, is_active);
+                pList.add(p);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    public static void main(String[] args) {
+        ProductCategoryDAO pdao=new ProductCategoryDAO();
+        List<ResultSearch> plist=pdao.searchCategory("New");
+        System.out.println(plist);
     }
 }
