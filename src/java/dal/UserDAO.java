@@ -640,12 +640,14 @@ public class UserDAO extends DBContext {
     {
            ArrayList<User> list=new ArrayList();
            RoleDAO roledao =new RoleDAO();
-           String sql="Select * from Users where role_id=5 AND (first_name like ? OR last_name like ? ) ";
+           String sql="Select * from Users where role_id=5 AND (first_name like ? OR last_name like ? "
+                   + " OR Concat(first_name,' ', last_name) like ? ) ";
         try{
             // thực thi câu truy vấn
             PreparedStatement pre= connection.prepareStatement(sql);
               pre.setString(1, "%"+search+"%");
             pre.setString(2, "%"+search+"%");
+              pre.setString(3, "%"+search+"%");
             ResultSet rs=pre.executeQuery();
             while(rs.next()){
                 int user_id = rs.getInt("user_id");
