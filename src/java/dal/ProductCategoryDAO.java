@@ -53,4 +53,28 @@ public class ProductCategoryDAO extends DBContext{
 
         }
     }
+    public List<ProductCategory> searchCategory(String search){
+        List<ProductCategory> pList = new ArrayList<>();
+        String sql = "select * from Product_Categories\n" +
+"   where product_category_name like ?";
+
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, "%"+search+"%");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int product_category_id = rs.getInt("product_category_id");
+                String product_category_name = rs.getString("product_category_name");
+                int is_active = rs.getInt("is_active");
+                ProductCategory p =new ProductCategory(product_category_id, product_category_name, is_active);
+                pList.add(p);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    
 }

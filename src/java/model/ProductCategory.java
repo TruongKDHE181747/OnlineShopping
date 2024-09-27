@@ -45,6 +45,11 @@ public class ProductCategory {
     public void setIs_active(int is_active) {
         this.is_active = is_active;
     }
+
+    @Override
+    public String toString() {
+        return "ProductCategory{" + "product_category_id=" + product_category_id + ", product_category_name=" + product_category_name + ", is_active=" + is_active + '}';
+    }
     
     
 }
