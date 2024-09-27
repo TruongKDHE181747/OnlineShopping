@@ -45,7 +45,7 @@ public class AddProduct extends HttpServlet {
         List<Size> sizes = sdao.getAllSize();
         ProductSizeDAO psdao = new ProductSizeDAO();
         
-        Part file=request.getPart("img");
+        Part file = request.getPart("img");
         String imgfileName = file.getSubmittedFileName();
         boolean is_active = false;
         
@@ -70,7 +70,7 @@ public class AddProduct extends HttpServlet {
         }
         
         ProductDAO pdao = new ProductDAO();
-        pdao.addProduct(new Product(0, name, price, total_quantity, discount, description, name, is_active, rated_star, brand, category));
+        pdao.addProduct(new Product(0, name, price, total_quantity, discount, description, img, is_active, rated_star, brand, category));
         for (Size size : sizes) {
             Product product = pdao.getHighestId();
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
