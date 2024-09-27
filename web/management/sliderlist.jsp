@@ -152,7 +152,7 @@
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchslider" method="get">
-                                            <input placeholder="Search by id, name,description,..." name="search" class="form-control me-2" type="search"  aria-label="Search">
+                                            <input placeholder="Search by  name,description,..." name="search" class="form-control me-2" type="search"  aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
