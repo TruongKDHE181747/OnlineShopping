@@ -6,6 +6,7 @@
 package product_controller;
 
 import dal.ProductDAO;
+import dal.ProductSizeDAO;
 import dal.SizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.util.List;
 import model.Product;
+import model.ProductSize;
 import model.Size;
 
 /**
@@ -41,6 +43,7 @@ public class AddProduct extends HttpServlet {
         
         SizeDAO sdao = new SizeDAO();
         List<Size> sizes = sdao.getAllSize();
+        ProductSizeDAO psdao = new ProductSizeDAO();
         
         Part file=request.getPart("img");
         String imgfileName = file.getSubmittedFileName();
@@ -58,7 +61,7 @@ public class AddProduct extends HttpServlet {
         int category = Integer.parseInt(request.getParameter("category"));
         
         for (Size size : sizes) {
-            int quantity = Integer.parseInt(request.getParameter("size_") + size.getSize_id());
+            int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
             total_quantity += quantity;
         }
         
@@ -68,6 +71,11 @@ public class AddProduct extends HttpServlet {
         
         ProductDAO pdao = new ProductDAO();
         pdao.addProduct(new Product(0, name, price, total_quantity, discount, description, name, is_active, rated_star, brand, category));
+        for (Size size : sizes) {
+            Product product = pdao.getHighestId();
+            int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
+            psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity));
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
