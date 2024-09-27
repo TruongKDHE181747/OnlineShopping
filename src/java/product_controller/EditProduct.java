@@ -36,13 +36,30 @@ public class EditProduct extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int pid = Integer.parseInt(request.getParameter("pid"));
-        ProductDAO pdao = new ProductDAO();
-        Product p = pdao.getProductById(pid);
         HttpSession session = request.getSession();
-
-        session.setAttribute("pdetail", p);
-        response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+        
+        if (request.getParameter("button")!= null) {
+            String button = request.getParameter("button");
+            int pid = Integer.parseInt(request.getParameter("pid"));
+            if (button.equals("hide")) {
+                ProductDAO pdao = new ProductDAO();
+                Product p = pdao.getProductById(pid);
+                p.setIs_active(false);
+                pdao.updateProduct(p);
+                request.getRequestDispatcher("productlist").forward(request, response);
+            } else if (button.equals("show")) {
+                ProductDAO pdao = new ProductDAO();
+                Product p = pdao.getProductById(pid);
+                p.setIs_active(true);
+                pdao.updateProduct(p);
+                request.getRequestDispatcher("productlist").forward(request, response);
+            } else {
+                ProductDAO pdao = new ProductDAO();
+                Product p = pdao.getProductById(pid);
+                session.setAttribute("product_detail", p);
+                response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+            }
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

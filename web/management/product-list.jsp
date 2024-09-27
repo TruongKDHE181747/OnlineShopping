@@ -90,7 +90,7 @@
             }
 
             .product-img{
-                width: 40%;
+                width: 30%;
             }
 
             .product-img img{
@@ -224,7 +224,7 @@
                                         %>
 
                                         <div class="edit" style="background-color: greenyellow">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%> & button=show" onclick="return confirm('Show this product?')">
+                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=show" onclick="return confirm('Show this product?')">
                                                 <i style="color: black;" class="bi bi-eye-fill"></i>
                                             </a>
                                         </div>
@@ -234,7 +234,7 @@
                                         %> 
 
                                         <div class="edit">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%> & button=edit"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=edit"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                         </div>
                                     </td>
                                     <%
