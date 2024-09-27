@@ -14,14 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Product;
 
 /**
  *
  * @author Thanh Tan
  */
-@WebServlet(name="UpdateProduct", urlPatterns={"/updateproduct"})
-public class UpdateProduct extends HttpServlet {
+@WebServlet(name="SearchProduct", urlPatterns={"/searchproduct"})
+public class SearchProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,13 +35,12 @@ public class UpdateProduct extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int pid = Integer.parseInt(request.getParameter("pid"));
-        ProductDAO pdao = new ProductDAO();
-        Product p = pdao.getProductById(pid);
         HttpSession session = request.getSession();
-
-        session.setAttribute("pdetail", p);
-        response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+        String search = request.getParameter("search");
+        ProductDAO pdao = new ProductDAO();
+        List<Product> plist = pdao.searchProduct(search);
+        session.setAttribute("search_product", plist);
+        response.sendRedirect(request.getContextPath()+"/management/search-product.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

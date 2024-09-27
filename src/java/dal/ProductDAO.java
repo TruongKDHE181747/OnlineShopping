@@ -353,10 +353,9 @@ public class ProductDAO extends DBContext {
         String sql = "Select * from Products\n"
                 + " order by product_id\n"
                 + " offset ? rows\n"
-                + " fetch first 3 rows only";
+                + " fetch next 3 rows only";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-
             pre.setInt(1, (index - 1) * 3);
             ResultSet rs = pre.executeQuery();
 
@@ -382,7 +381,8 @@ public class ProductDAO extends DBContext {
     }
     
     public void addProduct(Product p) {
-        String sql = "insert into Products(product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id)\n"
+        String sql = "insert into Products \n"
+                + "(product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id)\n"
                 + "values \n"
                 + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -397,13 +397,77 @@ public class ProductDAO extends DBContext {
             pre.setInt(8, p.getRated_star());
             pre.setInt(9, p.getBrand_id());
             pre.setInt(10, p.getProduct_category_id());
-        } catch (Exception e) {
+            pre.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void updateProduct(Product p) {
+        String sql = "update Products set \n"
+                + "product_name = ?, \n"
+                + "price = ?, \n"
+                + "total quantity = ?, \n"
+                + "discount = ?, \n"
+                + "description = ?, \n"
+                + "thumbnail = ?, \n"
+                + "is_active = ?, \n"
+                + "rated_star = ?, \n"
+                + "brand_id = ?, \n"
+                + "product_category_id = ? \n"
+                + "where product_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, p.getProduct_name());
+            pre.setInt(2, p.getPrice());
+            pre.setInt(3, p.getTotal_quantity());
+            pre.setInt(4, p.getDiscount());
+            pre.setString(5, p.getDescription());
+            pre.setString(6, p.getThumbnail());
+            pre.setBoolean(7, p.isIs_active());
+            pre.setInt(8, p.getRated_star());
+            pre.setInt(9, p.getBrand_id());
+            pre.setInt(10, p.getProduct_category_id());
+            pre.setInt(11, p.getProduct_id());
+            pre.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public List<Product> searchProduct(String s) {
+        List<Product> list = new ArrayList<>();
+        String sql = "select * from Products \n "
+                + "where product_name like ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, "%"+s+"%");
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                int product_id = rs.getInt("product_id");
+                String product_name = rs.getString("product_name");
+                int price = rs.getInt("price");
+                int total_quantity = rs.getInt("total_quantity");
+                int discount = rs.getInt("discount");
+                String description = rs.getString("description");
+                String thumbnail = rs.getString("thumbnail");
+                boolean is_active = rs.getBoolean("is_active");
+                int rated_star = rs.getInt("rated_star");
+                int brand_id = rs.getInt("brand_id");
+                int product_category_id = rs.getInt("product_category_id");
+                Product product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                list.add(product);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
 //    public static void main(String[] args) {
 //        ProductDAO pdao = new ProductDAO();
-//        List<Product> pList = pdao.getProductPaging(1);
+//        List<Product> pList = pdao.searchProduct("polo");
 //        System.out.println(pList.size());
 //    }
 }

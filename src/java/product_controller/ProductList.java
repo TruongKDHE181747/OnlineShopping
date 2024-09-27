@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import model.Product;
 
@@ -35,6 +34,7 @@ public class ProductList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         ProductDAO pdao = new ProductDAO();
         List<Product> list = pdao.getAllProduct();
         List<Product> plist = pdao.getProductPaging(1);
@@ -42,7 +42,7 @@ public class ProductList extends HttpServlet {
         
         session.setAttribute("product_list", plist);
         session.setAttribute("cur_page", 1);
-        session.setAttribute("num_page", getNumberOfPage(list.size(), 2));
+        session.setAttribute("num_page", getNumberOfPage(list.size(), 3));
         response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
         
     } 
@@ -85,7 +85,7 @@ public class ProductList extends HttpServlet {
     
      public int getNumberOfPage(int length, int n)
     {
-        if(length%n==0) return length/n;
-        else return length/n +1;
+        if(length%n == 0) return length/n;
+        else return length/n + 1;
     }
 }
