@@ -63,7 +63,7 @@
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6">
                                     <label for="classification">Classification:</label>
-                                    <input value="post"name="classification" type="text" class="form-control" id="classification" disabled="">
+                                    <input value="${sessionScope.type}"name="classification" type="text" class="form-control" id="classification" disabled="">
 
                                     </select>
                                 </div>

@@ -22,8 +22,8 @@ import model.ProductCategory;
  *
  * @author 84983
  */
-@WebServlet(name="UpdateSetting", urlPatterns={"/updatesetting"})
-public class UpdateSetting extends HttpServlet {
+@WebServlet(name="ChangeStatus", urlPatterns={"/changestatus"})
+public class ChangeStatus extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,16 +38,27 @@ public class UpdateSetting extends HttpServlet {
         HttpSession session=request.getSession();
         PostCategoriesDAO pcdao=new PostCategoriesDAO();
         ProductCategoryDAO pdao= new ProductCategoryDAO();
-        String classification=(String) session.getAttribute("type");
-        String pname=request.getParameter("pname");
-        int status=Integer.parseInt(request.getParameter("status"));
-        int pid=Integer.parseInt(request.getParameter("pid"));
-        if(classification.equals("product")){
-            ProductCategory pd=new ProductCategory(pid, pname, status);
-            pdao.updateProductCategory(pd);
-        }else if(classification.equals("post")){
-            PostCategories pc= new PostCategories(pid, pname, status);
-            pcdao.updatePostCategory(pc);
+        int pdid=Integer.parseInt(request.getParameter("pdid"));
+        String button=request.getParameter("button");
+        String type=request.getParameter("type");
+        ProductCategory oldproduct=pdao.getProductCategories(pdid);
+        PostCategories oldpost=pcdao.getPostCategories(pdid);
+        if(type.equals("product")){
+            if(button.equals("show")){
+                ProductCategory newproduct=new ProductCategory(pdid,oldproduct.getProduct_category_name(), 1);
+                pdao.updateProductCategory(newproduct);
+            }else if(button.equals("hide")){
+                ProductCategory newproduct=new ProductCategory(pdid,oldproduct.getProduct_category_name(), 0);
+                pdao.updateProductCategory(newproduct);
+            }
+        }else if(type.equals("post")){
+            if(button.equals("show")){
+                PostCategories newpost=new PostCategories(pdid,oldpost.getPost_category_name(), 1);
+                pcdao.updatePostCategory(newpost);
+            }else if(button.equals("hide")){
+                PostCategories newpost=new PostCategories(pdid,oldpost.getPost_category_name(), 0);
+                pcdao.updatePostCategory(newpost);
+            }
         }
         response.sendRedirect("settinglist");
     } 
