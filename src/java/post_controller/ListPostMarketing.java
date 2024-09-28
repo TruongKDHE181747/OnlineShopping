@@ -43,7 +43,7 @@ public class ListPostMarketing extends HttpServlet {
         List<Post> top3post = select3Post(pList, 0);
         PostCategoryDAO pcdao = new PostCategoryDAO();
         List<PostCategory> pcList = pcdao.getAllPostCategory();
-        //Reset(session);
+        Reset(session);
         
         session.setAttribute("listpostcategorymkt", pcList);
         session.setAttribute("listpostmarketing", pList);
