@@ -27,6 +27,7 @@
 
     </head>
     <body class="bg-body-tertiary">
+                    <c:set var="s" value="${sessionScope.customer}"></c:set>
 
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -43,66 +44,81 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                    <h2>Customer </h2>
+                    <h2>Customer ${s.first_name} ${s.last_name}</h2>
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
 
-                    <c:set var="s" value="${sessionScope.s}"></c:set>
-                   
+                  
 
-                    <div class="col-md-8">
-                        <form class="needs-validation" action="../updateslider" method="post" enctype="multipart/form-data">
+
+                        <div class="col-md-8">
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="id" class="form-label"> Id</label>
-                                    <input readonly value="${s.id}" name="id" type="text" class="form-control" id="id" required>
-
-                                </div>
-                            <input type="text" hidden="" value="${s.img}" name="currentimg">
-                                <div class="col-sm-6">
-                                    <label for="title" class="form-label">Title</label>
-                                    <input  value="${s.title}" name="title" type="text" class="form-control" id="title" required>
-
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="img" class="form-label"> Image</label>
-                                    <input name="img" type="file" class="form-control" id="img">
-                                    <img style="margin-top: 10px;width:  285px;height: 141px;" src="../${s.img}" alt="alt"/>
-                                </div>
-
-
-                                <div class="my-3 col-sm-6">
-                                    <label for="status" class="form-label">Status</label>
-                                   <div class="form-check">
-    <input value="1" id="status" name="status" type="radio" class="form-check-input"
-        <c:if test="${s.status == 1}"> checked</c:if>>
-    <label class="form-check-label" for="status">Active</label>
-</div>
-<div class="form-check">
-    <input value="0" id="status" name="status" type="radio" class="form-check-input"
-        <c:if test="${s.status == 0}"> checked</c:if>>
-    <label class="form-check-label" for="status">Inactive</label>
-</div>
-                                </div>
-                                
-                              <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <label for="description" class="form-label">Description</label>
-                                    <input  value="${s.description}" name="description" type="text" class="form-control" id="id" required>
-
-                                </div>
-                             
-
+                                    <input disabled="" value="${s.user_id}" name="id" type="text" class="form-control" id="id" required>
 
                             </div>
 
-                            <hr class="my-4">
-                            <!-- Error check Username and Password -->
-                            
 
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
-                        </form>
+                            <img src="../${s.profile_picture_url}" alt="alt" style="width: 130px;height: 108px;"/>
+
+
+                            <div class="col-sm-6">
+                                <label for="title" class="form-label">First Name</label>
+                                <input disabled=""  value="${s.first_name}" name="title" type="text" class="form-control" id="title" required>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="title" class="form-label">Last Name</label>
+                                <input disabled=""  value="${s.last_name}" name="title" type="text" class="form-control" id="title" required>
+
+                            </div>
+
+                            <div class="my-3 col-sm-6">
+                                <label for="title" class="form-label">Phone</label>
+                                <input disabled=""  value="${s.phone}" name="title" type="text" class="form-control" id="title" required>
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="title" class="form-label">Email</label>
+                                <input disabled=""  value="${s.email}" name="title" type="text" class="form-control" id="title" required>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="title" class="form-label">Gender</label>
+                                <input disabled=""  value="<c:if test="${s.gender=='true'}">Male</c:if>  <c:if test="${s.gender=='false'}">Female</c:if>" name="title" type="text" class="form-control" id="title" required>
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="title" class="form-label">Date Of Birth</label>
+                                        <input disabled=""  value="${s.dob}" name="title" type="text" class="form-control" id="title" required>
+
+                            </div>
+                               
+                                     <div class="my-3 col-sm-6">
+                                    <label for="status" class="form-label">Account Status</label>
+                                    <div class="form-check">
+                                        <input disabled="" value="1" id="status" name="status" type="radio" class="form-check-input" <c:if test="${s.is_active=='true'}">checked=""</c:if>>
+                                        <label class="form-check-label" for="status">Activated</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input  disabled="" value="0" id="status" name="status" type="radio" class="form-check-input" <c:if test="${s.is_banned=='true'}">checked=""</c:if> >
+                                        <label class="form-check-label" for="status">Banned</label>
+                                    </div>
+                                </div>
+                                
+                                
+                        </div>
+
+                        <hr class="my-4">
+                        <!-- Error check Username and Password -->
+
+
+                        <a href="../customerlist">   <button class="w-100 btn btn-primary btn-lg" >Save</button></a>
+
                     </div>
                 </div>
             </main>
