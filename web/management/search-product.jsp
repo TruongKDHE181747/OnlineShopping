@@ -214,7 +214,7 @@
                                         %>
 
                                         <div class="edit" style="background-color: red">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%> & button=hide" onclick="return confirm('Hide this product?')">
+                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=hide" onclick="return confirm('Hide this product?')">
                                                 <i style="color: black;" class="bi bi-eye-slash-fill"></i>
                                             </a>
                                         </div>
@@ -224,7 +224,7 @@
                                         %>
 
                                         <div class="edit" style="background-color: greenyellow">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%> & button=show" onclick="return confirm('Show this product?')">
+                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=show" onclick="return confirm('Show this product?')">
                                                 <i style="color: black;" class="bi bi-eye-fill"></i>
                                             </a>
                                         </div>

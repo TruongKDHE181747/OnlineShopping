@@ -23,7 +23,7 @@ public class PostFeedbackDAO extends DBContext{
      public List<PostFeedback> getTop3FeedbackByPostId (String id, int n) {
         List<PostFeedback> pList = new ArrayList<>();
        String sql = "select pf.*, u.username, u.profile_picture_url from Post_Feedbacks as pf, Users as u\n" +
-                    "where pf.customer_id = u.user_id and post_id = ? and pf.is_active=1\n" +
+                    "where pf.customer_id = u.user_id and post_id = ? and pf.is_active=1 and u.is_banned=0\n" +
                     "order by post_feedback_id\n" +
                     "offset ? rows fetch next 3 rows only";
         try {
@@ -54,7 +54,7 @@ public class PostFeedbackDAO extends DBContext{
      public List<PostFeedback> getAllFeedbackByPostId (String id) {
         List<PostFeedback> pList = new ArrayList<>();
        String sql = "select pf.*, u.username, u.profile_picture_url from Post_Feedbacks as pf, Users as u\n" +
-"where pf.customer_id = u.user_id and post_id = ? and pf.is_active=1";
+"where pf.customer_id = u.user_id and post_id = ? and pf.is_active=1 and u.is_banned=0";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, id);
@@ -76,5 +76,23 @@ public class PostFeedbackDAO extends DBContext{
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return pList;
+    }
+     
+     
+     public void AddCustomerPostFeedback (PostFeedback pf) {
+        
+       String sql = "INSERT INTO Post_Feedbacks (customer_id, post_id, review, is_active) VALUES\n" +
+                    "(?, ?, ?, 1)";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, pf.getCustomer_id());
+            pre.setInt(2, pf.getPost_id());
+            pre.setString(3, pf.getReview());
+            pre.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }

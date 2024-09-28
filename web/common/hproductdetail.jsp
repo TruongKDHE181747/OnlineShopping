@@ -44,6 +44,10 @@
 
     <body>
         <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
+        </div>
+        <!-- Page Preloder -->
         <jsp:include page="../common/header.jsp" />
         <!-- Header Section End -->
 

@@ -3,27 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package post_controller;
 
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Product;
+import java.util.ArrayList;
+import java.util.List;
+import model.Post;
 
 /**
  *
- * @author Thanh Tan
+ * @author Dell
  */
-@WebServlet(name="EditProduct", urlPatterns={"/editproduct"})
-@MultipartConfig(maxFileSize = 16177215)
-public class EditProduct extends HttpServlet {
+@WebServlet(name="PostmktPagi", urlPatterns={"/postmktpagi"})
+public class PostmktPagi extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,33 +34,33 @@ public class EditProduct extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         HttpSession session = request.getSession();
+        List<Post> allpostlist = (List<Post>)session.getAttribute("listpostmarketing");
+        int cpage = Integer.parseInt(request.getParameter("cpage"));
+        if(cpage<0) cpage=0;
+        if(cpage>=(allpostlist.size()/3+1)) cpage = allpostlist.size()/3;
+        List<Post> top3post = select3Post(allpostlist, cpage);
         
-        if (request.getParameter("button")!= null) {
-            String button = request.getParameter("button");
-            int pid = Integer.parseInt(request.getParameter("pid"));
-            if (button.equals("hide")) {
-                ProductDAO pdao = new ProductDAO();
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(false);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productlist").forward(request, response);
-            } else if (button.equals("show")) {
-                ProductDAO pdao = new ProductDAO();
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(true);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productlist").forward(request, response);
+        
+        
+        session.setAttribute("top3postmarketing", top3post);
+        session.setAttribute("cpostmkt", cpage);
+        response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
+        
+    } 
+    
+    public static List<Post> select3Post( List<Post> pList, int pageNum){
+        List<Post> top3List = new ArrayList<>();
+        for(int i = pageNum*3;i<=pageNum*3+2;i++){
+            if(i>=pList.size()) {
+                break;
             } else {
-                ProductDAO pdao = new ProductDAO();
-                Product p = pdao.getProductById(pid);
-                session.setAttribute("product_detail", p);
-                response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+                top3List.add(pList.get(i));
             }
         }
-    } 
-
+        
+        return top3List;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.

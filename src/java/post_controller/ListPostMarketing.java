@@ -3,27 +3,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package post_controller;
 
-import dal.ProductDAO;
+import dal.PostCategoryDAO;
+import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Product;
+import java.util.ArrayList;
+import java.util.List;
+import model.Post;
+import model.PostCategory;
 
 /**
  *
- * @author Thanh Tan
+ * @author Dell
  */
-@WebServlet(name="EditProduct", urlPatterns={"/editproduct"})
-@MultipartConfig(maxFileSize = 16177215)
-public class EditProduct extends HttpServlet {
+@WebServlet(name="ListPostMarketing", urlPatterns={"/listpostmarketing"})
+public class ListPostMarketing extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,32 +37,43 @@ public class EditProduct extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         HttpSession session = request.getSession();
+        PostDAO pdao = new PostDAO();
+        List<Post> pList = pdao.getAllPostMarketing();
+        List<Post> top3post = select3Post(pList, 0);
+        PostCategoryDAO pcdao = new PostCategoryDAO();
+        List<PostCategory> pcList = pcdao.getAllPostCategory();
+        //Reset(session);
         
-        if (request.getParameter("button")!= null) {
-            String button = request.getParameter("button");
-            int pid = Integer.parseInt(request.getParameter("pid"));
-            if (button.equals("hide")) {
-                ProductDAO pdao = new ProductDAO();
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(false);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productlist").forward(request, response);
-            } else if (button.equals("show")) {
-                ProductDAO pdao = new ProductDAO();
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(true);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productlist").forward(request, response);
+        session.setAttribute("listpostcategorymkt", pcList);
+        session.setAttribute("listpostmarketing", pList);
+        session.setAttribute("top3postmarketing", top3post);
+        session.setAttribute("cpostmkt", 0);
+        response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
+    } 
+    
+    public static void Reset(HttpSession session){
+        session.setAttribute("begindatemkt", "");
+        session.setAttribute("enddatemkt", "");
+        session.setAttribute("authormkt", "");
+        session.setAttribute("titlemkt", "");
+        session.setAttribute("sortValuemkt",null);
+        session.setAttribute("pmktCategory",null);
+        session.setAttribute("pmktloi", "");
+    }
+    
+    public static List<Post> select3Post( List<Post> pList, int pageNum){
+        List<Post> top6List = new ArrayList<>();
+        for(int i = pageNum*3;i<=pageNum*3+2;i++){
+            if(i>=pList.size()) {
+                break;
             } else {
-                ProductDAO pdao = new ProductDAO();
-                Product p = pdao.getProductById(pid);
-                session.setAttribute("product_detail", p);
-                response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+                top6List.add(pList.get(i));
             }
         }
-    } 
+        
+        return top6List;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

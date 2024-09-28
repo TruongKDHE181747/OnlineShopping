@@ -46,6 +46,10 @@ public class HPostDetail extends HttpServlet {
         PostFeedbackDAO pfdao = new PostFeedbackDAO();
         
         String bid = request.getParameter("bid");
+        if(bid==null){
+            Post ppostdetail = (Post)session.getAttribute("ppostdetail");
+            bid = ppostdetail.getPost_id()+"";
+        }
         Post p = pdao.getPostByID(bid);
         PostCategory pc = pdao.getPostCategoryByPostID(bid);
         User u = pdao.getUserByPostID(bid);
