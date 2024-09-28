@@ -73,7 +73,7 @@
             .remove{
                 color: white;
                 display: inline-block;
-                background-color: red;
+                
                 padding: 6px 8px;
                 border-radius: 4px;
                 cursor: pointer;
@@ -283,12 +283,19 @@
                                         </c:if></td>
                                     <td>
                                         <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="../editsetting?type=product&pid=${pl.product_category_id}"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                             
                                         </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
+                                        <c:if test="${pl.is_active==1}">
+                                            <div class="remove" style="background-color: red">
+                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa fa-eye"></i></a>     
                                         </div>
+                                        </c:if>
+                                        <c:if test="${pl.is_active==0}">
+                                        <div class="remove" style="background-color: green">
+                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                        </div>
+                                        </c:if>
                                     </td>
 
                                 </tr>
@@ -310,12 +317,19 @@
                                         </c:if></td>
                                     <td>
                                         <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="../editsetting?type=post&pid=${p.post_category_id}"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                             
                                         </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
+                                        <c:if test="${p.is_active==1}">
+                                        <div class="remove" style="background-color: red">
+                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa fa-eye"></i></a>     
                                         </div>
+                                        </c:if>
+                                        <c:if test="${p.is_active==0}">
+                                        <div class="remove"style="background-color: green">
+                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                        </div>
+                                        </c:if>
                                     </td>
 
                                 </tr>   

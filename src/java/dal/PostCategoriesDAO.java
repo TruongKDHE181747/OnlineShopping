@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.PostCategories;
 import model.PostCategory;
+import model.ProductCategory;
 
 /**
  *
@@ -53,8 +54,8 @@ public class PostCategoriesDAO extends DBContext{
 
         }
     }
-   public List<PostCategory> searchCategory2(String search){
-        List<PostCategory> pList = new ArrayList<>();
+   public List<PostCategories> searchCategory2(String search){
+        List<PostCategories> pList = new ArrayList<>();
         String sql = "select * from Post_Categories\n" +
 "   where post_category_name like ?";
 
@@ -67,7 +68,7 @@ public class PostCategoriesDAO extends DBContext{
                 int post_category_id = rs.getInt("post_category_id");
                 String post_category_name = rs.getString("post_category_name");
                 int is_active = rs.getInt("is_active");
-                PostCategory p =new PostCategory(post_category_id, post_category_name, is_active);
+                PostCategories p =new PostCategories(post_category_id, post_category_name, is_active);
                 pList.add(p);
                 
             }
@@ -76,9 +77,47 @@ public class PostCategoriesDAO extends DBContext{
         }
         return pList;
     }
+   public PostCategories getPostCategories(int post_category_id){
+       PostCategories pc=null;
+       String sql=" select * from Post_Categories\n" +
+                " where post_category_id=?";
+       try{
+           PreparedStatement pre= connection.prepareStatement(sql);
+           pre.setInt(1, post_category_id);
+           ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                post_category_id = rs.getInt("post_category_id");
+                String post_category_name = rs.getString("post_category_name");
+                int is_active = rs.getInt("is_active");
+                pc =new PostCategories(post_category_id, post_category_name, is_active);
+                
+            }
+            
+       }catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return pc;
+   }
+    public void updatePostCategory(PostCategories pd){
+        try {
+            String sql = "Update Post_Categories\n" +
+                         " set post_category_name=?,\n" +
+                         " is_active=?\n" +
+                         " where post_category_id=?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, pd.getPost_category_name());
+            pre.setInt(2, pd.getIs_active());
+            pre.setInt(3, pd.getPost_category_id());
+           pre.executeUpdate();
+
+        } catch (SQLException ex) {
+
+        }
+    }
     public static void main(String[] args) {
         PostCategoriesDAO pdao= new PostCategoriesDAO();
-        List<PostCategory> pd= pdao.searchCategory2("New");
+        PostCategories pd= new PostCategories(4, "nh", 0);
+        pdao.updatePostCategory(pd);
         System.out.println(pd);
     }
 }
