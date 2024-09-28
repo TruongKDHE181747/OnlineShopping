@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package admin_controller;
 
-import dal.ProductDAO;
+import dal.PostCategoriesDAO;
+import dal.ProductCategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +15,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
-import model.Product;
+import model.PostCategory;
+import model.ProductCategory;
 
 /**
  *
- * @author Thanh Tan
+ * @author 84983
  */
-@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
-public class ProductPaging extends HttpServlet {
+@WebServlet(name="SettingSearch", urlPatterns={"/settingsearch"})
+public class SettingSearch extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,25 +37,22 @@ public class ProductPaging extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession();
-        if (request.getParameter("p") != null) {
-            int p = Integer.parseInt(request.getParameter("p"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> plist = pdao.getProductPaging(p);
-
-            session.setAttribute("product_list", plist);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        } else {
-            int p = (int) session.getAttribute("cur_page");
-            ProductDAO pdao = new ProductDAO();
-            List<Product> plist = pdao.getProductPaging(p);
+        HttpSession session=request.getSession();
+        String psearch= request.getParameter("psearch");
+        ProductCategoryDAO pdao=new ProductCategoryDAO();
+        PostCategoriesDAO pd=new PostCategoriesDAO();
+        List<ProductCategory> plist=pdao.searchCategory(psearch);
+        List<PostCategory> pl=pd.searchCategory2(psearch);
+        if(plist!=null){
             
-            session.setAttribute("product_list", plist);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
+            session.setAttribute("plist", plist);
+            session.setAttribute("postlist", pl);
+        }else{
+            session.setAttribute("plist", plist);
+            session.setAttribute("postlist", pl);
         }
+        
+        response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
         
     } 
 

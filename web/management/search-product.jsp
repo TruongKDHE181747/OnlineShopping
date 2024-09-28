@@ -90,7 +90,7 @@
             }
 
             .product-img{
-                width: 30%;
+                width: 40%;
             }
 
             .product-img img{
@@ -174,9 +174,9 @@
 
 
                                 <!-- START Product item -->
-                                <%
-                                    List<Product> pList = (ArrayList<Product>) session.getAttribute("product_list");
-                                    for (Product p : pList) {
+                                <%  List<Product> search = (ArrayList<Product>) session.getAttribute("search_product");
+                                    if (search != null) {
+                                        for (Product p : search) {
                                 %>
                                 <tr>
 
@@ -203,7 +203,7 @@
                                     </td>
 
                                     <td><%= p.getPrice()%></td>
-
+                                    
                                     <td><%= p.getDiscount()%></td>
 
                                     <td><%= p.getRated_star()%></td>
@@ -238,6 +238,7 @@
                                         </div>
                                     </td>
                                     <%
+                                            }
                                         }
                                     %>
 
@@ -255,37 +256,7 @@
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
 
-                                    <%
-                                     int cur_page = (int) session.getAttribute("cur_page");
-                                     int total_page = (int) session.getAttribute("num_page");
-                                     if(cur_page > 1) {
-                                    %>
-                                    <li class="page-item">
-                                        <a class="page-link" href="../productpaging?p=<%= cur_page - 1%>" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <%
-                                       }
-
-                                       for (int i = 1; i <= total_page; i++) {
-                                    %>
-                                    <li class="page-item <%= (cur_page == i) ? "active" : "" %>">
-                                        <a class="page-link" href="../productpaging?p=<%= i %>"><%= i %></a>
-                                    </li>
-                                    <%
-                                        }
-
-                                        if (cur_page < total_page) {
-                                    %>
-                                    <li class="page-item">
-                                        <a class="page-link" href="../productpaging?p=<%= cur_page + 1 %>" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                    <%
-                                        }
-                                    %>
+                                    
                                 </ul>
                             </nav>
 

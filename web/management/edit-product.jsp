@@ -42,12 +42,12 @@
                 <div class="row g-5" style="justify-content: center;">
                     
                     <%
-                        Product p = (Product)session.getAttribute("pdetail");
+                        Product p = (Product)session.getAttribute("product_detail");
                     %>
                    
 
                     <div class="col-md-8">
-                        <form class="needs-validation" action="../updateproduct" method="post" enctype="multipart/form-data">
+                        <form class="needs-validation" action="../editproduct" method="post" enctype="multipart/form-data">
                             <div class="row g-3">
                                 
                                 <div class="col-sm-6">

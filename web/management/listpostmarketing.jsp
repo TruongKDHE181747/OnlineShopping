@@ -1,14 +1,12 @@
 <%-- 
-    Document   : admin
-    Created on : May 28, 2024, 9:07:04 PM
+    Document   : listpostmarketing
+    Created on : Sep 27, 2024, 9:37:00 PM
     Author     : Dell
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@page import="model.Post"%>
+<%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,6 +26,10 @@
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <jsp:include page="../common/css.jsp" />
         <style>
             .criteria{
                 border: 1px solid #bb9797;
@@ -65,7 +67,7 @@
 
             .edit{
                 display: inline-block;
-               
+                background-color: yellow;
                 padding: 6px 8px;
                 border-radius: 4px;
                 cursor: pointer;
@@ -75,7 +77,7 @@
             .remove{
                 color: white;
                 display: inline-block;
-                background-color: red;
+                background-color: #a0a1e0;
                 padding: 6px 8px;
                 border-radius: 4px;
                 cursor: pointer;
@@ -97,11 +99,11 @@
             }
 
             .product-img{
-                width: 40%;
+                width: 30%;
             }
 
             .product-img img{
-                width: 60%;
+                width: 80%;
             }
             
             .dropdown-toggle::after{
@@ -126,21 +128,78 @@
                 margin-top: 10px;
                 padding: 16px 0;
             }
+            .post-title{
+                width: 16%;
+                    
+            }
         </style>
+        
     </head>
     <body>
-        <c:set var="curlink" value="slider"></c:set>
-        
+        <jsp:include page="../common/header.jsp" />
         <div class="row">
-            <!-- START HEADER -->
+            <!-- START menu -->
+            <div class="col-md-2">
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    
+                         width: 100%;
+                        height: 100%;
+                     ">
 
-              <jsp:include page="marketing_header.jsp" />
+                    <hr>
+                    
+                    
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-white home-link" aria-current="page">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link text-white product-link">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link text-white account-link active">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                                Post
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="nav-link text-white station-link">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                                Stations
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="nav-link text-white contract-link">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                                Contracts
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    <hr>
+
+                </div>
+            </div>
 
             <!-- END menu -->
 
             <div class="col-md-10" style="padding: 40px;">
                 
-
+                <%
+                 List<Post> top3postmarketing = (List<Post>)session.getAttribute("top3postmarketing");
+            List<Post> listpostmarketing = (List<Post>)session.getAttribute("listpostmarketing");
+            
+            int npage = listpostmarketing.size()/3+1;
+                int cpostpage = 0;
+            if(session.getAttribute("cpostmkt")!=null) cpostpage = Integer.parseInt(session.getAttribute("cpostmkt")+"");
+                %>
                 
                 <!-- START products -->
                 <div class="product">
@@ -148,11 +207,11 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Sliders List</h5>
+                                    <h5 class="navbar-brand" href="#">Manage Post</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchslider" method="get">
-                                            <input placeholder="Search by  name,description,..." name="search" class="form-control me-2" type="search"  aria-label="Search">
+                                        <form class="d-flex" role="search">
+                                            <input placeholder="Car name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -160,7 +219,7 @@
 
                                     <div class="">
                                         <div class="d-flex add" role="search">
-                                            <a href="addslider.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
+                                            <a href="#"><i style="color: white;" class="fa-solid fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -170,120 +229,86 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                      <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col">Title</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col"> Status</th>
-                                    <th scope="col" style="width: 14%">Action</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Created Day</th>
+                                    <th scope="col">Modified Day</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                          
+                                <%
+                                int i = 1;
+                                for (Post post : top3postmarketing) {
+                                
+                                %>
+                                
                                 <!-- START Product item -->
-                                  <c:forEach var="s" items="${sessionScope.slider}">
                                 <tr>
-                                    <th scope="row">${s.id}</th>
-                                      <td>${s.title}</td>
-                                    <td>${s.description}</td>
+                                    <th scope="row"><%=i%></th>
+                                    <td class="post-title"><%=post.getTitle()%></td>
                                     <td class="product-img">
-                                        
-                                        <img src="../${s.img}" alt="alt"/>
-                                       
+                                        <img src="../<%=post.getThumbnail()%>">
                                     </td>
-                                    
+                                    <td><%=post.getAuthor_name()%></td>
+                                    <td><%=post.getCreated_at()%></td>
+                                    <td><%=post.getModified_at()%></td>
                                     <td>
-                                        <c:if test="${s.status==1}">
-                                            <p style="color: green">Active</p>
-                                        
-                                        </c:if>
-                                               <c:if test="${s.status==0}">
-                                            <p style="color: red">Inactive</p>
-                                        
-                                        </c:if>
-                                        
-                                        
-                                    </td>
-                                    
-                                    <td>
-                                        <c:if test="${s.status==1}">
-                                            
-                                        <div class="edit" style="background-color: red">
-                                            
-                                              
-                                                  
-                                              
-                                                
-                                            <a href="../updateslider?sid=${s.id}&button=hide" onclick="return confirm('Hide this slider?')"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
+                                        <div class="edit">
+                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                        </div>
+                                        <div class="remove">
+                                            <a style="color: white;"onclick="return confirm('Do you want to delete carID 1')" href="#"><i class="fa-solid fa-circle-info"></i></a> 
                                             
                                         </div>
-                                        </c:if>
-                                       
-                                          <c:if test="${s.status==0}">
-                                            
-                                        <div class="edit" style="background-color: greenyellow">
-                                      
-                                              
-                                                  
-                                              
-                                                
-                                           <a href="../updateslider?sid=${s.id}&button=show" onclick="return confirm('Show this slider?')">
-    <i style="color: black;" class="bi bi-eye-fill"></i>
-</a>
+                                        <div class="remove" style="background-color: greenyellow">                               
+                                           <a href="#?sid=1&button=show" onclick="return confirm('Show this slider?')">
+                                             <i style="color: black;" class="bi bi-eye-fill"></i>
+                                           </a>    
+                                        </div>
+                                    </td>
 
-                                            
-                                        </div>
-                                        </c:if>
-                                        <div class="remove" style="background-color: yellow">
-                                            <a href="../updateslider?sid=${s.id}&button=edit"><i style="color: black;" class="bi bi-pencil-fill"></i></a>     
-                                        </div>
-                                         <div class="remove" style="background-color: orangered">
-                                            <a href="../deleteslider?sid=${s.id}" onclick="return confirm('Delete this slider?')"><i style="color: black;" class="bi bi-trash"></i></a>     
-                                        </div>
-                                    </td>
-                                    
                                 </tr>
-                                  
+                                <!-- END Product item -->
                                 
                                 
-                                 </c:forEach>
-                                <!-- END Product item -->
-                               
-                                <!-- START Product item -->
-                             
-                                <!-- END Product item -->
+                                <%
+                                    i++;
+                                    }
+                                %>
+                                
+
 
                             </tbody>
                         </table>
-                             
-                               
+                                
                     <!-- START PAGE -->
                     
                     <div style="display: flex;
-                                justify-content: center;">
+                                justify-content: center;
+                                margin-bottom: 16px;">
                         
                         <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <c:if test="${sessionScope.cpage>1}" >
                             <li class="page-item">
-                                <a class="page-link" href="../sliderpaging?p=${sessionScope.cpage-1}" aria-label="Previous">
+                                <a class="page-link" href="#" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                          </c:if>
-                            <c:forEach begin="1" end="${sessionScope.page}" var="p">
-                                
-                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.cpage==p}">active</c:if>" href="../sliderpaging?p=${p}">${p}</a></li>
-                                
-                            </c:forEach>
                             
-                             <c:if test="${sessionScope.cpage<page}" >
+                           
+                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link " href="#">2</a></li>
+                            <li class="page-item"><a class="page-link " href="#">4</a></li>
+                            <li class="page-item"><a class="page-link " href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#">6</a></li>
                             <li class="page-item">
-                                <a class="page-link" href="../sliderpaging?p=${cpage+1}" aria-label="Next">
+                                <a class="page-link" href="#" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
-                            </c:if>
                         </ul>
                     </nav>
                         

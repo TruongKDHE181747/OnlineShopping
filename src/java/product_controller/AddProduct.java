@@ -6,17 +6,21 @@
 package product_controller;
 
 import dal.ProductDAO;
+import dal.ProductSizeDAO;
 import dal.SizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.io.File;
 import java.util.List;
 import model.Product;
+import model.ProductSize;
 import model.Size;
 
 /**
@@ -24,6 +28,7 @@ import model.Size;
  * @author Thanh Tan
  */
 @WebServlet(name="AddProduct", urlPatterns={"/addproduct"})
+@MultipartConfig(maxFileSize = 16177215)
 public class AddProduct extends HttpServlet {
    
     /** 
@@ -39,9 +44,12 @@ public class AddProduct extends HttpServlet {
         
         SizeDAO sdao = new SizeDAO();
         List<Size> sizes = sdao.getAllSize();
+        ProductSizeDAO psdao = new ProductSizeDAO();
         
-        Part file=request.getPart("img");
-        String imgfileName = file.getSubmittedFileName();
+        Part file = request.getPart("img");
+        String fileName = file.getSubmittedFileName();
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "product_img";
+        file.write(uploadPath + File.separator + fileName);
         boolean is_active = false;
         
         String name = request.getParameter("name");
@@ -49,14 +57,14 @@ public class AddProduct extends HttpServlet {
         int discount = Integer.parseInt(request.getParameter("discount"));
         int total_quantity = 0;
         String description = request.getParameter("description");
-        String img = "product_img/"+imgfileName;
+        String img = "product_img/" + fileName;
         int status = Integer.parseInt(request.getParameter("status"));
         int rated_star = 0;
         int brand = Integer.parseInt(request.getParameter("brand"));
         int category = Integer.parseInt(request.getParameter("category"));
         
         for (Size size : sizes) {
-            int quantity = Integer.parseInt(request.getParameter("size_") + size.getSize_id());
+            int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
             total_quantity += quantity;
         }
         
@@ -65,7 +73,13 @@ public class AddProduct extends HttpServlet {
         }
         
         ProductDAO pdao = new ProductDAO();
-        pdao.addProduct(new Product(0, name, price, total_quantity, discount, description, name, is_active, rated_star, brand, category));
+        pdao.addProduct(new Product(name, price, total_quantity, discount, description, img, is_active, rated_star, brand, category));
+        for (Size size : sizes) {
+            Product product = pdao.getHighestId();
+            int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
+            psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity));
+        }
+        response.sendRedirect("productlist");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

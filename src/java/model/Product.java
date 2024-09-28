@@ -29,6 +29,19 @@ public class Product {
         this.brand_id = brand_id;
         this.product_category_id = product_category_id;
     }
+    
+    public Product(String product_name, int price, int total_quantity, int discount, String description, String thumbnail, boolean is_active, int rated_star, int brand_id, int product_category_id) {
+        this.product_name = product_name;
+        this.price = price;
+        this.total_quantity = total_quantity;
+        this.discount = discount;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.is_active = is_active;
+        this.rated_star = rated_star;
+        this.brand_id = brand_id;
+        this.product_category_id = product_category_id;
+    }
 
     public int getProduct_id() {
         return product_id;

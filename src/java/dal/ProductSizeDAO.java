@@ -42,4 +42,19 @@ public class ProductSizeDAO extends DBContext{
         return pList;
     }
     
+    public void addSizeProduct(ProductSize p) {
+        String sql = "insert into Product_Size \n"
+                + "(size_id, product_id, quantity) \n"
+                + "values \n"
+                + "(?, ?, ?)";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, p.getSize_id());
+            pre.setInt(2, p.getProduct_id());
+            pre.setInt(3, p.getQuantity());
+            pre.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

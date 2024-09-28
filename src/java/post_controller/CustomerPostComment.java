@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package post_controller;
 
-import dal.ProductDAO;
+import dal.PostDAO;
+import dal.PostFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +15,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Product;
+import model.Post;
+import model.PostFeedback;
+import model.User;
 
 /**
  *
- * @author Thanh Tan
+ * @author Dell
  */
-@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
-public class ProductPaging extends HttpServlet {
+@WebServlet(name="CustomerPostComment", urlPatterns={"/customerpostcomment"})
+public class CustomerPostComment extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,22 +38,21 @@ public class ProductPaging extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         HttpSession session = request.getSession();
-        if (request.getParameter("p") != null) {
-            int p = Integer.parseInt(request.getParameter("p"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> plist = pdao.getProductPaging(p);
-
-            session.setAttribute("product_list", plist);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
+        PostFeedbackDAO pfdao = new PostFeedbackDAO();
+        
+        User user = (User)session.getAttribute("account");
+        String comment = request.getParameter("postcomment");
+        
+        if(user==null){
+            response.sendRedirect(request.getContextPath()+"/login");
         } else {
-            int p = (int) session.getAttribute("cur_page");
-            ProductDAO pdao = new ProductDAO();
-            List<Product> plist = pdao.getProductPaging(p);
+            int userid = user.getUser_id();
+            Post ppostdetail = (Post)session.getAttribute("ppostdetail");
+            int postid = ppostdetail.getPost_id();
             
-            session.setAttribute("product_list", plist);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
+            PostFeedback pf = new PostFeedback(0, userid, postid, comment, 1);
+            pfdao.AddCustomerPostFeedback(pf);
+            response.sendRedirect(request.getContextPath()+"/hpostdetail");
         }
         
     } 

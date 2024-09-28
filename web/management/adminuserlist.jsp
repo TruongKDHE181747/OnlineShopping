@@ -124,6 +124,55 @@
                 margin-top: 10px;
                 padding: 16px 0;
             }
+                    /* Style for the dropdown button */
+.dropbtn {
+    background-color: #d0d040;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Container for the dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when hovered */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
         </style>
     </head>
     <body>
@@ -234,11 +283,21 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Products</h5>
-
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search">
-                                            <input placeholder="Car name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <div class="dropdown">
+                                            <button class="dropbtn">Classification</button>
+                                            <div class="dropdown-content">
+                                                <a href="../userclassification?role=1">Admin</a>
+                                                <a href="../userclassification?role=2">Sale manager</a>
+                                                <a href="../userclassification?role=3">Saler</a>
+                                                <a href="../userclassification?role=4">Maketer</a>
+                                                <a href="../userclassification?role=5">User</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="" id="navbarSupportedContent">
+                                        <form class="d-flex" role="search" action="../searchuser">
+                                            <input placeholder="Search..." name="usersearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -257,6 +316,8 @@
                                 <tr>
                                     <th scope="col">Id</th>
                                     <th scope="col">Username</th>
+                                    <th scope="col">First name</th>
+                                    <th scope="col">Last name</th>
                                     <th scope="col">Phone number</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Gender</th>
@@ -272,6 +333,8 @@
                                 <tr>
                                     <th scope="row">${ul.user_id}</th>
                                     <td>${ul.username}</td>
+                                    <td>${ul.first_name}</td>
+                                    <td>${ul.last_name}</td>
                                     <td>${ul.phone}</td>
                                     <td>${ul.email}</td>
                                     <td>
@@ -333,6 +396,7 @@
                     <!-- END PAGE -->
                                 
                     </div>
+                    
                 </div>
                 <!-- END products -->
                 

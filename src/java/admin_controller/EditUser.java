@@ -10,11 +10,14 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import model.Role;
 import model.User;
 import utils.Email;
@@ -24,6 +27,7 @@ import utils.Email;
  * @author 84983
  */
 @WebServlet(name="EditUser", urlPatterns={"/edituser"})
+@MultipartConfig(maxFileSize = 16177215)
 public class EditUser extends HttpServlet {
    
     /** 
@@ -48,12 +52,27 @@ public class EditUser extends HttpServlet {
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         String dob = request.getParameter("dob");
         String phone = request.getParameter("phone");
-        String profilepic=request.getParameter("profile_picture_url");
+        
         String rolename=request.getParameter("role");
         String password=request.getParameter("password");
-                
-        boolean checkExistUsername = userDAO.checkExistUsername(username);
-        boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
+        User oldu=userDAO.getUserById(user_id);
+        String profilepic= oldu.getProfile_picture_url();
+        try {
+          
+          Part filePart = request.getPart("profile_picture_url"); 
+        String fileName = filePart.getSubmittedFileName();
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "profile_img";
+
+
+        // Save the uploaded file to the specified path
+        filePart.write(uploadPath + File.separator + fileName);
+
+            profilepic = "profile_img/"+fileName;
+             if(fileName.isEmpty()) throw new Exception();
+        } catch (Exception e) {
+            profilepic=oldu.getProfile_picture_url();
+        }
+        
         Role role=rdao.getRolebyname(rolename);
         
         User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, profilepic, true, false, role);

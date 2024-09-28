@@ -9,6 +9,7 @@ import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,8 +21,9 @@ import model.Product;
  *
  * @author Thanh Tan
  */
-@WebServlet(name="UpdateProduct", urlPatterns={"/updateproduct"})
-public class UpdateProduct extends HttpServlet {
+@WebServlet(name="EditProduct", urlPatterns={"/editproduct"})
+@MultipartConfig(maxFileSize = 16177215)
+public class EditProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,13 +36,30 @@ public class UpdateProduct extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int pid = Integer.parseInt(request.getParameter("pid"));
-        ProductDAO pdao = new ProductDAO();
-        Product p = pdao.getProductById(pid);
         HttpSession session = request.getSession();
-
-        session.setAttribute("pdetail", p);
-        response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+        
+        if (request.getParameter("button")!= null) {
+            String button = request.getParameter("button");
+            int pid = Integer.parseInt(request.getParameter("pid"));
+            if (button.equals("hide")) {
+                ProductDAO pdao = new ProductDAO();
+                Product p = pdao.getProductById(pid);
+                p.setIs_active(false);
+                pdao.updateProduct(p);
+                request.getRequestDispatcher("productlist").forward(request, response);
+            } else if (button.equals("show")) {
+                ProductDAO pdao = new ProductDAO();
+                Product p = pdao.getProductById(pid);
+                p.setIs_active(true);
+                pdao.updateProduct(p);
+                request.getRequestDispatcher("productlist").forward(request, response);
+            } else {
+                ProductDAO pdao = new ProductDAO();
+                Product p = pdao.getProductById(pid);
+                session.setAttribute("product_detail", p);
+                response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
+            }
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

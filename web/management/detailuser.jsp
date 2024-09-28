@@ -75,8 +75,8 @@
                                 <div class="col-sm-6">
                                     <label for="profile_picture_url" class="form-label">Profile Image</label>
                                     <input name="profile_picture_url" type="file" class="form-control" id="profile_picture_url">
-                                    <img style="margin-top: 10px;" 
-                                         src="${sessionScope.u.profile_picture_url != null ? sessionScope.u.profile_picture_url : 'img/user.png'}" 
+                                    <img style="margin-top: 10px; height: 100px;" 
+                                         src="../${sessionScope.u.profile_picture_url != null ? sessionScope.u.profile_picture_url : 'img/user.png'}" 
                                          alt="Profile Image"/>
                                 </div>
 

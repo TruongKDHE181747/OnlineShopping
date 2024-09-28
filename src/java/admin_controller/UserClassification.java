@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package admin_controller;
 
-import dal.ProductDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,14 +15,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Product;
+import model.User;
 
 /**
  *
- * @author Thanh Tan
+ * @author 84983
  */
-@WebServlet(name="ProductPaging", urlPatterns={"/productpaging"})
-public class ProductPaging extends HttpServlet {
+@WebServlet(name="UserClassification", urlPatterns={"/userclassification"})
+public class UserClassification extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,26 +34,14 @@ public class ProductPaging extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession();
-        if (request.getParameter("p") != null) {
-            int p = Integer.parseInt(request.getParameter("p"));
-            ProductDAO pdao = new ProductDAO();
-            List<Product> plist = pdao.getProductPaging(p);
-
-            session.setAttribute("product_list", plist);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        } else {
-            int p = (int) session.getAttribute("cur_page");
-            ProductDAO pdao = new ProductDAO();
-            List<Product> plist = pdao.getProductPaging(p);
-            
-            session.setAttribute("product_list", plist);
-            session.setAttribute("cur_page", p);
-            response.sendRedirect(request.getContextPath() + "/management/product-list.jsp");
-        }
-        
+        HttpSession session=request.getSession();
+        UserDAO ud=new UserDAO();
+        String rolename=request.getParameter("role");
+        int role_id=Integer.parseInt(rolename);
+        List<User> ulist=ud.getALlUserInRole(role_id);
+        session.setAttribute("ulist", ulist);
+        response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
+                
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
