@@ -5,8 +5,6 @@
 
 package post_controller;
 
-import dal.PostCategoryDAO;
-import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,14 +16,13 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Post;
-import model.PostCategory;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="ListPostMarketing", urlPatterns={"/listpostmarketing"})
-public class ListPostMarketing extends HttpServlet {
+@WebServlet(name="PostmktPagi", urlPatterns={"/postmktpagi"})
+public class PostmktPagi extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,43 +35,32 @@ public class ListPostMarketing extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        PostDAO pdao = new PostDAO();
-        List<Post> pList = pdao.getAllPostMarketing();
-        List<Post> top3post = select3Post(pList, 0);
-        PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<PostCategory> pcList = pcdao.getAllPostCategory();
-        //Reset(session);
+        List<Post> allpostlist = (List<Post>)session.getAttribute("listpostmarketing");
+        int cpage = Integer.parseInt(request.getParameter("cpage"));
+        if(cpage<0) cpage=0;
+        if(cpage>=(allpostlist.size()/3+1)) cpage = allpostlist.size()/3;
+        List<Post> top3post = select3Post(allpostlist, cpage);
         
-        session.setAttribute("listpostcategorymkt", pcList);
-        session.setAttribute("listpostmarketing", pList);
+        
+        
         session.setAttribute("top3postmarketing", top3post);
-        session.setAttribute("cpostmkt", 0);
+        session.setAttribute("cpostmkt", cpage);
         response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
+        
     } 
     
-    public static void Reset(HttpSession session){
-        session.setAttribute("begindatemkt", "");
-        session.setAttribute("enddatemkt", "");
-        session.setAttribute("authormkt", "");
-        session.setAttribute("titlemkt", "");
-        session.setAttribute("sortValuemkt",null);
-        session.setAttribute("pmktCategory",null);
-        session.setAttribute("pmktloi", "");
-    }
-    
     public static List<Post> select3Post( List<Post> pList, int pageNum){
-        List<Post> top6List = new ArrayList<>();
+        List<Post> top3List = new ArrayList<>();
         for(int i = pageNum*3;i<=pageNum*3+2;i++){
             if(i>=pList.size()) {
                 break;
             } else {
-                top6List.add(pList.get(i));
+                top3List.add(pList.get(i));
             }
         }
         
-        return top6List;
+        return top3List;
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.

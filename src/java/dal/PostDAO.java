@@ -276,6 +276,33 @@ public class PostDAO extends DBContext{
     }
     
     
+    public List<Post> getAllPostByFilterMkt(String sql) {
+        List<Post> pList = new ArrayList<>();
+       
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_id = rs.getInt("post_id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String thumbnail = rs.getString("thumbnail");
+                int author_id = rs.getInt("author_id");
+                int is_active = rs.getInt("is_active");
+                Date created_at = rs.getDate("created_at");
+               Date modified_at = rs.getDate("modified_at");
+                int post_category_id = rs.getInt("post_category_id");
+                 String author_name = rs.getString("authorname");
+                Post post = new Post(post_id, title, content, thumbnail, author_id, is_active, created_at, modified_at, post_category_id,author_name);
+                pList.add(post);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    
+    
     public Post getPostByID(String id) {
         Post p = new Post();
        String sql = "select * from Posts\n" +

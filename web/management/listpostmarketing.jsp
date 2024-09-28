@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Post"%>
+<%@page import="model.PostCategory"%>
 <%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
@@ -139,7 +140,7 @@
         <jsp:include page="../common/header.jsp" />
         <div class="row">
             <!-- START menu -->
-            <div class="col-md-2">
+            <div class="col-md-2" style="min-height: 552px">
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    
                          width: 100%;
                         height: 100%;
@@ -162,7 +163,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white account-link active">
+                            <a href="../listpostmarketing" class="nav-link text-white account-link active">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
                                 Post
                             </a>
@@ -190,6 +191,7 @@
 
             <!-- END menu -->
 
+            
             <div class="col-md-10" style="padding: 40px;">
                 
                 <%
@@ -201,21 +203,65 @@
             if(session.getAttribute("cpostmkt")!=null) cpostpage = Integer.parseInt(session.getAttribute("cpostmkt")+"");
                 %>
                 
+                <%
+            String begin = session.getAttribute("begindatemkt")+"";
+        String end = session.getAttribute("enddatemkt")+"";
+        String author = session.getAttribute("authormkt")+"";
+        String title = session.getAttribute("titlemkt")+"";
+        if(begin.equals("null")) begin = "";
+        if(end.equals("null")) end = "";
+        if(author.equals("null")) author = "";
+        if(title.equals("null")) title = "";
+        
+            %>
                 <!-- START products -->
                 <div class="product">
                     <div class="container products" >
+                        <div class="" id="navbarSupportedContent" style="margin: 10px 0;">
+                            <form action="../listpostfiltermkt" class="d-flex" role="search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">From:</h5>
+                                            <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">To:</h5>
+                                            <input value="<%=end%>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
+                                            <input value="<%=title%>" placeholder="Post title" name="title" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <input value="<%=author%>" placeholder="Author name" name="author" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                        </form>
+                            <%
+                        String loi = session.getAttribute("pmktloi")+"";
+                        String postsql = session.getAttribute("postsql")+"";
+                        if(loi.equals("null")) loi = "";
+                        %>
+                        <div style="color: red;">
+                            <%=loi%>
+                        </div>
+                                    </div>
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Post</h5>
+                                    <h5 style="font-weight: bold;" class="navbar-brand" href="#">Manage Post</h5>
 
-                                    <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search">
-                                            <input placeholder="Car name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
-                                        </form>
+                                    <%
+                                    List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("listpostcategorymkt");
+                                    %>
+                                    <div class="btn-group" style="">
+                                      <button  style="color: white;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Select category
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                          <%
+                                          for (PostCategory postCategory : postcategorylist) {
+
+                                          %>
+                                          <li><a class="dropdown-item " href="../listpostfiltermkt?cid=<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></a></li>
+                                          <%
+                                              }
+                                          %>
+                                      </ul>
                                     </div>
-
+                                    
+                                    <!-- Example single danger button -->
+                                    
 
                                     <div class="">
                                         <div class="d-flex add" role="search">
@@ -293,19 +339,20 @@
                         <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
+                                <a class="page-link" href="../postmktpagi?cpage=<%=cpostpage-1%>" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             
-                           
-                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link " href="#">2</a></li>
-                            <li class="page-item"><a class="page-link " href="#">4</a></li>
-                            <li class="page-item"><a class="page-link " href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
+                            <%
+                            for (int j = 0; j < npage; j++) {
+                            %>
+                            <li class="page-item"><a class="page-link <%=j==cpostpage?"active":""%>" href="../postmktpagi?cpage=<%=j%>"><%=j+1%></a></li>
+                            <%
+                                }
+                            %>
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                                <a class="page-link" href="../postmktpagi?cpage=<%=cpostpage+1%>" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
