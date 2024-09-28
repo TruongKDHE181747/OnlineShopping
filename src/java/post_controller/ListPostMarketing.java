@@ -7,7 +7,6 @@ package post_controller;
 
 import dal.PostCategoryDAO;
 import dal.PostDAO;
-import dal.PostFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,19 +15,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import model.Post;
-import model.PostCategories;
 import model.PostCategory;
-import model.PostFeedback;
-import model.User;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="HPostDetail", urlPatterns={"/hpostdetail"})
-public class HPostDetail extends HttpServlet {
+@WebServlet(name="ListPostMarketing", urlPatterns={"/listpostmarketing"})
+public class ListPostMarketing extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,44 +37,43 @@ public class HPostDetail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         PostDAO pdao = new PostDAO();
+        List<Post> pList = pdao.getAllPostMarketing();
+        List<Post> top3post = select3Post(pList, 0);
         PostCategoryDAO pcdao = new PostCategoryDAO();
-        PostFeedbackDAO pfdao = new PostFeedbackDAO();
-        
-        String bid = request.getParameter("bid");
-        if(bid==null){
-            Post ppostdetail = (Post)session.getAttribute("ppostdetail");
-            bid = ppostdetail.getPost_id()+"";
-        }
-        Post p = pdao.getPostByID(bid);
-        PostCategory pc = pdao.getPostCategoryByPostID(bid);
-        User u = pdao.getUserByPostID(bid);
         List<PostCategory> pcList = pcdao.getAllPostCategory();
-        List<PostFeedback> pf3List = pfdao.getTop3FeedbackByPostId(bid, 0);
-        List<PostFeedback> allpfList = pfdao.getAllFeedbackByPostId(bid);
-        List<Post> plist = pdao.get3PostByCategoryId(pc.getPost_category_id()+"", bid);
+        //Reset(session);
         
-        Post afterPost = pdao.getPostAfter(u.getUser_id()+"", bid);
-        Post beforePost = pdao.getPostBefore(u.getUser_id()+"", bid);
-        
-        
-        session.setAttribute("afterPost", afterPost);
-        session.setAttribute("beforePost", beforePost);
-        session.setAttribute("relatedPostList", plist);
-        session.setAttribute("top3postfblist", pf3List);
-        session.setAttribute("allpostfblist", allpfList);
-        session.setAttribute("pofpage", 0);
-        session.setAttribute("postcategorylist", pcList);
-        session.setAttribute("ppostdetail", p);
-        session.setAttribute("ppostcategory", pc);
-        session.setAttribute("ppostauthor", u);
-        
-        
-        
-        response.sendRedirect(request.getContextPath()+"/common/hblogdetail.jsp");
-        
+        session.setAttribute("listpostcategorymkt", pcList);
+        session.setAttribute("listpostmarketing", pList);
+        session.setAttribute("top3postmarketing", top3post);
+        session.setAttribute("cpostmkt", 0);
+        response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
     } 
+    
+    public static void Reset(HttpSession session){
+        session.setAttribute("begindatemkt", "");
+        session.setAttribute("enddatemkt", "");
+        session.setAttribute("authormkt", "");
+        session.setAttribute("titlemkt", "");
+        session.setAttribute("sortValuemkt",null);
+        session.setAttribute("pmktCategory",null);
+        session.setAttribute("pmktloi", "");
+    }
+    
+    public static List<Post> select3Post( List<Post> pList, int pageNum){
+        List<Post> top6List = new ArrayList<>();
+        for(int i = pageNum*3;i<=pageNum*3+2;i++){
+            if(i>=pList.size()) {
+                break;
+            } else {
+                top6List.add(pList.get(i));
+            }
+        }
+        
+        return top6List;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

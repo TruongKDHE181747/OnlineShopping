@@ -37,6 +37,10 @@
     </head>
 
     <body>
+        <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
+        </div>
         <jsp:include page="../common/header.jsp" />
         <!-- Header Section End -->
 
@@ -173,11 +177,11 @@
                             </div>
                             <div class="blog__details__comment">
                                 <h4>Leave A Comment</h4>
-                                <form action="#">
+                                <form action="../customerpostcomment">
                                     <div class="row">
                                         
                                         <div class="col-lg-12 text-center">
-                                            <textarea placeholder="Comment"></textarea>
+                                            <textarea required="" name="postcomment" placeholder="Comment"></textarea>
                                             <button type="submit" class="site-btn">Post Comment</button>
                                         </div>
                                     </div>

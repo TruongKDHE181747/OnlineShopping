@@ -21,10 +21,15 @@ import model.ProductFeedback;
 public class ProductFeedbackDAO extends DBContext{
     public List<ProductFeedback> getAllFeetBackByProductId(String id) {
         List<ProductFeedback> pList = new ArrayList<>();
-        String sql = "select * from Feedbacks where product_id = "+id+" and is_active = 1;";
+        String sql = "select f.* \n" +
+                    "from Feedbacks as f, Users as u\n" +
+                    "where f.customer_id = u.user_id and \n" +
+                    "product_id = ? and f.is_active = 1\n" +
+                    "and u.is_banned=0;";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, id);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 int feedback_id = rs.getInt("feedback_id");
@@ -48,8 +53,11 @@ public class ProductFeedbackDAO extends DBContext{
     
     public List<ProductFeedback> get2FeetBackByProductId(String id, int n) {
         List<ProductFeedback> pList = new ArrayList<>();
-        String sql = "select * from Feedbacks\n" +
-                    "where is_active = 1 and product_id = ?\n" +
+        String sql = "select f.* \n" +
+                    "from Feedbacks as f, Users as u\n" +
+                    "where f.customer_id = u.user_id and \n" +
+                    "product_id = ? and f.is_active = 1\n" +
+                    "and u.is_banned=0\n" +
                     "order by feedback_id\n" +
                     "offset ? rows fetch next 2 rows only";
 
