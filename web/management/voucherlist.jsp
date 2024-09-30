@@ -101,7 +101,7 @@
             .product-img img{
                 width: 60%;
             }
-            
+
             .dropdown-toggle::after{
                 color: white;
             }
@@ -124,54 +124,54 @@
                 margin-top: 10px;
                 padding: 16px 0;
             }
-                    /* Style for the dropdown button */
-.dropbtn {
-    background-color: #d0d040;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
+            /* Style for the dropdown button */
+            .dropbtn {
+                background-color: #d0d040;
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
 
-/* Container for the dropdown */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+            /* Container for the dropdown */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
 
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
+            /* Dropdown content (hidden by default) */
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
 
-/* Links inside the dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+            /* Links inside the dropdown */
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+            /* Show the dropdown menu on hover */
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
 
-/* Change the background color of the dropdown button when hovered */
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-}
+            /* Change the background color of the dropdown button when hovered */
+            .dropdown:hover .dropbtn {
+                background-color: #3e8e41;
+            }
 
         </style>
     </head>
@@ -188,20 +188,20 @@
                         </a>
 
                         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            
+
                         </ul>
 
                         <!-- User check exist -->
-                        
-<!--                        <div class="text-end">
 
-                            <a href="login.jsp" class="btn btn-outline-light me-2" previewlistener="true">Login</a>
-                            <a href="register.jsp" class="btn btn-warning" previewlistener="true">Sign-up</a>
-                        </div>-->
-                     
+                        <!--                        <div class="text-end">
+                        
+                                                    <a href="login.jsp" class="btn btn-outline-light me-2" previewlistener="true">Login</a>
+                                                    <a href="register.jsp" class="btn btn-warning" previewlistener="true">Sign-up</a>
+                                                </div>-->
+
 
                         <div class="text-end" style="display: flex;">
-                            
+
                             <div class="dropdown text-end">
 
                                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -224,7 +224,7 @@
                             </div>
                         </div>
 
-                      
+
 
 
                     </div>
@@ -243,8 +243,8 @@
                      ">
 
                     <hr>
-                    
-                    
+
+
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
                             <a href="../admindasboard" class="nav-link text-white home-link " aria-current="page">
@@ -273,30 +273,19 @@
             <!-- END menu -->
 
             <div class="col-md-10" style="padding: 40px;">
-                
 
-                
+
+
                 <!-- START products -->
-                
+
                 <div class="product">
                     <div class="container products" >
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
+                                    <h5 class="navbar-brand" href="#">Manage Voucher</h5>
                                     <div class="" id="navbarSupportedContent">
-                                        <div class="dropdown">
-                                            <button class="dropbtn">Classification</button>
-                                            <div class="dropdown-content">
-                                                <a href="../userclassification?role=1">Admin</a>
-                                                <a href="../userclassification?role=2">Sale manager</a>
-                                                <a href="../userclassification?role=3">Saler</a>
-                                                <a href="../userclassification?role=4">Maketer</a>
-                                                <a href="../userclassification?role=5">User</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchuser">
+                                        <form class="d-flex" role="search" action="">
                                             <input placeholder="Search..." name="usersearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
@@ -305,7 +294,7 @@
 
                                     <div class="">
                                         <div class="d-flex add" role="search">
-                                            <a href="adduserlist.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
+                                            <a href="addvoucher.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -315,98 +304,106 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">First name</th>
-                                    <th scope="col">Last name</th>
-                                    <th scope="col">Phone number</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Gender</th>
-                                    <th scope="col">Role</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Value</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                
-                                <!-- START Product item -->
-                                <c:forEach var="ul" items="${sessionScope.ulist}">
-                                <tr>
-                                    <th scope="row">${ul.user_id}</th>
-                                    <td>${ul.username}</td>
-                                    <td>${ul.first_name}</td>
-                                    <td>${ul.last_name}</td>
-                                    <td>${ul.phone}</td>
-                                    <td>${ul.email}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${ul.gender}">
-                                                Male
-                                            </c:when>
-                                            <c:otherwise>
-                                                Female
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    <td>${ul.role.rolename}</td>
-                                    <td>
-                                        <div class="edit">
-                                            <a href="../detailuser?uid=${ul.user_id}"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-                                            
-                                        </div>
-                                        
-                                    </td>
 
-                                </tr>
+                                <!-- START Product item -->
+                                <c:forEach var="vl" items="${sessionScope.vlist}">
+                                    <tr>
+                                        <th scope="row">${vl.voucher_id}</th>
+                                        <td>${vl.voucher_name}</td>
+                                        <td>${vl.start_date}</td>
+                                        <td>${vl.end_date}</td>
+                                        <td>${vl.quantity}</td>
+                                        <td>${vl.percent}</td>
+                                        <td>
+                                            <c:if test="${vl.is_active==1}">
+                                                <p style="color: green">Active</p>
+
+                                            </c:if>
+                                            <c:if test="${vl.is_active==0}">
+                                                <p style="color: red">Inactive</p>
+
+                                            </c:if>
+                                        </td>
+
+                                        <td>
+                                            <div class="edit">
+                                                <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+
+                                            </div>
+                                            <c:if test="${vl.is_active==1}">
+                                            <div class="remove" style="background-color: red">
+                                                <a onclick="return confirm('Do you want to hide this voucher')" href="#"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                            </div>
+                                            </c:if>
+                                            <c:if test="${vl.is_active==0}">
+                                            <div class="remove" style="background-color: green">
+                                                <a onclick="return confirm('Do you want to show this voucher')" href="#"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                            </div>
+                                            </c:if>
+                                        </td>
+
+                                    </tr>
                                 </c:forEach>
                                 <!-- END Product item -->
-                               
-                                
+
+
 
                             </tbody>
                         </table>
-                                
-                    <!-- START PAGE -->
-                    
-                    <div style="display: flex;
-                                justify-content: center;">
-                        
-                        <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <c:if test="${sessionScope.curentpage>1}" >
-                            <li class="page-item">
-                                <a class="page-link" href="../userpaging?p=${sessionScope.curentpage-1}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                          </c:if>
-                            <c:forEach begin="1" end="${sessionScope.numberpage}" var="p">
-                                
-                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.curentpage==p}">active</c:if>" href="../userpaging?p=${p}">${p}</a></li>
-                                
-                            </c:forEach>
-                            
-                             <c:if test="${sessionScope.curentpage<numberpage}" >
-                            <li class="page-item">
-                                <a class="page-link" href="../userpaging?p=${curentpage+1}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                        
+
+                        <!-- START PAGE -->
+
+                        <div style="display: flex;
+                             justify-content: center;">
+
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <c:if test="${sessionScope.curentpage>1}" >
+                                        <li class="page-item">
+                                            <a class="page-link" href="../voucherpaging?p=${sessionScope.curentpage-1}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${sessionScope.npage}" var="p">
+
+                                        <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.curentpage==p}">active</c:if>" href="../voucherpaging?p=${p}">${p}</a></li>
+
+                                    </c:forEach>
+
+                                    <c:if test="${sessionScope.curentpage<numberpage}" >
+                                        <li class="page-item">
+                                            <a class="page-link" href="../voucherpaging?p=${curentpage+1}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </nav>
+
+                        </div>
+                        <!-- END PAGE -->
+
                     </div>
-                    <!-- END PAGE -->
-                                
-                    </div>
-                    
+
                 </div>
                 <!-- END products -->
-                
-                
+
+
             </div>
         </div>
 
-        
+
     </body>
 </html>

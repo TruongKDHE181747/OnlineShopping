@@ -114,10 +114,5 @@ public class PostCategoriesDAO extends DBContext{
 
         }
     }
-    public static void main(String[] args) {
-        PostCategoriesDAO pdao= new PostCategoriesDAO();
-        PostCategories pd= new PostCategories(4, "nh", 0);
-        pdao.updatePostCategory(pd);
-        System.out.println(pd);
-    }
+    
 }

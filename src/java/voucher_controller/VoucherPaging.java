@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package admin_controller;
+package voucher_controller;
 
-import dal.RoleDAO;
-import dal.UserDAO;
+import dal.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,15 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Role;
-import model.User;
+import java.util.List;
+import model.Voucher;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="AddUserList", urlPatterns={"/adduserlist"})
-public class AddUserList extends HttpServlet {
+@WebServlet(name="VoucherPaging", urlPatterns={"/voucherpaging"})
+public class VoucherPaging extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,38 +35,23 @@ public class AddUserList extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session= request.getSession();
-        UserDAO ud= new UserDAO();
-        RoleDAO rd=new RoleDAO();
-        String username=request.getParameter("username");
-        String password=request.getParameter("password");
-        String firstname= request.getParameter("first_name");
-        String lastname=request.getParameter("last_name");
-        String picture=request.getParameter("profile_picture_url");
-        String gender=request.getParameter("gender");
-        String phone=request.getParameter("phone");
-        String email=request.getParameter("email");
-        String dob=request.getParameter("dob");
-        String role=request.getParameter("role");
-        int role_id=Integer.parseInt(role);
-        Role r=rd.getRoleById(role_id);
+        VoucherDAO vdao= new VoucherDAO();
+        if(request.getParameter("p")!=null)
+        {
+        int p=Integer.parseInt(request.getParameter("p"));
+        List<Voucher> vlist= vdao.getVoucherPaging(p);
+        session.setAttribute("vlist", vlist);
+        session.setAttribute("curentpage", p);
         
-        boolean checkExistUsername = ud.checkExistUsername(username);
-        boolean checkExistEmail = ud.checkExistEmail(email);
-        String error="";
-        if(checkExistUsername){
-            error="Username is existed!";
+        response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
         }else{
-            if(checkExistEmail){
-                error="Email is existed!";
-            }
+            int p=(int)session.getAttribute("curentpage");
+            List<Voucher> vlist= vdao.getVoucherPaging(p);
+            session.setAttribute("vlist", vlist);
+            session.setAttribute("curentpage", p);
+        
+            response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
         }
-        if(error.length()>0){
-            session.setAttribute("error", error);
-            response.sendRedirect(request.getContextPath()+"/management/adduserlist.jsp");
-        }else{
-        User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, picture, true, false, r);
-        ud.addUser(u);
-        response.sendRedirect("adminuser");}
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
