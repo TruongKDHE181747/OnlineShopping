@@ -5,8 +5,7 @@
 
 package admin_controller;
 
-import dal.PostCategoriesDAO;
-import dal.ProductCategoryDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,18 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import model.PostCategories;
-import model.PostCategory;
-import model.ProductCategory;
+import model.User;
 
 /**
  *
- * @author 84983
+ * @author quanpyke
  */
-@WebServlet(name="SettingSearch", urlPatterns={"/settingsearch"})
-public class SettingSearch extends HttpServlet {
+@WebServlet(name="CustomerDetail", urlPatterns={"/customerdetail"})
+public class CustomerDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,22 +33,13 @@ public class SettingSearch extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session=request.getSession();
-        String psearch= request.getParameter("psearch");
-        ProductCategoryDAO pdao=new ProductCategoryDAO();
-        PostCategoriesDAO pd=new PostCategoriesDAO();
-        List<ProductCategory> plist=pdao.searchCategory(psearch);
-        List<PostCategories> pl=pd.searchCategory2(psearch);
-        if(plist!=null){
-            
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
-        }else{
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
-        }
+      int cid=Integer.parseInt(request.getParameter("cid"));
+        UserDAO udao=new UserDAO();
+        User customer=udao.getUserById(cid);
+        HttpSession session=request.getSession(true);
+        session.setAttribute("customer", customer);
+        response.sendRedirect(request.getContextPath()+"/management/customer_detail.jsp");
         
-        response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
         
     } 
 

@@ -15,18 +15,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import model.PostCategories;
-import model.PostCategory;
 import model.ProductCategory;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="SettingSearch", urlPatterns={"/settingsearch"})
-public class SettingSearch extends HttpServlet {
+@WebServlet(name="ChangeStatus", urlPatterns={"/changestatus"})
+public class ChangeStatus extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,22 +36,31 @@ public class SettingSearch extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        String psearch= request.getParameter("psearch");
-        ProductCategoryDAO pdao=new ProductCategoryDAO();
-        PostCategoriesDAO pd=new PostCategoriesDAO();
-        List<ProductCategory> plist=pdao.searchCategory(psearch);
-        List<PostCategories> pl=pd.searchCategory2(psearch);
-        if(plist!=null){
-            
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
-        }else{
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
+        PostCategoriesDAO pcdao=new PostCategoriesDAO();
+        ProductCategoryDAO pdao= new ProductCategoryDAO();
+        int pdid=Integer.parseInt(request.getParameter("pdid"));
+        String button=request.getParameter("button");
+        String type=request.getParameter("type");
+        ProductCategory oldproduct=pdao.getProductCategories(pdid);
+        PostCategories oldpost=pcdao.getPostCategories(pdid);
+        if(type.equals("product")){
+            if(button.equals("show")){
+                ProductCategory newproduct=new ProductCategory(pdid,oldproduct.getProduct_category_name(), 1);
+                pdao.updateProductCategory(newproduct);
+            }else if(button.equals("hide")){
+                ProductCategory newproduct=new ProductCategory(pdid,oldproduct.getProduct_category_name(), 0);
+                pdao.updateProductCategory(newproduct);
+            }
+        }else if(type.equals("post")){
+            if(button.equals("show")){
+                PostCategories newpost=new PostCategories(pdid,oldpost.getPost_category_name(), 1);
+                pcdao.updatePostCategory(newpost);
+            }else if(button.equals("hide")){
+                PostCategories newpost=new PostCategories(pdid,oldpost.getPost_category_name(), 0);
+                pcdao.updatePostCategory(newpost);
+            }
         }
-        
-        response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
-        
+        response.sendRedirect("settinglist");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

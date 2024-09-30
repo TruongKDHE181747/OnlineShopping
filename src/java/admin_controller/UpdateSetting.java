@@ -15,18 +15,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import model.PostCategories;
-import model.PostCategory;
 import model.ProductCategory;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="SettingSearch", urlPatterns={"/settingsearch"})
-public class SettingSearch extends HttpServlet {
+@WebServlet(name="UpdateSetting", urlPatterns={"/updatesetting"})
+public class UpdateSetting extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,22 +36,20 @@ public class SettingSearch extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        String psearch= request.getParameter("psearch");
-        ProductCategoryDAO pdao=new ProductCategoryDAO();
-        PostCategoriesDAO pd=new PostCategoriesDAO();
-        List<ProductCategory> plist=pdao.searchCategory(psearch);
-        List<PostCategories> pl=pd.searchCategory2(psearch);
-        if(plist!=null){
-            
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
-        }else{
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
+        PostCategoriesDAO pcdao=new PostCategoriesDAO();
+        ProductCategoryDAO pdao= new ProductCategoryDAO();
+        String classification=(String) session.getAttribute("type");
+        String pname=request.getParameter("pname");
+        int status=Integer.parseInt(request.getParameter("status"));
+        int pid=Integer.parseInt(request.getParameter("pid"));
+        if(classification.equals("product")){
+            ProductCategory pd=new ProductCategory(pid, pname, status);
+            pdao.updateProductCategory(pd);
+        }else if(classification.equals("post")){
+            PostCategories pc= new PostCategories(pid, pname, status);
+            pcdao.updatePostCategory(pc);
         }
-        
-        response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
-        
+        response.sendRedirect("settinglist");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

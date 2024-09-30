@@ -199,7 +199,11 @@
                                     
                                        <td>${s.dob}</td> 
                                        
-                                    
+                                       <td>
+                                                 <div class="remove" style="background-color: yellow">
+                                            <a href="../customerdetail?cid=${s.user_id}"><i style="color: black;" class="bi bi-eye"></i></a>     
+                                        </div>
+                                       </td>
                                 </tr>
                                   
                                 

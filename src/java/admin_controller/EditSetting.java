@@ -15,18 +15,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import model.PostCategories;
-import model.PostCategory;
 import model.ProductCategory;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="SettingSearch", urlPatterns={"/settingsearch"})
-public class SettingSearch extends HttpServlet {
+@WebServlet(name="EditSetting", urlPatterns={"/editsetting"})
+public class EditSetting extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,21 +36,21 @@ public class SettingSearch extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        String psearch= request.getParameter("psearch");
-        ProductCategoryDAO pdao=new ProductCategoryDAO();
-        PostCategoriesDAO pd=new PostCategoriesDAO();
-        List<ProductCategory> plist=pdao.searchCategory(psearch);
-        List<PostCategories> pl=pd.searchCategory2(psearch);
-        if(plist!=null){
-            
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
-        }else{
-            session.setAttribute("plist", plist);
-            session.setAttribute("postlist", pl);
+        PostCategoriesDAO pcdao=new PostCategoriesDAO();
+        ProductCategoryDAO pdao= new ProductCategoryDAO();
+        String type=request.getParameter("type");
+        int pid=Integer.parseInt(request.getParameter("pid"));
+        session.setAttribute("type", type);
+        if(type.equals("product")){
+            ProductCategory pd=pdao.getProductCategories(pid);
+            session.setAttribute("pd", pd);
+            response.sendRedirect(request.getContextPath()+"/management/editsettingproduct.jsp");
+        }else if(type.equals("post")){
+            PostCategories pc=pcdao.getPostCategories(pid);
+            session.setAttribute("pc", pc);
+            response.sendRedirect(request.getContextPath()+"/management/editsettingpost.jsp");
         }
         
-        response.sendRedirect(request.getContextPath()+"/management/settinglist.jsp");
         
     } 
 
