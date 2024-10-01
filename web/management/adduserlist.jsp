@@ -124,7 +124,11 @@
 
                             <hr class="my-4">
                             <!-- Error check Username and Password -->
-                            
+                            <div style="text-align: left;
+                                        color: red;
+                                        margin-left: 5px;">
+                                <h5>${sessionScope.error}</h5><br>
+                             </div>
 
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
                         </form>

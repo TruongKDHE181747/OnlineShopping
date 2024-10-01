@@ -372,23 +372,26 @@
                         
                         <nav aria-label="Page navigation example">
                         <ul class="pagination">
+                            <c:if test="${sessionScope.curentpage>1}" >
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
+                                <a class="page-link" href="../userpaging?p=${sessionScope.curentpage-1}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
+                          </c:if>
+                            <c:forEach begin="1" end="${sessionScope.numberpage}" var="p">
+                                
+                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.curentpage==p}">active</c:if>" href="../userpaging?p=${p}">${p}</a></li>
+                                
+                            </c:forEach>
                             
-                           
-                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">6</a></li>
+                             <c:if test="${sessionScope.curentpage<numberpage}" >
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                                <a class="page-link" href="../userpaging?p=${curentpage+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
+                            </c:if>
                         </ul>
                     </nav>
                         

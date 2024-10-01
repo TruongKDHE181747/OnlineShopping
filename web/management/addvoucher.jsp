@@ -4,14 +4,13 @@
     Author     : Dell
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit Car Page</title>
+        <title>Detail user Page</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!-- CSS Bootstrap -->
@@ -28,10 +27,10 @@
 
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="../settinglist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <a href="../voucherlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <i style="margin-right: 10px;
                        font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
-                    <span class="fs-4">Back to home</span>
+                    <span class="fs-4">Back</span>
                 </a>                
             </header>
         </div>
@@ -41,52 +40,61 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                    <h2>Edit Setting</h2>
+                    <h2>Add voucher </h2>
                 </div>
+
                 <div class="row g-5" style="justify-content: center;">
 
 
                    
 
                     <div class="col-md-8">
-                        <form class="needs-validation" action="../updatesetting" enctype="multipart/form-data">
+                        <form class="needs-validation" action="../addvoucher" enctype="multipart/form-data">
                             <div class="row g-3">
                                 
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-6">
-                                    <label for="pname" class="form-label"> Name</label>
-                                    <input value="${sessionScope.pc.post_category_name}" name="pname" type="text" class="form-control" id="pname" required>
-                                    
-                                    
-                                </div>
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-6">
-                                    <label for="classification">Classification:</label>
-                                    <input value="${sessionScope.type}"name="classification" type="text" class="form-control" id="classification" disabled="">
 
-                                    </select>
+                                <div class="col-sm-6">
+                                    <label for="voucher_name" class="form-label">Name</label>
+                                    <input  value="" name="voucher_name" type="text" class="form-control" id="voucher_name" required>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="description" class="form-label">Description</label>
+                                    <input  value="" name="description" type="text" class="form-control" id="description" required>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="start_date" class="form-label">Start date</label>
+                                    <input  value="" name="start_date" type="date" class="form-control" id="start_date" required>
+
+                                </div>
+                                <div class="col-sm-6">
+                                      <label for="end_date" class="form-label">End date</label>
+                                    <input value="" name="end_date" type="date" class="form-control" id="end_date" required>
+                                
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="quantity" class="form-label">Quantity</label>
+                                    <input name="quantity" type="number" min="0" class="form-control" id="quantity" required>
                                 </div>
 
-                               <div class="col-sm-3"></div>
-                               <div class="col-sm-3"></div>
+
+                                <div class="col-sm-6">
+                                    <label for="percent" class="form-label">Value</label>
+                                    <input  value="" name="percent" type="number" min="0" max="100" class="form-control" id="percent" required>
+
+                                </div>
+                                
                                 <div class="my-3 col-sm-6">
                                     <label for="status" class="form-label">Status</label>
                                     <div class="form-check">
-                                        <input value="1" id="status" name="status" type="radio" class="form-check-input"
-                                               <c:if test="${sessionScope.pc.is_active ==1}">checked</c:if>>
-                                        <label class="form-check-label" for="status">Show</label>
+                                        <input value="1" id="status" name="status" type="radio" class="form-check-input">
+                                        <label class="form-check-label" for="status">Active</label>
                                     </div>
                                     <div class="form-check">
-                                        <input value="0" id="status1" name="status" type="radio" class="form-check-input"
-                                               <c:if test="${sessionScope.pc.is_active == 0}">checked</c:if>>
-                                        <label class="form-check-label" for="status1">Hidden</label>
-                                               </div>
-                                </div>
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-6">
-                                    <input value="${sessionScope.pc.post_category_id}" name="pid" type="hidden" class="form-control" id="pid">
-                                    
+                                        <input value="0" id="status1" name="status" type="radio" class="form-check-input">
+                                        <label class="form-check-label" for="status1">Inactive</label>
+                                    </div>
                                     
                                 </div>
                                 
@@ -94,14 +102,16 @@
 
                             <hr class="my-4">
                             <!-- Error check Username and Password -->
-                            
+                            <div style="text-align: left;
+                                        color: red;
+                                        margin-left: 5px;">
+                                <h5>${sessionScope.error}</h5><br>
+                             </div>
 
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
-                            
                         </form>
                     </div>
                 </div>
-                                    
             </main>
 
             <footer class="my-5 pt-5 text-body-secondary text-center text-small">

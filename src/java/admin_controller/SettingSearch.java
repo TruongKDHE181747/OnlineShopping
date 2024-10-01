@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import model.PostCategories;
 import model.PostCategory;
 import model.ProductCategory;
 
@@ -42,7 +43,7 @@ public class SettingSearch extends HttpServlet {
         ProductCategoryDAO pdao=new ProductCategoryDAO();
         PostCategoriesDAO pd=new PostCategoriesDAO();
         List<ProductCategory> plist=pdao.searchCategory(psearch);
-        List<PostCategory> pl=pd.searchCategory2(psearch);
+        List<PostCategories> pl=pd.searchCategory2(psearch);
         if(plist!=null){
             
             session.setAttribute("plist", plist);

@@ -76,5 +76,41 @@ public class ProductCategoryDAO extends DBContext{
         }
         return pList;
     }
-    
+    public ProductCategory getProductCategories(int product_category_id){
+       ProductCategory pc=null;
+       String sql=" select * from Product_Categories\n" +
+                  " where product_category_id=?";
+       try{
+           PreparedStatement pre= connection.prepareStatement(sql);
+           pre.setInt(1, product_category_id);
+           ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                product_category_id = rs.getInt("product_category_id");
+                String product_category_name = rs.getString("product_category_name");
+                int is_active = rs.getInt("is_active");
+                pc =new ProductCategory(product_category_id, product_category_name, is_active);
+                
+            }
+            
+       }catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return pc;
+   }
+    public void updateProductCategory(ProductCategory pd){
+        try {
+            String sql = "Update Product_Categories\n" +
+                        " set product_category_name=?,\n" +
+                        " is_active=?\n" +
+                        " where product_category_id=?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, pd.getProduct_category_name());
+            pre.setInt(2, pd.getIs_active());
+            pre.setInt(3, pd.getProduct_category_id());
+           pre.executeUpdate();
+
+        } catch (SQLException ex) {
+
+        }
+    }
 }

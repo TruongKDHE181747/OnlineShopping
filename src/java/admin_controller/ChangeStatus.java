@@ -5,8 +5,8 @@
 
 package admin_controller;
 
-import dal.RoleDAO;
-import dal.UserDAO;
+import dal.PostCategoriesDAO;
+import dal.ProductCategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,15 +15,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Role;
-import model.User;
+import model.PostCategories;
+import model.ProductCategory;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="AddUserList", urlPatterns={"/adduserlist"})
-public class AddUserList extends HttpServlet {
+@WebServlet(name="ChangeStatus", urlPatterns={"/changestatus"})
+public class ChangeStatus extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,39 +35,32 @@ public class AddUserList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session= request.getSession();
-        UserDAO ud= new UserDAO();
-        RoleDAO rd=new RoleDAO();
-        String username=request.getParameter("username");
-        String password=request.getParameter("password");
-        String firstname= request.getParameter("first_name");
-        String lastname=request.getParameter("last_name");
-        String picture=request.getParameter("profile_picture_url");
-        String gender=request.getParameter("gender");
-        String phone=request.getParameter("phone");
-        String email=request.getParameter("email");
-        String dob=request.getParameter("dob");
-        String role=request.getParameter("role");
-        int role_id=Integer.parseInt(role);
-        Role r=rd.getRoleById(role_id);
-        
-        boolean checkExistUsername = ud.checkExistUsername(username);
-        boolean checkExistEmail = ud.checkExistEmail(email);
-        String error="";
-        if(checkExistUsername){
-            error="Username is existed!";
-        }else{
-            if(checkExistEmail){
-                error="Email is existed!";
+        HttpSession session=request.getSession();
+        PostCategoriesDAO pcdao=new PostCategoriesDAO();
+        ProductCategoryDAO pdao= new ProductCategoryDAO();
+        int pdid=Integer.parseInt(request.getParameter("pdid"));
+        String button=request.getParameter("button");
+        String type=request.getParameter("type");
+        ProductCategory oldproduct=pdao.getProductCategories(pdid);
+        PostCategories oldpost=pcdao.getPostCategories(pdid);
+        if(type.equals("product")){
+            if(button.equals("show")){
+                ProductCategory newproduct=new ProductCategory(pdid,oldproduct.getProduct_category_name(), 1);
+                pdao.updateProductCategory(newproduct);
+            }else if(button.equals("hide")){
+                ProductCategory newproduct=new ProductCategory(pdid,oldproduct.getProduct_category_name(), 0);
+                pdao.updateProductCategory(newproduct);
+            }
+        }else if(type.equals("post")){
+            if(button.equals("show")){
+                PostCategories newpost=new PostCategories(pdid,oldpost.getPost_category_name(), 1);
+                pcdao.updatePostCategory(newpost);
+            }else if(button.equals("hide")){
+                PostCategories newpost=new PostCategories(pdid,oldpost.getPost_category_name(), 0);
+                pcdao.updatePostCategory(newpost);
             }
         }
-        if(error.length()>0){
-            session.setAttribute("error", error);
-            response.sendRedirect(request.getContextPath()+"/management/adduserlist.jsp");
-        }else{
-        User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, picture, true, false, r);
-        ud.addUser(u);
-        response.sendRedirect("adminuser");}
+        response.sendRedirect("settinglist");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
