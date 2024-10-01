@@ -406,7 +406,7 @@ public class ProductDAO extends DBContext {
         String sql = "update Products set \n"
                 + "product_name = ?, \n"
                 + "price = ?, \n"
-                + "total quantity = ?, \n"
+                + "total_quantity = ?, \n"
                 + "discount = ?, \n"
                 + "description = ?, \n"
                 + "thumbnail = ?, \n"
@@ -428,7 +428,7 @@ public class ProductDAO extends DBContext {
             pre.setInt(9, p.getBrand_id());
             pre.setInt(10, p.getProduct_category_id());
             pre.setInt(11, p.getProduct_id());
-            pre.execute();
+            pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -494,7 +494,7 @@ public class ProductDAO extends DBContext {
 
 //    public static void main(String[] args) {
 //        ProductDAO pdao = new ProductDAO();
-//        List<Product> pList = pdao.searchProduct("polo");
-//        System.out.println(pList.size());
+//        List<Product> pList = pdao.updateProduct();
+//        System.out.println(p);
 //    }
 }
