@@ -43,14 +43,13 @@ public class ProductImageDAO extends DBContext{
     
    public void addProductImage(ProductImg p) {
        String sql = "insert into Product_Images \n"
-                + "(product_image_id, product_id, image_url, 1) \n"
+                + "(product_id, image_url, is_active) \n"
                 + "values \n"
-                + "(?, ?, ?)";
+                + "(?, ?, 1)";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setInt(1, p.getProduct_image_id());
-            pre.setInt(2, p.getProduct_id());
-            pre.setString(3, p.getImage_url());
+            pre.setInt(1, p.getProduct_id());
+            pre.setString(2, p.getImage_url());
             pre.execute();
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -62,7 +62,6 @@ public class AddProduct extends HttpServlet {
         String description = request.getParameter("description");
         String img = "product_img/" + fileName;
         int status = Integer.parseInt(request.getParameter("status"));
-        int rated_star = 0;
         int brand = Integer.parseInt(request.getParameter("brand"));
         int category = Integer.parseInt(request.getParameter("category"));
         
@@ -76,22 +75,22 @@ public class AddProduct extends HttpServlet {
         }
         
         ProductDAO pdao = new ProductDAO();
-        pdao.addProduct(new Product(name, price, total_quantity, discount, description, img, is_active, rated_star, brand, category));
+        pdao.addProduct(new Product(name, price, total_quantity, discount, description, img, is_active, 0, brand, category));
         
-//        for (int i = 1; i <= 3; i++) {
-//            Part file1 = request.getPart("img_" + i);
-//            String fileName1 = file1.getSubmittedFileName();
-//            String uploadPath1 = getServletContext().getRealPath("") + File.separator + "product_img";
-//            file.write(uploadPath1 + File.separator + fileName1);
-//            String img_url = "product_img/" + fileName1;
-//            Product product = pdao.getHighestId();
-//            pidao.addProductImage(new ProductImg(product.getProduct_id(), img_url));
-//        }
-        
+        Product product = pdao.getHighestId();
         for (Size size : sizes) {
-            Product product = pdao.getHighestId();
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
             psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity));
+        }
+        
+        pidao.addProductImage(new ProductImg(product.getProduct_id(), img));
+        for (int i = 1; i <= 3; i++) {
+            Part newFile = request.getPart("img_" + i);
+            String newFileName = newFile.getSubmittedFileName();
+            String newUploadPath = getServletContext().getRealPath("") + File.separator + "product_img";
+            newFile.write(newUploadPath + File.separator + newFileName);
+            String img_url = "product_img/" + newFileName;
+            pidao.addProductImage(new ProductImg(product.getProduct_id(), img_url));
         }
         
         response.sendRedirect("productlist");

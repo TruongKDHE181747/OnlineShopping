@@ -40,17 +40,17 @@ public class ProductCategoryDAO extends DBContext{
         }
         return pList;
     }
+    
     public void addproductcate(ProductCategory p){
         try {
             String sql = "insert into Product_Categories( product_category_name, is_active) values   \n" +
-"		   (? , ?)";
+                            "(? , ?)";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, p.getProduct_category_name());
             pre.setInt(2, p.getIs_active());
            pre.executeUpdate();
 
         } catch (SQLException ex) {
-
         }
     }
     public List<ProductCategory> searchCategory(String search){
