@@ -80,7 +80,7 @@
 
 
                                 <div class="col-sm-6">
-                                    <label for="percent" class="form-label">Value</label>
+                                    <label for="percent" class="form-label">Discount(%)</label>
                                     <input  value="" name="percent" type="number" min="0" max="100" class="form-control" id="percent" required>
 
                                 </div>

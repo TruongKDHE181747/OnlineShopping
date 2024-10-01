@@ -353,7 +353,16 @@
                                             <a href="../detailuser?uid=${ul.user_id}"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                             
                                         </div>
-                                        
+                                        <c:if test="${!ul.is_banned}">
+                                            <div class="remove" style="background-color: red">
+                                                <a onclick="return confirm('Do you want to ban this account')" href="../banacc?status=true&uid=${ul.user_id}"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                            </div>
+                                            </c:if>
+                                        <c:if test="${ul.is_banned}">
+                                            <div class="remove" style="background-color: green">
+                                                <a onclick="return confirm('Do you want to show this account')" href="../banacc?status=false&uid=${ul.user_id}"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                            </div>
+                                       </c:if>
                                     </td>
 
                                 </tr>

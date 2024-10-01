@@ -746,5 +746,18 @@ public class UserDAO extends DBContext {
         }
         return list;
     }
+    public void banAcc(int user_id,boolean is_banned){
+        try{
+            String sql="update Users\n" +
+                    "set is_banned=?\n" +
+                    "where user_id=?" ;
+            PreparedStatement pre=connection.prepareStatement(sql);
+            pre.setBoolean(1, is_banned);
+            pre.setInt(2, user_id);
+            pre.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
     
 }

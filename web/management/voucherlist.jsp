@@ -308,7 +308,7 @@
                                     <th scope="col">Start Date</th>
                                     <th scope="col">End Date</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col">Value</th>
+                                    <th scope="col">Discount(%)</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
