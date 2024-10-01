@@ -139,56 +139,8 @@
     <body>
         <jsp:include page="../common/header.jsp" />
         <div class="row">
-            <!-- START menu -->
-            <div class="col-md-2" style="min-height: 552px">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    
-                         width: 100%;
-                        height: 100%;
-                     ">
-
-                    <hr>
-                    
-                    
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-white home-link" aria-current="page">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white product-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                                Products
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../listpostmarketing" class="nav-link text-white account-link active">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Post
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="#" class="nav-link text-white station-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Stations
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="#" class="nav-link text-white contract-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                                Contracts
-                            </a>
-                        </li>
-                        
-                    </ul>
-                    <hr>
-
-                </div>
-            </div>
-
+           <!-- START menu -->
+            <jsp:include page="marketing_header.jsp"/>
             <!-- END menu -->
 
             
