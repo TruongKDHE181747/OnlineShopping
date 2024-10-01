@@ -64,16 +64,7 @@
                                     <input type="file" class="form-control" id="img" name="img" required>
                                 </div>
 
-                                <%
-                                    for (int i = 1; i <= 3; i++) {
-                                %>
-                                <div class="col-12">
-                                    <label for="img_<%=i%>" class="form-label">Image <%=i%></label>
-                                    <input type="file" class="form-control" id="img_<%=i%>" name="img_<%=i%>" required>
-                                </div>
-                                <%
-                                    }
-                                %>
+                                
 
                                 <div class="col-12 my-3">
                                     <label class="form-label">Status</label>
