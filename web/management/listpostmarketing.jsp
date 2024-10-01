@@ -213,6 +213,9 @@
         if(author.equals("null")) author = "";
         if(title.equals("null")) title = "";
         
+
+        String pcmktName = session.getAttribute("pcmktName")+"";
+        if(pcmktName.equals("null")) pcmktName = "";
             %>
                 <!-- START products -->
                 <div class="product">
@@ -242,18 +245,19 @@
                                     <h5 style="font-weight: bold;" class="navbar-brand" href="#">Manage Post</h5>
 
                                     <%
+                                        
                                     List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("listpostcategorymkt");
                                     %>
                                     <div class="btn-group" style="">
                                       <button  style="color: white;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Select category
+                                        <%=pcmktName.equals("")?"Select category":pcmktName%>
                                       </button>
                                       <ul class="dropdown-menu">
                                           <%
                                           for (PostCategory postCategory : postcategorylist) {
 
                                           %>
-                                          <li><a class="dropdown-item " href="../listpostfiltermkt?cid=<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></a></li>
+                                          <li class=""><a class="dropdown-item " href="../listpostfiltermkt?cid=<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></a></li>
                                           <%
                                               }
                                           %>

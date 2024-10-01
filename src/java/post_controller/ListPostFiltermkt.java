@@ -5,6 +5,7 @@
 
 package post_controller;
 
+import dal.PostCategoryDAO;
 import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import model.Post;
+import model.PostCategories;
+import model.PostCategory;
 
 /**
  *
@@ -41,13 +44,46 @@ public class ListPostFiltermkt extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         PostDAO pdao = new PostDAO();
+        PostCategoryDAO pcdao = new PostCategoryDAO();
         
         String begindate = request.getParameter("begindate");
         String enddate = request.getParameter("enddate");
         String author = request.getParameter("author");
         String title = request.getParameter("title");
+        String category = request.getParameter("cid");
         String sortPostValue = session.getAttribute("sortValuemkt")+"";
-        String category = session.getAttribute("pmktCategory")+"";
+        
+        
+        if(begindate==null) {
+            if(session.getAttribute("begindatemkt")!=null)
+            begindate= session.getAttribute("begindatemkt")+"";
+            else begindate="";
+        } 
+        
+        if(enddate==null) {
+            if(session.getAttribute("enddatemkt")!=null) 
+            enddate=session.getAttribute("enddatemkt")+"";
+            else enddate="";
+        }
+           
+        
+        
+        if(author==null) {
+           if(session.getAttribute("authormkt")!=null)
+            author=session.getAttribute("authormkt")+"";   
+           else author="";
+        }
+            
+        
+        if(title==null) {
+            if(session.getAttribute("titlemkt")!=null)
+                title=session.getAttribute("titlemkt")+"";
+            else title="";
+        }
+            
+        
+        
+        if(category==null) category=session.getAttribute("pCategorycmk")+"";
         
         if(begindate.length()==0) session.setAttribute("begindatemkt", "");
         if(enddate.length()==0) session.setAttribute("enddatemkt", "");
@@ -98,6 +134,11 @@ public class ListPostFiltermkt extends HttpServlet {
         }
         
         if(category.equals("null")==false){
+            session.setAttribute("pCategorycmk", category);
+            PostCategory pc = pcdao.getPostCategories(category);
+            String pcname = pc.getPost_category_name();
+            session.setAttribute("pcmktName", pcname);
+            
             sql += "and p.post_category_id = "+category+" ";
         }
         if(sortPostValue.equals("null")==false){
