@@ -34,7 +34,10 @@ public class AdminUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         UserDAO udao= new UserDAO();
-        List<User> ulist=udao.getALlUser();
+        List<User> list=udao.getALlUser();
+        List<User> ulist=udao.getUserPaging(1);
+        session.setAttribute("curentpage", 1);
+        session.setAttribute("numberpage", getNumberOfPage(list.size(), 5));
         session.setAttribute("ulist", ulist);
         response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
     } 
@@ -74,5 +77,9 @@ public class AdminUser extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    public int getNumberOfPage(int length, int n)
+    {
+        if(length%n==0) return length/n;
+        else return length/n +1;
+    }
 }

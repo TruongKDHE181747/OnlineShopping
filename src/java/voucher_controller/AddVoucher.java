@@ -3,27 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package voucher_controller;
 
-import dal.ProductDAO;
+import dal.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Product;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import model.Voucher;
 
 /**
  *
- * @author Thanh Tan
+ * @author 84983
  */
-@WebServlet(name="EditProduct", urlPatterns={"/editproduct"})
-@MultipartConfig(maxFileSize = 16177215)
-public class EditProduct extends HttpServlet {
+@WebServlet(name="AddVoucher", urlPatterns={"/addvoucher"})
+public class AddVoucher extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,29 +35,28 @@ public class EditProduct extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session= request.getSession();
+        VoucherDAO vdao= new VoucherDAO();
+        String voucher_name= request.getParameter("voucher_name");
+        String description=request.getParameter("description");
+        String start_date=request.getParameter("start_date");
+        String end_date=request.getParameter("end_date");
+        int quantity=Integer.parseInt(request.getParameter("quantity"));
+        int percent=Integer.parseInt(request.getParameter("percent"));
+        int status=Integer.parseInt(request.getParameter("status"));
+        String error="";
         
-        HttpSession session = request.getSession();
-        ProductDAO pdao = new ProductDAO();
-        
-        if (request.getParameter("button")!= null) {
-            String button = request.getParameter("button");
-            int pid = Integer.parseInt(request.getParameter("pid"));
-            if (button.equals("hide")) {
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(false);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productpaging").forward(request, response);
-            } else if (button.equals("show")) {
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(true);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productpaging").forward(request, response);
-            } else {
-                Product p = pdao.getProductById(pid);
-                session.setAttribute("product_detail", p);
-                response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
-            }
-        }
+            
+    LocalDate startDate = LocalDate.parse(start_date);
+    LocalDate endDate = LocalDate.parse(end_date);
+
+    if (startDate.isAfter(endDate)) {
+        // Start date is before end date
+        error="Start date must be before end date";
+        session.setAttribute("error", error);
+    } else{
+    vdao.addVoucher(new Voucher(0, voucher_name, description, start_date, end_date, quantity, percent, status));
+    response.sendRedirect("voucherlist");}
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

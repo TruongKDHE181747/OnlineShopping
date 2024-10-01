@@ -544,7 +544,6 @@ public class UserDAO extends DBContext {
                 list.add(new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role));
             }
         }catch(Exception e){
-            System.out.println(e);
         }
         return list;
            
@@ -712,6 +711,53 @@ public class UserDAO extends DBContext {
         }
         return list;
     }
-    
+    public List<User> getUserPaging(int index){
+        List<User> list= new ArrayList<>();
+        RoleDAO roledao =new RoleDAO();
+           String sql=" select * from Users \n" +
+                    " order by user_id\n" +
+                    " offset ? rows fetch next 5 rows only ";
+        try{
+            // thực thi câu truy vấn
+            PreparedStatement pre= connection.prepareStatement(sql);
+              pre.setInt(1, (index-1)*5);
+            ResultSet rs=pre.executeQuery();
+            while(rs.next()){
+                int user_id = rs.getInt("user_id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                boolean gender = rs.getBoolean("gender");
+                String dob = rs.getString("dob");
+                String verification_code = rs.getString("verification_code");
+                String reset_password_code = rs.getString("reset_password_code");
+                String google_id = rs.getString("google_id");
+                String profile_picture_url = rs.getString("profile_picture_url");
+                boolean is_active = rs.getBoolean("is_active");
+                boolean is_banned = rs.getBoolean("is_banned");
+                Role role = roledao.getRoleById(rs.getInt("role_id"));
+                list.add(new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role));
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return list;
+    }
+    public void banAcc(int user_id,boolean is_banned){
+        try{
+            String sql="update Users\n" +
+                    "set is_banned=?\n" +
+                    "where user_id=?" ;
+            PreparedStatement pre=connection.prepareStatement(sql);
+            pre.setBoolean(1, is_banned);
+            pre.setInt(2, user_id);
+            pre.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
     
 }

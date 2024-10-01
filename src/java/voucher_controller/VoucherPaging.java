@@ -3,27 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package product_controller;
+package voucher_controller;
 
-import dal.ProductDAO;
+import dal.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Product;
+import java.util.List;
+import model.Voucher;
 
 /**
  *
- * @author Thanh Tan
+ * @author 84983
  */
-@WebServlet(name="EditProduct", urlPatterns={"/editproduct"})
-@MultipartConfig(maxFileSize = 16177215)
-public class EditProduct extends HttpServlet {
+@WebServlet(name="VoucherPaging", urlPatterns={"/voucherpaging"})
+public class VoucherPaging extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,28 +34,23 @@ public class EditProduct extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session= request.getSession();
+        VoucherDAO vdao= new VoucherDAO();
+        if(request.getParameter("p")!=null)
+        {
+        int p=Integer.parseInt(request.getParameter("p"));
+        List<Voucher> vlist= vdao.getVoucherPaging(p);
+        session.setAttribute("vlist", vlist);
+        session.setAttribute("curentpage", p);
         
-        HttpSession session = request.getSession();
-        ProductDAO pdao = new ProductDAO();
+        response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
+        }else{
+            int p=(int)session.getAttribute("curentpage");
+            List<Voucher> vlist= vdao.getVoucherPaging(p);
+            session.setAttribute("vlist", vlist);
+            session.setAttribute("curentpage", p);
         
-        if (request.getParameter("button")!= null) {
-            String button = request.getParameter("button");
-            int pid = Integer.parseInt(request.getParameter("pid"));
-            if (button.equals("hide")) {
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(false);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productpaging").forward(request, response);
-            } else if (button.equals("show")) {
-                Product p = pdao.getProductById(pid);
-                p.setIs_active(true);
-                pdao.updateProduct(p);
-                request.getRequestDispatcher("productpaging").forward(request, response);
-            } else {
-                Product p = pdao.getProductById(pid);
-                session.setAttribute("product_detail", p);
-                response.sendRedirect(request.getContextPath() + "/management/edit-product.jsp");
-            }
+            response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
         }
     } 
 

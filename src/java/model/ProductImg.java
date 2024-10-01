@@ -22,6 +22,11 @@ public class ProductImg {
         this.image_url = image_url;
         this.is_active = is_active;
     }
+    
+    public ProductImg(int product_id, String image_url) {
+        this.product_id = product_id;
+        this.image_url = image_url;
+    }
 
     public int getProduct_image_id() {
         return product_image_id;

@@ -50,9 +50,24 @@ public class AddUserList extends HttpServlet {
         String role=request.getParameter("role");
         int role_id=Integer.parseInt(role);
         Role r=rd.getRoleById(role_id);
+        
+        boolean checkExistUsername = ud.checkExistUsername(username);
+        boolean checkExistEmail = ud.checkExistEmail(email);
+        String error="";
+        if(checkExistUsername){
+            error="Username is existed!";
+        }else{
+            if(checkExistEmail){
+                error="Email is existed!";
+            }
+        }
+        if(error.length()>0){
+            session.setAttribute("error", error);
+            response.sendRedirect(request.getContextPath()+"/management/adduserlist.jsp");
+        }else{
         User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, picture, true, false, r);
         ud.addUser(u);
-        response.sendRedirect("adminuser");
+        response.sendRedirect("adminuser");}
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
