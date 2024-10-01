@@ -22,6 +22,8 @@ import java.util.List;
 import model.Product;
 import model.ProductSize;
 import model.Size;
+import model.ProductImg;
+import dal.ProductImageDAO;
 
 /**
  *
@@ -45,6 +47,7 @@ public class AddProduct extends HttpServlet {
         SizeDAO sdao = new SizeDAO();
         List<Size> sizes = sdao.getAllSize();
         ProductSizeDAO psdao = new ProductSizeDAO();
+        ProductImageDAO pidao = new ProductImageDAO();
         
         Part file = request.getPart("img");
         String fileName = file.getSubmittedFileName();
@@ -74,11 +77,23 @@ public class AddProduct extends HttpServlet {
         
         ProductDAO pdao = new ProductDAO();
         pdao.addProduct(new Product(name, price, total_quantity, discount, description, img, is_active, rated_star, brand, category));
+        
+        for (int i = 1; i <= 3; i++) {
+            Part file1 = request.getPart("img_" + i);
+            String fileName1 = file1.getSubmittedFileName();
+            String uploadPath1 = getServletContext().getRealPath("") + File.separator + "product_img";
+            file.write(uploadPath1 + File.separator + fileName1);
+            String img_url = "product_img/" + fileName1;
+            Product product = pdao.getHighestId();
+            pidao.addProductImage(new ProductImg(product.getProduct_id(), img_url));
+        }
+        
         for (Size size : sizes) {
             Product product = pdao.getHighestId();
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
             psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity));
         }
+        
         response.sendRedirect("productlist");
     } 
 
