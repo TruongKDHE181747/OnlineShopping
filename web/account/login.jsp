@@ -39,7 +39,7 @@
                                 <form method="post" action="./login">
                                     <!-- Username input -->
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="username" class="form-control" id="userInput" placeholder="Username" required>
+                                        <input type="text" name="username" class="form-control" id="userInput" placeholder="Username" value="${u}" required>
                                         <label for="userInput">Username</label>
                                     </div>
 
@@ -52,7 +52,7 @@
                                     <!-- Remember me and forgot password -->
                                     <div class="d-flex justify-content-between align-items-center mb-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" name="rememberMe" type="checkbox" id="rememberMe" />
+                                            <input class="form-check-input" name="rememberMe" type="checkbox" id="rememberMe" value="On" checked="" />
                                             <label class="form-check-label" for="rememberMe"> Remember me </label>
                                         </div>
                                         <a href="./resetPasswordRequest" class="custom-link">Forgot password?</a>

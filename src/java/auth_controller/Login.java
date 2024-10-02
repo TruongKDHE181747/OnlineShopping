@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.User;
-import org.apache.http.HttpRequest;
+
 import utils.Constants;
 
 /**
@@ -36,6 +36,16 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        Cookie[] cookies = request.getCookies();
+        
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals(Constants.COOKIE_REMEMBER)){
+                request.setAttribute("u", cookie.getValue());
+            }
+                    
+        }
+        
         request.getRequestDispatcher("/account/login.jsp").forward(request, response);
     }
 
@@ -76,7 +86,7 @@ public class Login extends HttpServlet {
             return;
         }
         
-        if("on".equals(rememberMe)){
+        if("On".equals(rememberMe)){
             saveRememberMe(username, response);
         }
         
