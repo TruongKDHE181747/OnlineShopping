@@ -11,7 +11,7 @@
 
 <!-- START menu -->
 <div class="col-md-2">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="position: absolute; width: 100%; height: 100%;">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="position: absolute; width: 100%; height: 100%; min-height: 600px">
         <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../listpostmarketing" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('listpostmarketing.jsp')}">active</c:if>">
+                        <a href="../listpostmarketing" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('postmarketing.jsp')}">active</c:if>">
                             <!-- Post Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
                                 <path d="M9.293 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5.707l-4.293-4.293A1 1 0 0 0 9.293 0zM11 1v1H5.5a.5.5 0 0 0-.5.5V5h8V3H8zm5 10h1v-8H3v8h10z"/>

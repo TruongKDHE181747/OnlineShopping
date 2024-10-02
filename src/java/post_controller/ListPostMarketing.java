@@ -58,7 +58,8 @@ public class ListPostMarketing extends HttpServlet {
         session.setAttribute("authormkt", "");
         session.setAttribute("titlemkt", "");
         session.setAttribute("sortValuemkt",null);
-        session.setAttribute("pmktCategory",null);
+        session.setAttribute("pCategorycmk", null);
+        session.setAttribute("pcmktName", "");
         session.setAttribute("pmktloi", "");
     }
     

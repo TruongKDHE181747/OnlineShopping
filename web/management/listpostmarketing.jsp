@@ -221,7 +221,7 @@
 
                                     <div class="">
                                         <div class="d-flex add" role="search">
-                                            <a href="#"><i style="color: white;" class="fa-solid fa-plus"></i></a>
+                                            <a href="addpostmarketing.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +236,7 @@
                                     <th scope="col">Author</th>
                                     <th scope="col">Created Day</th>
                                     <th scope="col">Modified Day</th>
-                                    <th scope="col">Action</th>
+                                    <th style="width: 20%;" scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
