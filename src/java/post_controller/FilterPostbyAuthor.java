@@ -19,14 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Post;
 import model.PostCategory;
-import model.User;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="ListPostMarketing", urlPatterns={"/listpostmarketing"})
-public class ListPostMarketing extends HttpServlet {
+@WebServlet(name="FilterPostbyAuthor", urlPatterns={"/filterpostbyauthor"})
+public class FilterPostbyAuthor extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,28 +37,26 @@ public class ListPostMarketing extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
+         HttpSession session = request.getSession();
         PostDAO pdao = new PostDAO();
         
-        User user = (User)session.getAttribute("account");
-        if(user==null){
-            response.sendRedirect(request.getContextPath()+"/login");
-        } else {
-        List<Post> pList = pdao.getAllPostMarketing();
-        List<Post> top3post = select3Post(pList, 0);
-        PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<PostCategory> pcList = pcdao.getAllPostCategory();
-        Reset(session);
         
-        session.setAttribute("listpostcategorymkt", pcList);
+        String filter = request.getParameter("aid");
+        List<Post> pList = pdao.getAllPostMarketing();
+        if(filter.equals("all")==false){
+            pList = pdao.getAllPostMarketingByAuthorId(filter);
+        } 
+        List<Post> top3post = select3Post(pList, 0); 
+        Reset(session);
+
+        
+        session.setAttribute("authorfiltermkt", filter);
         session.setAttribute("listpostmarketing", pList);
         session.setAttribute("top3postmarketing", top3post);
         session.setAttribute("cpostmkt", 0);
-        session.setAttribute("authorfiltermkt", null);
         response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
+    } 
     
-        } 
-    }
     
     public static void Reset(HttpSession session){
         session.setAttribute("begindatemkt", "");

@@ -148,6 +148,7 @@
             <div class="col-md-10" style="padding: 40px;">
                 
                 <%
+                    User user = (User)session.getAttribute("account");
                  List<Post> top3postmarketing = (List<Post>)session.getAttribute("top3postmarketing");
             List<Post> listpostmarketing = (List<Post>)session.getAttribute("listpostmarketing");
             
@@ -216,6 +217,21 @@
                                           %>
                                       </ul>
                                     </div>
+                                      
+                                      <%
+                                      String authorfiltermkt = session.getAttribute("authorfiltermkt")+"";
+                                        if(authorfiltermkt.equals("null")) authorfiltermkt="";
+                                      %>
+                                      <div class="btn-group" style="">
+                                      <button  style="color: white;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        
+                                        <%=(authorfiltermkt.length()==0||authorfiltermkt.equals("all"))?"All Post":"Your Post"%>
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=all">All Post</a></li>
+                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=<%=user.getUser_id()%>">Your Post</a></li>
+                                      </ul>
+                                    </div>
                                     
                                     <!-- Example single danger button -->
                                     
@@ -243,7 +259,7 @@
                             <tbody>
 
                                 <%
-                                User user = (User)session.getAttribute("account");
+                                
                                 int i = 1;
                                 for (Post post : top3postmarketing) {
                                 
