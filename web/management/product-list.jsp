@@ -92,11 +92,11 @@
             }
 
             .product-img{
-                width: 20%;
+                width: 25%;
             }
 
             .product-img img{
-                width: 36%;
+                width: 60%;
             }
 
             .dropdown-toggle::after{

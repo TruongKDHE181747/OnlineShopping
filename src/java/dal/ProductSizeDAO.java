@@ -18,12 +18,13 @@ import model.ProductSize;
  *
  * @author Dell
  */
-public class ProductSizeDAO extends DBContext{
+public class ProductSizeDAO extends DBContext {
+
     public List<ProductSize> getAllProductSizeById(String id) {
         List<ProductSize> pList = new ArrayList<>();
-        String sql = "select distinct ps.*, s.size_name \n" +
-                    "from Product_Size as ps, Sizes as s\n" +
-                    "where ps.size_id = s.size_id and product_id = "+id;
+        String sql = "select distinct ps.*, s.size_name \n"
+                + "from Product_Size as ps, Sizes as s\n"
+                + "where ps.size_id = s.size_id and product_id = " + id;
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -33,15 +34,15 @@ public class ProductSizeDAO extends DBContext{
                 int product_id = rs.getInt("product_id");
                 int quantity = rs.getInt("quantity");
                 String size_name = rs.getString("size_name");
-                ProductSize ps = new ProductSize(size_id, product_id, quantity,size_name);
-                pList.add(ps); 
+                ProductSize ps = new ProductSize(size_id, product_id, quantity, size_name);
+                pList.add(ps);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return pList;
     }
-    
+
     public void addSizeProduct(ProductSize p) {
         String sql = "insert into Product_Size \n"
                 + "(size_id, product_id, quantity) \n"
@@ -57,4 +58,26 @@ public class ProductSizeDAO extends DBContext{
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int getQuantityOfEachSize(int sid, int pid) {
+        String sql = "SELECT ps.quantity FROM Product_Size AS ps, Sizes AS s "
+                + "WHERE ps.size_id = s.size_id AND ps.size_id = ? AND product_id = ?";
+        int quantity = 0;  // Initialize to 0 in case there's no result.
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, sid);
+            pre.setInt(2, pid);
+            ResultSet rs = pre.executeQuery();
+
+            if (rs.next()) {
+                quantity = rs.getInt("quantity");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return quantity;
+    }
+
 }
