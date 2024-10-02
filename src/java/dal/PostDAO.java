@@ -142,6 +142,74 @@ public class PostDAO extends DBContext{
     }
     
     
+    public void AddNewPost(Post p) {
+       
+       String sql = "INSERT INTO Posts (title, content, thumbnail, author_id, is_active, created_at, modified_at, post_category_id)\n" +
+                    "VALUES \n" +
+                    "(?, ?, ?, ?, 1, GETDATE(), GETDATE(), ?)";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, p.getTitle());
+            pre.setString(2, p.getContent());
+            pre.setString(3, p.getThumbnail());
+            pre.setInt(4, p.getAuthor_id());
+            pre.setInt(5, p.getPost_category_id());
+            pre.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
+    
+    public void EditPost(Post p) {
+       
+       String sql = "update Posts\n" +
+                    "set \n" +
+                    "title =?,\n" +
+                    "content =?,\n" +
+                    "thumbnail=?,\n" +
+                    "is_active = ?,\n" +
+                    "modified_at = GETDATE(),\n" +
+                    "post_category_id = ?\n" +
+                    "where post_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, p.getTitle());
+            pre.setString(2, p.getContent());
+            pre.setString(3, p.getThumbnail());
+            pre.setInt(4, p.getIs_active());
+            pre.setInt(5, p.getPost_category_id());
+            pre.setInt(6, p.getPost_id());
+            pre.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
+    
+     public void ShowHidePost(String id, String is_active) {
+       
+       String sql = "update Posts\n" +
+                    "set \n" +
+                    "is_active = ?\n" +
+                    "where post_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, is_active);
+            pre.setString(2, id);
+            
+            pre.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
     public Post getPostAfter(String auid, String pid) {
         Post post = null;
        String sql = "select top 1 *\n" +

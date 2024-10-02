@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Post"%>
 <%@page import="model.PostCategory"%>
+<%@page import="model.User"%>
 <%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
@@ -242,6 +243,7 @@
                             <tbody>
 
                                 <%
+                                User user = (User)session.getAttribute("account");
                                 int i = 1;
                                 for (Post post : top3postmarketing) {
                                 
@@ -258,18 +260,37 @@
                                     <td><%=post.getCreated_at()%></td>
                                     <td><%=post.getModified_at()%></td>
                                     <td>
+                                        <%
+                                        if(user.getUser_id()==post.getAuthor_id()){
+                                        %>
                                         <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="..\editpostmarketing?pid=<%=post.getPost_id()%>"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                         </div>
+                                        <%
+                                            }
+                                        %>
+                                        
                                         <div class="remove">
-                                            <a style="color: white;"onclick="return confirm('Do you want to delete carID 1')" href="#"><i class="fa-solid fa-circle-info"></i></a> 
-                                            
+                                            <a style="color: white;" href="..\viewpostmarketing?pid=<%=post.getPost_id()%>"><i class="fa-solid fa-circle-info"></i></a>  
                                         </div>
+                                        <%
+                                        if(post.getIs_active()==0){
+                                        %>
                                         <div class="remove" style="background-color: greenyellow">                               
-                                           <a href="#?sid=1&button=show" onclick="return confirm('Show this slider?')">
+                                           <a href="../showhidepostmarketing?ia=1&pid=<%=post.getPost_id()%>" onclick="return confirm('Show this post?')">
                                              <i style="color: black;" class="bi bi-eye-fill"></i>
                                            </a>    
                                         </div>
+                                        <%
+                                            } else {
+                                        %>
+                                        <div class="remove" style="background-color: red">   
+                                            <a href="../showhidepostmarketing?ia=0&pid=<%=post.getPost_id()%>" onclick="return confirm('Hide this post?')"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>   
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                        
                                     </td>
 
                                 </tr>
