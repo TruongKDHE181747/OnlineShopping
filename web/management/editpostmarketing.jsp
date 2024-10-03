@@ -149,33 +149,34 @@
                     <main>
                         <div class="py-5 text-center" >
                             <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                            <h2>Add new post</h2>
+                            <h2>Edit Post Info</h2>
                         </div>
 
                         <div class="row g-5" style="justify-content: center;">
 
-
+                            <%
+                            Post editpostmkt = (Post)session.getAttribute("editpostmkt");
+                            %>
 
 
                             <div class="col-md-8">
-                                <form class="needs-validation" action="../addpostmarketing" method="post" enctype="multipart/form-data">
+                                <form class="needs-validation" action="../editpostmarketing" method="post" enctype="multipart/form-data">
                                     <div class="row g-3">
 
 
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
                                             <label for="posttitle" class="form-label">Post title</label>
-                                            <input name="posttitle" type="text" class="form-control" id="posttitle" required>
+                                            <input value="<%=editpostmkt.getTitle()%>" name="posttitle" type="text" class="form-control" id="posttitle" required>
 
                                         </div>
-                                        <div class="col-sm-6">
+                                            <div class="col-sm-12">
                                             <label for="image" class="form-label">Post Image</label>
-                                            <input name="image" type="file" class="form-control" id="image" required>
-
+                                            <input name="image" type="file" class="form-control" id="image">
+                                            <img style="margin-top: 10px;" src="../<%=editpostmkt.getThumbnail()%>" alt="alt"/>
                                         </div>
-
                                         <div class="col-sm-12">
                                             <label for="postcontent" class="form-label">Post content</label>
-                                            <textarea style="min-height: 200px;" id="postcontent" required="" name="postcontent" class="form-control"></textarea>
+                                            <textarea style="min-height: 200px;" id="postcontent" required="" name="postcontent" class="form-control"><%=editpostmkt.getContent().trim()%></textarea>
 
                                         </div>
 
@@ -190,7 +191,7 @@
                                           for (PostCategory postCategory : postcategorylist) {
 
                                           %>
-                                           <option value="<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></option>                                   
+                                           <option <%=postCategory.getPost_category_id()==editpostmkt.getPost_category_id()?"selected":""%> value="<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></option>                                   
                                           <%
                                               }
                                           %>
@@ -199,14 +200,15 @@
 
                                             </select>
                                         </div>
+                                          
                                         <div class="my-3 col-sm-6">
                                             <label for="available" class="form-label">Status</label>
                                             <div class="form-check">
-                                                <input checked="" value="1" id="available" name="is_active" type="radio" class="form-check-input">
+                                                <input <%=editpostmkt.getIs_active()==1?"checked":""%> value="1" id="available" name="is_active" type="radio" class="form-check-input">
                                                 <label class="form-check-label" for="available">Show</label>
                                             </div>
                                             <div class="form-check">
-                                                <input value="0" id="available1" name="is_active" type="radio" class="form-check-input">
+                                                <input <%=editpostmkt.getIs_active()==0?"checked":""%> value="0" id="available1" name="is_active" type="radio" class="form-check-input">
                                                 <label class="form-check-label" for="available1">Hide</label>
                                             </div>
                                         </div>
@@ -226,7 +228,7 @@
                                         <%=e%>
                                     </div>
 
-                                    <button class="w-100 btn btn-primary btn-lg" type="submit">Add</button>
+                                    <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
                                 </form>
                             </div>
                         </div>

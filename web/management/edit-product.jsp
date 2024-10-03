@@ -9,6 +9,8 @@
 <%@page import="model.Size"%>
 <%@page import="dal.ProductSizeDAO"%>
 <%@page import="model.ProductSize"%>
+<%@page import="dal.ProductImageDAO"%>
+<%@page import="model.ProductImg"%>
 
 <!DOCTYPE html>
 <html>
@@ -78,19 +80,22 @@
                                 </div>
 
                                 <!-- Image Upload -->
-                                <div class="col-12">
+                                <div class="col-3">
                                     <label for="img" class="form-label">Thumbnail</label>
                                     <input type="file" class="form-control" id="img" name="img">
-                                    <img style="margin-top: 10px;width: 40%;" src="../<%= p.getThumbnail()%>" alt="alt" />
+                                    <img style="margin-top: 10px;width: 60%;" src="../<%= p.getThumbnail()%>" alt="alt" />
                                 </div>
 
                                 <!-- Additional Images -->
                                 <%
+                                    ProductImageDAO pidao = new ProductImageDAO();
+                                    List<ProductImg> productImg = pidao.getAllProductImgById(p.getProduct_id()+"");
                                     for (int i = 1; i <= 3; i++) {
                                 %>
-                                <div class="col-12">
+                                <div class="col-3">
                                     <label for="img_<%=i%>" class="form-label">Image <%=i%></label>
                                     <input type="file" class="form-control" id="img_<%=i%>" name="img_<%=i%>" >
+                                    <img style="margin-top: 10px;width: 60%;" src="../<%= productImg.get(i).getImage_url()%>" alt="alt" />
                                 </div>
                                 <%
                                     }

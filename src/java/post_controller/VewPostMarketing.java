@@ -3,26 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package slider_controller;
+package post_controller;
 
-import dal.SliderDao;
+import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import model.Slider;
+import model.Post;
 
 /**
  *
- * @author quanpyke
+ * @author Dell
  */
-@WebServlet(name="SliderList", urlPatterns={"/sliderlist"})
-public class SliderList extends HttpServlet {
+@MultipartConfig
+@WebServlet(name="VewPostMarketing", urlPatterns={"/viewpostmarketing"})
+public class VewPostMarketing extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,17 +35,15 @@ public class SliderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        SliderDao sdao=new SliderDao();
-        ArrayList<Slider> list=sdao.getAllSliders();
+        HttpSession session = request.getSession();
+        PostDAO pdao = new PostDAO();
         
-        ArrayList<Slider> slist=sdao.getSliderPaging(1);
-        HttpSession session=request.getSession(true);
-        session.setAttribute("cpage", 1);
-        session.setAttribute("slider", slist);
-        session.setAttribute("page", getNumberOfPage(list.size(), 2));
-//        session.setAttribute("slider","clink");
-        response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");
+        String pid = request.getParameter("pid");
+        Post post = pdao.getPostByID(pid);
         
+        session.setAttribute("editpostmkt", post);
+        
+        response.sendRedirect(request.getContextPath()+"/management/viewpostmarketing.jsp");
         
     } 
 
@@ -82,16 +81,6 @@ public class SliderList extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold> 
-    
-    public int getNumberOfPage(int length, int n)
-    {
-        if(length%n==0) return length/n;
-        else return length/n +1;
-    }
-    
-   
-    
-    
-    
+    }// </editor-fold>
+
 }
