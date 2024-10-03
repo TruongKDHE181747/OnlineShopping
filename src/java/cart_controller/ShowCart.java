@@ -6,18 +6,21 @@ package cart_controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import model.Cart;
+import utils.Constants;
 
 /**
  *
  * @author Admin
  */
 @WebServlet(name = "Cart", urlPatterns = {"/cart"})
-public class Cart extends HttpServlet {
+public class ShowCart extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -30,6 +33,21 @@ public class Cart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies();
+
+        String txt = "";
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(Constants.COOKIE_CART)) {
+                txt = cookie.getValue();
+                break;
+            }
+        }
+        
+        Cart cart = new Cart(txt);
+        
+        request.setAttribute("cart", cart.getItems());
+       
+        
         request.getRequestDispatcher("/common/cart.jsp").forward(request, response);
     }
 

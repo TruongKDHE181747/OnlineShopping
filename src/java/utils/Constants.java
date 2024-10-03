@@ -6,6 +6,8 @@ package utils;
 
 public class Constants {
     
+    public static final String COOKIE_CART = "cart";
+    
     public static final String COOKIE_REMEMBER = "username";
 
     public static final String SENT_EMAIL = "ducdmhe181735@fpt.edu.vn";
