@@ -5,28 +5,27 @@
 
 package post_controller;
 
-import dal.PostCategoryDAO;
 import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import model.Post;
-import model.PostCategory;
-import model.User;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="ListPostMarketing", urlPatterns={"/listpostmarketing"})
-public class ListPostMarketing extends HttpServlet {
+@MultipartConfig
+@WebServlet(name="EditPostMarketing", urlPatterns={"/editpostmarketing"})
+public class EditPostMarketing extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,50 +39,27 @@ public class ListPostMarketing extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         PostDAO pdao = new PostDAO();
-        
-        User user = (User)session.getAttribute("account");
-        if(user==null){
-            response.sendRedirect(request.getContextPath()+"/login");
-        } else {
-        List<Post> pList = pdao.getAllPostMarketing();
-        List<Post> top3post = select3Post(pList, 0);
-        PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<PostCategory> pcList = pcdao.getAllPostCategory();
-        Reset(session);
-        
-        session.setAttribute("listpostcategorymkt", pcList);
-        session.setAttribute("listpostmarketing", pList);
-        session.setAttribute("top3postmarketing", top3post);
-        session.setAttribute("cpostmkt", 0);
-        session.setAttribute("authorfiltermkt", null);
-        response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
-    
-        } 
-    }
-    
-    public static void Reset(HttpSession session){
-        session.setAttribute("begindatemkt", "");
-        session.setAttribute("enddatemkt", "");
-        session.setAttribute("authormkt", "");
-        session.setAttribute("titlemkt", "");
-        session.setAttribute("sortValuemkt",null);
-        session.setAttribute("pCategorycmk", null);
-        session.setAttribute("pcmktName", "");
-        session.setAttribute("pmktloi", "");
-    }
-    
-    public static List<Post> select3Post( List<Post> pList, int pageNum){
-        List<Post> top6List = new ArrayList<>();
-        for(int i = pageNum*3;i<=pageNum*3+2;i++){
-            if(i>=pList.size()) {
-                break;
-            } else {
-                top6List.add(pList.get(i));
-            }
+        Post editpostmkt = (Post)session.getAttribute("editpostmkt");
+        String img ="";
+        Part filePath = request.getPart("image");
+        if(filePath.getSubmittedFileName().length()>0){ 
+            String filename = filePath.getSubmittedFileName();
+            String uploadPath = getServletContext().getRealPath("")+File.separator+"post_img";
+            filePath.write(uploadPath+File.separator+filename);
+            img = "post_img/"+filename;
         }
+         else img = editpostmkt.getThumbnail();
         
-        return top6List;
-    }
+        String posttitle = request.getParameter("posttitle");
+        String postcontent = request.getParameter("postcontent");
+        String postcategory = request.getParameter("postcategory");
+        int is_active = Integer.parseInt(request.getParameter("is_active"));
+        int postCategoryId = Integer.parseInt(request.getParameter("postcategory"));
+         
+        Post newPost = new Post(editpostmkt.getPost_id(), posttitle, postcontent, img, editpostmkt.getAuthor_id(), is_active, editpostmkt.getCreated_at(), null, postCategoryId);
+        pdao.EditPost(newPost);
+        response.sendRedirect(request.getContextPath()+"/listpostmarketing");
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -96,7 +72,16 @@ public class ListPostMarketing extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        PostDAO pdao = new PostDAO();
+        
+        String pid = request.getParameter("pid");
+        Post post = pdao.getPostByID(pid);
+        
+        session.setAttribute("editpostmkt", post);
+        
+        response.sendRedirect(request.getContextPath()+"/management/editpostmarketing.jsp");
+        
     } 
 
     /** 

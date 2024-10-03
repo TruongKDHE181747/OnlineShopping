@@ -5,28 +5,32 @@
 
 package post_controller;
 
-import dal.PostCategoryDAO;
 import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import model.Post;
-import model.PostCategory;
 import model.User;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="ListPostMarketing", urlPatterns={"/listpostmarketing"})
-public class ListPostMarketing extends HttpServlet {
+@MultipartConfig
+@WebServlet(name="AddPostMarketing", urlPatterns={"/addpostmarketing"})
+public class AddPostMarketing extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,50 +44,34 @@ public class ListPostMarketing extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         PostDAO pdao = new PostDAO();
-        
         User user = (User)session.getAttribute("account");
-        if(user==null){
-            response.sendRedirect(request.getContextPath()+"/login");
-        } else {
-        List<Post> pList = pdao.getAllPostMarketing();
-        List<Post> top3post = select3Post(pList, 0);
-        PostCategoryDAO pcdao = new PostCategoryDAO();
-        List<PostCategory> pcList = pcdao.getAllPostCategory();
-        Reset(session);
+        int authorid = user.getUser_id();
         
-        session.setAttribute("listpostcategorymkt", pcList);
-        session.setAttribute("listpostmarketing", pList);
-        session.setAttribute("top3postmarketing", top3post);
-        session.setAttribute("cpostmkt", 0);
-        session.setAttribute("authorfiltermkt", null);
-        response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
-    
-        } 
-    }
-    
-    public static void Reset(HttpSession session){
-        session.setAttribute("begindatemkt", "");
-        session.setAttribute("enddatemkt", "");
-        session.setAttribute("authormkt", "");
-        session.setAttribute("titlemkt", "");
-        session.setAttribute("sortValuemkt",null);
-        session.setAttribute("pCategorycmk", null);
-        session.setAttribute("pcmktName", "");
-        session.setAttribute("pmktloi", "");
-    }
-    
-    public static List<Post> select3Post( List<Post> pList, int pageNum){
-        List<Post> top6List = new ArrayList<>();
-        for(int i = pageNum*3;i<=pageNum*3+2;i++){
-            if(i>=pList.size()) {
-                break;
-            } else {
-                top6List.add(pList.get(i));
-            }
-        }
+        Part filePath = request.getPart("image");
+        String filename = filePath.getSubmittedFileName();
+        String uploadPath = getServletContext().getRealPath("")+File.separator+"post_img";
+        filePath.write(uploadPath+File.separator+filename);
+        String img = "post_img/"+filename;
         
-        return top6List;
-    }
+        String posttitle = request.getParameter("posttitle");
+        String postcontent = request.getParameter("postcontent");
+        String postcategory = request.getParameter("postcategory");
+        int is_active = Integer.parseInt(request.getParameter("is_active"));
+        int postCategoryId = Integer.parseInt(request.getParameter("postcategory"));
+        
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        LocalDate td = LocalDate.parse(sdfDate.format(today),formatter);
+        
+        
+        Post post = new Post(1, posttitle, postcontent, img, authorid, is_active, today, today, postCategoryId);
+        pdao.AddNewPost(post);
+        
+        response.sendRedirect(request.getContextPath()+"/listpostmarketing");
+        
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

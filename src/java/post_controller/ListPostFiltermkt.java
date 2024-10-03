@@ -51,7 +51,7 @@ public class ListPostFiltermkt extends HttpServlet {
         String author = request.getParameter("author");
         String title = request.getParameter("title");
         String category = request.getParameter("cid");
-        String sortPostValue = session.getAttribute("sortValuemkt")+"";
+        
         
         
         if(begindate==null) {
@@ -141,14 +141,11 @@ public class ListPostFiltermkt extends HttpServlet {
             
             sql += "and p.post_category_id = "+category+" ";
         }
-        if(sortPostValue.equals("null")==false){
-            
-            if(sortPostValue.equals("new")){
-                sql+="order by DATEDIFF(DAY, modified_at, GETDATE()) asc ";
-            } else if(sortPostValue.equals("old")){
-                 sql+="order by DATEDIFF(DAY, modified_at, GETDATE()) desc ";
-            } 
-        } 
+        String authorfiltermkt = session.getAttribute("authorfiltermkt")+"";
+        if(authorfiltermkt.equals("null")) authorfiltermkt="";
+        if(authorfiltermkt.length()>0 && authorfiltermkt.equals("all")==false){
+            sql += "and p.author_id = "+authorfiltermkt+" ";
+        }
                
         List<Post> pList = pdao.getAllPostByFilterMkt(sql);
         List<Post> top3post = select3Post(pList, 0);
