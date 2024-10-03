@@ -44,6 +44,7 @@ public class SliderPaging extends HttpServlet {
        
         session.setAttribute("slider", slist);
         session.setAttribute("cpage", p);
+//         session.setAttribute("slider","clink");
            response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");}
         else
         {
