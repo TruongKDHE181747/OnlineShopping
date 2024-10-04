@@ -20,7 +20,9 @@
 
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+        
+        <jsp:include page="../common/css.jsp" />
+        
         <style>
             .criteria{
                 border: 1px solid #bb9797;
@@ -90,11 +92,11 @@
             }
 
             .product-img{
-                width: 30%;
+                width: 25%;
             }
 
             .product-img img{
-                width: 36%;
+                width: 60%;
             }
 
             .dropdown-toggle::after{
@@ -123,16 +125,15 @@
     </head>
     <body>
         <div class="row">
-            <!-- START HEADER -->
-
-            <jsp:include page="marketing_header.jsp" />
-
+            <jsp:include page="../common/header.jsp" />
+            <!-- START menu -->
+            <jsp:include page="marketing_header.jsp"/>
             <!-- END menu -->
 
             <div class="col-md-10" style="padding: 40px;">
 
 
-
+                
                 <!-- START products -->
                 <div class="product">
                     <div class="container products" >

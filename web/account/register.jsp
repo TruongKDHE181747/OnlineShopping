@@ -68,13 +68,13 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="firstname"  class="form-control" id="firstName" placeholder="First name" required>
+                                                <input type="text" name="firstname"  class="form-control" id="firstName" placeholder="First name" >
                                                 <label for="firstName">First name</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Last name" required>
+                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Last name" >
                                                 <label for="lastName">Last name</label>
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@
 
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="date" name="dob" class="form-control" id="dob" required>
+                                                <input type="date" name="dob" class="form-control" id="dob" >
                                                 <label for="dob">Date of Birth</label>
                                             </div>
                                         </div>

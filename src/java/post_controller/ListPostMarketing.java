@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Post;
 import model.PostCategory;
+import model.User;
 
 /**
  *
@@ -39,18 +40,26 @@ public class ListPostMarketing extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         PostDAO pdao = new PostDAO();
+        
+        User user = (User)session.getAttribute("account");
+        if(user==null){
+            response.sendRedirect(request.getContextPath()+"/login");
+        } else {
         List<Post> pList = pdao.getAllPostMarketing();
         List<Post> top3post = select3Post(pList, 0);
         PostCategoryDAO pcdao = new PostCategoryDAO();
         List<PostCategory> pcList = pcdao.getAllPostCategory();
-        //Reset(session);
+        Reset(session);
         
         session.setAttribute("listpostcategorymkt", pcList);
         session.setAttribute("listpostmarketing", pList);
         session.setAttribute("top3postmarketing", top3post);
         session.setAttribute("cpostmkt", 0);
+        session.setAttribute("authorfiltermkt", null);
         response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
-    } 
+    
+        } 
+    }
     
     public static void Reset(HttpSession session){
         session.setAttribute("begindatemkt", "");
@@ -58,7 +67,8 @@ public class ListPostMarketing extends HttpServlet {
         session.setAttribute("authormkt", "");
         session.setAttribute("titlemkt", "");
         session.setAttribute("sortValuemkt",null);
-        session.setAttribute("pmktCategory",null);
+        session.setAttribute("pCategorycmk", null);
+        session.setAttribute("pcmktName", "");
         session.setAttribute("pmktloi", "");
     }
     

@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package slider_controller;
+package product_controller;
 
-import dal.SliderDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import model.Slider;
 
 /**
  *
- * @author quanpyke
+ * @author Thanh Tan
  */
-@WebServlet(name="SliderList", urlPatterns={"/sliderlist"})
-public class SliderList extends HttpServlet {
+@WebServlet(name="UpdateProduct", urlPatterns={"/updateproduct"})
+public class UpdateProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,18 +30,18 @@ public class SliderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        SliderDao sdao=new SliderDao();
-        ArrayList<Slider> list=sdao.getAllSliders();
-        
-        ArrayList<Slider> slist=sdao.getSliderPaging(1);
-        HttpSession session=request.getSession(true);
-        session.setAttribute("cpage", 1);
-        session.setAttribute("slider", slist);
-        session.setAttribute("page", getNumberOfPage(list.size(), 2));
-//        session.setAttribute("slider","clink");
-        response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");
-        
-        
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateProduct</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateProduct at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,16 +78,6 @@ public class SliderList extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold> 
-    
-    public int getNumberOfPage(int length, int n)
-    {
-        if(length%n==0) return length/n;
-        else return length/n +1;
-    }
-    
-   
-    
-    
-    
+    }// </editor-fold>
+
 }

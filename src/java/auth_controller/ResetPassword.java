@@ -74,6 +74,12 @@ public class ResetPassword extends HttpServlet {
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
 
+        if (newPassword.isBlank()) {
+            request.setAttribute("error", "Password could not be blank!");
+            request.getRequestDispatcher("/account/resetPassword.jsp").forward(request, response);
+            return;
+        }
+        
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("error", "Password and Confirm password are not matched!");
             request.getRequestDispatcher("/account/resetPassword.jsp").forward(request, response);

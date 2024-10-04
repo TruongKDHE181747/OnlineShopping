@@ -63,6 +63,12 @@ public class ChangePassword extends HttpServlet {
             request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
             return;
         }
+        
+        if (newPassword.isBlank()) {
+            request.setAttribute("error", "Password could not be blank!");
+            request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
+            return;
+        }
 
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("error", "New password and confirm password do not match!");

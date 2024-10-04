@@ -80,6 +80,36 @@ public class PostDAO extends DBContext{
     }
     
     
+    public List<Post> getAllPostMarketingByAuthorId (String id) {
+        List<Post> pList = new ArrayList<>();
+       String sql = "select p.*, (u.first_name+' '+u.last_name) as author_name  \n" +
+                    "from Posts as p, Users as u \n" +
+                    "where p.author_id = u.user_id and p.author_id=?;";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, id);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_id = rs.getInt("post_id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String thumbnail = rs.getString("thumbnail");
+                int author_id = rs.getInt("author_id");
+                int is_active = rs.getInt("is_active");
+                Date created_at = rs.getDate("created_at");
+               Date modified_at = rs.getDate("modified_at");
+                int post_category_id = rs.getInt("post_category_id");
+                String author_name = rs.getString("author_name");
+                Post post = new Post(post_id, title, content, thumbnail, author_id, is_active, created_at, modified_at, post_category_id,author_name);
+                pList.add(post);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    
+    
     public List<Post> getAllPostByCategoryId(String id) {
         List<Post> pList = new ArrayList<>();
        String sql = "select * from Posts \n" +
@@ -141,6 +171,74 @@ public class PostDAO extends DBContext{
         return pList;
     }
     
+    
+    public void AddNewPost(Post p) {
+       
+       String sql = "INSERT INTO Posts (title, content, thumbnail, author_id, is_active, created_at, modified_at, post_category_id)\n" +
+                    "VALUES \n" +
+                    "(?, ?, ?, ?, 1, GETDATE(), GETDATE(), ?)";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, p.getTitle());
+            pre.setString(2, p.getContent());
+            pre.setString(3, p.getThumbnail());
+            pre.setInt(4, p.getAuthor_id());
+            pre.setInt(5, p.getPost_category_id());
+            pre.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
+    
+    public void EditPost(Post p) {
+       
+       String sql = "update Posts\n" +
+                    "set \n" +
+                    "title =?,\n" +
+                    "content =?,\n" +
+                    "thumbnail=?,\n" +
+                    "is_active = ?,\n" +
+                    "modified_at = GETDATE(),\n" +
+                    "post_category_id = ?\n" +
+                    "where post_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, p.getTitle());
+            pre.setString(2, p.getContent());
+            pre.setString(3, p.getThumbnail());
+            pre.setInt(4, p.getIs_active());
+            pre.setInt(5, p.getPost_category_id());
+            pre.setInt(6, p.getPost_id());
+            pre.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
+    
+     public void ShowHidePost(String id, String is_active) {
+       
+       String sql = "update Posts\n" +
+                    "set \n" +
+                    "is_active = ?\n" +
+                    "where post_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, is_active);
+            pre.setString(2, id);
+            
+            pre.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
     
     public Post getPostAfter(String auid, String pid) {
         Post post = null;

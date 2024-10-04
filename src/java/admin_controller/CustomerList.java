@@ -41,6 +41,7 @@ public class CustomerList extends HttpServlet {
         ArrayList<User> clist=udao.getUsers(sql);
         HttpSession session=request.getSession(true);
         session.setAttribute("clist", clist);
+//         session.setAttribute("customer","clink");
         response.sendRedirect(request.getContextPath()+"/management/customerlist.jsp");}
         
         else
@@ -50,6 +51,7 @@ public class CustomerList extends HttpServlet {
         ArrayList<User> clist=udao.searchCustomer(request.getParameter("searchcustomer"));
         HttpSession session=request.getSession(true);
         session.setAttribute("clist", clist);
+//          session.setAttribute("customer","clink");
         response.sendRedirect(request.getContextPath()+"/management/customerlist.jsp");}
          
             

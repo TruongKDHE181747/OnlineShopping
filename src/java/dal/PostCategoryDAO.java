@@ -40,4 +40,28 @@ public class PostCategoryDAO extends DBContext{
         }
         return pList;
     }
+     
+     
+     
+      public PostCategory getPostCategories(String id){
+       PostCategory pc=null;
+       String sql=" select * from Post_Categories\n" +
+                " where post_category_id=?";
+       try{
+           PreparedStatement pre= connection.prepareStatement(sql);
+           pre.setString(1, id);
+           ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_category_id = rs.getInt("post_category_id");
+                String post_category_name = rs.getString("post_category_name");
+                int is_active = rs.getInt("is_active");
+                pc =new PostCategory(post_category_id, post_category_name, is_active);
+                
+            }
+            
+       }catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return pc;
+   }
 }

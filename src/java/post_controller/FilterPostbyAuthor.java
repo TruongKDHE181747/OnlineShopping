@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package slider_controller;
+package post_controller;
 
-import dal.SliderDao;
+import dal.PostCategoryDAO;
+import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,14 +16,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import model.Slider;
+import java.util.List;
+import model.Post;
+import model.PostCategory;
 
 /**
  *
- * @author quanpyke
+ * @author Dell
  */
-@WebServlet(name="SliderList", urlPatterns={"/sliderlist"})
-public class SliderList extends HttpServlet {
+@WebServlet(name="FilterPostbyAuthor", urlPatterns={"/filterpostbyauthor"})
+public class FilterPostbyAuthor extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,19 +37,50 @@ public class SliderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        SliderDao sdao=new SliderDao();
-        ArrayList<Slider> list=sdao.getAllSliders();
-        
-        ArrayList<Slider> slist=sdao.getSliderPaging(1);
-        HttpSession session=request.getSession(true);
-        session.setAttribute("cpage", 1);
-        session.setAttribute("slider", slist);
-        session.setAttribute("page", getNumberOfPage(list.size(), 2));
-//        session.setAttribute("slider","clink");
-        response.sendRedirect(request.getContextPath()+"/management/sliderlist.jsp");
+         HttpSession session = request.getSession();
+        PostDAO pdao = new PostDAO();
         
         
+        String filter = request.getParameter("aid");
+        List<Post> pList = pdao.getAllPostMarketing();
+        if(filter.equals("all")==false){
+            pList = pdao.getAllPostMarketingByAuthorId(filter);
+        } 
+        List<Post> top3post = select3Post(pList, 0); 
+        Reset(session);
+
+        
+        session.setAttribute("authorfiltermkt", filter);
+        session.setAttribute("listpostmarketing", pList);
+        session.setAttribute("top3postmarketing", top3post);
+        session.setAttribute("cpostmkt", 0);
+        response.sendRedirect(request.getContextPath()+"/management/listpostmarketing.jsp");
     } 
+    
+    
+    public static void Reset(HttpSession session){
+        session.setAttribute("begindatemkt", "");
+        session.setAttribute("enddatemkt", "");
+        session.setAttribute("authormkt", "");
+        session.setAttribute("titlemkt", "");
+        session.setAttribute("sortValuemkt",null);
+        session.setAttribute("pCategorycmk", null);
+        session.setAttribute("pcmktName", "");
+        session.setAttribute("pmktloi", "");
+    }
+    
+    public static List<Post> select3Post( List<Post> pList, int pageNum){
+        List<Post> top6List = new ArrayList<>();
+        for(int i = pageNum*3;i<=pageNum*3+2;i++){
+            if(i>=pList.size()) {
+                break;
+            } else {
+                top6List.add(pList.get(i));
+            }
+        }
+        
+        return top6List;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -82,16 +116,6 @@ public class SliderList extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold> 
-    
-    public int getNumberOfPage(int length, int n)
-    {
-        if(length%n==0) return length/n;
-        else return length/n +1;
-    }
-    
-   
-    
-    
-    
+    }// </editor-fold>
+
 }

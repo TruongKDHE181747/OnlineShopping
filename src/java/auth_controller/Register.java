@@ -69,6 +69,11 @@ public class Register extends HttpServlet {
         boolean checkExistUsername = userDAO.checkExistUsername(username);
         boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
 
+        if(username.isBlank()|| password.isBlank()){
+            sendErrorMessage("Username and password could not be blank!", request, response);
+            return;
+        }
+        
         if (checkExistUsername) {
             sendErrorMessage("Username is existed!", request, response);
             return;

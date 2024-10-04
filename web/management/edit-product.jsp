@@ -1,6 +1,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Product"%>
 <%@page import="java.util.*" %>
+<%@page import="model.Brand"%>
+<%@page import="dal.BrandDAO"%>
+<%@page import="dal.ProductCategoryDAO"%>
+<%@page import="model.ProductCategory"%>
+<%@page import="dal.SizeDAO"%>
+<%@page import="model.Size"%>
+<%@page import="dal.ProductSizeDAO"%>
+<%@page import="model.ProductSize"%>
+<%@page import="dal.ProductImageDAO"%>
+<%@page import="model.ProductImg"%>
 
 <!DOCTYPE html>
 <html>
@@ -16,11 +26,10 @@
         <!-- Script Link Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
-
+        <jsp:include page="../common/css.jsp" />
     </head>
     <body class="bg-body-tertiary">
-
+        <jsp:include page="../common/header.jsp" />
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a href="../productlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -40,80 +49,131 @@
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
-                    
-                    <%
-                        Product p = (Product)session.getAttribute("product_detail");
-                    %>
-                   
-
                     <div class="col-md-8">
-                        <form class="needs-validation" action="../editproduct" method="post" enctype="multipart/form-data">
+                        <%
+                            Product p = (Product)session.getAttribute("product_detail");
+                        %>
+                        <form class="needs-validation" action="../updateproduct" method="post" enctype="multipart/form-data">
                             <div class="row g-3">
-                                
-                                <div class="col-sm-6">
-                                    <label for="productid" class="form-label">Product Id</label>
-                                    <input disabled="" value="<%= p.getProduct_id()%>" name="productid" type="text" class="form-control" id="productid" required>
-                                </div>
-
+                                <!-- Product Name -->
                                 <div class="col-sm-6">
                                     <label for="productname" class="form-label">Product Name</label>
-                                    <input  value="<%= p.getProduct_name()%>" name="productname" type="text" class="form-control" id="productname" required>
-                                </div>
-                                    
-                                <div class="col-sm-6">
-                                    <label for="image" class="form-label">Product Image</label>
-                                    <input name="image" type="file" class="form-control" id="image">
-                                    <img style="margin-top: 10px;" src="../<%= p.getThumbnail()%>" alt="alt"/>
+                                    <input value="<%= p.getProduct_name()%>" name="productname" type="text" class="form-control" id="productname" required>
                                 </div>
 
-
-                                <div class="my-3 col-sm-6">
-                                    <label for="available" class="form-label">Available</label>
-                                    <div class="form-check">
-                                        <input value="1" id="available" name="available" type="radio" class="form-check-input">
-                                        <label class="form-check-label" for="available">Active</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input id="available1" name="available" type="radio" class="form-check-input">
-                                        <label class="form-check-label" for="available1">Inactive</label>
-                                    </div>
-                                </div>
-                                
+                                <!-- Price -->
                                 <div class="col-sm-6">
                                     <label for="price" class="form-label">Price</label>
-                                    <input value="<%= p.getPrice()%>" name="price" type="text" class="form-control" id="price" required>
+                                    <input value="<%= p.getPrice()%>" name="price" type="number" class="form-control" id="price" required min="0" max="10000000" step="100000">
                                 </div>
-                                
+
+                                <!-- Discount -->
                                 <div class="col-sm-6">
-                                    <label for="quantity" class="form-label">Total Quantity</label>
-                                    <input disabled="" value="<%= p.getTotal_quantity()%>" name="quantity" type="text" class="form-control" id="quantity" required>
+                                    <label for="discount" class="form-label">Discount (%)</label>
+                                    <input value="<%= p.getDiscount()%>" name="discount" type="number" class="form-control" id="discount" required min="0" max="100" step="5">
                                 </div>
-                                
-                                <div class="col-sm-6">
-                                    <label for="discount" class="form-label">Discount</label>
-                                    <input value="<%= p.getDiscount()%>" name="discount" type="text" class="form-control" id="discount" required>
-                                </div>                   
-                               
 
-                                
+                                <!-- Description -->
+                                <div class="col-12">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3"><%= p.getDescription() %></textarea>
+                                </div>
 
+                                <!-- Image Upload -->
+                                <div class="col-3">
+                                    <label for="img" class="form-label">Thumbnail</label>
+                                    <input type="file" class="form-control" id="img" name="img">
+                                    <img style="margin-top: 10px;width: 60%;" src="../<%= p.getThumbnail()%>" alt="alt" />
+                                </div>
+
+                                <!-- Additional Images -->
+                                <%
+                                    ProductImageDAO pidao = new ProductImageDAO();
+                                    List<ProductImg> productImg = pidao.getAllProductImgById(p.getProduct_id()+"");
+                                    for (int i = 1; i <= 3; i++) {
+                                %>
+                                <div class="col-3">
+                                    <label for="img_<%=i%>" class="form-label">Image <%=i%></label>
+                                    <input type="file" class="form-control" id="img_<%=i%>" name="img_<%=i%>" >
+                                    <img style="margin-top: 10px;width: 60%;" src="../<%= productImg.get(i).getImage_url()%>" alt="alt" />
+                                </div>
+                                <%
+                                    }
+                                %>
+
+                                <!-- Product Status -->
+                                <div class="col-12 my-3">
+                                    <label class="form-label">Status</label>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="statusShow" name="status" value="1" <%= p.isIs_active()==true ? "checked" : "" %> >
+                                        <label class="form-check-label" for="statusShow">Show</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="statusHide" name="status" value="0" <%= p.isIs_active()==false ? "checked" : "" %>>
+                                        <label class="form-check-label" for="statusHide">Hidden</label>
+                                    </div>
+                                </div>
+
+                                <!-- Brand Selection -->
+                                <div class="col-12">
+                                    <label for="brand" class="form-label">Brand</label>
+                                    <select class="form-select" id="brand" name="brand" required>
+                                        <%
+                                            BrandDAO bdao = new BrandDAO();
+                                            List<Brand> brand = bdao.getAllBrand();
+                                            for (Brand b : brand) {
+                                        %>
+                                        <option value="<%= b.getBrand_id()%>" <%= (p.getBrand_id() == b.getBrand_id()) ? "selected" : "" %>><%= b.getBrand_name()%></option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+
+                                <!-- Category Selection -->
+                                <div class="col-12">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select class="form-select" id="category" name="category" required>
+                                        <%
+                                            ProductCategoryDAO pcdao = new ProductCategoryDAO();
+                                            List<ProductCategory> pc = pcdao.getAllProductCategory();
+                                            for (ProductCategory category : pc) {
+                                        %>
+                                        <option value="<%= category.getProduct_category_id()%>" <%= (p.getProduct_category_id() == category.getProduct_category_id()) ? "selected" : "" %>><%= category.getProduct_category_name()%></option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+
+                                <!-- Quantity for Each Size -->
+                                <div class="col-12">
+                                    <label for="sizes" class="form-label">Quantity for Each Size</label>
+                                    <div class="row">
+                                        <%
+                                            SizeDAO sdao = new SizeDAO();
+                                            List<Size> sizes = sdao.getAllSize();
+                                            ProductSizeDAO psdao = new ProductSizeDAO();
+                                            for (Size size : sizes) {
+                                                int quantity = psdao.getQuantityOfEachSize(size.getSize_id(), p.getProduct_id());
+                                        %>
+                                        <div class="col-sm-6">
+                                            <label for="size_<%= size.getSize_id() %>" class="form-label">Size: <%= size.getSize_name() %></label>
+                                            <input type="number" class="form-control" id="size_<%= size.getSize_id() %>" name="size_<%= size.getSize_id() %>" placeholder="Enter quantity for size <%= size.getSize_name() %>" value="<%= quantity%>" required min="0" max="100">
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                </div>
 
                             </div>
-
                             <hr class="my-4">
-                            <!-- Error check Username and Password -->
-                            
-
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
                         </form>
                     </div>
                 </div>
             </main>
-
-            <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-
-            </footer>
         </div>
-
     </body>
 </html>

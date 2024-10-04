@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Post"%>
 <%@page import="model.PostCategory"%>
+<%@page import="model.User"%>
 <%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
@@ -139,62 +140,15 @@
     <body>
         <jsp:include page="../common/header.jsp" />
         <div class="row">
-            <!-- START menu -->
-            <div class="col-md-2" style="min-height: 552px">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="    
-                         width: 100%;
-                        height: 100%;
-                     ">
-
-                    <hr>
-                    
-                    
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-white home-link" aria-current="page">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white product-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                                Products
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../listpostmarketing" class="nav-link text-white account-link active">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Post
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="#" class="nav-link text-white station-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                Stations
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="#" class="nav-link text-white contract-link">
-                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                                Contracts
-                            </a>
-                        </li>
-                        
-                    </ul>
-                    <hr>
-
-                </div>
-            </div>
-
+           <!-- START menu -->
+            <jsp:include page="marketing_header.jsp"/>
             <!-- END menu -->
 
             
             <div class="col-md-10" style="padding: 40px;">
                 
                 <%
+                    User user = (User)session.getAttribute("account");
                  List<Post> top3postmarketing = (List<Post>)session.getAttribute("top3postmarketing");
             List<Post> listpostmarketing = (List<Post>)session.getAttribute("listpostmarketing");
             
@@ -213,6 +167,9 @@
         if(author.equals("null")) author = "";
         if(title.equals("null")) title = "";
         
+
+        String pcmktName = session.getAttribute("pcmktName")+"";
+        if(pcmktName.equals("null")) pcmktName = "";
             %>
                 <!-- START products -->
                 <div class="product">
@@ -242,21 +199,37 @@
                                     <h5 style="font-weight: bold;" class="navbar-brand" href="#">Manage Post</h5>
 
                                     <%
+                                        
                                     List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("listpostcategorymkt");
                                     %>
                                     <div class="btn-group" style="">
                                       <button  style="color: white;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Select category
+                                        <%=pcmktName.equals("")?"Select category":pcmktName%>
                                       </button>
                                       <ul class="dropdown-menu">
                                           <%
                                           for (PostCategory postCategory : postcategorylist) {
 
                                           %>
-                                          <li><a class="dropdown-item " href="../listpostfiltermkt?cid=<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></a></li>
+                                          <li class=""><a class="dropdown-item " href="../listpostfiltermkt?cid=<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></a></li>
                                           <%
                                               }
                                           %>
+                                      </ul>
+                                    </div>
+                                      
+                                      <%
+                                      String authorfiltermkt = session.getAttribute("authorfiltermkt")+"";
+                                        if(authorfiltermkt.equals("null")) authorfiltermkt="";
+                                      %>
+                                      <div class="btn-group" style="">
+                                      <button  style="color: white;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        
+                                        <%=(authorfiltermkt.length()==0||authorfiltermkt.equals("all"))?"All Post":"Your Post"%>
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=all">All Post</a></li>
+                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=<%=user.getUser_id()%>">Your Post</a></li>
                                       </ul>
                                     </div>
                                     
@@ -265,7 +238,7 @@
 
                                     <div class="">
                                         <div class="d-flex add" role="search">
-                                            <a href="#"><i style="color: white;" class="fa-solid fa-plus"></i></a>
+                                            <a href="addpostmarketing.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -280,12 +253,13 @@
                                     <th scope="col">Author</th>
                                     <th scope="col">Created Day</th>
                                     <th scope="col">Modified Day</th>
-                                    <th scope="col">Action</th>
+                                    <th style="width: 20%;" scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <%
+                                
                                 int i = 1;
                                 for (Post post : top3postmarketing) {
                                 
@@ -302,18 +276,37 @@
                                     <td><%=post.getCreated_at()%></td>
                                     <td><%=post.getModified_at()%></td>
                                     <td>
+                                        <%
+                                        if(user.getUser_id()==post.getAuthor_id()){
+                                        %>
                                         <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <a href="..\editpostmarketing?pid=<%=post.getPost_id()%>"><i style="color: black;" class="fa-solid fa-pen"></i></a>
                                         </div>
+                                        <%
+                                            }
+                                        %>
+                                        
                                         <div class="remove">
-                                            <a style="color: white;"onclick="return confirm('Do you want to delete carID 1')" href="#"><i class="fa-solid fa-circle-info"></i></a> 
-                                            
+                                            <a style="color: white;" href="..\viewpostmarketing?pid=<%=post.getPost_id()%>"><i class="fa-solid fa-circle-info"></i></a>  
                                         </div>
+                                        <%
+                                        if(post.getIs_active()==0){
+                                        %>
                                         <div class="remove" style="background-color: greenyellow">                               
-                                           <a href="#?sid=1&button=show" onclick="return confirm('Show this slider?')">
+                                           <a href="../showhidepostmarketing?ia=1&pid=<%=post.getPost_id()%>" onclick="return confirm('Show this post?')">
                                              <i style="color: black;" class="bi bi-eye-fill"></i>
                                            </a>    
                                         </div>
+                                        <%
+                                            } else {
+                                        %>
+                                        <div class="remove" style="background-color: red">   
+                                            <a href="../showhidepostmarketing?ia=0&pid=<%=post.getPost_id()%>" onclick="return confirm('Hide this post?')"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>   
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                        
                                     </td>
 
                                 </tr>
