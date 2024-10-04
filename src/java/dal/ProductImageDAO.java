@@ -55,4 +55,21 @@ public class ProductImageDAO extends DBContext{
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
    }
+   
+   public void updateProductImage(ProductImg p) {
+       String sql = "update Product_Images set\n"
+               + "image_url = ?, "
+               + "is_active = ? \n"
+               + "where product_image_id = ? and product_id = ?";
+       try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, p.getImage_url());
+            pre.setInt(2, p.getIs_active());
+            pre.setInt(3, p.getProduct_image_id());
+            pre.setInt(4, p.getProduct_id());
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
 }

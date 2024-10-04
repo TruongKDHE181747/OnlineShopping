@@ -4,6 +4,8 @@
  */
 package cart_controller;
 
+import dal.ProductSizeDAO;
+import dal.SizeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -12,7 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import model.Cart;
+import model.ProductSize;
 import utils.Constants;
 
 /**
@@ -33,6 +37,9 @@ public class ShowCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        ProductSizeDAO daoProductSize = new ProductSizeDAO();
+        
         Cookie[] cookies = request.getCookies();
 
         String txt = "";
@@ -45,6 +52,12 @@ public class ShowCart extends HttpServlet {
         
         Cart cart = new Cart(txt);
         
+        List<ProductSize> list = daoProductSize.getAll();
+        for (ProductSize productSize : list) {
+            
+        }
+        
+        request.setAttribute("listSize", daoProductSize.getAll());
         request.setAttribute("cart", cart.getItems());
        
         

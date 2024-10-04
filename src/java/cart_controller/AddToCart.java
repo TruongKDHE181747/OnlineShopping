@@ -34,6 +34,7 @@ public class AddToCart extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String productId = request.getParameter("pid");
+        String sizeId = request.getParameter("sid");
         String quantity = request.getParameter("quantity");
 
         Cookie[] cookies = request.getCookies();
@@ -47,19 +48,18 @@ public class AddToCart extends HttpServlet {
         }
 
         if (txt.isEmpty() || txt.isBlank()) {
-            txt += productId + ":" + quantity;
+            txt += productId + ":" + sizeId + ":" + quantity;
         } else {
-            txt += "#" + productId + ":" + quantity;
+            txt += "#" + productId + ":" + sizeId + ":" + quantity;
         }
-        
+
         Cookie cart = new Cookie(Constants.COOKIE_CART, txt);
         cart.setMaxAge(30 * 60);
         response.addCookie(cart);
-        
-        response.sendRedirect(request.getContextPath()+"/cart");
+
+        response.sendRedirect(request.getContextPath() + "/cart");
     }
-    
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -72,7 +72,7 @@ public class AddToCart extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     /**
@@ -87,7 +87,7 @@ public class AddToCart extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     /**

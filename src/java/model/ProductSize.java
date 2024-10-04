@@ -9,6 +9,7 @@ package model;
  * @author Dell
  */
 public class ProductSize {
+
     int size_id, product_id, quantity;
     String size_name;
 
@@ -19,6 +20,12 @@ public class ProductSize {
         this.size_id = size_id;
         this.product_id = product_id;
         this.quantity = quantity;
+    }
+
+    public ProductSize(int size_id, int product_id, String size_name) {
+        this.size_id = size_id;
+        this.product_id = product_id;
+        this.size_name = size_name;
     }
 
     public ProductSize(int size_id, int product_id, int quantity, String size_name) {
@@ -35,8 +42,6 @@ public class ProductSize {
     public void setSize_name(String size_name) {
         this.size_name = size_name;
     }
-    
-    
 
     public int getSize_id() {
         return size_id;
@@ -61,6 +66,5 @@ public class ProductSize {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    
+
 }
