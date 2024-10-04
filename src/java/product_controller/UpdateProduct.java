@@ -54,17 +54,17 @@ public class UpdateProduct extends HttpServlet {
         Product product = (Product)session.getAttribute("product_detail");
         
         Part file = request.getPart("img");
-        String img = product.getThumbnail();
+        String img = "";
         if(file.getSubmittedFileName().length() > 0) {
             String fileName = file.getSubmittedFileName();
             String uploadPath = getServletContext().getRealPath("") + File.separator + "product_img";
             file.write(uploadPath + File.separator + fileName);
             img = "product_img/" + fileName;
-        }
+        } else img = product.getThumbnail();
 
         boolean is_active = false;
         
-        String name = request.getParameter("name");
+        String name = request.getParameter("productname");
         int price = Integer.parseInt(request.getParameter("price"));
         int discount = Integer.parseInt(request.getParameter("discount"));
         int total_quantity = 0;
@@ -83,7 +83,7 @@ public class UpdateProduct extends HttpServlet {
         }
         
         ProductDAO pdao = new ProductDAO();
-        pdao.updateProduct(new Product(name, price, total_quantity, discount, description, img, is_active, 0, brand, category));
+        pdao.updateProduct(new Product(product.getProduct_id(),name, price, total_quantity, discount, description, img, is_active, product.getRated_star(), brand, category));
         
         for (Size size : sizes) {
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
@@ -91,17 +91,17 @@ public class UpdateProduct extends HttpServlet {
         }
         
         List<ProductImg> productImg = pidao.getAllProductImgById(product.getProduct_id()+"");
-        pidao.updateProductImage(new ProductImg(product.getProduct_id(),productImg.get(0).getProduct_image_id(), img, productImg.get(0).getIs_active()));
+        pidao.updateProductImage(new ProductImg(productImg.get(0).getProduct_image_id(),product.getProduct_id(), img, productImg.get(0).getIs_active()));
         
         for (int i = 1; i <= 3; i++) {
             Part newFile = request.getPart("img_" + i);
-            String img_url = productImg.get(i).getImage_url();
+            String img_url = "";
             if(newFile.getSubmittedFileName().length() > 0) {
                 String newFileName = newFile.getSubmittedFileName();
                 String newUploadPath = getServletContext().getRealPath("") + File.separator + "product_img";
                 newFile.write(newUploadPath + File.separator + newFileName);
                 img_url = "product_img/" + newFileName;
-            }
+            } else img_url = productImg.get(i).getImage_url();
             pidao.updateProductImage(new ProductImg(productImg.get(i).getProduct_image_id(), product.getProduct_id(),   img_url, productImg.get(i).getIs_active()));
         }
         

@@ -83,7 +83,7 @@ public class ProductSizeDAO extends DBContext {
     public void updateSizeProduct(int size, int pid, int quantity) {
         String sql = "update Product_Size set \n"
                 + "quantity = ? \n"
-                + "where size_id = ?, product_id = ?";
+                + "where size_id = ? and product_id = ?";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, quantity);
