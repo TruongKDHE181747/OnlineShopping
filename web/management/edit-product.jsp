@@ -159,7 +159,7 @@
                                         %>
                                         <div class="col-sm-6">
                                             <label for="size_<%= size.getSize_id() %>" class="form-label">Size: <%= size.getSize_name() %></label>
-                                            <input type="number" class="form-control" id="size_<%= size.getSize_id() %>" name="size_<%= size.getSize_id() %>" placeholder="Enter quantity for size <%= size.getSize_name() %>" value="<%= quantity%>" required min="0" max="100">
+                                            <input type="number" class="form-control" id="size_<%= size.getSize_id() %>" name="size_<%= size.getSize_id()%>" placeholder="Enter quantity for size <%= size.getSize_name() %>" value="<%= quantity%>" required min="0" max="100">
                                         </div>
                                         <%
                                             }
