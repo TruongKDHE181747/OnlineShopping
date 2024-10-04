@@ -146,6 +146,33 @@ public class VoucherDAO extends DBContext{
         }
         return v;
     }
+    public void editVoucher(Voucher v){
+        try {
+            String sql = "Update Voucher set \n" +
+                            "voucher_name= ?,\n" +
+                            "description=?,\n" +
+                            "start_date=?,\n" +
+                            "end_date=?,\n" +
+                            "quantity=?,\n" +
+                            "[percent] = ?,\n" +
+                            "is_active=?\n" +
+                            "where voucher_id=?";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, v.getVoucher_name());
+            pre.setString(2, v.getDescription());
+            pre.setString(3, v.getStart_date());
+            pre.setString(4, v.getEnd_date());
+            pre.setInt(5, v.getQuantity());
+            pre.setInt(6, v.getPercent());
+            pre.setInt(7, v.getIs_active());
+            pre.setInt(8, v.getVoucher_id());
+           pre.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
     public static void main(String[] args) {
         VoucherDAO vdao= new VoucherDAO();
         Voucher vlist=vdao.getVoucherbyId(1);

@@ -38,6 +38,7 @@ public class DetailVoucher extends HttpServlet {
         int vid=Integer.parseInt(request.getParameter("vid"));
         Voucher v= vdao.getVoucherbyId(vid);
         session.setAttribute("voucher", v);
+        session.setAttribute("vid", vid);
         response.sendRedirect(request.getContextPath()+"/management/detailvoucher.jsp");
     } 
 
