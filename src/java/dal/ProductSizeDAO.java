@@ -20,6 +20,27 @@ import model.ProductSize;
  */
 public class ProductSizeDAO extends DBContext {
 
+    public List<ProductSize> getAll() {
+        List<ProductSize> list = new ArrayList<>();
+        String sql = "select distinct ps.size_id,ps.product_id,s.size_name\n"
+                + "from Product_Size ps join Sizes s on ps.size_id = s.size_id \n"
+                + "group by ps.size_id,ps.product_id,s.size_name";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int size_id = rs.getInt("size_id");
+                int product_id = rs.getInt("product_id");
+                String size_name = rs.getString("size_name");
+                list.add(new ProductSize(size_id, product_id, size_name));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public List<ProductSize> getAllProductSizeById(String id) {
         List<ProductSize> pList = new ArrayList<>();
         String sql = "select distinct ps.*, s.size_name \n"
