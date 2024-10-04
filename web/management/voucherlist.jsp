@@ -285,8 +285,8 @@
                                 <div class="container-fluid">
                                     <h5 class="navbar-brand" href="#">Manage Voucher</h5>
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="">
-                                            <input placeholder="Search..." name="usersearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <form class="d-flex" role="search" action="../searchvoucher">
+                                            <input placeholder="Search..." name="vsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -338,17 +338,17 @@
 
                                         <td>
                                             <div class="edit">
-                                                <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                                <a href="../detailvoucher?vid=${vl.voucher_id}"><i style="color: black;" class="fa-solid fa-pen"></i></a>
 
                                             </div>
                                             <c:if test="${vl.is_active==1}">
                                             <div class="remove" style="background-color: red">
-                                                <a onclick="return confirm('Do you want to hide this voucher')" href="#"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                                <a onclick="return confirm('Do you want to hide this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=0"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
                                             </div>
                                             </c:if>
                                             <c:if test="${vl.is_active==0}">
                                             <div class="remove" style="background-color: green">
-                                                <a onclick="return confirm('Do you want to show this voucher')" href="#"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                                <a onclick="return confirm('Do you want to show this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=1"><i style="color: white;" class="fa fa-eye"></i></a>     
                                             </div>
                                             </c:if>
                                         </td>

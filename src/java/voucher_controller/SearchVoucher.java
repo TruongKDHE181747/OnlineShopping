@@ -14,16 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import model.Voucher;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="AddVoucher", urlPatterns={"/addvoucher"})
-public class AddVoucher extends HttpServlet {
+@WebServlet(name="SearchVoucher", urlPatterns={"/searchvoucher"})
+public class SearchVoucher extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,29 +36,10 @@ public class AddVoucher extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session= request.getSession();
         VoucherDAO vdao= new VoucherDAO();
-        String voucher_name= request.getParameter("voucher_name");
-        String description=request.getParameter("description");
-        String start_date=request.getParameter("start_date");
-        String end_date=request.getParameter("end_date");
-        int quantity=Integer.parseInt(request.getParameter("quantity"));
-        int percent=Integer.parseInt(request.getParameter("percent"));
-        int status=Integer.parseInt(request.getParameter("status"));
-        String error="";
-        
-            
-    LocalDate startDate = LocalDate.parse(start_date);
-    LocalDate endDate = LocalDate.parse(end_date);
-
-    if (startDate.isAfter(endDate)) {
-        // Start date is before end date
-        error="Start date must be before end date";
-    }
-    if(error.length()>0){
-            session.setAttribute("error", error);
-            response.sendRedirect(request.getContextPath()+"/management/addvoucher.jsp");
-        }else{
-    vdao.addVoucher(new Voucher(0, voucher_name, description, start_date, end_date, quantity, percent, status));
-    response.sendRedirect("voucherlist");}
+        String vsearch=request.getParameter("vsearch");
+        List<Voucher> vlist =vdao.searchVoucher(vsearch);
+        session.setAttribute("vlist", vlist);
+        response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

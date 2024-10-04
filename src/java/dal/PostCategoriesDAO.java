@@ -44,14 +44,14 @@ public class PostCategoriesDAO extends DBContext{
     public void addpostcate(PostCategories p){
         try {
             String sql = "insert into Post_Categories ( post_category_name, is_active) values   \n" +
-"		   (? , ?)";
+                        "(? , ?)";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, p.getPost_category_name());
             pre.setInt(2, p.getIs_active());
            pre.executeUpdate();
 
         } catch (SQLException ex) {
-
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    public List<PostCategories> searchCategory2(String search){
@@ -111,7 +111,7 @@ public class PostCategoriesDAO extends DBContext{
            pre.executeUpdate();
 
         } catch (SQLException ex) {
-
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

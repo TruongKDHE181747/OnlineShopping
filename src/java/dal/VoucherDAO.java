@@ -64,8 +64,8 @@ public class VoucherDAO extends DBContext{
                 vlist.add(v);
             }
             
-        }catch(Exception e){
-            System.out.println(e);
+        }catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vlist;
     }
@@ -92,13 +92,63 @@ public class VoucherDAO extends DBContext{
             pre.setInt(7, v.getIs_active());
            pre.executeUpdate();
 
-        } catch(Exception e){
-            System.out.println(e);
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public List<Voucher> searchVoucher(String search){
+        List<Voucher> vlist= new ArrayList<>();
+        String sql=" select * from Voucher\n" +
+                    " where voucher_name like ?";
+        try{
+            PreparedStatement pre= connection.prepareStatement(sql);
+              pre.setString(1, "%"+search+"%");
+            ResultSet rs=pre.executeQuery();
+            while(rs.next()){
+                int voucher_id=rs.getInt("voucher_id");
+                String voucher_name=rs.getString("voucher_name");
+                String description=rs.getString("description");
+                String start_date=rs.getString("start_date");
+                String end_date=rs.getString("end_date");
+                int quantity=rs.getInt("quantity");
+                int percent=rs.getInt("percent");
+                int is_active=rs.getInt("is_active");
+                Voucher v= new Voucher(voucher_id, voucher_name, description, start_date, end_date, quantity, percent, is_active);
+                vlist.add(v);
+            }
+            
+        }catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vlist;
+    }
+    public Voucher getVoucherbyId(int voucher_id){
+        Voucher v= null;
+        String sql="select * from Voucher\n" +
+                    " where voucher_id= ?";
+        try{
+            PreparedStatement pre=connection.prepareStatement(sql);
+            pre.setInt(1, voucher_id);
+            ResultSet rs=pre.executeQuery();
+            while(rs.next()){
+                voucher_id=rs.getInt("voucher_id");
+                String voucher_name=rs.getString("voucher_name");
+                String description=rs.getString("description");
+                String start_date=rs.getString("start_date");
+                String end_date=rs.getString("end_date");
+                int quantity=rs.getInt("quantity");
+                int percent=rs.getInt("percent");
+                int is_active=rs.getInt("is_active");
+                v= new Voucher(voucher_id, voucher_name, description, start_date, end_date, quantity, percent, is_active);
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return v;
     }
     public static void main(String[] args) {
         VoucherDAO vdao= new VoucherDAO();
-        List<Voucher> vlist=vdao.getVoucherPaging(1);
+        Voucher vlist=vdao.getVoucherbyId(1);
         System.out.println(vlist);
     }
 }

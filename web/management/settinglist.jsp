@@ -124,6 +124,54 @@
                 margin-top: 10px;
                 padding: 16px 0;
             }
+             /* Style for the dropdown button */
+.dropbtn {
+    background-color: #d0d040;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Container for the dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when hovered */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
         </style>
     </head>
     <body>
@@ -234,7 +282,15 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Products</h5>
+                                    <div class="" id="navbarSupportedContent">
+                                        <div class="dropdown">
+                                            <button class="dropbtn">Classification</button>
+                                            <div class="dropdown-content">
+                                                <a href="../settingpaging?ptype=product">Product</a>
+                                                <a href="../settingpaging?ptype=post">Post</a>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../settingsearch">
@@ -335,6 +391,7 @@
                                 </tr>   
                                  <c:set var="counter" value="${counter + 1}" /> <!-- Tăng biến đếm -->
                                 </c:forEach>
+                                
                                 <!-- END Product item -->
                                
                                 
@@ -346,28 +403,6 @@
                     
                     <div style="display: flex;
                                 justify-content: center;">
-                        
-                        <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            
-                           
-                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">6</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
                         
                     </div>
                     <!-- END PAGE -->

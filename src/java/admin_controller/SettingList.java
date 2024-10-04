@@ -5,6 +5,7 @@
 
 package admin_controller;
 
+import dal.BrandDAO;
 import dal.PostCategoriesDAO;
 import dal.ProductCategoryDAO;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Brand;
 import model.PostCategories;
 import model.ProductCategory;
 
