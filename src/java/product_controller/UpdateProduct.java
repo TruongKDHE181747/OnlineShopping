@@ -108,7 +108,7 @@ public class UpdateProduct extends HttpServlet {
             pidao.updateProductImage(new ProductImg(productImg.get(i).getProduct_image_id(), product.getProduct_id(),   img_url, productImg.get(i).getIs_active()));
         }
         
-        response.sendRedirect("productlist");
+        request.getRequestDispatcher("productpaging").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
