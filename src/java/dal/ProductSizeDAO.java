@@ -80,4 +80,18 @@ public class ProductSizeDAO extends DBContext {
         return quantity;
     }
 
+    public void updateSizeProduct(int size, int pid, int quantity) {
+        String sql = "update Product_Size set \n"
+                + "quantity = ? \n"
+                + "where size_id = ?, product_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, quantity);
+            pre.setInt(2, size);
+            pre.setInt(3, pid);
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
