@@ -317,6 +317,13 @@
         </div>
         <!-- Search End -->
 
+         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="Clothes_Test"
+  agent-id="8aa23345-6a5f-4ef6-8580-b78f67115fcb"
+  language-code="en"
+></df-messenger>  
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
