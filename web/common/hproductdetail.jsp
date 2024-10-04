@@ -180,10 +180,10 @@
                                 <h3><%=cmoney%></h3>
                                 <p><%=product.getDescription()%></p>
                                 <div class="product__details__option">
-                                    
+
                                     <div class="product__details__option__size">
                                         <span>Size:</span>
-                                        
+
                                         <div class="shop__sidebar__tags">
                                             <%
                                      int dsize = Integer.parseInt(session.getAttribute("dsize")+"");
@@ -205,18 +205,20 @@
 
                                 </div>
                                 <div class="product__details__cart__option">
-                                    
-                                    <form action="#">
+
+                                    <form action="../addToCart" method="get">
                                         <span style="margin-right: 12px;
-                                        font-weight: bold;">In stock: <%=dquantity%></span>
+                                              font-weight: bold;">In stock: <%=dquantity%></span>
                                         <div class="quantity">
-                                        <div class="pro-qty">
-                                            
-                                            <input value="1" type="number" min="1" max="<%=dquantity%>">
+                                            <div class="pro-qty">
+
+                                                <input name="quantity" value="1" type="number" min="1" max="<%=dquantity%>">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <a href="#" class="primary-btn">add to cart</a>
-                                    <a href="#" class="primary-btn">Checkout</a>
+                                                <input type="hidden" name="pid" value="<%=product.getProduct_id()%>">
+                                                <input type="hidden" name="sid" value="<%=dsize%>">
+                                        <button type="submit" class="primary-btn">add to cart</button>
+
                                     </form>
                                 </div>
 
@@ -303,7 +305,7 @@
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
                                                             <%}%>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -353,34 +355,34 @@
                 
                 %>
                 <div class="row">
-                     <%
+                    <%
                    
                     
-                    for (Product rproduct : prlList) {
-                    int rprice =rproduct.getPrice() - rproduct.getPrice()*rproduct.getDiscount()/100;
-                    String rcmoney = numberFormat.format(rprice);
-                    if(rproduct.isIs_active()){
+                   for (Product rproduct : prlList) {
+                   int rprice =rproduct.getPrice() - rproduct.getPrice()*rproduct.getDiscount()/100;
+                   String rcmoney = numberFormat.format(rprice);
+                   if(rproduct.isIs_active()){
 
                     %>
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="../<%=rproduct.getThumbnail()%>">
-                                    <%
-                                if(rproduct.getDiscount()!=0){
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="../<%=rproduct.getThumbnail()%>">
+                                <%
+                            if(rproduct.getDiscount()!=0){
                                 %>
                                 <span style="background-color: black; color: white;" class="label">-<%=rproduct.getDiscount()%>%</span>
                                 <% }%>
-                                    <ul class="product__hover">
-                                        
-                                        <li><a href="../hproductdetail?proid=<%=rproduct.getProduct_id()%>"><img src="img/icon/search.png" alt=""></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><%=rproduct.getProduct_name()%></h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
+                                <ul class="product__hover">
+
+                                    <li><a href="../hproductdetail?proid=<%=rproduct.getProduct_id()%>"><img src="img/icon/search.png" alt=""></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><%=rproduct.getProduct_name()%></h6>
+                                <a href="#" class="add-cart">+ Add To Cart</a>
+                                <div class="rating">
                                     <%if(rproduct.getRated_star()<=0){
-                                        %>
+                                    %>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -392,53 +394,53 @@
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
-                                       <% } else if(rproduct.getRated_star()<=2){  %>
+                                    <% } else if(rproduct.getRated_star()<=2){  %>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
-                                       <%} else if(rproduct.getRated_star()<=3){%>
+                                    <%} else if(rproduct.getRated_star()<=3){%>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
-                                        <%} else if(rproduct.getRated_star()<=4){%>
+                                    <%} else if(rproduct.getRated_star()<=4){%>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
-                                        <%} else { %>
+                                    <%} else { %>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
-                                        <%}%>
+                                    <%}%>
                                 </div>
-                                        <h5><%=rcmoney%> 
-                                        </h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>
+                                <h5><%=rcmoney%> 
+                                </h5>
+                                <div class="product__color__select">
+                                    <label for="pc-4">
+                                        <input type="radio" id="pc-4">
+                                    </label>
+                                    <label class="active black" for="pc-5">
+                                        <input type="radio" id="pc-5">
+                                    </label>
+                                    <label class="grey" for="pc-6">
+                                        <input type="radio" id="pc-6">
+                                    </label>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <%
                             }
                         }
                     %>
-                    
+
                 </div>
             </div>
         </section>

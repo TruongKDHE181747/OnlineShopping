@@ -8,13 +8,15 @@ package model;
 public class CartItem {
     
     private Product product;
+    private Size size;
     private int quantity;
 
     public CartItem() {
     }
 
-    public CartItem(Product product, int quantity) {
+    public CartItem(Product product, Size size, int quantity) {
         this.product = product;
+        this.size = size;
         this.quantity = quantity;
     }
 
@@ -26,6 +28,14 @@ public class CartItem {
         this.product = product;
     }
 
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -33,6 +43,8 @@ public class CartItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    
     
     
     

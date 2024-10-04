@@ -5,6 +5,7 @@
 package model;
 
 import dal.ProductDAO;
+import dal.SizeDAO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,33 +19,34 @@ public class Cart {
         if (txt.isBlank() || txt.isEmpty()) {
             return;
         }
-        ProductDAO dao = new ProductDAO();
+        ProductDAO daoP = new ProductDAO();
+        SizeDAO daoS = new SizeDAO();
 
         String[] itemCart = txt.split("#");
         for (String o : itemCart) {
             try {
                 String[] s = o.split(":");
-                Product p = dao.getProductById(Integer.parseInt(s[0]));
-                int quantity = Integer.parseInt(s[1]);
+                Product product = daoP.getProductById(Integer.parseInt(s[0]));
+                Size size = daoS.getSizeById(Integer.parseInt(s[1]));
+                int quantity = Integer.parseInt(s[2]);
+               
 
-                CartItem existItem = findCartItemByProduct(p);
+                CartItem existItem = findCartItemByProductSize(product, size);
 
                 if (existItem != null) {
                     existItem.setQuantity(existItem.getQuantity()+ quantity);
                 }else{
-                    items.add(new CartItem(p, quantity));
+                    items.add(new CartItem(product, size, quantity));
                 }
-
-                
-
             } catch (NumberFormatException ex) {
             }
         }
     }
 
-    private CartItem findCartItemByProduct(Product product) {
+    private CartItem findCartItemByProductSize(Product product,Size size) {
         for (CartItem item : items) {
-            if (item.getProduct().getProduct_id() == product.getProduct_id()) {
+            if (item.getProduct().getProduct_id() == product.getProduct_id() 
+                    && item.getSize().getSize_id() == size.getSize_id()) {
                 return item;
             }
         }

@@ -1,7 +1,10 @@
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,21 +52,37 @@
                                 <thead>
                                     <tr>
                                         <th>Product</th>
+                                        <th>&nbsp;Size</th>
                                         <th>Quantity</th>
                                         <th>Total</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     <c:forEach var="o" items="${cart}">
-                                        <tr>
+                                        <fmt:setLocale value="vi_VN" />
+                                        <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
+
+                                        <tr >
                                             <td class="product__cart__item">
                                                 <div class="product__cart__item__pic">
                                                     <img style="width: 100px;height: 100px" src="${o.product.thumbnail}" alt="">
                                                 </div>
                                                 <div class="product__cart__item__text">
                                                     <h6>${o.product.product_name}</h6>
-                                                    <h5>${o.product.price}</h5>
+                                                    <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
+                                                </div>
+                                            </td>
+                                            <td class="cart__price">
+                                                <div >
+                                                    <select>
+                                                        <c:forEach var="s" items="${listSize}">
+                                                            <c:if test="${o.product.product_id == s.product_id}">
+                                                                <option ${o.size.size_id == s.size_id ? "selected":""} value="${s.size_id}">${s.size_name}</option>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </select>
                                                 </div>
                                             </td>
                                             <td class="quantity__item">
@@ -73,7 +92,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="cart__price">${o.product.price*o.quantity}</td>
+                                            <td class="cart__price"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                             <td class="cart__close"><i class="fa fa-close"></i></td>
                                         </tr>
                                     </c:forEach>

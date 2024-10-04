@@ -39,4 +39,25 @@ public class SizeDAO extends DBContext{
         }
         return pList;
     }
+     
+     public Size getSizeById(int id){
+         String sql = "select * from Sizes where [size_id] = ?";
+         
+         try {
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ps.setInt(1, id);
+             ResultSet rs = ps.executeQuery();
+             if(rs.next()){
+                 int size_id = rs.getInt(1);
+                String size_name = rs.getString(2);
+                String description = rs.getString(3);
+                return new Size(size_id, size_name, description);
+             }
+             
+         } catch (SQLException ex) {
+             Logger.getLogger(SizeDAO.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         
+         return null;
+     }
 }
