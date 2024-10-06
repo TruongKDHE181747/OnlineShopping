@@ -96,7 +96,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="cart__price"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                                <td class="cart__close"><a class="text-reset" href="removeOne?pid=${o.product.product_id}&sid=${o.size.size_id}"><i class="fa fa-close"></i></a></td>
 
 
                                         <input type="hidden" name="pid_${status.index}" value="${o.product.product_id}">
@@ -110,15 +110,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="continue__btn">
-                                        <a href="#">Continue Shopping</a>
+                                    <div class="continue__btn update__btn " >
+                                        <button onclick="window.location.href='./removeAll'" style="width: 80%;margin-right:auto" class="btn btn-block btn-dark btn-lg" type="button">Remove all</button>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="continue__btn update__btn">
-                                        <button style="width: 80%" class="btn btn-block btn-dark btn-lg" type="submit"><i class="fa fa-spinner"></i> Update cart</button>
+                                    <div class="continue__btn update__btn " style="margin: auto">
+                                        <button style="width: 80%;margin-left:auto" class="btn btn-block btn-dark btn-lg" type="submit"><i class="fa fa-spinner"></i> Update cart</button>
                                     </div>
                                 </div>
+                            </div>
+                                    <div class="row" style="margin-top: 30px">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="continue__btn text-center" >
+                                        <a style="width: 100%" href="#">Continue Shopping</a>
+                                    </div>
+                                </div>
+        
                             </div>
                         </form>
                     </div>

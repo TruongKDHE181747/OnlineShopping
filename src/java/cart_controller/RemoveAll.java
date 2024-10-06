@@ -11,15 +11,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import utils.Constants;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/addToCart"})
-public class AddToCart extends HttpServlet {
+@WebServlet(name = "RemoveAll", urlPatterns = {"/removeAll"})
+public class RemoveAll extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,33 +32,21 @@ public class AddToCart extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String productId = request.getParameter("pid");
-        String sizeId = request.getParameter("sid");
-        String quantity = request.getParameter("quantity");
-
-        Cookie[] cookies = request.getCookies();
-
-        String txt = "";
+        
+        Cookie[] cookies =request.getCookies();
+        
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(Constants.COOKIE_CART)) {
-                txt = cookie.getValue();
+            if(cookie.getName().equals(Constants.COOKIE_CART)){
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
                 break;
             }
         }
-
-        if (txt.isEmpty() || txt.isBlank()) {
-            txt += productId + ":" + sizeId + ":" + quantity;
-        } else {
-            txt += "#" + productId + ":" + sizeId + ":" + quantity;
-        }
-
-        Cookie cart = new Cookie(Constants.COOKIE_CART, txt);
-        cart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
-        response.addCookie(cart);
-
+        
         response.sendRedirect(request.getContextPath() + "/cart");
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -72,7 +59,6 @@ public class AddToCart extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
@@ -87,7 +73,6 @@ public class AddToCart extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**

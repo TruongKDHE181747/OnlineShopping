@@ -11,15 +11,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import utils.Constants;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/addToCart"})
-public class AddToCart extends HttpServlet {
+@WebServlet(name = "RemoveOne", urlPatterns = {"/removeOne"})
+public class RemoveOne extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,13 +32,10 @@ public class AddToCart extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String productId = request.getParameter("pid");
-        String sizeId = request.getParameter("sid");
-        String quantity = request.getParameter("quantity");
 
         Cookie[] cookies = request.getCookies();
-
         String txt = "";
+
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(Constants.COOKIE_CART)) {
                 txt = cookie.getValue();
@@ -47,19 +43,39 @@ public class AddToCart extends HttpServlet {
             }
         }
 
-        if (txt.isEmpty() || txt.isBlank()) {
-            txt += productId + ":" + sizeId + ":" + quantity;
-        } else {
-            txt += "#" + productId + ":" + sizeId + ":" + quantity;
+        if (txt.isBlank() || txt.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
         }
 
-        Cookie cart = new Cookie(Constants.COOKIE_CART, txt);
+        String pid = request.getParameter("pid");
+        String sid = request.getParameter("sid");
+
+        String[] products = txt.split("#");
+
+        String newTxt = "";
+        for (String p : products) {
+
+            String[] s = p.split(":");
+
+            if (!s[0].equals(pid) || !s[1].equals(sid)) {
+
+                if (newTxt.isBlank() || newTxt.isEmpty()) {
+                    newTxt += s[0] + ":" + s[1] + ":" + s[2];
+                } else {
+                    newTxt += "#" + s[0] + ":" + s[1] + ":" + s[2];
+                }
+            }
+        }
+
+        Cookie cart = new Cookie(Constants.COOKIE_CART, newTxt);
         cart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
         response.addCookie(cart);
-
         response.sendRedirect(request.getContextPath() + "/cart");
+
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -72,7 +88,6 @@ public class AddToCart extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
@@ -87,7 +102,6 @@ public class AddToCart extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**

@@ -30,12 +30,15 @@ public class Cart {
                 Size size = daoS.getSizeById(Integer.parseInt(s[1]));
                 int quantity = Integer.parseInt(s[2]);
 
-                CartItem existItem = findCartItemByProductSize(product, size);
+                if (quantity > 0) {
 
-                if (existItem != null) {
-                    existItem.setQuantity(existItem.getQuantity() + quantity);
-                } else {
-                    items.add(new CartItem(product, size, quantity));
+                    CartItem existItem = findCartItemByProductSize(product, size);
+
+                    if (existItem != null) {
+                        existItem.setQuantity(existItem.getQuantity() + quantity);
+                    } else {
+                        items.add(new CartItem(product, size, quantity));
+                    }
                 }
             } catch (NumberFormatException ex) {
             }
@@ -68,14 +71,13 @@ public class Cart {
         return items;
     }
 
-
     public void removeAll() {
         items = null;
     }
 
     public static void main(String[] args) {
         Cart c = new Cart("1:1:1#1:2:1#1:1:1#1:1:1");
-        
+
         System.out.println(c.generateText());
     }
 }
