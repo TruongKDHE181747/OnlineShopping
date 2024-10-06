@@ -29,13 +29,12 @@ public class Cart {
                 Product product = daoP.getProductById(Integer.parseInt(s[0]));
                 Size size = daoS.getSizeById(Integer.parseInt(s[1]));
                 int quantity = Integer.parseInt(s[2]);
-               
 
                 CartItem existItem = findCartItemByProductSize(product, size);
 
                 if (existItem != null) {
-                    existItem.setQuantity(existItem.getQuantity()+ quantity);
-                }else{
+                    existItem.setQuantity(existItem.getQuantity() + quantity);
+                } else {
                     items.add(new CartItem(product, size, quantity));
                 }
             } catch (NumberFormatException ex) {
@@ -43,9 +42,21 @@ public class Cart {
         }
     }
 
-    private CartItem findCartItemByProductSize(Product product,Size size) {
+    public String generateText() {
+        String txt = "";
         for (CartItem item : items) {
-            if (item.getProduct().getProduct_id() == product.getProduct_id() 
+            if (txt.isBlank() || txt.isEmpty()) {
+                txt += item.getProduct().getProduct_id() + ":" + item.getSize().getSize_id() + ":" + item.getQuantity();
+            } else {
+                txt += "," + item.getProduct().getProduct_id() + ":" + item.getSize().getSize_id() + ":" + item.getQuantity();
+            }
+        }
+        return txt;
+    }
+
+    private CartItem findCartItemByProductSize(Product product, Size size) {
+        for (CartItem item : items) {
+            if (item.getProduct().getProduct_id() == product.getProduct_id()
                     && item.getSize().getSize_id() == size.getSize_id()) {
                 return item;
             }
@@ -57,12 +68,14 @@ public class Cart {
         return items;
     }
 
-    public void addItem(CartItem item) {
-        items.add(item);
-    }
 
     public void removeAll() {
         items = null;
     }
 
+    public static void main(String[] args) {
+        Cart c = new Cart("1:1:1#1:2:1#1:1:1#1:1:1");
+        
+        System.out.println(c.generateText());
+    }
 }

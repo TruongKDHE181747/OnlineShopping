@@ -46,72 +46,83 @@
         <section class="shopping-cart spad">
             <div class="container">
                 <div class="row">
+
                     <div class="col-lg-8">
-                        <div class="shopping__cart__table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>&nbsp;Size</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <c:forEach var="o" items="${cart}">
-                                        <fmt:setLocale value="vi_VN" />
-                                        <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
-
-                                        <tr >
-                                            <td class="product__cart__item">
-                                                <div class="product__cart__item__pic">
-                                                    <img style="width: 100px;height: 100px" src="${o.product.thumbnail}" alt="">
-                                                </div>
-                                                <div class="product__cart__item__text">
-                                                    <h6>${o.product.product_name}</h6>
-                                                    <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price">
-                                                <div >
-                                                    <select>
-                                                        <c:forEach var="s" items="${listSize}">
-                                                            <c:if test="${o.product.product_id == s.product_id}">
-                                                                <option ${o.size.size_id == s.size_id ? "selected":""} value="${s.size_id}">${s.size_name}</option>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="quantity__item">
-                                                <div class="quantity">
-                                                    <div class="pro-qty-2">
-                                                        <input type="text" value="${o.quantity}">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                            <td class="cart__close"><i class="fa fa-close"></i></td>
+                        <form method="GET" action="updateCart">
+                            <div class="shopping__cart__table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>&nbsp;Size</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th></th>
                                         </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <c:forEach var="o" items="${cart}" varStatus="status">
+                                            <fmt:setLocale value="vi_VN" />
+                                            <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
+
+                                            <tr >
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img style="width: 100px;height: 100px" src="${o.product.thumbnail}" alt="">
+                                                    </div>
+                                                    <div class="product__cart__item__text">
+                                                        <h6>${o.product.product_name}</h6>
+                                                        <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price">
+                                                    <div >
+                                                        <select id="sid_${status.index}" name="sid_${status.index}">
+                                                            <c:forEach var="s" items="${listSize}">
+                                                                <c:if test="${o.product.product_id == s.product_id}">
+                                                                    <option ${o.size.size_id == s.size_id ? "selected":""} value="${s.size_id}">${s.size_name}</option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input id="quantity_${status.index}" name="quantity_${status.index}" type="text" value="${o.quantity}">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                                <td class="cart__close"><i class="fa fa-close"></i></td>
+
+
+                                        <input type="hidden" name="pid_${status.index}" value="${o.product.product_id}">
+
+                                        </tr>
+                                        <c:set var="maxIndex" value="${status.index}" />
                                     </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="continue__btn">
-                                    <a href="#">Continue Shopping</a>
+                                    <input type="hidden" name="maxIndex" value="${maxIndex}">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="continue__btn">
+                                        <a href="#">Continue Shopping</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="continue__btn update__btn">
+                                        <button style="width: 80%" class="btn btn-block btn-dark btn-lg" type="submit"><i class="fa fa-spinner"></i> Update cart</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="continue__btn update__btn">
-                                    <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
+
                     <div class="col-lg-4">
                         <div class="cart__discount">
                             <h6>Discount codes</h6>
