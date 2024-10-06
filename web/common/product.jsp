@@ -293,9 +293,9 @@ if(sql1.equals("null")) sql1 = "";
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><%=product.getProduct_name()%></h6>
+                                        <h5 style="cursor: pointer" onclick="window.location.href = '../hproductdetail?proid=<%=product.getProduct_id()%>'"><%=product.getProduct_name()%></h5>
 
-                                        <a href="../addToCart?pid=<%=product.getProduct_id()%>&quantity=1"  class="add-cart">+ Add To Cart</a>
+
 
                                         <div class="rating">
                                             <%if(product.getRated_star()<=0){
@@ -339,17 +339,7 @@ if(sql1.equals("null")) sql1 = "";
                                         </div>
                                         <h5><%=cmoney%> 
                                         </h5>
-                                        <div class="product__color__select">
-                                            <label for="pc-4">
-                                                <input type="radio" id="pc-4">
-                                            </label>
-                                            <label class="active black" for="pc-5">
-                                                <input type="radio" id="pc-5">
-                                            </label>
-                                            <label class="grey" for="pc-6">
-                                                <input type="radio" id="pc-6">
-                                            </label>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>

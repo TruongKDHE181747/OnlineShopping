@@ -37,9 +37,8 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
 
-        <style>
+        
 
-        </style>
     </head>
 
     <body>
@@ -205,336 +204,327 @@
 
                                 </div>
                                 <div class="product__details__cart__option">
-
                                     <form action="../addToCart" method="get">
-                                        <span style="margin-right: 12px;
-                                              font-weight: bold;">In stock: <%=dquantity%></span>
+                                        <span style="margin-right: 12px;  font-weight: bold;">In stock: <%=dquantity%></span>
                                         <div class="quantity">
-                                            <div class="pro-qty">
-
+                                            <div class="">
                                                 <input name="quantity" value="1" type="number" min="1" max="<%=dquantity%>">
                                             </div>
                                         </div>
-                                                <input type="hidden" name="pid" value="<%=product.getProduct_id()%>">
-                                                <input type="hidden" name="sid" value="<%=dsize%>">
+                                        <input type="hidden" name="pid" value="<%=product.getProduct_id()%>">
+                                        <input type="hidden" name="sid" value="<%=dsize%>">
                                         <button type="submit" class="primary-btn">add to cart</button>
-
                                     </form>
                                 </div>
-
-
                             </div>
+
+
                         </div>
                     </div>
-                    <% String dcontent = session.getAttribute("dcontent")+"";%>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="product__details__tab">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link <%=dcontent.equals("pdescription")?"active":""%>" data-toggle="tab" href="#tabs-5"
-                                           role="tab">Description</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link <%=dcontent.equals("pfeedback")?"active":""%>" data-toggle="tab" href="#tabs-6" role="tab">Customer
-                                            Previews(<%=alldpfList.size()%>)</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane <%=dcontent.equals("pdescription")?"active":""%>" id="tabs-5" role="tabpanel">
-                                        <div class="product__details__tab__content">
-                                            <div class="product__details__tab__content__item">
-                                                <h5>Products Infomation</h5>
-                                                <p><p><%=product.getDescription()%></p></p>
+                </div>
+                <% String dcontent = session.getAttribute("dcontent")+"";%>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__details__tab">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link <%=dcontent.equals("pdescription")?"active":""%>" data-toggle="tab" href="#tabs-5"
+                                       role="tab">Description</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link <%=dcontent.equals("pfeedback")?"active":""%>" data-toggle="tab" href="#tabs-6" role="tab">Customer
+                                        Previews(<%=alldpfList.size()%>)</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane <%=dcontent.equals("pdescription")?"active":""%>" id="tabs-5" role="tabpanel">
+                                    <div class="product__details__tab__content">
+                                        <div class="product__details__tab__content__item">
+                                            <h5>Products Infomation</h5>
+                                            <p><p><%=product.getDescription()%></p></p>
 
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane <%=dcontent.equals("pfeedback")?"active":""%>" id="tabs-6" role="tabpanel">
-                                        <%
-                                        for (ProductFeedback productFeedback : pfList) {
+                                </div>
+                                <div class="tab-pane <%=dcontent.equals("pfeedback")?"active":""%>" id="tabs-6" role="tabpanel">
+                                    <%
+                                    for (ProductFeedback productFeedback : pfList) {
             
         
-                                        %>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="product__item row" style="margin: 24px 0;">
-                                                    <div style="height: 120px" class="product__item__pic set-bg col-md-2" data-setbg="../<%=productFeedback.getThumbnail()%>">
+                                    %>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="product__item row" style="margin: 24px 0;">
+                                                <div style="height: 120px" class="product__item__pic set-bg col-md-2" data-setbg="../<%=productFeedback.getThumbnail()%>">
 
-                                                    </div>
-
-                                                    <div class="col-md-10">
-                                                        <h6><%=productFeedback.getReview()%></h6>
-
-                                                        <div class="rating">
-                                                            <%if(productFeedback.getRating()<=0){
-                                                            %>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <% } else if(productFeedback.getRating()<=1){%>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <% } else if(productFeedback.getRating()<=2){  %>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <%} else if(productFeedback.getRating()<=3){%>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <%} else if(productFeedback.getRating()<=4){%>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <%} else { %>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <%}%>
-
-                                                        </div>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <%
-                                            }
-                                        %>
 
+                                                <div class="col-md-10">
+                                                    <h6><%=productFeedback.getReview()%></h6>
 
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="product__pagination">
-                                                    <%
-                                                        int numberOfPage = alldpfList.size()/2+1;
-                                                    int dfeedbackpage = Integer.parseInt(session.getAttribute("dfeedbackpage")+"");
-                                                    for (int j = 0; j < numberOfPage; j++) {
-                                                    %>
-                                                    <a class="<%=dfeedbackpage==j?"active":""%>" href="../fbpagination?cpage=<%=j%>"><%=j+1%> </a>
-                                                    <%
-                                                        }
-                                                    %>
+                                                    <div class="rating">
+                                                        <%if(productFeedback.getRating()<=0){
+                                                        %>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <% } else if(productFeedback.getRating()<=1){%>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <% } else if(productFeedback.getRating()<=2){  %>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <%} else if(productFeedback.getRating()<=3){%>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <%} else if(productFeedback.getRating()<=4){%>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <%} else { %>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <%}%>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <%
+                                        }
+                                    %>
 
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="product__pagination">
+                                                <%
+                                                    int numberOfPage = alldpfList.size()/2+1;
+                                                int dfeedbackpage = Integer.parseInt(session.getAttribute("dfeedbackpage")+"");
+                                                for (int j = 0; j < numberOfPage; j++) {
+                                                %>
+                                                <a class="<%=dfeedbackpage==j?"active":""%>" href="../fbpagination?cpage=<%=j%>"><%=j+1%> </a>
+                                                <%
+                                                    }
+                                                %>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- Shop Details Section End -->
+        </div>
+    </section>
+    <!-- Shop Details Section End -->
 
-        <!-- Related Section Begin -->
-        <section class="related spad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h3 class="related-title">Related Product</h3>
+    <!-- Related Section Begin -->
+    <section class="related spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="related-title">Related Product</h3>
+                </div>
+            </div>
+            <%
+            List<Product> prlList = (List<Product>)session.getAttribute("prlList");
+                
+            %>
+            <div class="row">
+                <%
+                   
+                    
+               for (Product rproduct : prlList) {
+               int rprice =rproduct.getPrice() - rproduct.getPrice()*rproduct.getDiscount()/100;
+               String rcmoney = numberFormat.format(rprice);
+               if(rproduct.isIs_active()){
+
+                %>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="../<%=rproduct.getThumbnail()%>">
+                            <%
+                        if(rproduct.getDiscount()!=0){
+                            %>
+                            <span style="background-color: black; color: white;" class="label">-<%=rproduct.getDiscount()%>%</span>
+                            <% }%>
+                            <ul class="product__hover">
+
+                                <li><a href="../hproductdetail?proid=<%=rproduct.getProduct_id()%>"><img src="img/icon/search.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h5 style="cursor: pointer" onclick="window.location.href = '../hproductdetail?proid=<%=product.getProduct_id()%>'"><%=product.getProduct_name()%></h5>
+
+                            <div class="rating">
+                                <%if(rproduct.getRated_star()<=0){
+                                %>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <% } else if(rproduct.getRated_star()<=1){%>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <% } else if(rproduct.getRated_star()<=2){  %>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <%} else if(rproduct.getRated_star()<=3){%>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <%} else if(rproduct.getRated_star()<=4){%>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <%} else { %>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <%}%>
+                            </div>
+                            <h5><%=rcmoney%> 
+                            </h5>
+
+                        </div>
                     </div>
                 </div>
                 <%
-                List<Product> prlList = (List<Product>)session.getAttribute("prlList");
-                
-                %>
-                <div class="row">
-                    <%
-                   
-                    
-                   for (Product rproduct : prlList) {
-                   int rprice =rproduct.getPrice() - rproduct.getPrice()*rproduct.getDiscount()/100;
-                   String rcmoney = numberFormat.format(rprice);
-                   if(rproduct.isIs_active()){
-
-                    %>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="../<%=rproduct.getThumbnail()%>">
-                                <%
-                            if(rproduct.getDiscount()!=0){
-                                %>
-                                <span style="background-color: black; color: white;" class="label">-<%=rproduct.getDiscount()%>%</span>
-                                <% }%>
-                                <ul class="product__hover">
-
-                                    <li><a href="../hproductdetail?proid=<%=rproduct.getProduct_id()%>"><img src="img/icon/search.png" alt=""></a></li>
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><%=rproduct.getProduct_name()%></h6>
-                                <a href="#" class="add-cart">+ Add To Cart</a>
-                                <div class="rating">
-                                    <%if(rproduct.getRated_star()<=0){
-                                    %>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <% } else if(rproduct.getRated_star()<=1){%>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <% } else if(rproduct.getRated_star()<=2){  %>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <%} else if(rproduct.getRated_star()<=3){%>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <%} else if(rproduct.getRated_star()<=4){%>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <%} else { %>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <%}%>
-                                </div>
-                                <h5><%=rcmoney%> 
-                                </h5>
-                                <div class="product__color__select">
-                                    <label for="pc-4">
-                                        <input type="radio" id="pc-4">
-                                    </label>
-                                    <label class="active black" for="pc-5">
-                                        <input type="radio" id="pc-5">
-                                    </label>
-                                    <label class="grey" for="pc-6">
-                                        <input type="radio" id="pc-6">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%
-                            }
                         }
-                    %>
+                    }
+                %>
 
-                </div>
-            </div>
-        </section>
-        <!-- Related Section End -->
-
-        <!-- Footer Section Begin -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="footer__about">
-                            <div class="footer__logo">
-                                <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                            </div>
-                            <p>The customer is at the heart of our unique business model, which includes design.</p>
-                            <a href="#"><img src="img/payment.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Clothing Store</a></li>
-                                <li><a href="#">Trending Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Delivary</a></li>
-                                <li><a href="#">Return & Exchanges</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>NewLetter</h6>
-                            <div class="footer__newslatter">
-                                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Your email">
-                                    <button type="submit"><span class="icon_mail_alt"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="footer__copyright__text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            <p>Copyright ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>2020
-                                All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                                                                    aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            </p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Footer Section End -->
-
-        <!-- Search Begin -->
-        <div class="search-model">
-            <div class="h-100 d-flex align-items-center justify-content-center">
-                <div class="search-close-switch">+</div>
-                <form class="search-model-form">
-                    <input type="text" id="search-input" placeholder="Search here.....">
-                </form>
             </div>
         </div>
-        <!-- Search End -->
+    </section>
+    <!-- Related Section End -->
 
-        <!-- Js Plugins -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.nice-select.min.js"></script>
-        <script src="js/jquery.nicescroll.min.js"></script>
-        <script src="js/jquery.magnific-popup.min.js"></script>
-        <script src="js/jquery.countdown.min.js"></script>
-        <script src="js/jquery.slicknav.js"></script>
-        <script src="js/mixitup.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/main.js"></script>
-    </body>
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                        </div>
+                        <p>The customer is at the heart of our unique business model, which includes design.</p>
+                        <a href="#"><img src="img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="#">Clothing Store</a></li>
+                            <li><a href="#">Trending Shoes</a></li>
+                            <li><a href="#">Accessories</a></li>
+                            <li><a href="#">Sale</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Payment Methods</a></li>
+                            <li><a href="#">Delivary</a></li>
+                            <li><a href="#">Return & Exchanges</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>NewLetter</h6>
+                        <div class="footer__newslatter">
+                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                            <form action="#">
+                                <input type="text" placeholder="Your email">
+                                <button type="submit"><span class="icon_mail_alt"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>2020
+                            All rights reserved | This template is made with <i class="fa fa-heart-o"
+                                                                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+
+
+</body>
 
 </html>
