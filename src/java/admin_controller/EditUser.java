@@ -52,11 +52,13 @@ public class EditUser extends HttpServlet {
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         String dob = request.getParameter("dob");
         String phone = request.getParameter("phone");
-        
+        String profilepic=request.getParameter("profile_picture_url");
         String rolename=request.getParameter("role");
         String password=request.getParameter("password");
         User oldu=userDAO.getUserById(user_id);
-        String profilepic= oldu.getProfile_picture_url();
+        if(profilepic.equals(null)){
+        profilepic= oldu.getProfile_picture_url();
+        }else{
         try {
           
           Part filePart = request.getPart("profile_picture_url"); 
@@ -72,7 +74,7 @@ public class EditUser extends HttpServlet {
         } catch (Exception e) {
             profilepic=oldu.getProfile_picture_url();
         }
-        
+        }
         Role role=rdao.getRolebyname(rolename);
         
         User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, profilepic, true, false, role);

@@ -13,7 +13,9 @@ public class PostFeedback {
     String review;
     int is_active;
     String username,profile_picture_url;
-
+  
+    Post post;
+    
     public PostFeedback() {
     }
 
@@ -34,6 +36,19 @@ public class PostFeedback {
         this.username = username;
         this.profile_picture_url = profile_picture_url;
     }
+
+    public PostFeedback(int post_feedback_id, int customer_id, String review, int is_active, String username, String profile_picture_url, Post post) {
+        this.post_feedback_id = post_feedback_id;
+        this.customer_id = customer_id;
+        this.review = review;
+        this.is_active = is_active;
+        this.username = username;
+        this.profile_picture_url = profile_picture_url;
+        this.post = post;
+    }
+    
+    
+    
 
     public int getPost_feedback_id() {
         return post_feedback_id;
@@ -89,6 +104,14 @@ public class PostFeedback {
 
     public void setProfile_picture_url(String profile_picture_url) {
         this.profile_picture_url = profile_picture_url;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
     
     

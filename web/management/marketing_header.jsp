@@ -24,7 +24,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../productlist" class="nav-link text-white product-link <c:if test="${pageContext.request.requestURI.endsWith('product-list.jsp')}">active</c:if>">
+                        <a href="../productlist" class="nav-link text-white product-link <c:if test="${pageContext.request.requestURI.endsWith('product-list.jsp') || pageContext.request.requestURI.endsWith('search-product.jsp')}">active</c:if>">
                             <!-- Product Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-fill" viewBox="0 0 16 16">
                                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h9V.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5H0a.5.5 0 0 1-.5-.5V.5a.5.5 0 0 1 .5-.5h2zM8 1v1H5.5a.5.5 0 0 0-.5.5V5h8V3H8zm5 10h1v-8H3v8h10z"/>
