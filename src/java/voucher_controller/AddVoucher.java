@@ -47,19 +47,19 @@ public class AddVoucher extends HttpServlet {
         String error="";
         
             
-    LocalDate startDate = LocalDate.parse(start_date);
-    LocalDate endDate = LocalDate.parse(end_date);
+        LocalDate startDate = LocalDate.parse(start_date);
+        LocalDate endDate = LocalDate.parse(end_date);
 
-    if (startDate.isAfter(endDate)) {
-        // Start date is before end date
-        error="Start date must be before end date";
-    }
-    if(error.length()>0){
-            session.setAttribute("error", error);
-            response.sendRedirect(request.getContextPath()+"/management/addvoucher.jsp");
-        }else{
-    vdao.addVoucher(new Voucher(0, voucher_name, description, start_date, end_date, quantity, percent, status));
-    response.sendRedirect("voucherlist");}
+        if (startDate.isAfter(endDate)) {
+            // Start date is before end date
+            error="Start date must be before end date";
+        }
+        if(error.length()>0){
+                session.setAttribute("error", error);
+                response.sendRedirect(request.getContextPath()+"/management/addvoucher.jsp");
+            }else{
+        vdao.addVoucher(new Voucher(0, voucher_name, description, start_date, end_date, quantity, percent, status));
+        response.sendRedirect("voucherlist");}
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -54,7 +54,7 @@ public class AddToCart extends HttpServlet {
         }
 
         Cookie cart = new Cookie(Constants.COOKIE_CART, txt);
-        cart.setMaxAge(30 * 60);
+        cart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
         response.addCookie(cart);
 
         response.sendRedirect(request.getContextPath() + "/cart");

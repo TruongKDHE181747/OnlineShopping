@@ -5,6 +5,7 @@
 
 package voucher_controller;
 
+import dal.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import model.Voucher;
 
 /**
  *
@@ -30,17 +34,32 @@ public class EditVoucher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditVoucher</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditVoucher at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session= request.getSession();
+        VoucherDAO vdao= new VoucherDAO();
+        int voucher_id= (int) session.getAttribute("vid");
+        String voucher_name= request.getParameter("voucher_name");
+        String description=request.getParameter("description");
+        String start_date=request.getParameter("start_date");
+        String end_date=request.getParameter("end_date");
+        int quantity=Integer.parseInt(request.getParameter("quantity"));
+        int percent=Integer.parseInt(request.getParameter("percent"));
+        int status=Integer.parseInt(request.getParameter("status"));
+        String error="";
+        
+            
+        LocalDate startDate = LocalDate.parse(start_date);
+        LocalDate endDate = LocalDate.parse(end_date);
+
+        if (startDate.isAfter(endDate)) {
+            // Start date is before end date
+            error="Start date must be before end date";
+        }
+        if(error.length()>0){
+                session.setAttribute("error", error);
+                response.sendRedirect(request.getContextPath()+"/management/detailvoucher.jsp");
+            }else{
+        vdao.editVoucher(new Voucher(voucher_id, voucher_name, description, start_date, end_date, quantity, percent, status));
+        response.sendRedirect("voucherlist");
         }
     } 
 

@@ -51,11 +51,7 @@ public class ShowCart extends HttpServlet {
         }
         
         Cart cart = new Cart(txt);
-        
-        List<ProductSize> list = daoProductSize.getAll();
-        for (ProductSize productSize : list) {
-            
-        }
+
         
         request.setAttribute("listSize", daoProductSize.getAll());
         request.setAttribute("cart", cart.getItems());

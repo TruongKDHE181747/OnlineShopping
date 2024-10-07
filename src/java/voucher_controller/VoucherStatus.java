@@ -5,6 +5,7 @@
 
 package voucher_controller;
 
+import dal.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Voucher;
 
 /**
  *
@@ -30,18 +33,13 @@ public class VoucherStatus extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VoucherStatus</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VoucherStatus at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        HttpSession session=request.getSession();
+        int vid= Integer.parseInt(request.getParameter("vid"));
+        VoucherDAO vdao= new VoucherDAO();
+        Voucher voucher=vdao.getVoucherbyId(vid);
+        int status=Integer.parseInt(request.getParameter("status"));
+        vdao.editVoucher(new Voucher(vid, voucher.getVoucher_name(), voucher.getDescription(), voucher.getStart_date(), voucher.getEnd_date(), voucher.getQuantity(), voucher.getPercent(), status));
+        response.sendRedirect("voucherlist");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

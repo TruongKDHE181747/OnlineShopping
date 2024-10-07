@@ -5,13 +5,15 @@
 package utils;
 
 public class Constants {
-    
+
+    public static final int COOKIE_CART_MAXAGE = 30 * 60;
+
     public static final String COOKIE_CART = "cart";
-    
+
     public static final String COOKIE_REMEMBER = "username";
 
     public static final String SENT_EMAIL = "ducdmhe181735@fpt.edu.vn";
-    
+
     public static final String EMAIL_PASSWORD = "afux tpky avpr vqpa";
 
     public static final String GOOGLE_CLIENT_ID = "450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com";

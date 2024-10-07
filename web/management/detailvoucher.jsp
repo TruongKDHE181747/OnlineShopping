@@ -27,10 +27,10 @@
 
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="../adminuser" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <a href="../voucherlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <i style="margin-right: 10px;
                        font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
-                    <span class="fs-4">Back to home</span>
+                    <span class="fs-4">Back</span>
                 </a>                
             </header>
         </div>
@@ -40,7 +40,7 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                    <h2>Detail voucher </h2>
+                    <h2>Edit voucher </h2>
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
@@ -49,85 +49,74 @@
                    
 
                     <div class="col-md-8">
-                        <form class="needs-validation" action="../edituser" enctype="multipart/form-data">
+                        <form class="needs-validation" action="../editvoucher" enctype="multipart/form-data">
                             <div class="row g-3">
+                                
                                 <div class="col-sm-6">
                                     <label for="voucher_id" class="form-label">Voucher ID</label>
-                                    <input disabled="" value="${sessionScope.voucher.voucher_id}" name="voucher_id" type="text" class="form-control" id="voucher_id" >
+                                    <input  value="${sessionScope.voucher.voucher_id}" name="voucher_id" type="text" class="form-control" id="voucher_id" disabled="">
 
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="username" class="form-label">Voucher name</label>
-                                    <input  value="${sessionScope.voucher.voucher_name}" name="username" type="text" class="form-control" id="username" >
+                                    <label for="voucher_name" class="form-label">Name</label>
+                                    <input  value="${sessionScope.voucher.voucher_name}" name="voucher_name" type="text" class="form-control" id="voucher_name" required>
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="first_name" class="form-label">First name</label>
-                                    <input  value="${sessionScope.u.first_name}" name="first_name" type="text" class="form-control" id="first_name" >
+                                    <label for="description" class="form-label">Description</label>
+                                    <input  value="${sessionScope.voucher.description}" name="description" type="text" class="form-control" id="description" required>
+
+                                </div>
+                                   
+                                <div class="col-sm-6">
+                                    <label for="percent" class="form-label">Discount(%)</label>
+                                    <input  value="${sessionScope.voucher.percent}" name="percent" type="number" min="0" max="100" class="form-control" id="percent" required>
+
+                                </div>
+                                    
+                                <div class="col-sm-6">
+                                    <label for="start_date" class="form-label">Start date</label>
+                                    <input  value="${sessionScope.voucher.start_date}" name="start_date" type="date" class="form-control" id="start_date" required>
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="last_name" class="form-label">Last name</label>
-                                    <input  value="${sessionScope.u.last_name}" name="last_name" type="text" class="form-control" id="last_name" >
-
+                                      <label for="end_date" class="form-label">End date</label>
+                                    <input value="${sessionScope.voucher.end_date}" name="end_date" type="date" class="form-control" id="end_date" required>
+                                
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="profile_picture_url" class="form-label">Profile Image</label>
-                                    <input name="profile_picture_url" type="file" class="form-control" id="profile_picture_url">
-                                    <img style="margin-top: 10px; height: 100px;" 
-                                         src="../${sessionScope.u.profile_picture_url}" 
-                                         alt="Profile Image"/>
+                                    <label for="quantity" class="form-label">Quantity</label>
+                                    <input value="${sessionScope.voucher.quantity}" name="quantity" type="number" min="0" class="form-control" id="quantity" required>
                                 </div>
 
 
+                                
+                                
                                 <div class="my-3 col-sm-6">
-                                    <label for="gender" class="form-label">Gender</label>
+                                    <label for="status" class="form-label">Status</label>
                                     <div class="form-check">
-                                        <input value="true" id="male" name="gender" type="radio" class="form-check-input"
-                                            <c:if test="${sessionScope.u.gender == true}">checked</c:if>>
-                                        <label class="form-check-label" for="male">Male</label>
+                                        <input value="1" id="status" name="status" type="radio" class="form-check-input"
+                                        <c:if test="${sessionScope.voucher.is_active == 1}">checked</c:if>>
+                                        <label class="form-check-label" for="status">Active</label>
                                     </div>
                                     <div class="form-check">
-                                        <input value="false" id="female" name="gender" type="radio" class="form-check-input"
-                                            <c:if test="${sessionScope.u.gender == false}">checked</c:if>>
-                                        <label class="form-check-label" for="female">Female</label>
+                                        <input value="0" id="status1" name="status" type="radio" class="form-check-input"
+                                        <c:if test="${sessionScope.voucher.is_active == 0}">checked</c:if>>
+                                        <label class="form-check-label" for="status1">Inactive</label>
                                     </div>
+                                    
                                 </div>
-
-                                <div class="col-sm-6">
-                                    <label for="phone" class="form-label">Phone number</label>
-                                    <input  value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" >
-
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input  value="${sessionScope.u.email}" name="email" type="text" class="form-control" id="email" >
-
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="dob" class="form-label">Date of birth</label>
-                                    <input  value="${sessionScope.u.dob}" name="dob" type="date" class="form-control" id="dob" >
-
-                                </div>
-
-                                 <div class="col-sm-6">
-                                    <label for="role" class="form-label">Role</label>
-                                        <select id="role" name="role" class="form-select">
-                                            <option value="admin" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>Admin</option>
-                                            <option value="sale manager" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>sale manager</option>
-                                            <option value="saler" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>saler</option>
-                                            <option value="marketer" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>marketer</option>
-                                            <option value="user" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>user</option>
-                                        </select>
-                                </div>  
-                                <input disabled="" value="${sessionScope.u.password}" name="password" type="hidden" class="form-control" id="password" >
-
+                                
                             </div>
 
                             <hr class="my-4">
                             <!-- Error check Username and Password -->
-                            
+                            <div style="text-align: left;
+                                        color: red;
+                                        margin-left: 5px;">
+                                <h5>${sessionScope.error}</h5><br>
+                             </div>
 
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
                         </form>

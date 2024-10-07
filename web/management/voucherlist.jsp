@@ -283,9 +283,12 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Voucher</h5>
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchvoucher">
+                                             <h5 style="font-weight: bold;" class="navbar-brand" href="#">From:</h5>
+                                            <input value="" name="begindate" class="form-control me-2" type="date" aria-label="Search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">To:</h5>
+                                            <input value="" name="enddate" class="form-control me-2" type="date" aria-label="Search">
                                             <input placeholder="Search..." name="vsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
