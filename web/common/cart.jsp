@@ -111,7 +111,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="continue__btn update__btn " >
-                                        <button onclick="window.location.href='./removeAll'" style="width: 80%;margin-right:auto" class="btn btn-block btn-dark btn-lg" type="button">Remove all</button>
+                                        <button onclick="window.location.href = './removeAll'" style="width: 80%;margin-right:auto" class="btn btn-block btn-dark btn-lg" type="button">Remove all</button>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -120,13 +120,13 @@
                                     </div>
                                 </div>
                             </div>
-                                    <div class="row" style="margin-top: 30px">
+                            <div class="row" style="margin-top: 30px">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="continue__btn text-center" >
                                         <a style="width: 100%" href="${pageContext.request.contextPath}/homeproduct">Continue Shopping</a>
                                     </div>
                                 </div>
-        
+
                             </div>
                         </form>
                     </div>
@@ -134,7 +134,15 @@
                     <div class="col-lg-4">
                         <div class="cart__discount">
                             <h6>Discount codes</h6>
-                            <form action="#">
+                            <c:if test="${sessionScope.voucherError!=null}">
+                                <div class="alert-danger alert">
+                                    ${sessionScope.voucherError}
+                                </div>
+                                <%
+                                    session.removeAttribute("voucherError");
+                                %>
+                            </c:if>
+                            <form action="applyVoucher" method="POST">
                                 <input type="text" placeholder="Coupon code">
                                 <button type="submit">Apply</button>
                             </form>
