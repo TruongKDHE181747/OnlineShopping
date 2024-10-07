@@ -281,27 +281,38 @@
                 <div class="product">
                     <div class="container products" >
                         <div>
-                            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                            <nav class="navbar navbar-expand-lg bg-body-tertiary"> 
                                 <div class="container-fluid">
-                                    <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchvoucher">
-                                             <h5 style="font-weight: bold;" class="navbar-brand" href="#">From:</h5>
-                                            <input value="" name="begindate" class="form-control me-2" type="date" aria-label="Search">
-                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">To:</h5>
-                                            <input value="" name="enddate" class="form-control me-2" type="date" aria-label="Search">
-                                            <input placeholder="Search..." name="vsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                    <div id="navbarSupportedContent" class="d-flex justify-content-around align-items-center w-100">
+                                        <form class="d-flex align-items-center w-75 justify-content-between" role="search" action="../searchvoucher">
+                                            <div class="d-flex align-items-center">
+                                                <h5 class="navbar-brand me-2" style="font-weight: bold;">From:</h5>
+                                                <input value="" name="begindate" class="form-control me-4" type="date" aria-label="From Date">
+                                            </div>
+
+                                            <div class="d-flex align-items-center">
+                                                <h5 class="navbar-brand me-2" style="font-weight: bold;">To:</h5>
+                                                <input value="" name="enddate" class="form-control me-4" type="date" aria-label="To Date">
+                                            </div>
+
+                                            <div class="d-flex align-items-center">
+                                                <input placeholder="Search..." name="vsearch" class="form-control me-4" type="search" aria-label="Search">
+                                                <button class="btn btn-outline-success me-4" type="submit">Search</button>
+                                            </div>
                                         </form>
+
+                                        <a href="addvoucher.jsp" class="btn btn-success d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; padding: 0; border-radius: 50%;">
+                                            <i class="fa-solid fa-plus" style="color: white;"></i>
+                                        </a>
                                     </div>
 
-
-                                    <div class="">
-                                        <div class="d-flex add" role="search">
-                                            <a href="addvoucher.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
-                                        </div>
+                                    <div style="color: red; margin-left: 20px;">
+                                        ${sessionScope.messe}
                                     </div>
                                 </div>
                             </nav>
+
+
                         </div>
                         <table class="table">
                             <thead>
@@ -345,14 +356,14 @@
 
                                             </div>
                                             <c:if test="${vl.is_active==1}">
-                                            <div class="remove" style="background-color: red">
-                                                <a onclick="return confirm('Do you want to hide this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=0"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
-                                            </div>
+                                                <div class="remove" style="background-color: red">
+                                                    <a onclick="return confirm('Do you want to hide this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=0"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                                </div>
                                             </c:if>
                                             <c:if test="${vl.is_active==0}">
-                                            <div class="remove" style="background-color: green">
-                                                <a onclick="return confirm('Do you want to show this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=1"><i style="color: white;" class="fa fa-eye"></i></a>     
-                                            </div>
+                                                <div class="remove" style="background-color: green">
+                                                    <a onclick="return confirm('Do you want to show this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=1"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                                </div>
                                             </c:if>
                                         </td>
 

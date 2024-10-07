@@ -96,13 +96,10 @@ public class VoucherDAO extends DBContext{
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public List<Voucher> searchVoucher(String search){
+    public List<Voucher> searchVoucher(String sql){
         List<Voucher> vlist= new ArrayList<>();
-        String sql=" select * from Voucher\n" +
-                    " where voucher_name like ?";
         try{
             PreparedStatement pre= connection.prepareStatement(sql);
-              pre.setString(1, "%"+search+"%");
             ResultSet rs=pre.executeQuery();
             while(rs.next()){
                 int voucher_id=rs.getInt("voucher_id");

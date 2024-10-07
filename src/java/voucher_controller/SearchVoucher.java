@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 import model.Voucher;
 
@@ -37,8 +38,31 @@ public class SearchVoucher extends HttpServlet {
         HttpSession session= request.getSession();
         VoucherDAO vdao= new VoucherDAO();
         String vsearch=request.getParameter("vsearch");
-        List<Voucher> vlist =vdao.searchVoucher(vsearch);
+        String begindate=request.getParameter("begindate");
+        String enddate=request.getParameter("enddate");
+        String sql="SELECT * FROM Voucher where is_active=1";
+        String error="";
+        if((begindate.length()!=0 && enddate.length()==0) || (begindate.length()==0 && enddate.length()!=0)){
+            error = "Please input both From and To";
+        }else if(begindate.length()!=0 && enddate.length()!=0){
+            LocalDate begin=LocalDate.parse(begindate);
+            LocalDate end=LocalDate.parse(enddate);
+            if(begin.isAfter(end)){
+                error="To must be before From";
+            }else{
+                sql+="and start_date >= '"+begin+"' AND end_date <= '"+end+"'";
+            }
+        } 
+        if(vsearch.length()>0){
+            sql+="and voucher_name like '%"+vsearch+"%'";
+        }
+        if(error.length()>0){
+            session.setAttribute("messe", error);
+        }else{
+        List<Voucher> vlist =vdao.searchVoucher(sql);
         session.setAttribute("vlist", vlist);
+        session.setAttribute("messe", "");
+        }
         response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
     } 
 
