@@ -123,7 +123,7 @@
                                     <div class="row" style="margin-top: 30px">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="continue__btn text-center" >
-                                        <a style="width: 100%" href="#">Continue Shopping</a>
+                                        <a style="width: 100%" href="${pageContext.request.contextPath}/homeproduct">Continue Shopping</a>
                                     </div>
                                 </div>
         

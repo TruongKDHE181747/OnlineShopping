@@ -4,6 +4,7 @@
  */
 package cart_controller;
 
+import dal.ProductSizeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import model.Cart;
+import model.ProductSize;
 import utils.Constants;
 
 /**
@@ -32,7 +35,8 @@ public class AddToCart extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        ProductSizeDAO psDAO = new ProductSizeDAO();
+
         String productId = request.getParameter("pid");
         String sizeId = request.getParameter("sid");
         String quantity = request.getParameter("quantity");
@@ -53,7 +57,32 @@ public class AddToCart extends HttpServlet {
             txt += "#" + productId + ":" + sizeId + ":" + quantity;
         }
 
-        Cookie cart = new Cookie(Constants.COOKIE_CART, txt);
+        Cart c = new Cart(txt);
+        String finalTxt = "";
+        for (String p : c.getFormatText().split("#")) {
+
+            String[] s = p.split(":");
+
+            int pid = Integer.parseInt(s[0]);
+            int sid = Integer.parseInt(s[1]);
+            int qty = Integer.parseInt(s[2]);
+
+            ProductSize productSize = psDAO.getProductSize(sid, pid);
+
+            int stock = productSize.getQuantity();
+
+            if (qty > stock) {
+                qty = stock;
+            }
+
+            if (finalTxt.isBlank() || finalTxt.isEmpty()) {
+                finalTxt += pid + ":" + sid + ":" + qty;
+            } else {
+                finalTxt += "#" + pid + ":" + sid + ":" + qty;
+            }
+        }
+
+        Cookie cart = new Cookie(Constants.COOKIE_CART, finalTxt);
         cart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
         response.addCookie(cart);
 

@@ -52,12 +52,15 @@ public class ShowCart extends HttpServlet {
         }
         
         Cart cart = new Cart(txt);
+        int cartSize = cart.cartSize(txt);
         
-        Cookie txtCart = new Cookie(Constants.COOKIE_CART, cart.getFormatText());
-        txtCart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
-        response.addCookie(txtCart);
+        session.setAttribute("cartSize", cartSize);
         
-        session.setAttribute("cartSize", cart.cartSize(txt));
+        if(cartSize == 0){
+            request.getRequestDispatcher("/common/emptycart.jsp").forward(request, response);
+            return;
+        }
+                
         
         request.setAttribute("listSize", daoProductSize.getAll());
         request.setAttribute("cart", cart.getItems());
