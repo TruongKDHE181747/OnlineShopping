@@ -62,7 +62,7 @@
                                     </thead>
 
                                     <tbody>
-
+                                        <c:set var="subtotal" value="${0}"/>
                                         <c:forEach var="o" items="${cart}" varStatus="status">
                                             <fmt:setLocale value="vi_VN" />
                                             <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
@@ -96,6 +96,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="cart__price text-center"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                                <c:set var="subtotal" value="${subtotal + (price*o.quantity)}"/>
                                                 <td class="cart__close text-center"><a class="text-reset" href="removeOne?pid=${o.product.product_id}&sid=${o.size.size_id}"><i class="fa fa-close"></i></a></td>
 
 
@@ -146,12 +147,27 @@
                                 <input type="text" placeholder="Coupon code">
                                 <button type="submit">Apply</button>
                             </form>
+                            <c:if test="${sessionScope.voucher!=null}">
+                                <div class="alert alert-secondary d-flex justify-content-between align-items-center" style="margin-top: 20px;">
+                                    <span>${sessionScope.voucher.voucher_name} - <fmt:formatNumber value="${sessionScope.voucher.percent}" type="number" minFractionDigits="0" maxFractionDigits="2" />%</span>
+                                    <button onclick="window.location.href='removeVoucher'" type="button" class="btn-close" aria-label="Close"></button>
+                                </div>
+                            </c:if>
                         </div>
                         <div class="cart__total">
                             <h6>Cart total</h6>
                             <ul>
-                                <li>Subtotal <span>$ 169.50</span></li>
-                                <li>Total <span>$ 169.50</span></li>
+                                <li>Subtotal <span><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                    <c:set var="discountPercent" value="${0}"/>
+                                    <c:if test="${sessionScope.voucher!=null}">
+                                        <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
+                                    <li>Voucher 
+                                        <span>- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
+                                    </li>
+
+                                </c:if>
+                                <c:set var="total" value="${subtotal - subtotal*discountPercent}"/>
+                                <li>Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                             </ul>
                             <a href="#" class="primary-btn">Proceed to checkout</a>
                         </div>
