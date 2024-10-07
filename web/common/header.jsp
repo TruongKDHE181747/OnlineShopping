@@ -33,7 +33,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-7">
-                    
+
                 </div>
                 <%
                 String s = request.getContextPath();;
@@ -42,12 +42,12 @@
                     <div class="header__top__right">
                         <div class="header__top__links">
                             <c:if test="${sessionScope.account eq null}">
-                            <a href="<%=s%>/login">Sign in</a>
-                            <a href="<%=s%>/register">Sign up</a>                      
+                                <a href="<%=s%>/login">Sign in</a>
+                                <a href="<%=s%>/register">Sign up</a>                      
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
                                 <a href="<%=s%>/profile">Hello ${sessionScope.account.username}</a>
-                            <a href="<%=s%>/logout">Logout</a>                      
+                                <a href="<%=s%>/logout">Logout</a>                      
                             </c:if>
                         </div>
                     </div>
@@ -85,10 +85,10 @@
                     </ul>
                 </nav>
             </div>
-                        <%
-                    String pname = session.getAttribute("pname")+"";
-                    if(pname.equals("null")) pname= "";
-                    %>
+            <%
+        String pname = session.getAttribute("pname")+"";
+        if(pname.equals("null")) pname= "";
+            %>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option row" style="padding: 22px 0;">
                     <div class="col-md-10">
@@ -98,7 +98,7 @@
                         </form>
 
                     </div>
-                    <div style="display: flex; align-items: center;" class="col-md-2"><a href="#"><img src="<%=s%>/common/img/icon/cart.png" alt=""> <span>0</span></a></div>
+                            <div style="display: flex; align-items: center;padding: 0;width: 100%" class="col-md-2"><a href="<%=s%>/cart"><img style="width: 25px"  src="<%=s%>/common/img/icon/cart.png" alt=""> <span style="font-weight: bold;width: 100%;text-align: center;padding-right: 8px">${sessionScope.cartSize != null ? sessionScope.cartSize :0}</span></a></div>
 
 
 

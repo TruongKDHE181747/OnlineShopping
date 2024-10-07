@@ -52,9 +52,9 @@
                             <div class="shopping__cart__table">
                                 <table>
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center">
                                             <th>Product</th>
-                                            <th>&nbsp;Size</th>
+                                            <th>Size</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
                                             <th></th>
@@ -67,7 +67,7 @@
                                             <fmt:setLocale value="vi_VN" />
                                             <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
 
-                                            <tr >
+                                            <tr>
                                                 <td class="product__cart__item">
                                                     <div class="product__cart__item__pic">
                                                         <img style="width: 100px;height: 100px" src="${o.product.thumbnail}" alt="">
@@ -77,9 +77,9 @@
                                                         <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
                                                     </div>
                                                 </td>
-                                                <td class="cart__price">
-                                                    <div >
-                                                        <select id="sid_${status.index}" name="sid_${status.index}">
+                                                <td class="">
+                                                    <div class="text-center">
+                                                        <select id="sid_${status.index}" name="sid_${status.index}" >
                                                             <c:forEach var="s" items="${listSize}">
                                                                 <c:if test="${o.product.product_id == s.product_id}">
                                                                     <option ${o.size.size_id == s.size_id ? "selected":""} value="${s.size_id}">${s.size_name}</option>
@@ -90,13 +90,13 @@
                                                 </td>
                                                 <td class="quantity__item">
                                                     <div class="quantity">
-                                                        <div class="pro-qty-2">
-                                                            <input id="quantity_${status.index}" name="quantity_${status.index}" type="text" value="${o.quantity}">
+                                                        <div class="text-center">
+                                                            <input style="width: 60px;text-align: center" id="quantity_${status.index}" name="quantity_${status.index}" type="number" min="1" value="${o.quantity}">
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="cart__price"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                                <td class="cart__close"><a class="text-reset" href="removeOne?pid=${o.product.product_id}&sid=${o.size.size_id}"><i class="fa fa-close"></i></a></td>
+                                                <td class="cart__price text-center"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                                <td class="cart__close text-center"><a class="text-reset" href="removeOne?pid=${o.product.product_id}&sid=${o.size.size_id}"><i class="fa fa-close"></i></a></td>
 
 
                                         <input type="hidden" name="pid_${status.index}" value="${o.product.product_id}">
