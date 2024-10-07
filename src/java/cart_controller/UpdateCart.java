@@ -4,6 +4,7 @@
  */
 package cart_controller;
 
+import dal.ProductSizeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import model.Cart;
+import model.ProductSize;
 import utils.Constants;
 
 /**
@@ -34,30 +37,58 @@ public class UpdateCart extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        ProductSizeDAO psDAO = new ProductSizeDAO();
+
         try {
 
             int maxIndex = Integer.parseInt(request.getParameter("maxIndex"));
             String txt = "";
             for (int i = 0; i <= maxIndex; i++) {
 
-                String pid = request.getParameter("pid_" + i);
-                String sid = request.getParameter("sid_" + i);
-                String quantity = request.getParameter("quantity_" + i);
+                int pid = Integer.parseInt(request.getParameter("pid_" + i));
+                int sid = Integer.parseInt(request.getParameter("sid_" + i));
+                int quantity = Integer.parseInt(request.getParameter("quantity_" + i));              
 
                 if (txt.isBlank() || txt.isEmpty()) {
                     txt += pid + ":" + sid + ":" + quantity;
                 } else {
                     txt += "#" + pid + ":" + sid + ":" + quantity;
                 }
-
             }
+            
+            
+            Cart c = new Cart(txt);
+            String finalTxt = "";
+            for (String p : c.getFormatText().split("#")) {
+                
+                String[] s = p.split(":");
+                
+                int pid = Integer.parseInt(s[0]);
+                int sid = Integer.parseInt(s[1]);
+                int quantity = Integer.parseInt(s[2]);
+                
+                ProductSize productSize = psDAO.getProductSize(sid, pid);
 
-            Cookie cart = new Cookie(Constants.COOKIE_CART, txt);
+                int stock = productSize.getQuantity();
+
+                if (quantity > stock) {
+                    quantity = stock;
+                }
+                
+                if (finalTxt.isBlank() || finalTxt.isEmpty()) {
+                    finalTxt += pid + ":" + sid + ":" + quantity;
+                } else {
+                    finalTxt += "#" + pid + ":" + sid + ":" + quantity;
+                }
+            }
+            
+            
+            Cookie cart = new Cookie(Constants.COOKIE_CART, finalTxt);
             cart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
             response.addCookie(cart);
 
             response.sendRedirect(request.getContextPath() + "/cart");
-            
+
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/cart");
         }

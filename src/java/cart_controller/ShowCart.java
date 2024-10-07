@@ -12,6 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -37,7 +38,7 @@ public class ShowCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
         ProductSizeDAO daoProductSize = new ProductSizeDAO();
         
         Cookie[] cookies = request.getCookies();
@@ -51,7 +52,12 @@ public class ShowCart extends HttpServlet {
         }
         
         Cart cart = new Cart(txt);
-
+        
+        Cookie txtCart = new Cookie(Constants.COOKIE_CART, cart.getFormatText());
+        txtCart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
+        response.addCookie(txtCart);
+        
+        session.setAttribute("cartSize", cart.cartSize(txt));
         
         request.setAttribute("listSize", daoProductSize.getAll());
         request.setAttribute("cart", cart.getItems());

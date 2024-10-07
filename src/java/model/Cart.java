@@ -45,13 +45,17 @@ public class Cart {
         }
     }
 
-    public String generateText() {
+    public List<CartItem> getItems() {
+        return items;
+    }
+
+    public String getFormatText() {
         String txt = "";
         for (CartItem item : items) {
             if (txt.isBlank() || txt.isEmpty()) {
                 txt += item.getProduct().getProduct_id() + ":" + item.getSize().getSize_id() + ":" + item.getQuantity();
             } else {
-                txt += "," + item.getProduct().getProduct_id() + ":" + item.getSize().getSize_id() + ":" + item.getQuantity();
+                txt += "#" + item.getProduct().getProduct_id() + ":" + item.getSize().getSize_id() + ":" + item.getQuantity();
             }
         }
         return txt;
@@ -67,17 +71,18 @@ public class Cart {
         return null;
     }
 
-    public List<CartItem> getItems() {
-        return items;
+    public int cartSize(String txt) {
+        int size = 0;
+        if (txt.isBlank() || txt.isEmpty()) {
+            return 0;
+        }
+
+        for (String p : txt.split("#")) {
+            String[] s = p.split(":");
+            size += Integer.parseInt(s[2]);
+        }
+
+        return size;
     }
 
-    public void removeAll() {
-        items = null;
-    }
-
-    public static void main(String[] args) {
-        Cart c = new Cart("1:1:1#1:2:1#1:1:1#1:1:1");
-
-        System.out.println(c.generateText());
-    }
 }
