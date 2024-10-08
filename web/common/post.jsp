@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="inputGroup-sizing-default">Author</span>
-                                            <input value="<%=author%>" name="author" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                            <input maxlength="500" value="<%=author%>" name="author" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -105,7 +105,7 @@
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="inputGroup-sizing-default">Post tittle</span>
-                                            <input value="<%=title%>" name="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                            <input maxlength="500" value="<%=title%>" name="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                         </div>
                                     </div>
                                     <div class="col-md-3">

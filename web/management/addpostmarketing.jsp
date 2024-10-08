@@ -164,7 +164,7 @@
 
                                         <div class="col-sm-6">
                                             <label for="posttitle" class="form-label">Post title</label>
-                                            <input name="posttitle" type="text" class="form-control" id="posttitle" required>
+                                            <input maxlength="500" name="posttitle" type="text" class="form-control" id="posttitle" required>
 
                                         </div>
                                         <div class="col-sm-6">
@@ -175,7 +175,7 @@
 
                                         <div class="col-sm-12">
                                             <label for="postcontent" class="form-label">Post content</label>
-                                            <textarea style="min-height: 200px;" id="postcontent" required="" name="postcontent" class="form-control"></textarea>
+                                            <textarea maxlength="1000" style="min-height: 200px;" id="postcontent" required="" name="postcontent" class="form-control"></textarea>
 
                                         </div>
 
