@@ -378,12 +378,12 @@
                                         </div>
                                         <c:if test="${p.is_active==1}">
                                         <div class="remove" style="background-color: red">
-                                            <a onclick="return confirm('Do you want to hide this setting')" href="../changestatus?pdid=${p.post_category_id}&button=hide&type=product"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                            <a onclick="return confirm('Do you want to hide this setting')" href="../changestatus?pdid=${p.post_category_id}&button=hide&type=post"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
                                         </div>
                                         </c:if>
                                         <c:if test="${p.is_active==0}">
                                         <div class="remove"style="background-color: green">
-                                            <a onclick="return confirm('Do you want to show this setting')" href="../changestatus?pdid=${p.post_category_id}&button=show&type=product"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                            <a onclick="return confirm('Do you want to show this setting')" href="../changestatus?pdid=${p.post_category_id}&button=show&type=post"><i style="color: white;" class="fa fa-eye"></i></a>     
                                         </div>
                                         </c:if>
                                     </td>
