@@ -42,6 +42,9 @@ public class CustomerPostComment extends HttpServlet {
         
         User user = (User)session.getAttribute("account");
         String comment = request.getParameter("postcomment");
+        if(comment.length()>500){
+            comment = comment.substring(0, 500);
+        }
         
         if(user==null){
             response.sendRedirect(request.getContextPath()+"/login");

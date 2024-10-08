@@ -181,7 +181,7 @@
                                     <div class="row">
                                         
                                         <div class="col-lg-12 text-center">
-                                            <textarea required="" name="postcomment" placeholder="Comment"></textarea>
+                                            <textarea maxlength="500" required="" name="postcomment" placeholder="Comment"></textarea>
                                             <button type="submit" class="site-btn">Post Comment</button>
                                         </div>
                                     </div>
