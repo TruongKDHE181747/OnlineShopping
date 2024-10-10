@@ -15,7 +15,7 @@ public class PostFeedback {
     String username,profile_picture_url;
   
     Post post;
-    
+    User user;
     public PostFeedback() {
     }
 
@@ -45,6 +45,24 @@ public class PostFeedback {
         this.username = username;
         this.profile_picture_url = profile_picture_url;
         this.post = post;
+    }
+
+    public PostFeedback(int post_feedback_id, String review, int is_active, Post post, User user) {
+        this.post_feedback_id = post_feedback_id;
+        this.review = review;
+        this.is_active = is_active;
+        this.post = post;
+        this.user = user;
+    }
+
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
     
