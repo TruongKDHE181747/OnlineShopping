@@ -100,7 +100,7 @@ public class PostFeedbackDAO extends DBContext{
        public List<PostFeedback> getAllFeedback (int page) {
         List<PostFeedback> pList = new ArrayList<>();
        String sql = "select pf.*, u.username, u.profile_picture_url from Post_Feedbacks as pf, Users as u\n"
-               + "where pf.customer_id = u.user_id and pf.is_active=1 and u.is_banned=0 \n"
+               + "where pf.customer_id = u.user_id  and u.is_banned=0 \n"
                + "   order by post_id\n"
                + " offset ? rows\n"
                + " fetch first 5 rows only ";
@@ -150,6 +150,49 @@ public class PostFeedbackDAO extends DBContext{
         }
         return totalfeedback;
      }
-   
-     
+   public void updateFeedback(PostFeedback pf)
+   {
+        String sql = "UPDATE Post_Feedbacks SET review=?, is_active=? WHERE post_feedback_id=? ";
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            
+            pre.setString(1, pf.getReview());
+            pre.setInt(2, pf.getIs_active());
+          
+            pre.setInt(3, pf.getPost_feedback_id());
+       
+           
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+       
+        
+       
+   }
+    public PostFeedback getPostFeedBackById(int id) {
+    PostFeedback pf = null;
+    String sql = "SELECT * FROM Post_feedbacks WHERE post_feedback_id = ?";
+    try (
+        // Use try-with-resources to auto-close resources
+        PreparedStatement pre = connection.prepareStatement(sql);
+    ) {
+        pre.setInt(1, id);
+        try (ResultSet rs = pre.executeQuery()) {
+            if (rs.next()) { // Use 'if' instead of 'while' because you expect only one result
+                int post_feedback_id = rs.getInt("post_feedback_id");
+                int customer_id = rs.getInt("customer_id");
+                int post_id = rs.getInt("post_id");
+                String review = rs.getString("review");
+                int is_active = rs.getInt("is_active");
+
+                pf = new PostFeedback(post_feedback_id, customer_id, post_id, review, is_active);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Proper error handling
+    }
+    return pf;
+}
+
+       
 }

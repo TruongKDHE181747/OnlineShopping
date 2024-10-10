@@ -13,16 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import model.PostFeedback;
 
 /**
  *
  * @author quanpyke
  */
-@WebServlet(name="PostFeedbackPaging", urlPatterns={"/postfeedbackpaging"})
-public class PostFeedbackPaging extends HttpServlet {
+@WebServlet(name="EditPostFeedback", urlPatterns={"/editpostfeedback"})
+public class EditPostFeedback extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,30 +32,22 @@ public class PostFeedbackPaging extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session=request.getSession(true);
-         PostFeedbackDAO pfdao=new PostFeedbackDAO();
-             if(request.getParameter("p")!=null)
+        
+        String button=request.getParameter("button");
+        int id=Integer.parseInt(request.getParameter("pfid"));
+        PostFeedbackDAO pfdao=new PostFeedbackDAO();
+        PostFeedback pf=pfdao.getPostFeedBackById(id);
+        if(button.equals("hide"))
         {
-        int p=Integer.parseInt(request.getParameter("p"));
-           
-         List<PostFeedback> pflist=pfdao.getAllFeedback(p);
-       
-        session.setAttribute("pflist", pflist);
-        session.setAttribute("pfpage", p);
-//         session.setAttribute("slider","clink");
-           response.sendRedirect(request.getContextPath()+"/management/postfeedbacklist.jsp");}
-             else
-             {
-            int p=(int)session.getAttribute("pfpage");
-              List<PostFeedback> pflist=pfdao.getAllFeedback(p);
-               session.setAttribute("pflist", pflist);
-        session.setAttribute("pfpage", p);
-          response.sendRedirect(request.getContextPath()+"/management/postfeedbacklist.jsp");
-             }
+            pf.setIs_active(0);
+        }
+         else if(button.equals("show"))
+        {
+            pf.setIs_active(1);
+        }
+        pfdao.updateFeedback(pf);
+        response.sendRedirect("postfeedbackpaging");
     } 
-    
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

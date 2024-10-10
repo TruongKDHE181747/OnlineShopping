@@ -152,7 +152,10 @@
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchslider" method="get">
-                                            <input placeholder="Search by  name,description,..." name="search" class="form-control me-2" type="search"  aria-label="Search">
+                                            <select name="filter">
+                                                <option value="post" selected="">Sort by Post</option>
+                                                <option value="user" selected="">Sort by User</option>
+                                            </select>
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -189,7 +192,7 @@
                                       <c:set var="no" value="${no+1}"></c:set>
                                   </td>
                                       <td>
-                                      ${s.post.title}
+                                          <a href="../hpostdetail?bid=${s.post.post_id}">  ${s.post.title}</a> 
                                   </td>
                                      <td class="product-img">
                                         
@@ -200,8 +203,8 @@
                                     <td>${s.review}</td>
                                       <td class="product-img">
                                         
-                                        <img src="../${s.user.profile_picture_url}" alt="alt"/>
-                                       
+                                          <img src="../${s.user.profile_picture_url}" alt="alt"/ style="width: 100px;height: 103px">
+                                         ${s.user.first_name} ${s.user.last_name}
                                     </td>
                                       <td>
                                         <c:if test="${s.is_active==1}">
@@ -215,6 +218,33 @@
                                         
                                         
                                     </td>
+                                    <td>
+                                   <c:if test="${s.is_active==1}">      <a href="../editpostfeedback?button=hide&pfid=${s.post_feedback_id}" onclick="return confirm('Hide this feedback?')">      
+                                <i style="color: black;color: black;
+                display: inline-block;
+                background-color: red;
+                padding: 6px 8px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-left: 12px;
+                box-shadow: 1px 1px 6px gray;" class="bi bi-eye-slash-fill"></i></a>   
+                                        
+                                        </c:if>
+                                 <c:if test="${s.is_active==0}">        
+                                       <a href="../editpostfeedback?button=show&pfid=${s.post_feedback_id}" onclick="return confirm('Show this feedback?')">      
+                                <i style="color: black;color: black;
+                display: inline-block;
+                background-color: greenyellow;
+                padding: 6px 8px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-left: 12px;
+                box-shadow: 1px 1px 6px gray;" class="bi bi-eye-fill"></i></a> 
+                                        
+                                        </c:if>
+                                        
+                                    </td>
+                                    
                                     
                                 </tr>
                                   
