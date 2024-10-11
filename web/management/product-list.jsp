@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Product"%>
 <%@page import="java.util.*" %>
+<%@page import="java.text.DecimalFormatSymbols"%>
+<%@page import="java.text.NumberFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -20,9 +22,9 @@
 
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        
+
         <jsp:include page="../common/css.jsp" />
-        
+
         <style>
             .criteria{
                 border: 1px solid #bb9797;
@@ -133,7 +135,7 @@
             <div class="col-md-10" style="padding: 40px;">
 
 
-                
+
                 <!-- START products -->
                 <div class="product">
                     <div class="container products" >
@@ -161,8 +163,8 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">No.</th>
+                                    <th scope="col" style="width: 20%">Name</th>
                                     <th scope="col">Image</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Price</th>
@@ -177,11 +179,22 @@
                                 <!-- START Product item -->
                                 <%
                                     List<Product> pList = (ArrayList<Product>) session.getAttribute("product_list");
+                                    
+                                    Locale locale = new Locale("vi", "VN");
+                                    Currency currency = Currency.getInstance("VND");
+                                    DecimalFormatSymbols df = DecimalFormatSymbols.getInstance(locale);
+                                    df.setCurrency(currency);
+                                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+                                    numberFormat.setCurrency(currency);
+                                    
+                                    int num = 1;
                                     for (Product p : pList) {
+                                        int price = p.getPrice();
+                                        String cmoney = numberFormat.format(price);
                                 %>
                                 <tr>
 
-                                    <td><%= p.getProduct_id()%></td>
+                                    <td><%= num%></td>
 
                                     <td><%= p.getProduct_name()%></td>
 
@@ -203,9 +216,9 @@
                                         %>   
                                     </td>
 
-                                    <td><%= p.getPrice()%></td>
+                                    <td><%= cmoney%></td>
 
-                                    <td><%= p.getDiscount()%></td>
+                                    <td><%= p.getDiscount()%>%</td>
 
                                     <td><%= p.getRated_star()%></td>
 
@@ -239,6 +252,7 @@
                                         </div>
                                     </td>
                                     <%
+                                        num++;
                                         }
                                     %>
 
