@@ -22,6 +22,20 @@ public class CustomerAddress {
     public CustomerAddress() {
     }
 
+    public CustomerAddress(String address, int province_id, String province_name, int district_id, String district_name, String ward_code, String ward_name, String phone, String receiver_name, boolean is_default, int customer_id) {
+        this.address = address;
+        this.province_id = province_id;
+        this.province_name = province_name;
+        this.district_id = district_id;
+        this.district_name = district_name;
+        this.ward_code = ward_code;
+        this.ward_name = ward_name;
+        this.phone = phone;
+        this.receiver_name = receiver_name;
+        this.is_default = is_default;
+        this.customer_id = customer_id;
+    }
+
     public CustomerAddress(int customer_addresses_id, String address, int province_id, String province_name, int district_id, String district_name, String ward_code, String ward_name, String phone, String receiver_name, boolean is_default, int customer_id) {
         this.customer_addresses_id = customer_addresses_id;
         this.address = address;

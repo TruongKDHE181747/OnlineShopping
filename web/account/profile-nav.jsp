@@ -17,7 +17,7 @@
                  <!-- Profile picture upload button-->
                  <form action="./uploadProfileImage" method="post" enctype="multipart/form-data">
                      <input style="margin-left: 40px;"  type="file" name="profileImage" accept="image/*">                                 
-                     <button class="btn btn-primary mt-2" type="submit">Upload new image</button>
+                     <button class="btn btn-primary mt-3" type="submit">Upload</button>
                  </form>
             </div>
         </div>
