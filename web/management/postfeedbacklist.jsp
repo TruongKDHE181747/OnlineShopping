@@ -148,15 +148,17 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Sliders List</h5>
+                                    <h5 class="navbar-brand" >Post Feedback List</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchslider" method="get">
+                                        <form class="d-flex" role="search" action="../postfeedbackpaging" method="get">
                                             <select name="filter">
-                                                <option value="post" selected="">Sort by Post</option>
-                                                <option value="user" selected="">Sort by User</option>
+                                                <option value="post" >Sort by Post</option>
+                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Sort by User</option>
+                                              <option value="show"<c:if test="${sessionScope.filter=='show'}"> selected </c:if>>Only show active</option>
+                                                <option value="hidden"<c:if test="${sessionScope.filter=='hidden'}"> selected </c:if>>Only show hidden</option>
                                             </select>
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                            <button class="btn btn-outline-success" type="submit"><i class="bi bi-filter"></i></button>
                                         </form>
                                     </div>
 

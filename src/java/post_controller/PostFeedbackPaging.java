@@ -36,25 +36,39 @@ public class PostFeedbackPaging extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession(true);
          PostFeedbackDAO pfdao=new PostFeedbackDAO();
+         int p;
              if(request.getParameter("p")!=null)
         {
-        int p=Integer.parseInt(request.getParameter("p"));
+         p=Integer.parseInt(request.getParameter("p")); }
            
-         List<PostFeedback> pflist=pfdao.getAllFeedback(p);
-       
-        session.setAttribute("pflist", pflist);
-        session.setAttribute("pfpage", p);
-//         session.setAttribute("slider","clink");
-           response.sendRedirect(request.getContextPath()+"/management/postfeedbacklist.jsp");}
+        else
+        {
+                p=(int)session.getAttribute("pfpage");
+         }
+        
+             String filter;
+             if(session.getAttribute("filter")==null || request.getParameter("filter")!=null    )
+             {
+                 filter=request.getParameter("filter");
+             }
              else
              {
-            int p=(int)session.getAttribute("pfpage");
-              List<PostFeedback> pflist=pfdao.getAllFeedback(p);
-               session.setAttribute("pflist", pflist);
-        session.setAttribute("pfpage", p);
-          response.sendRedirect(request.getContextPath()+"/management/postfeedbacklist.jsp");
+                 filter=(String)session.getAttribute("filter");
              }
-    } 
+             
+        String sql=getSql(filter, p);
+         List<PostFeedback> pflist=pfdao.getFeedBackSql(sql);
+
+        session.setAttribute("pflist", pflist);
+        session.setAttribute("pfpage", p);
+           
+
+        session.setAttribute("filter", filter);
+           response.sendRedirect(request.getContextPath()+"/management/postfeedbacklist.jsp");}
+            
+             
+           
+  
     
     
     
@@ -95,4 +109,36 @@ public class PostFeedbackPaging extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public String getSql(String filter,int page)
+    {
+        String sql=null;
+        
+        if(filter == null) filter="post";
+        if(filter.contains("post")   ) sql= "select pf.*, u.username, u.profile_picture_url from Post_Feedbacks as pf, Users as u\n"
+               + "where pf.customer_id = u.user_id  and u.is_banned=0 \n"
+               + "   order by post_id\n"
+               + " offset "+ page+ " rows\n"
+               + " fetch first 5 rows only ";
+        if(filter.contains("user")) sql="select pf.*, u.username, u.profile_picture_url from Post_Feedbacks as pf, Users as u\n"
+               + "where pf.customer_id = u.user_id  and u.is_banned=0 \n"
+               + "   order by customer_id\n"
+               + " offset " +page+ " rows\n"
+               + " fetch first 5 rows only ";
+        
+          if(filter.contains("show")) sql="select pf.*, u.username, u.profile_picture_url from Post_Feedbacks as pf, Users as u\n"
+               + "where pf.customer_id = u.user_id  and u.is_banned=0 and pf.is_active=1\n"
+               + "   order by customer_id\n"
+               + " offset " +page+ " rows\n"
+               + " fetch first 5 rows only "; 
+           if(filter.contains("hidden")) sql="select pf.*, u.username, u.profile_picture_url from Post_Feedbacks as pf, Users as u\n"
+               + "where pf.customer_id = u.user_id  and u.is_banned=0 and pf.is_active=0\n"
+               + "   order by customer_id\n"
+               + " offset " +page+ " rows\n"
+               + " fetch first 5 rows only "; 
+        
+        
+        return sql;
+    }
+    
+    
 }

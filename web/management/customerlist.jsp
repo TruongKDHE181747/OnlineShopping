@@ -140,7 +140,7 @@
             <div class="col-md-10" style="padding: 40px;">
                 
 
-
+                <c:set var="no" value="1"></c:set>
 
                 
                 <!-- START products -->
@@ -182,7 +182,9 @@
                                 <!-- START Product item -->
                                   <c:forEach var="s" items="${sessionScope.clist}">
                                 <tr>
-                                    <th scope="row">${s.user_id}</th>
+                                    <th scope="row">${no}
+                                                    <c:set var="no" value="${no+1}"></c:set>
+</th>
                                       <td>${s.first_name}</td>
                                     <td>${s.last_name}</td>
                                       <td>${s.phone}</td>

@@ -130,6 +130,48 @@ public class PostFeedbackDAO extends DBContext{
         }
         return pList;
     }
+       
+         public List<PostFeedback> getFeedBackSql (String sql) {
+        List<PostFeedback> pList = new ArrayList<>();
+       
+           PostDAO pdao=new  PostDAO();
+           UserDAO udao=new UserDAO();
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+          
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int post_feedback_id = rs.getInt("post_feedback_id");
+                int customer_id = rs.getInt("customer_id");
+                int post_id = rs.getInt("post_id"); 
+                String review = rs.getString("review");
+                int is_active = rs.getInt("is_active");
+                String username = rs.getString("username");
+                String profile_picture_url = rs.getString("profile_picture_url");
+                Post post= pdao.getPostByID(String.valueOf(post_id));
+                User user= udao.getUserById(customer_id);
+               PostFeedback pf=new PostFeedback(post_feedback_id, review, is_active, post, user);
+                
+                pList.add(pf);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
      public int getTotalFeedBack()
      {
      

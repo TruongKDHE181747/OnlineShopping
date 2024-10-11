@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('productfeedback')}">active</c:if>">
+                        <a href="../postfeedbacklist" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('productfeedback')}">active</c:if>">
                             <!-- Product Feedback Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
                                 <path d="M1 0h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3l-2 2V1a1 1 0 0 1 1-1z"/>
