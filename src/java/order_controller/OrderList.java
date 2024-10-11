@@ -37,10 +37,10 @@ public class OrderList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         OrderDAO odao = new OrderDAO();
-        List<Order> order = new ArrayList<>();
+        List<Order> order = odao.getAllOrder();
         HttpSession session = request.getSession();
         
-        request.setAttribute("order_list", odao);
+        session.setAttribute("order_list", order);
         response.sendRedirect(request.getContextPath() + "/management/list-order.jsp");
     } 
 
