@@ -37,7 +37,7 @@
                     <a href="#"  class="nav-item nav-link has-icon nav-link-faded">
                         Order History
                     </a>
-                    <a href="#" class="nav-item nav-link has-icon nav-link-faded">
+                    <a href="./address" class="nav-item nav-link has-icon nav-link-faded <%= currentPage.contains("address")? "active":"" %>">
                         Address
                     </a>
                 </nav>

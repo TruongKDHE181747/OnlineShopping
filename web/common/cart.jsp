@@ -150,24 +150,24 @@
                             <c:if test="${sessionScope.voucher!=null}">
                                 <div class="alert alert-secondary d-flex justify-content-between align-items-center" style="margin-top: 20px;">
                                     <span>${sessionScope.voucher.voucher_name} - <fmt:formatNumber value="${sessionScope.voucher.percent}" type="number" minFractionDigits="0" maxFractionDigits="2" />%</span>
-                                    <button onclick="window.location.href='removeVoucher'" type="button" class="btn-close" aria-label="Close"></button>
+                                    <button onclick="window.location.href = 'removeVoucher'" type="button" class="btn-close" aria-label="Close"></button>
                                 </div>
                             </c:if>
                         </div>
                         <div class="cart__total">
                             <h6>Cart total</h6>
                             <ul>
-                                <li>Subtotal <span><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                <li style="font-weight: normal ">Subtotal <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                                     <c:set var="discountPercent" value="${0}"/>
                                     <c:if test="${sessionScope.voucher!=null}">
                                         <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
-                                    <li>Voucher 
-                                        <span>- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
-                                    </li>
+                                    <li style="font-weight: normal" >Voucher
+                                        <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
+                                        </li>
 
-                                </c:if>
-                                <c:set var="total" value="${subtotal - subtotal*discountPercent}"/>
-                                <li>Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                    </c:if>
+                                    <c:set var="total" value="${subtotal - subtotal*discountPercent}"/>
+                                    <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                             </ul>
                             <a href="#" class="primary-btn">Proceed to checkout</a>
                         </div>
