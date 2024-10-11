@@ -15,7 +15,69 @@ import java.util.logging.Logger;
 
 public class CustomerAddressDAO extends DBContext {
 
-    public boolean updateAllDefaultToFalse(int customerId){
+    
+    public boolean updateAddress(CustomerAddress customerAdress){
+        String sql = """
+                     UPDATE [dbo].[Customer_Addresses]
+                        SET [address] = ?
+                           ,[province_id] = ?
+                           ,[province_name] = ?
+                           ,[district_id] = ?
+                           ,[district_name] = ?
+                           ,[ward_code] = ?
+                           ,[ward_name] = ?
+                           ,[phone] = ?
+                           ,[receiver_name] = ?
+                           ,[is_default] = ?
+                      WHERE customer_addresses_id = ?""";
+        
+        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, customerAdress.getAddress());
+            ps.setInt(2, customerAdress.getProvince_id());
+            ps.setString(3, customerAdress.getProvince_name());
+            ps.setInt(4, customerAdress.getDistrict_id());
+            ps.setString(5, customerAdress.getDistrict_name());
+            ps.setString(6, customerAdress.getWard_code());
+            ps.setString(7, customerAdress.getWard_name());
+            ps.setString(8, customerAdress.getPhone());
+            ps.setString(9, customerAdress.getReceiver_name());
+            ps.setBoolean(10, customerAdress.isIs_default());
+            ps.setInt(11, customerAdress.getCustomer_addresses_id());
+
+            int exe = ps.executeUpdate();
+
+            if (exe > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean deleteAddress(int addressId) {
+        String sql = """
+                     DELETE FROM [dbo].[Customer_Addresses]
+                           WHERE customer_addresses_id = ?""";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, addressId);
+
+            int exe = ps.executeUpdate();
+
+            if (exe > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean updateAllDefaultToFalse(int customerId) {
         String sql = """
                      UPDATE [dbo].[Customer_Addresses]
                         SET 
@@ -34,12 +96,10 @@ public class CustomerAddressDAO extends DBContext {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        
+
         return false;
     }
-    
-    
+
     public boolean checkDefaultAddress(int customerId) {
         String sql = """
                      select * 

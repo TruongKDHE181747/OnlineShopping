@@ -38,7 +38,7 @@
                         $('#province').html(data);
                         $('#district').html('<option value="">Select District</option>');
                         $('#ward').html('<option value="">Select Ward</option>');
-                    }).fail(function(){
+                    }).fail(function () {
                         $('#province').html('<option value="">Fail to load data</option>');
                         $('#district').html('<option value="">Fail to load data</option>');
                         $('#ward').html('<option value="">Fail to load data</option>');
@@ -47,9 +47,9 @@
 
                 function loadDistricts(provinceId) {
                     $.get("location?action=getDistricts&provinceId=" + provinceId, function (data) {
-                        $('#district').html(data); 
+                        $('#district').html(data);
                         $('#ward').html('<option value="">Select Ward</option>');
-                    }).fail(function(){
+                    }).fail(function () {
                         $('#district').html('<option value="">Fail to load data</option>');
                         $('#ward').html('<option value="">Fail to load data</option>');
                     });
@@ -58,8 +58,8 @@
 
                 function loadWards(districtId) {
                     $.get("location?action=getWards&districtId=" + districtId, function (data) {
-                        $('#ward').html(data); 
-                    }).fail(function(){
+                        $('#ward').html(data);
+                    }).fail(function () {
                         $('#ward').html('<option value="">Fail to load data</option>');
                     });
                 }
@@ -97,7 +97,7 @@
                                             <div class="card" style="margin: 20px 0">
                                                 <div class="card-body">
                                                     <c:if test="${o.is_default}">
-                                                    <p class="text-success text-small">Default Address</p>
+                                                        <p class="text-success text-small">Default Address</p>
                                                     </c:if>
                                                     <p class="card-text">
                                                     <div>Name: ${o.receiver_name}</div>
@@ -108,7 +108,9 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <button style="width: 80px" class="btn btn-sm btn-outline-primary me-2"><span class="fa-pencil fa"></span></button>
-                                                    <button style="width: 80px"  class="btn btn-sm btn-outline-danger"><span class="fa-trash fa"></span></button>
+                                                        <c:if test="${!o.is_default}">
+                                                        <button style="width: 80px" onclick="confirmDelete(${o.customer_addresses_id})" class="btn btn-sm btn-outline-danger"><span class="fa-trash fa"></span></button>
+                                                        </c:if>
                                                 </div>
                                             </div>
                                         </c:forEach>
@@ -150,7 +152,7 @@
                             <div class="mb-3">
                                 <label for="province" class="form-label">Province:</label>
                                 <select class="form-control" id="province" name="province" required>
-  
+
 
                                 </select>
                             </div>
@@ -158,7 +160,7 @@
                             <div class="mb-3">
                                 <label for="district" class="form-label">District:</label>
                                 <select class="form-control" id="district" name="district" required>
-                                    
+
 
                                 </select>
                             </div>
@@ -166,7 +168,7 @@
                             <div class="mb-3">
                                 <label for="ward" class="form-label">Ward:</label>
                                 <select class="form-control" id="ward" name="ward" required>
-                                    
+
 
                                 </select>
                             </div>
@@ -178,7 +180,7 @@
 
 
                             <div class="mb-3 form-check">
-                                
+
                                 <input type="checkbox" class="form-check-input" id="is_default" name="is_default" value="On">
                                 <label class="form-check-label" for="is_default">Is Default</label>
                             </div>
@@ -200,10 +202,17 @@
 
 
 
+
         <jsp:include page="../common/footer.jsp" />
         <!-- Bootstrap JS with Popper.js -->
 
-
+        <script>
+            function confirmDelete(addressId) {
+                if (confirm("Are you sure you want to delete this address?")) {
+                    window.location.href = 'deleteAddress?addressId=' + addressId;
+                }
+            }
+        </script>
 
         <script src="${pageContext.request.contextPath}/common/js/jquery-3.3.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/common/js/bootstrap.min.js"></script>
