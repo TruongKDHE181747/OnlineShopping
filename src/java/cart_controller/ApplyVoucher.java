@@ -36,9 +36,9 @@ public class ApplyVoucher extends HttpServlet {
         HttpSession session = request.getSession();
         VoucherDAO dao = new VoucherDAO();
         
-        //String code = request.getParameter("voucherCode");
+        String code = request.getParameter("voucherCode");
         
-        Voucher voucher = dao.getVoucherbyId(2);
+        Voucher voucher = dao.getVoucherbyCode(code);
         
         if(voucher == null){
             session.setAttribute("voucherError", "Voucher is invalid !");

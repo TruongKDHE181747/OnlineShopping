@@ -144,7 +144,7 @@
                                 %>
                             </c:if>
                             <form action="applyVoucher" method="POST">
-                                <input type="text" placeholder="Coupon code">
+                                <input type="text" name="voucherCode" placeholder="Voucher code">
                                 <button type="submit">Apply</button>
                             </form>
                             <c:if test="${sessionScope.voucher!=null}">

@@ -76,7 +76,7 @@ public class LocationHandler extends HttpServlet {
         JSONObject obj = new JSONObject(jsonResponse);
         JSONArray provinces = obj.getJSONArray("data");
 
-        // Start by adding the "Select Province" option
+       
         StringBuilder options = new StringBuilder();
         options.append("<option value=''>Select Province</option>");
         
@@ -92,7 +92,7 @@ public class LocationHandler extends HttpServlet {
         JSONObject obj = new JSONObject(jsonResponse);
         JSONArray districts = obj.getJSONArray("data");
 
-        // Start by adding the "Select District" option
+
         StringBuilder options = new StringBuilder();
         options.append("<option value=''>Select District</option>");
         
@@ -108,7 +108,7 @@ public class LocationHandler extends HttpServlet {
         JSONObject obj = new JSONObject(jsonResponse);
         JSONArray wards = obj.getJSONArray("data");
 
-        // Start by adding the "Select Ward" option
+
         StringBuilder options = new StringBuilder();
         options.append("<option value=''>Select Ward</option>");
         
