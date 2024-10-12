@@ -34,7 +34,7 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
 
         session.removeAttribute("account");
 

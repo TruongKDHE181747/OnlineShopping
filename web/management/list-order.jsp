@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Product"%>
+<%@page import="model.Order"%>
 <%@page import="java.util.*" %>
 
 <!DOCTYPE html>
@@ -20,9 +20,9 @@
 
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        
+
         <jsp:include page="../common/css.jsp" />
-        
+
         <style>
             .criteria{
                 border: 1px solid #bb9797;
@@ -132,15 +132,12 @@
 
             <div class="col-md-10" style="padding: 40px;">
 
-
-                
-                <!-- START products -->
                 <div class="product">
                     <div class="container products" >
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Products</h5>
+                                    <h5 class="navbar-brand" href="#">Manage Orders</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchproduct" method="get">
@@ -148,26 +145,17 @@
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
-
-
-                                    <div class="">
-                                        <div class="d-flex add" role="search">
-                                            <a href="add-product.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
-                                        </div>
-                                    </div>
                                 </div>
                             </nav>
                         </div>
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Image</th>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Order Date</th>
+                                    <th scope="col">Receiver Name</th>
+                                    <th scope="col">Total Amount</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Discount</th>
-                                    <th scope="col">Rating</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -176,66 +164,25 @@
 
                                 <!-- START Product item -->
                                 <%
-                                    List<Product> pList = (ArrayList<Product>) session.getAttribute("product_list");
-                                    for (Product p : pList) {
+                                    List<Order> oList = (ArrayList<Order>) session.getAttribute("order_list");
+                                    for (Order o : oList) {
                                 %>
                                 <tr>
 
-                                    <td><%= p.getProduct_id()%></td>
+                                    <td><%= o.getOrderId()%></td>
 
-                                    <td><%= p.getProduct_name()%></td>
+                                    <td><%= o.getOrderedDate()%></td>
 
-                                    <td class="product-img">
-                                        <img src="../<%= p.getThumbnail()%>">
-                                    </td>
+                                    <td><%= o.getReceiverName()%></td>
 
-                                    <td>
-                                        <%
-                                            if(p.isIs_active()==true) {   
-                                        %>
-                                        <p style="color: green">Active</p>
-                                        <%
-                                            } else {
-                                        %>
-                                        <p style="color: Red">Inactive</p> 
-                                        <% 
-                                            }
-                                        %>   
-                                    </td>
+                                    <td><%= o.getTotalAmount()%></td>
 
-                                    <td><%= p.getPrice()%></td>
-
-                                    <td><%= p.getDiscount()%></td>
-
-                                    <td><%= p.getRated_star()%></td>
+                                    <td><%= o.getTotalAmount()%></td>
 
                                     <td>
-                                        <%
-                                            if(p.isIs_active()==true) {
-                                        %>
-
-                                        <div class="edit" style="background-color: red">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=hide" onclick="return confirm('Hide this product?')">
-                                                <i style="color: black;" class="bi bi-eye-slash-fill"></i>
-                                            </a>
-                                        </div>
-
-                                        <%
-                                            } else {
-                                        %>
-
-                                        <div class="edit" style="background-color: greenyellow">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=show" onclick="return confirm('Show this product?')">
-                                                <i style="color: black;" class="bi bi-eye-fill"></i>
-                                            </a>
-                                        </div>
-
-                                        <% 
-                                            }
-                                        %> 
-
-                                        <div class="edit">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=edit"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                        <div class="view" style="background-color: greenyellow">
+                                            <a href="../vieworderdetails?oid=<%= o.getOrderId()%>&button=view"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                            <i style="color: black;" class="bi bi-eye-fill"></i>
                                         </div>
                                     </td>
                                     <%
@@ -248,59 +195,9 @@
                             </tbody>
                         </table>
 
-                        <!-- START PAGE -->
-
-                        <div style="display: flex;
-                             justify-content: center;">
-
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-
-                                    <%
-                                     int cur_page = (int) session.getAttribute("cur_page");
-                                     int total_page = (int) session.getAttribute("num_page");
-                                     if(cur_page > 1) {
-                                    %>
-                                    <li class="page-item">
-                                        <a class="page-link" href="../productpaging?p=<%= cur_page - 1%>" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <%
-                                       }
-
-                                       for (int i = 1; i <= total_page; i++) {
-                                    %>
-                                    <li class="page-item <%= (cur_page == i) ? "active" : "" %>">
-                                        <a class="page-link" href="../productpaging?p=<%= i %>"><%= i %></a>
-                                    </li>
-                                    <%
-                                        }
-
-                                        if (cur_page < total_page) {
-                                    %>
-                                    <li class="page-item">
-                                        <a class="page-link" href="../productpaging?p=<%= cur_page + 1 %>" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                    <%
-                                        }
-                                    %>
-                                </ul>
-                            </nav>
-
-                        </div>
-                        <!-- END PAGE -->
-
                     </div>
                 </div>
-                <!-- END products -->
-
-
             </div>
         </div>
-
-
     </body>
 </html>

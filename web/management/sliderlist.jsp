@@ -141,7 +141,7 @@
             <div class="col-md-10" style="padding: 40px;">
                 
 
-                
+                       <c:set var="no" value="${(sessionScope.cpage-1)*2+1}"></c:set>
                 <!-- START products -->
                 <div class="product">
                     <div class="container products" >
@@ -183,7 +183,8 @@
                                 <!-- START Product item -->
                                   <c:forEach var="s" items="${sessionScope.slider}">
                                 <tr>
-                                    <th scope="row">${s.id}</th>
+                                    <td>${no}
+                                       <c:set var="no" value="${no+1}"></c:set></td>
                                       <td>${s.title}</td>
                                     <td>${s.description}</td>
                                     <td class="product-img">

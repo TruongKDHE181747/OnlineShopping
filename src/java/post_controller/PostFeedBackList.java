@@ -5,7 +5,6 @@
 
 package post_controller;
 
-import dal.PostDAO;
 import dal.PostFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,16 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Post;
+import java.util.List;
 import model.PostFeedback;
-import model.User;
 
 /**
  *
- * @author Dell
+ * @author quanpyke
  */
-@WebServlet(name="CustomerPostComment", urlPatterns={"/customerpostcomment"})
-public class CustomerPostComment extends HttpServlet {
+@WebServlet(name="PostFeedBackList", urlPatterns={"/postfeedbacklist"})
+public class PostFeedBackList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,27 +34,16 @@ public class CustomerPostComment extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PostFeedbackDAO pfdao=new PostFeedbackDAO();
+        HttpSession session=request.getSession(true);
+       List<PostFeedback> pflist=pfdao.getAllFeedback(1);
+            session.setAttribute("pfpage", 1);
+        session.setAttribute("pflist", pflist);
+        session.setAttribute("pfnum", getNumberOfPage(pfdao.getTotalFeedBack(), 5));
+        response.sendRedirect(request.getContextPath()+"/management/postfeedbacklist.jsp");
         
-        HttpSession session = request.getSession();
-        PostFeedbackDAO pfdao = new PostFeedbackDAO();
         
-        User user = (User)session.getAttribute("account");
-        String comment = request.getParameter("postcomment");
-        if(comment.length()>500){
-            comment = comment.substring(0, 500);
-        }
         
-        if(user==null){
-            response.sendRedirect(request.getContextPath()+"/login");
-        } else {
-            int userid = user.getUser_id();
-            Post ppostdetail = (Post)session.getAttribute("ppostdetail");
-            int postid = ppostdetail.getPost_id();
-            
-            PostFeedback pf = new PostFeedback(0, userid, postid, comment, 1);
-            pfdao.AddCustomerPostFeedback(pf);
-            response.sendRedirect(request.getContextPath()+"/hpostdetail");
-        }
         
     } 
 
@@ -95,5 +82,11 @@ public class CustomerPostComment extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+ public int getNumberOfPage(int length, int n)
+    {
+        if(length%n==0) return length/n;
+        else return length/n +1;
+    }
+ 
+  
 }

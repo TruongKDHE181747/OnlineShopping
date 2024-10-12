@@ -93,7 +93,7 @@
                 <div class="header__nav__option row" style="padding: 22px 0;">
                     <div class="col-md-10">
                         <form class="d-flex" role="search" action="<%=s%>/homeproductsearch">
-                            <input value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
+                            <input maxlength="500" value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
                         </form>
 

@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Edit Post Page</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -166,7 +166,7 @@
 
                                         <div class="col-sm-12">
                                             <label for="posttitle" class="form-label">Post title</label>
-                                            <input value="<%=editpostmkt.getTitle()%>" name="posttitle" type="text" class="form-control" id="posttitle" required>
+                                            <input maxlength="500" value="<%=editpostmkt.getTitle()%>" name="posttitle" type="text" class="form-control" id="posttitle" required>
 
                                         </div>
                                             <div class="col-sm-12">
@@ -176,7 +176,7 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <label for="postcontent" class="form-label">Post content</label>
-                                            <textarea style="min-height: 200px;" id="postcontent" required="" name="postcontent" class="form-control"><%=editpostmkt.getContent().trim()%></textarea>
+                                            <textarea maxlength="1000" style="min-height: 200px;" id="postcontent" required="" name="postcontent" class="form-control"><%=editpostmkt.getContent().trim()%></textarea>
 
                                         </div>
 
