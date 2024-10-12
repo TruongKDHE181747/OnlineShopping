@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import model.CustomerAddress;
 import model.User;
 
@@ -21,8 +20,22 @@ import model.User;
  *
  * @author Admin
  */
-@WebServlet(name = "AddAddress", urlPatterns = {"/addAddress"})
-public class AddAddress extends HttpServlet {
+@WebServlet(name = "UpdateAddress", urlPatterns = {"/updateAddress"})
+public class UpdateAddress extends HttpServlet {
+
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -35,13 +48,13 @@ public class AddAddress extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         CustomerAddressDAO dao = new CustomerAddressDAO();
         HttpSession session = request.getSession();
         try {
 
             User user = (User) session.getAttribute("account");
 
+            int addressId = Integer.parseInt(request.getParameter("addressId"));
             String reciever_name = request.getParameter("receiver_name");
 
             String phone = request.getParameter("phone");
@@ -67,19 +80,22 @@ public class AddAddress extends HttpServlet {
             if (is_default != null && is_default.equals("On")) {
                 isDefaultAddress = true;
             }
-        
-            if (!dao.checkDefaultAddress(user.getUser_id())) {
+
+            CustomerAddress current = dao.getAddressById(addressId);
+
+            if (current.isIs_default()) {
                 isDefaultAddress = true;
             }
 
-            CustomerAddress customerAddress = new CustomerAddress(address, province_id, province_name, district_id, district_name, ward_code, ward_name, phone, reciever_name, isDefaultAddress, user.getUser_id());
+            CustomerAddress customerAddress = new CustomerAddress(addressId, address, province_id, province_name, district_id, district_name, ward_code, ward_name, phone, reciever_name, isDefaultAddress, user.getUser_id());
 
-            if (!dao.checkAddressExist(customerAddress)) {
-                //Check if there are any default address existed
+            //Check if duplicate address
+            if (!dao.checkAddressExist(customerAddress, addressId)) {
+
                 if (isDefaultAddress) {
                     dao.updateAllDefaultToFalse(user.getUser_id());
                 }
-                dao.insertCustomerAddress(customerAddress);
+                dao.updateAddress(customerAddress);
             }
 
             response.sendRedirect(request.getContextPath() + "/address");
@@ -87,7 +103,16 @@ public class AddAddress extends HttpServlet {
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/address");
         }
-
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

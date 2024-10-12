@@ -8,6 +8,8 @@
 
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
         <script type="text/javascript">
             $(document).ready(function () {
 
@@ -33,37 +35,43 @@
                     }
                 });
 
-                function loadProvinces() {
-                    $.get("location?action=getProvinces", function (data) {
-                        $('#province').html(data);
-                        $('#district').html('<option value="">Select District</option>');
-                        $('#ward').html('<option value="">Select Ward</option>');
-                    }).fail(function () {
-                        $('#province').html('<option value="">Fail to load data</option>');
-                        $('#district').html('<option value="">Fail to load data</option>');
-                        $('#ward').html('<option value="">Fail to load data</option>');
-                    });
-                }
 
-                function loadDistricts(provinceId) {
-                    $.get("location?action=getDistricts&provinceId=" + provinceId, function (data) {
-                        $('#district').html(data);
-                        $('#ward').html('<option value="">Select Ward</option>');
-                    }).fail(function () {
-                        $('#district').html('<option value="">Fail to load data</option>');
-                        $('#ward').html('<option value="">Fail to load data</option>');
-                    });
-
-                }
-
-                function loadWards(districtId) {
-                    $.get("location?action=getWards&districtId=" + districtId, function (data) {
-                        $('#ward').html(data);
-                    }).fail(function () {
-                        $('#ward').html('<option value="">Fail to load data</option>');
-                    });
-                }
             });
+            function loadProvinces() {
+                $.get("location?action=getProvinces", function (data) {
+                    $('#province').html(data);
+                    $('#district').html('<option value="">Select District</option>');
+                    $('#ward').html('<option value="">Select Ward</option>');
+                }).fail(function () {
+                    $('#province').html('<option value="">Fail to load data</option>');
+                    $('#district').html('<option value="">Fail to load data</option>');
+                    $('#ward').html('<option value="">Fail to load data</option>');
+                });
+            }
+            ;
+
+            function loadDistricts(provinceId) {
+                $.get("location?action=getDistricts&provinceId=" + provinceId, function (data) {
+                    $('#district').html(data);
+                    $('#ward').html('<option value="">Select Ward</option>');
+                }).fail(function () {
+                    $('#district').html('<option value="">Fail to load data</option>');
+                    $('#ward').html('<option value="">Fail to load data</option>');
+                });
+
+            }
+            ;
+
+            function loadWards(districtId) {
+                $.get("location?action=getWards&districtId=" + districtId, function (data) {
+                    $('#ward').html(data);
+                }).fail(function () {
+                    $('#ward').html('<option value="">Fail to load data</option>');
+                });
+            }
+            ;
+
+
         </script>
 
 
@@ -87,7 +95,7 @@
                             <div id="" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                                 <!-- Sample addresses (these would be dynamically generated in a real application) -->
                                 <div class="col-lg-12" style="margin: 20px 0">
-                                    <button style="width: 60px" type="button" class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                                    <button style="width: 60px" type="button" onclick="openAddForm()" class="btn btn-sm btn-outline-primary me-2" >
                                         <span class="fa fa-plus"></span>
                                     </button>
                                 </div>
@@ -107,8 +115,25 @@
 
                                                 </div>
                                                 <div class="card-footer">
-                                                    <button style="width: 80px" class="btn btn-sm btn-outline-primary me-2"><span class="fa-pencil fa"></span></button>
-                                                        <c:if test="${!o.is_default}">
+                                                    <button style="width: 80px" class="btn btn-sm btn-outline-primary me-2"
+
+                                                            onclick="openUpdateForm('${o.customer_addresses_id}'
+                                                                            , '${o.receiver_name}'
+                                                                            , '${o.phone}'
+                                                                            , '${o.province_id}'
+                                                                            , '${o.province_name}'
+                                                                            , '${o.district_id}'
+                                                                            , '${o.district_name}'
+                                                                            , '${o.ward_code}'
+                                                                            , '${o.ward_name}'
+                                                                            , '${o.address}'
+                                                                            , ${o.is_default})"
+
+
+                                                            ><span class="fa-pencil fa"></span></button>
+
+
+                                                    <c:if test="${!o.is_default}">
                                                         <button style="width: 80px" onclick="confirmDelete(${o.customer_addresses_id})" class="btn btn-sm btn-outline-danger"><span class="fa-trash fa"></span></button>
                                                         </c:if>
                                                 </div>
@@ -135,7 +160,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
-                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
                         <form id="addressForm" action="addAddress" method="POST">
@@ -179,7 +204,7 @@
                             </div>
 
 
-                            <div class="mb-3 form-check">
+                            <div class="mb-3 form-check" id="default-address">
 
                                 <input type="checkbox" class="form-check-input" id="is_default" name="is_default" value="On">
                                 <label class="form-check-label" for="is_default">Is Default</label>
@@ -188,8 +213,10 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" >Add Address</button>
+                                <button type="submit" class="btn btn-primary" id='submitButton' >Add Address</button>
                             </div>
+
+                            <input type="hidden" id="addressId" name="addressId">
                         </form>
                     </div>
 
@@ -212,10 +239,65 @@
                     window.location.href = 'deleteAddress?addressId=' + addressId;
                 }
             }
+            ;
+
+
+            function openAddForm() {
+                $('#addAddressModalLabel').text('Add New Address');
+                $('#addressForm').attr('action', 'addAddress');
+                $('#addressId').val('');
+                $('#submitButton').text('Add Address');
+                $('#receiver_name').val('');
+                $('#phone').val('');
+                $('#province').val('');
+                $('#district').val('');
+                $('#ward').val('');
+                loadProvinces();
+                $('#address').val('');
+                $('#is_default').prop('checked', false);
+                var myModal = new bootstrap.Modal(document.getElementById('addAddressModal'));
+                myModal.show();
+            }
+            ;
+
+            function openUpdateForm(addressId, receiverName, phone, provinceId, provinceName
+                    , districtId, districtName, wardCode, wardName, address, isDefault) {
+
+                $('#addAddressModalLabel').text('Update Address');
+                $('#addressForm').attr('action', 'updateAddress');
+                $('#addressId').val(addressId);
+                $('#submitButton').text('Update Address');
+
+                $('#receiver_name').val(receiverName);
+                $('#phone').val(phone);
+
+                $('#province').val(provinceId + '#' + provinceName);
+                loadDistricts(provinceId);
+                setTimeout(function () {
+                    $('#district').val(districtId + '#' + districtName);
+                    loadWards(districtId);
+                }, 300);
+
+                setTimeout(function () {
+                    $('#ward').val(wardCode + '#' + wardName);
+                }, 600);
+
+                $('#address').val(address);
+
+
+                if (isDefault) {
+                    $('#default-address').hide();
+                } else {
+                    $('#default-address').show();
+                }
+                var myModal = new bootstrap.Modal(document.getElementById('addAddressModal'));
+                myModal.show();
+            }
+            ;
+
+
         </script>
 
-        <script src="${pageContext.request.contextPath}/common/js/jquery-3.3.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/common/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/common/js/jquery.nice-select.min.js"></script>
         <script src="${pageContext.request.contextPath}/common/js/jquery.nicescroll.min.js"></script>
         <script src="${pageContext.request.contextPath}/common/js/jquery.magnific-popup.min.js"></script>
@@ -224,7 +306,6 @@
         <script src="${pageContext.request.contextPath}/common/js/mixitup.min.js"></script>
         <script src="${pageContext.request.contextPath}/common/js/owl.carousel.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
 </html>
