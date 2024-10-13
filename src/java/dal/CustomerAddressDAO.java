@@ -14,7 +14,30 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CustomerAddressDAO extends DBContext {
-    
+
+    public boolean setDefaultAddress(int addressId) {
+        String sql = """
+                     UPDATE [dbo].[Customer_Addresses]
+                        SET 
+                           [is_default] = ?
+                      WHERE customer_addresses_id = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, true);
+            ps.setInt(2, addressId);
+
+            int exe = ps.executeUpdate();
+
+            if (exe > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean checkAddressExist(CustomerAddress customerAdress, int id) {
         String sql = """
                      SELECT *
