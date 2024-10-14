@@ -44,6 +44,7 @@ public class AddVoucher extends HttpServlet {
         int quantity=Integer.parseInt(request.getParameter("quantity"));
         int percent=Integer.parseInt(request.getParameter("percent"));
         int status=Integer.parseInt(request.getParameter("status"));
+        String code=request.getParameter("code");
         String error="";
         
             
@@ -58,7 +59,7 @@ public class AddVoucher extends HttpServlet {
                 session.setAttribute("error", error);
                 response.sendRedirect(request.getContextPath()+"/management/addvoucher.jsp");
             }else{
-        vdao.addVoucher(new Voucher(0, voucher_name, description, start_date, end_date, quantity, percent, status));
+        vdao.addVoucher(new Voucher(0, voucher_name, description, start_date, end_date, quantity, percent, status, code));
         response.sendRedirect("voucherlist");}
     } 
 

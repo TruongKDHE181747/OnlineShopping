@@ -38,7 +38,7 @@ public class VoucherStatus extends HttpServlet {
         VoucherDAO vdao= new VoucherDAO();
         Voucher voucher=vdao.getVoucherbyId(vid);
         int status=Integer.parseInt(request.getParameter("status"));
-        vdao.editVoucher(new Voucher(vid, voucher.getVoucher_name(), voucher.getDescription(), voucher.getStart_date(), voucher.getEnd_date(), voucher.getQuantity(), voucher.getPercent(), status));
+        vdao.editVoucher(new Voucher(vid, voucher.getVoucher_name(), voucher.getDescription(), voucher.getStart_date(), voucher.getEnd_date(), voucher.getQuantity(), voucher.getPercent(), status,voucher.getVoucher_code()));
         response.sendRedirect("voucherlist");
     } 
 

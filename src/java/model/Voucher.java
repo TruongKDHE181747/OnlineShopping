@@ -17,11 +17,12 @@ public class Voucher {
     int quantity;
     int percent;
     int is_active;
-
+    String voucher_code;
+    
     public Voucher() {
     }
 
-    public Voucher(int voucher_id, String voucher_name, String description, String start_date, String end_date, int quantity, int percent, int is_active) {
+    public Voucher(int voucher_id, String voucher_name, String description, String start_date, String end_date, int quantity, int percent, int is_active, String voucher_code) {
         this.voucher_id = voucher_id;
         this.voucher_name = voucher_name;
         this.description = description;
@@ -30,7 +31,10 @@ public class Voucher {
         this.quantity = quantity;
         this.percent = percent;
         this.is_active = is_active;
+        this.voucher_code = voucher_code;
     }
+
+    
 
     public int getVoucher_id() {
         return voucher_id;
@@ -96,9 +100,19 @@ public class Voucher {
         this.is_active = is_active;
     }
 
+    public String getVoucher_code() {
+        return voucher_code;
+    }
+
+    public void setVoucher_code(String voucher_code) {
+        this.voucher_code = voucher_code;
+    }
+
     @Override
     public String toString() {
-        return "Voucher{" + "voucher_id=" + voucher_id + ", voucher_name=" + voucher_name + ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", quantity=" + quantity + ", percent=" + percent + ", is_active=" + is_active + '}';
+        return "Voucher{" + "voucher_id=" + voucher_id + ", voucher_name=" + voucher_name + ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", quantity=" + quantity + ", percent=" + percent + ", is_active=" + is_active + ", voucher_code=" + voucher_code + '}';
     }
+    
+    
     
 }

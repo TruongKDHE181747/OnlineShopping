@@ -85,6 +85,11 @@
 
                                 </div>
                                 
+                                <div class="col-sm-6">
+                                    <label for="code" class="form-label">Voucher code</label>
+                                    <input value="" name="code" type="text"  class="form-control" id="code" required>
+                                </div>
+                                
                                 <div class="my-3 col-sm-6">
                                     <label for="status" class="form-label">Status</label>
                                     <div class="form-check">

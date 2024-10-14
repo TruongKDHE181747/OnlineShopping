@@ -2,24 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package cart_controller;
+package profile_controller;
 
-import dal.VoucherDAO;
+import dal.CustomerAddressDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import model.Voucher;
+import java.io.PrintWriter;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ApplyVoucher", urlPatterns = {"/applyVoucher"})
-public class ApplyVoucher extends HttpServlet {
+@WebServlet(name = "DeleteAddress", urlPatterns = {"/deleteAddress"})
+public class DeleteAddress extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,24 +31,19 @@ public class ApplyVoucher extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        VoucherDAO dao = new VoucherDAO();
-        
-        String code = request.getParameter("voucherCode");
-        
-        Voucher voucher = dao.getVoucherbyCode(code);
-        
-        if(voucher == null){
-            session.setAttribute("voucherError", "Voucher is invalid !");
-            response.sendRedirect(request.getContextPath()+"/cart");
-            return;
+
+        try {
+            CustomerAddressDAO dao = new CustomerAddressDAO();
+
+            int addressId = Integer.parseInt(request.getParameter("addressId"));
+
+            dao.deleteAddress(addressId);
+
+        } catch (NumberFormatException e) {
         }
-        
-        session.setAttribute("voucher", voucher);
-        response.sendRedirect(request.getContextPath()+"/cart");
-        
-        
+
+        response.sendRedirect(request.getContextPath() + "/address");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -90,7 +90,10 @@
                                     <input value="${sessionScope.voucher.quantity}" name="quantity" type="number" min="0" class="form-control" id="quantity" required>
                                 </div>
 
-
+                                <div class="col-sm-6">
+                                    <label for="code" class="form-label">Voucher code</label>
+                                    <input value="${sessionScope.voucher.voucher_code}" name="code" type="text" class="form-control" id="code" required>
+                                </div>
                                 
                                 
                                 <div class="my-3 col-sm-6">

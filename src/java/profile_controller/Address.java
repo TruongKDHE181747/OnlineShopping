@@ -4,13 +4,18 @@
  */
 package profile_controller;
 
+import dal.CustomerAddressDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import model.CustomerAddress;
+import model.User;
 
 /**
  *
@@ -19,9 +24,6 @@ import java.io.PrintWriter;
 @WebServlet(name = "Address", urlPatterns = {"/address"})
 public class Address extends HttpServlet {
 
-   
-
-  
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -33,6 +35,19 @@ public class Address extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+
+        User user = (User) session.getAttribute("account");
+
+        int customerId = user.getUser_id();
+
+        CustomerAddressDAO dao = new CustomerAddressDAO();
+
+        List<CustomerAddress> addressList = dao.getAddressByCustomerId(customerId);
+
+        request.setAttribute("addressList", addressList);
+        
         request.getRequestDispatcher("/account/customer-address.jsp").forward(request, response);
     }
 
@@ -47,7 +62,7 @@ public class Address extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
     /**
