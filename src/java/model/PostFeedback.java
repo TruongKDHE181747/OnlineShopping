@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Dell
@@ -13,12 +15,27 @@ public class PostFeedback {
     String review;
     int is_active;
     String username,profile_picture_url;
+    Date create_at, modified_at;
   
     Post post;
     User user;
     String time_create;
     public PostFeedback() {
     }
+
+    public PostFeedback(int post_feedback_id, int customer_id, int post_id, String review, int is_active, String username, String profile_picture_url, Date create_at, Date modified_at) {
+        this.post_feedback_id = post_feedback_id;
+        this.customer_id = customer_id;
+        this.post_id = post_id;
+        this.review = review;
+        this.is_active = is_active;
+        this.username = username;
+        this.profile_picture_url = profile_picture_url;
+        this.create_at = create_at;
+        this.modified_at = modified_at;
+    }
+    
+    
 
     public PostFeedback(int post_feedback_id, int customer_id, int post_id, String review, int is_active) {
         this.post_feedback_id = post_feedback_id;
@@ -65,8 +82,25 @@ public class PostFeedback {
         this.user = user;
     }
 
+    public Date getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(Date create_at) {
+        this.create_at = create_at;
+    }
+
+    public Date getModified_at() {
+        return modified_at;
+    }
+
+    public void setModified_at(Date modified_at) {
+        this.modified_at = modified_at;
+    }
 
 
+
+    
     public User getUser() {
         return user;
     }

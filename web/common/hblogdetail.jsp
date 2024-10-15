@@ -210,6 +210,7 @@
                                                 <div class="blog__details__author__text col-md-9">
                                                     <h5><%=postFeedback.getUsername()%></h5>
                                                     <p><%=postFeedback.getReview()%></p>
+                                                    <p style="color: #ddd; font-style: italic;"><%=postFeedback.getModified_at()%></p>
                                                 </div>
 
                                             </div>
