@@ -42,14 +42,14 @@ public class VoucherPaging extends HttpServlet {
         List<Voucher> vlist= vdao.getVoucherPaging(p);
         session.setAttribute("vlist", vlist);
         session.setAttribute("curentpage", p);
-        
+        session.setAttribute("mes", "");
         response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
         }else{
             int p=(int)session.getAttribute("curentpage");
             List<Voucher> vlist= vdao.getVoucherPaging(p);
             session.setAttribute("vlist", vlist);
             session.setAttribute("curentpage", p);
-        
+            session.setAttribute("mes", "");
             response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
         }
     } 

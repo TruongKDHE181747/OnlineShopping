@@ -375,6 +375,11 @@
 
                             </tbody>
                         </table>
+                        <div style="text-align: left;
+                                        color: red;
+                                        margin-left: 5px;">
+                                <h5>${sessionScope.mes}</h5><br>
+                             </div>
 
                         <!-- START PAGE -->
 

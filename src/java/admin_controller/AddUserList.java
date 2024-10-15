@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import model.Role;
 import model.User;
 
@@ -61,6 +63,11 @@ public class AddUserList extends HttpServlet {
                 error="Email is existed!";
             }
         }
+        if(picture.isEmpty()){
+            picture="profile_img/default.jpg";
+            
+        }
+        
         if(error.length()>0){
             session.setAttribute("error", error);
             response.sendRedirect(request.getContextPath()+"/management/adduserlist.jsp");
