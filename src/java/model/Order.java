@@ -12,7 +12,7 @@ public class Order {
     int shippingFee, totalPrice, totalAmount;
     String phoneNumber;
     Date paymentDate;
-    int paymentStatusId;
+    int paymentMethodId, paymentStatusId;
     String receiverName;
     String email;
     int statusId, voucherId;
@@ -20,7 +20,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int orderId, Date orderedDate, Date receivedDate, int shippingFee, int totalPrice, int totalAmount, String phoneNumber, Date paymentDate, int paymentStatusId, String receiverName, String email, int statusId, int voucherId) {
+    public Order(int orderId, Date orderedDate, Date receivedDate, int shippingFee, int totalPrice, int totalAmount, String phoneNumber, Date paymentDate, int paymentMethodId, int paymentStatusId, String receiverName, String email, int statusId, int voucherId) {
         this.orderId = orderId;
         this.orderedDate = orderedDate;
         this.receivedDate = receivedDate;
@@ -29,12 +29,23 @@ public class Order {
         this.totalAmount = totalAmount;
         this.phoneNumber = phoneNumber;
         this.paymentDate = paymentDate;
+        this.paymentMethodId = paymentMethodId;
         this.paymentStatusId = paymentStatusId;
         this.receiverName = receiverName;
         this.email = email;
         this.statusId = statusId;
         this.voucherId = voucherId;
     }
+
+    public int getPaymentMethodId() {
+        return paymentMethodId;
+    }
+
+    public void setPaymentMethodId(int paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
+    }
+
+    
 
     public int getOrderId() {
         return orderId;

@@ -1,6 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Order"%>
+<%@page import="model.PaymentStatus"%>
+<%@page import="dal.PaymentStatusDAO"%>
 <%@page import="java.util.*" %>
+<%@page import="java.text.DecimalFormatSymbols"%>
+<%@page import="java.text.NumberFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -140,8 +144,8 @@
                                     <h5 class="navbar-brand" href="#">Manage Orders</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchproduct" method="get">
-                                            <input placeholder="Search products" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <form class="d-flex" role="search" action="../searchorder" method="get">
+                                            <input placeholder="Search order b" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -165,27 +169,40 @@
                                 <!-- START Product item -->
                                 <%
                                     List<Order> oList = (ArrayList<Order>) session.getAttribute("order_list");
+                                    PaymentStatusDAO psdao = new PaymentStatusDAO();
+                                    int i = 1;
+                                    
+                                    Locale locale = new Locale("vi", "VN");
+                                    Currency currency = Currency.getInstance("VND");
+                                    DecimalFormatSymbols df = DecimalFormatSymbols.getInstance(locale);
+                                    df.setCurrency(currency);
+                                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+                                    numberFormat.setCurrency(currency);
+                                    
                                     for (Order o : oList) {
+                                        int price = o.getTotalPrice();
+                                        String cmoney = numberFormat.format(price);
+                                        PaymentStatus ps = psdao.getPaymentStatusById(o.getPaymentStatusId());
                                 %>
                                 <tr>
 
-                                    <td><%= o.getOrderId()%></td>
+                                    <td><%= i%></td>
 
                                     <td><%= o.getOrderedDate()%></td>
 
                                     <td><%= o.getReceiverName()%></td>
 
-                                    <td><%= o.getTotalAmount()%></td>
+                                    <td><%= cmoney%></td>
 
-                                    <td><%= o.getTotalAmount()%></td>
+                                    <td><%= ps.getPaymentStatusName()%></td>
 
                                     <td>
-                                        <div class="view" style="background-color: greenyellow">
-                                            <a href="../vieworderdetails?oid=<%= o.getOrderId()%>&button=view"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-                                            <i style="color: black;" class="bi bi-eye-fill"></i>
+                                        <div class="edit" style="background-color: greenyellow">
+                                            <a href="../vieworderdetails?oid=<%= o.getOrderId()%>&button=view"><i style="color: black;" class="bi bi-eye-fill"></i></a>
                                         </div>
                                     </td>
                                     <%
+                                        i++;
                                         }
                                     %>
 

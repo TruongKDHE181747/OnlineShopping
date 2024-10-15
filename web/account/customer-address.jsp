@@ -135,7 +135,7 @@
 
                                                     <c:if test="${!o.is_default}">
                                                         <button style="width: 80px" onclick="confirmDelete(${o.customer_addresses_id})" class="btn btn-sm btn-outline-danger"><span class="fa-trash fa"></span></button>
-                                                        <button style="width: fit-content" onclick="window.location.href = 'setDefaultAddress?addressId=${o.customer_addresses_id}'" class="btn btn-sm btn-outline-success">Set to default</button>
+                                                        <button style="width: fit-content" onclick="window.location.href = 'setDefaultAddress?addressId=${o.customer_addresses_id}'" class="btn btn-sm btn-outline-success">Set default</button>
                                                         </c:if>
                                                 </div>
                                             </div>
@@ -277,11 +277,11 @@
                 setTimeout(function () {
                     $('#district').val(districtId + '#' + districtName);
                     loadWards(districtId);
-                }, 300);
+                }, 500);
 
                 setTimeout(function () {
                     $('#ward').val(wardCode + '#' + wardName);
-                }, 600);
+                }, 1000);
 
                 $('#address').val(address);
 
