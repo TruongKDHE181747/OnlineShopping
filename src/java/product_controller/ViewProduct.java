@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package voucher_controller;
+package product_controller;
 
-import dal.VoucherDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Voucher;
+import model.Product;
 
 /**
  *
- * @author 84983
+ * @author Thanh Tan
  */
-@WebServlet(name="VoucherPaging", urlPatterns={"/voucherpaging"})
-public class VoucherPaging extends HttpServlet {
+@WebServlet(name="ViewProduct", urlPatterns={"/viewproduct"})
+public class ViewProduct extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,24 +33,15 @@ public class VoucherPaging extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session= request.getSession();
-        VoucherDAO vdao= new VoucherDAO();
-        if(request.getParameter("p")!=null)
-        {
-        int p=Integer.parseInt(request.getParameter("p"));
-        List<Voucher> vlist= vdao.getVoucherPaging(p);
-        session.setAttribute("vlist", vlist);
-        session.setAttribute("curentpage", p);
-        session.setAttribute("mes", "");
-        response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
-        }else{
-            int p=(int)session.getAttribute("curentpage");
-            List<Voucher> vlist= vdao.getVoucherPaging(p);
-            session.setAttribute("vlist", vlist);
-            session.setAttribute("curentpage", p);
-            session.setAttribute("mes", "");
-            response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
-        }
+        
+        HttpSession session = request.getSession();
+        ProductDAO pdao = new ProductDAO();
+        
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        Product product = pdao.getProductById(pid);
+        
+        session.setAttribute("viewproduct", product);
+        response.sendRedirect(request.getContextPath()+"/management/view-product.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

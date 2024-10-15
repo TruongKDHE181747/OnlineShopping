@@ -37,13 +37,15 @@ public class VoucherList extends HttpServlet {
         HttpSession session= request.getSession();
         VoucherDAO vdao= new VoucherDAO();
         
+        //update sql
+        vdao.updateStatus();
+        
         List<Voucher> list= vdao.getAllVoucher();
         List<Voucher> vlist= vdao.getVoucherPaging(1);
-        
         session.setAttribute("curentpage", 1);
         session.setAttribute("vlist", vlist);
         session.setAttribute("npage", getNumberOfPage(list.size(), 5));
-        
+        session.setAttribute("mes", "");
         response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
     } 
 

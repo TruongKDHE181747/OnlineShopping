@@ -246,6 +246,10 @@
                                         <% 
                                             }
                                         %> 
+                                        
+                                        <div class="edit"style="background-color: greenyellow">
+                                            <a style="color: black;" href="..\viewproduct?pid=<%= p.getProduct_id()%>"><i class="fa-solid fa-circle-info"></i></a>  
+                                        </div>
 
                                         <div class="edit">
                                             <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=edit"><i style="color: black;" class="fa-solid fa-pen"></i></a>

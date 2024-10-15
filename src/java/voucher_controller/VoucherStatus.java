@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
 import model.Voucher;
 
 /**
@@ -38,8 +39,19 @@ public class VoucherStatus extends HttpServlet {
         VoucherDAO vdao= new VoucherDAO();
         Voucher voucher=vdao.getVoucherbyId(vid);
         int status=Integer.parseInt(request.getParameter("status"));
+        String mes="";
+        LocalDate endDate = LocalDate.parse(voucher.getEnd_date());
+        LocalDate today = LocalDate.now();
+        if(endDate.isBefore(today) || endDate.isEqual(today)){
+            mes="This voucher has expired. You must change end date to use it";
+            
+        }
+        if(mes.length()>0){
+            session.setAttribute("mes", mes);
+            response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
+        }else{
         vdao.editVoucher(new Voucher(vid, voucher.getVoucher_name(), voucher.getDescription(), voucher.getStart_date(), voucher.getEnd_date(), voucher.getQuantity(), voucher.getPercent(), status,voucher.getVoucher_code()));
-        response.sendRedirect("voucherlist");
+        response.sendRedirect("voucherlist");}
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
