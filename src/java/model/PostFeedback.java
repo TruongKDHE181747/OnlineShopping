@@ -16,6 +16,7 @@ public class PostFeedback {
   
     Post post;
     User user;
+    String time_create;
     public PostFeedback() {
     }
 
@@ -25,6 +26,15 @@ public class PostFeedback {
         this.post_id = post_id;
         this.review = review;
         this.is_active = is_active;
+    }
+
+    public PostFeedback(int post_feedback_id, String review, int is_active, Post post, User user, String time_create) {
+        this.post_feedback_id = post_feedback_id;
+        this.review = review;
+        this.is_active = is_active;
+        this.post = post;
+        this.user = user;
+        this.time_create = time_create;
     }
 
     public PostFeedback(int post_feedback_id, int customer_id, int post_id, String review, int is_active, String username, String profile_picture_url) {
@@ -130,6 +140,14 @@ public class PostFeedback {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public String getTime_create() {
+        return time_create;
+    }
+
+    public void setTime_create(String time_create) {
+        this.time_create = time_create;
     }
     
     

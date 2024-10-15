@@ -118,9 +118,10 @@ public class PostFeedbackDAO extends DBContext{
                 int is_active = rs.getInt("is_active");
                 String username = rs.getString("username");
                 String profile_picture_url = rs.getString("profile_picture_url");
+              String time_create= rs.getString("create_at");
                 Post post= pdao.getPostByID(String.valueOf(post_id));
                 User user= udao.getUserById(customer_id);
-               PostFeedback pf=new PostFeedback(post_feedback_id, review, is_active, post, user);
+               PostFeedback pf=new PostFeedback(post_feedback_id, review, is_active, post, user, time_create);
                 
                 pList.add(pf);
                 
@@ -148,9 +149,10 @@ public class PostFeedbackDAO extends DBContext{
                 int is_active = rs.getInt("is_active");
                 String username = rs.getString("username");
                 String profile_picture_url = rs.getString("profile_picture_url");
+                String time_create= rs.getString("create_at");
                 Post post= pdao.getPostByID(String.valueOf(post_id));
                 User user= udao.getUserById(customer_id);
-               PostFeedback pf=new PostFeedback(post_feedback_id, review, is_active, post, user);
+               PostFeedback pf=new PostFeedback(post_feedback_id, review, is_active, post, user, time_create);
                 
                 pList.add(pf);
                 
