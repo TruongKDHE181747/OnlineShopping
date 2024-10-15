@@ -12,6 +12,8 @@
 <%@page import="java.util.*" %>
 <%@page import="java.text.DecimalFormatSymbols"%>
 <%@page import="java.text.NumberFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -248,8 +250,9 @@
                                 </div>
                                 <div class="tab-pane <%=dcontent.equals("pfeedback")?"active":""%>" id="tabs-6" role="tabpanel">
                                     <%
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                                     for (ProductFeedback productFeedback : pfList) {
-            
+                                    String date = sdf.format(productFeedback.getUpdate_at());
         
                                     %>
                                     <div class="row">
@@ -309,7 +312,7 @@
                                                         <%}%>
 
                                                     </div>
-                                                        <p style="color: #ccc; font-style: italic;"><%=productFeedback.getUpdate_at()%></p>
+                                                        <p style="color: #ccc; font-style: italic;"><%=date%></p>
                                                     </div>
                                                     
                                                 </div>

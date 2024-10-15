@@ -10,6 +10,8 @@
 <%@page import="model.PostCategory"%>
 <%@page import="model.User"%>
 <%@page import="model.PostFeedback"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -54,7 +56,8 @@
         List<PostFeedback> top3postfblist = (List<PostFeedback>)session.getAttribute("top3postfblist");
         List<PostFeedback> allpostfblist = (List<PostFeedback>)session.getAttribute("allpostfblist");
         
-        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String date = sdf.format(ppostdetail.getModified_at());
         %>
         <!-- Blog Details Hero Begin -->
         <section class="blog-hero spad">
@@ -65,7 +68,7 @@
                             <h2><%=ppostdetail.getTitle()%></h2>
                             <ul>
                                 <li>By <%=ppostauthor.getFirst_name()%> <%=ppostauthor.getLast_name()%></li>
-                                <li><%=ppostdetail.getModified_at()%></li>
+                                <li><%=date%></li>
                                 <li><%=allpostfblist.size()%> Comments</li>
                             </ul>
                         </div>
@@ -199,7 +202,7 @@
                                         
                                         <%
                                         for (PostFeedback postFeedback : top3postfblist) {
-            
+                                        date = sdf.format(postFeedback.getModified_at());
         
                                         %>
                                         <div class="col-md-12 row" style="margin: 5px 0;">
@@ -210,7 +213,7 @@
                                                 <div class="blog__details__author__text col-md-9">
                                                     <h5><%=postFeedback.getUsername()%></h5>
                                                     <p><%=postFeedback.getReview()%></p>
-                                                    <p style="color: #ddd; font-style: italic;"><%=postFeedback.getModified_at()%></p>
+                                                    <p style="color: #ddd; font-style: italic;"><%=date%></p>
                                                 </div>
 
                                             </div>
@@ -261,20 +264,20 @@
                         
                         <%
                         List<Post> relatedPostList = (List<Post>)session.getAttribute("relatedPostList");
-        
+                            
                         %>
                 <div class="row">
                     
                     <%
                     for (Post post : relatedPostList) {
-            
+                    date = sdf.format(post.getModified_at());
         
                     %>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic set-bg" data-setbg="../<%=post.getThumbnail()%>"></div>
                             <div class="blog__item__text">
-                                <span><img src="img/icon/calendar.png" alt=""> <%=post.getModified_at()%></span>
+                                <span><img src="img/icon/calendar.png" alt=""> <%=date%></span>
                                 <h5><%=post.getTitle()%></h5>
                                 <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
                             </div>

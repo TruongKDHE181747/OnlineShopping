@@ -8,6 +8,8 @@
 <%@page import="model.Post"%>
 <%@page import="model.PostCategory"%>
 <%@page import="java.util.*" %>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -161,14 +163,16 @@
                 
                 <div class="row">
                     <%
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    
                     for (Post post : top6post) {
-
+                    String date = sdf.format(post.getModified_at());
                     %>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic set-bg" data-setbg="../<%=post.getThumbnail()%>"></div>
                             <div class="blog__item__text">
-                                <span><img src="img/icon/calendar.png" alt=""> <%=post.getModified_at()%></span>
+                                <span><img src="img/icon/calendar.png" alt=""> <%=date%></span>
                                 <h5><%=post.getTitle()%></h5>
                                 <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
                             </div>
