@@ -47,7 +47,7 @@
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
                                 
-                                <a href="<%=s%>/profile"><img style="width: 25px;height: 25px;border-radius: 50%" src="${sessionScope.account.profile_picture_url}" alt="alt"/> ${sessionScope.account.username}</a>
+                                <a href="<%=s%>/profile"><img style="width: 25px;height: 25px;border-radius: 50%" src="<%=s%>/${sessionScope.account.profile_picture_url}" alt="alt"/> ${sessionScope.account.username}</a>
                                 <a href="<%=s%>/logout">Logout</a>                      
                             </c:if>
                         </div>
