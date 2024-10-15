@@ -203,7 +203,7 @@
                                     List<PostCategory> postcategorylist = (List<PostCategory>)session.getAttribute("listpostcategorymkt");
                                     %>
                                     <div class="btn-group" style="">
-                                      <button  style="color: white;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <button  style="color: black;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         <%=pcmktName.equals("")?"Select category":pcmktName%>
                                       </button>
                                       <ul class="dropdown-menu">
@@ -223,7 +223,7 @@
                                         if(authorfiltermkt.equals("null")) authorfiltermkt="";
                                       %>
                                       <div class="btn-group" style="">
-                                      <button  style="color: white;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <button  style="color: black;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         
                                         <%=(authorfiltermkt.length()==0||authorfiltermkt.equals("all"))?"All Post":"Your Post"%>
                                       </button>
