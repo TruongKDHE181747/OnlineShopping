@@ -39,7 +39,7 @@
                                 <form method="post" action="./login">
                                     <!-- Username input -->
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="username" class="form-control" id="userInput" placeholder="Username" value="${u}" required>
+                                        <input type="text" name="username" class="form-control" id="userInput" placeholder="Username" value="${requestScope.username!=null?requestScope.username:''}" required>
                                         <label for="userInput">Username</label>
                                     </div>
 

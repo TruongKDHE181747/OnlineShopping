@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
         
         for (Cookie cookie : cookies) {
             if(cookie.getName().equals(Constants.COOKIE_REMEMBER)){
-                request.setAttribute("u", cookie.getValue());
+                request.setAttribute("username", cookie.getValue());
             }
                     
         }
