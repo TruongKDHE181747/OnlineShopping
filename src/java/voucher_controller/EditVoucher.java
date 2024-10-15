@@ -47,6 +47,7 @@ public class EditVoucher extends HttpServlet {
         String code=request.getParameter("code");
         String error="";
         
+        Voucher v=vdao.getVoucherbyId(voucher_id);
             
         LocalDate startDate = LocalDate.parse(start_date);
         LocalDate endDate = LocalDate.parse(end_date);
@@ -55,6 +56,11 @@ public class EditVoucher extends HttpServlet {
             // Start date is before end date
             error="Start date must be before end date";
         }
+        Voucher vo=vdao.getVoucherbyCode(code);
+        if(vo !=null && !code.equals(v.getVoucher_code())){
+            error="Voucher code already has existed!";
+        }
+        
         if(error.length()>0){
                 session.setAttribute("error", error);
                 response.sendRedirect(request.getContextPath()+"/management/detailvoucher.jsp");

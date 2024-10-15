@@ -37,6 +37,7 @@ public class AddVoucher extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session= request.getSession();
         VoucherDAO vdao= new VoucherDAO();
+        
         String voucher_name= request.getParameter("voucher_name");
         String description=request.getParameter("description");
         String start_date=request.getParameter("start_date");
@@ -54,6 +55,11 @@ public class AddVoucher extends HttpServlet {
         if (startDate.isAfter(endDate)) {
             // Start date is before end date
             error="Start date must be before end date";
+        }
+        
+        Voucher vo=vdao.getVoucherbyCode(code);
+        if(vo !=null){
+            error="Voucher code already has existed!";
         }
         if(error.length()>0){
                 session.setAttribute("error", error);
