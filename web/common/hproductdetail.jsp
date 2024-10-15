@@ -255,12 +255,18 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="product__item row" style="margin: 24px 0;">
+                                                
                                                 <div style="height: 120px" class="product__item__pic set-bg col-md-2" data-setbg="../<%=productFeedback.getThumbnail()%>">
-
+                                                    
                                                 </div>
 
                                                 <div class="col-md-10">
-                                                    <h6><%=productFeedback.getReview()%></h6>
+                                                    <div style="padding: 0" class="blog__details__author__pic col-md-12">
+                                                        <img src="../profile_img/default.jpg" alt="">
+                                                        <strong>User1</strong>
+                                                    </div>
+                                                    <div style="    margin-left: 12px;">
+                                                        <h6><%=productFeedback.getReview()%></h6>
 
                                                     <div class="rating">
                                                         <%if(productFeedback.getRating()<=0){
@@ -303,6 +309,9 @@
                                                         <%}%>
 
                                                     </div>
+                                                        <p style="color: #ccc; font-style: italic;">15/10/2024</p>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
