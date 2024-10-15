@@ -262,8 +262,8 @@
 
                                                 <div class="col-md-10">
                                                     <div style="padding: 0" class="blog__details__author__pic col-md-12">
-                                                        <img src="../profile_img/default.jpg" alt="">
-                                                        <strong>User1</strong>
+                                                        <img src="../<%=productFeedback.getCustomer_img()%>" alt="">
+                                                        <strong><%=productFeedback.getCustomer_name()%></strong>
                                                     </div>
                                                     <div style="    margin-left: 12px;">
                                                         <h6><%=productFeedback.getReview()%></h6>
@@ -309,7 +309,7 @@
                                                         <%}%>
 
                                                     </div>
-                                                        <p style="color: #ccc; font-style: italic;">15/10/2024</p>
+                                                        <p style="color: #ccc; font-style: italic;"><%=productFeedback.getUpdate_at()%></p>
                                                     </div>
                                                     
                                                 </div>

@@ -60,6 +60,40 @@ public class ProductFeedback {
         this.is_active = is_active;
     }
 
+    public Date getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(Date create_at) {
+        this.create_at = create_at;
+    }
+
+    public Date getUpdate_at() {
+        return update_at;
+    }
+
+    public void setUpdate_at(Date update_at) {
+        this.update_at = update_at;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getCustomer_img() {
+        return customer_img;
+    }
+
+    public void setCustomer_img(String customer_img) {
+        this.customer_img = customer_img;
+    }
+    
+    
+
     public String getThumbnail() {
         return thumbnail;
     }
