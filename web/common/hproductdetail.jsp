@@ -236,7 +236,7 @@
                                         Previews(<%=alldpfList.size()%>)</a>
                                 </li>
                             </ul>
-                            <div class="tab-content">
+                                <div class="tab-content" style="margin: 0px 15%;">
                                 <div class="tab-pane <%=dcontent.equals("pdescription")?"active":""%>" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item">
