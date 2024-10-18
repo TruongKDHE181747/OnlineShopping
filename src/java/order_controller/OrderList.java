@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Order;
+import model.User;
 
 /**
  *
@@ -37,8 +38,9 @@ public class OrderList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         OrderDAO odao = new OrderDAO();
-        List<Order> order = odao.getAllOrder();
         HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("account");
+        List<Order> order = odao.getOrderBySale(user.getUsername());
         
         session.setAttribute("order_list", order);
         response.sendRedirect(request.getContextPath() + "/management/list-order.jsp");

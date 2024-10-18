@@ -15,12 +15,12 @@ public class Order {
     int paymentMethodId, paymentStatusId;
     String receiverName;
     String email;
-    int statusId, voucherId;
+    int statusId, voucherId, salerId;
 
     public Order() {
     }
 
-    public Order(int orderId, Date orderedDate, Date receivedDate, int shippingFee, int totalPrice, int totalAmount, String phoneNumber, Date paymentDate, int paymentMethodId, int paymentStatusId, String receiverName, String email, int statusId, int voucherId) {
+    public Order(int orderId, Date orderedDate, Date receivedDate, int shippingFee, int totalPrice, int totalAmount, String phoneNumber, Date paymentDate, int paymentMethodId, int paymentStatusId, String receiverName, String email, int statusId, int voucherId, int salerId) {
         this.orderId = orderId;
         this.orderedDate = orderedDate;
         this.receivedDate = receivedDate;
@@ -35,6 +35,15 @@ public class Order {
         this.email = email;
         this.statusId = statusId;
         this.voucherId = voucherId;
+        this.salerId = salerId;
+    }
+
+    public int getSalerId() {
+        return salerId;
+    }
+
+    public void setSalerId(int salerId) {
+        this.salerId = salerId;
     }
 
     public int getPaymentMethodId() {

@@ -38,7 +38,8 @@ public class OrderDAO extends DBContext{
                 String email = rs.getString("email");
                 int statusId = rs.getInt("status_id");
                 int voucherId = rs.getInt("voucherId");
-                Order order = new Order(oid, orderedDate, receivedDate, shippingFee, totalPrice, totalAmount, phoneNumber, paymentDate, paymentMethodId, paymentStatusId, receiverName, email, statusId, voucherId);
+                int salerId = rs.getInt("salerId");
+                Order order = new Order(oid, orderedDate, receivedDate, shippingFee, totalPrice, totalAmount, phoneNumber, paymentDate, paymentMethodId, paymentStatusId, receiverName, email, statusId, voucherId, salerId);
                 oList.add(order);
             }
         } catch (SQLException ex) {
