@@ -18,6 +18,40 @@
         <jsp:include page="../common/css.jsp" />
 
         <link rel="stylesheet" href="./account/css/registerstyle.css"/>
+        <style>
+            .payment-option {
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .payment-option:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .payment-option input[type="radio"]:checked + .card {
+                border-color: #28a745;
+                background-color: #d4edda;
+            }
+            .payment-option input[type="radio"]:checked + .card .card-body {
+                color: #155724;
+            }
+            .payment-option input[type="radio"]:checked + .card .payment-icon {
+                background-color: #28a745;
+                color: white;
+            }
+            .payment-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+                width: 60px;
+                height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background-color: #f8f9fa;
+                margin: 0 auto 1rem;
+                transition: all 0.3s ease;
+            }
+        </style>
     </head>
 
     <body>
@@ -53,87 +87,115 @@
                                 <table>
                                     <thead>
                                         <tr class="text-center">
+                                            <th class="text-left">No.</th>
                                             <th>Product</th>
                                             <th>Size</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
-                                            <th></th>
+
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <c:set var="subtotal" value="${0}"/>
-                                        <c:forEach var="o" items="${cart}" varStatus="status">
+                                        <c:forEach var="o" items="${items}" varStatus="status">
                                             <fmt:setLocale value="vi_VN" />
                                             <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
-                                            
+
                                             <tr>
+                                                <td class="text-left" style="width: 70px">${status.index +1}</td>
                                                 <td class="product__cart__item">
                                                     <div class="product__cart__item__pic">
                                                         <img style="width: 100px;height: 100px" src="${o.product.thumbnail}" alt="">
                                                     </div>
                                                     <div class="product__cart__item__text">
-                                                        <h6>${o.product.product_name}</h6>
+                                                        <h6 style="max-width: 90%">${o.product.product_name}</h6>
                                                         <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
                                                     </div>
                                                 </td>
                                                 <td class="">
                                                     <div class="text-center">
-                                                        <select id="sid_${status.index}" name="sid_${status.index}" >
-                                                            <c:forEach var="s" items="${listSize}">
-                                                                <c:if test="${o.product.product_id == s.product_id}">
-                                                                    <option ${o.size.size_id == s.size_id ? "selected":""} value="${s.size_id}">${s.size_name}</option>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </select>
+                                                        ${o.size.size_name}
                                                     </div>
                                                 </td>
-                                                <td class="quantity__item">
+                                                <td class="" style="width: 150px">
                                                     <div class="quantity">
                                                         <div class="text-center">
-                                                            <input style="width: 60px;text-align: center" id="quantity_${status.index}" name="quantity_${status.index}" type="number" min="1" value="${o.quantity}">
+                                                            x${o.quantity}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="cart__price text-center"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                                 <c:set var="subtotal" value="${subtotal + (price*o.quantity)}"/>
-                                                <td class="cart__close text-center"><a class="text-reset" href="removeOne?pid=${o.product.product_id}&sid=${o.size.size_id}"><i class="fa fa-close"></i></a></td>
+
 
 
                                         <input type="hidden" name="pid_${status.index}" value="${o.product.product_id}">
 
                                         </tr>
+
                                         <c:set var="maxIndex" value="${status.index}" />
                                     </c:forEach>
+
                                     <input type="hidden" name="maxIndex" value="${maxIndex}">
+
+
+
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="continue__btn update__btn " >
-                                        <button onclick="window.location.href = './removeAll'" style="width: 80%;margin-right:auto" class="btn btn-block btn-dark btn-lg" type="button">Remove all</button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="continue__btn update__btn " style="margin: auto">
-                                        <button style="width: 80%;margin-left:auto" class="btn btn-block btn-dark btn-lg" type="submit"><i class="fa fa-spinner"></i> Update cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 30px">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="continue__btn text-center" >
-                                        <a style="width: 100%" href="${pageContext.request.contextPath}/homeproduct">Continue Shopping</a>
-                                    </div>
-                                </div>
 
                             </div>
+
                         </form>
+                        <div class="row">
+                            <h2 class="text-center mb-4">Payment Method</h2>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="payment-option w-100">
+                                        <input type="radio" name="paymentMethod" value="cod" class="d-none" checked>
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                <div class="payment-icon">💵</div>
+                                                <h5 class="card-title">COD</h5>
+                                                <p class="card-text">Cash on Delivery</p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="payment-option w-100">
+                                        <input type="radio" name="paymentMethod" value="vnpay" class="d-none" >
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                <div class="payment-icon">💳</div>
+                                                <h5 class="card-title">VNPAY</h5>
+                                                <p class="card-text">Online Payment</p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
+
                     <div class="col-lg-4">
-                        <div class="cart__discount">
+                        <div class="checkout__order">
+                            <div class="row">
+                                <h4 class="mb-3 col-10" style="font-weight: bold">Delivery Address </h4>
+
+                                <a href="address" class="btn btn-dark col-2" style="height: 40px"><span class="fa fa-pencil"></span></a>
+                            </div>
+                            <hr style="border: 0.1px solid black;">
+                            <div class="mb-2">
+                                <p class="mb-1"><strong>${address.receiver_name}</strong></p>
+                                <p class="mb-1">${address.address}, ${address.ward_name}, </p>
+                                <p class="mb-1">${address.district_name}, ${address.province_name}</p>
+                                <p class="mb-1">Phone: ${address.phone}</p>
+                            </div>
+
+                        </div>
+                        <div class="cart__discount" style="margin-top: 20px">
                             <h6>Discount codes</h6>
                             <c:if test="${sessionScope.voucherError!=null}">
                                 <div class="alert-danger alert">
@@ -145,31 +207,27 @@
                             </c:if>
                             <form action="applyVoucher" method="POST">
                                 <input type="text" name="voucherCode" placeholder="Voucher code">
+                                <input type="hidden" name="isCheckout" value="true">
                                 <button type="submit">Apply</button>
                             </form>
                             <c:if test="${sessionScope.voucher!=null}">
                                 <div class="alert alert-secondary d-flex justify-content-between align-items-center" style="margin-top: 20px;">
                                     <span>${sessionScope.voucher.voucher_name} - <fmt:formatNumber value="${sessionScope.voucher.percent}" type="number" minFractionDigits="0" maxFractionDigits="2" />%</span>
-                                    <button onclick="window.location.href = 'removeVoucher'" type="button" class="btn-close" aria-label="Close"></button>
+                                    <button onclick="window.location.href = 'removeVoucher?isCheckout=true'" type="button" class="btn-close" aria-label="Close"></button>
                                 </div>
                             </c:if>
                         </div>
-                        <div class="cart__total">
-                            <h6>Cart total</h6>
-                            <ul>
-                                <li style="font-weight: normal ">Subtotal <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
-                                    <c:set var="discountPercent" value="${0}"/>
-                                    <c:if test="${sessionScope.voucher!=null}">
-                                        <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
-                                    <li style="font-weight: normal" >Voucher
-                                        <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
-                                        </li>
-
-                                    </c:if>
-                                    <c:set var="total" value="${subtotal - subtotal*discountPercent}"/>
-                                    <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
-                            </ul>
-                            <a href="#" class="primary-btn">Proceed to checkout</a>
+                        <div >
+                            <div class="checkout__order">
+                                <h3 style="font-weight: bold;">Order Total</h3>
+                                <hr style="border: 0.1px solid black;">
+                                <ul class="checkout__total__all" style="border:none">
+                                    <li>Subtotal <span>$750.99</span></li>
+                                    <li>Total <span>$750.99</span></li>
+                                </ul>
+                                <hr style="border: 0.1px solid black;">
+                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,7 +238,6 @@
         <!-- Bootstrap JS with Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="../common/js.jsp" />
-
     </body>
 
 </html>

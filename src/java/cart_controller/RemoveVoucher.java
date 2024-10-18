@@ -32,10 +32,14 @@ public class RemoveVoucher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
+
         session.removeAttribute("voucher");
-        
-        response.sendRedirect(request.getContextPath()+"/cart");
+        boolean isCheckout = request.getParameter("isCheckout").equals("true");
+        if (isCheckout) {
+            response.sendRedirect(request.getContextPath() + "/checkout");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/cart");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

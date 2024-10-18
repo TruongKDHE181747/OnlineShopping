@@ -14,6 +14,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CustomerAddressDAO extends DBContext {
+    
+    public CustomerAddress getDefaultAddress(int customerId) {
+        String sql = "Select * from [Customer_Addresses] where [customer_id] = ? and [is_default] = ?";
+        try {
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ps.setBoolean(2, true);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int customer_addresses_id = rs.getInt(1);
+                String address = rs.getString(2);
+                int province_id = rs.getInt(3);
+                String province_name = rs.getString(4);
+                int district_id = rs.getInt(5);
+                String district_name = rs.getString(6);
+                String ward_code = rs.getString(7);
+                String ward_name = rs.getString(8);
+                String phone = rs.getString(9);
+                String receiver_name = rs.getString(10);
+                boolean is_default = rs.getBoolean(11);
+                int customer_id = rs.getInt(12);
+
+                return new CustomerAddress(customer_addresses_id, address, province_id, province_name, district_id, district_name, ward_code, ward_name, phone, receiver_name, is_default, customer_id);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerAddressDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public boolean setDefaultAddress(int addressId) {
         String sql = """

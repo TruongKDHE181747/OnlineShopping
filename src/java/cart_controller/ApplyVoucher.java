@@ -32,24 +32,31 @@ public class ApplyVoucher extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         VoucherDAO dao = new VoucherDAO();
-        
+
         String code = request.getParameter("voucherCode");
-        
+        boolean isCheckout = request.getParameter("isCheckout").equals("true");
         Voucher voucher = dao.getVoucherbyCode(code);
-        
-        if(voucher == null){
+
+        if (voucher == null) {
             session.setAttribute("voucherError", "Voucher is invalid !");
-            response.sendRedirect(request.getContextPath()+"/cart");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
             return;
         }
-        
+
         session.setAttribute("voucher", voucher);
-        response.sendRedirect(request.getContextPath()+"/cart");
-        
-        
+        if (isCheckout) {
+            response.sendRedirect(request.getContextPath() + "/checkout");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/cart");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
