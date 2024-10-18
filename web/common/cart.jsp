@@ -169,7 +169,7 @@
                                     <c:set var="total" value="${subtotal - subtotal*discountPercent}"/>
                                     <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                             </ul>
-                            <a href="#" class="primary-btn">Proceed to checkout</a>
+                            <a href="checkout" class="primary-btn">Proceed to checkout</a>
                         </div>
                     </div>
                 </div>

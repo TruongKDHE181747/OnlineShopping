@@ -37,7 +37,11 @@ public class ApplyVoucher extends HttpServlet {
         VoucherDAO dao = new VoucherDAO();
 
         String code = request.getParameter("voucherCode");
-        boolean isCheckout = request.getParameter("isCheckout").equals("true");
+        String checkout = request.getParameter("isCheckout");
+        boolean isCheckout = false;
+        if (checkout != null) {
+            isCheckout = checkout.equals("true");
+        }
         Voucher voucher = dao.getVoucherbyCode(code);
 
         if (voucher == null) {

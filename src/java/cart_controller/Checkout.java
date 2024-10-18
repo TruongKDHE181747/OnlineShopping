@@ -19,6 +19,7 @@ import model.CartItem;
 import model.CustomerAddress;
 import model.User;
 import utils.Constants;
+import utils.ShippingFee;
 
 /**
  *
@@ -69,6 +70,10 @@ public class Checkout extends HttpServlet {
         
         request.setAttribute("address", address);
         
+        int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id());
+        
+        request.setAttribute("ship", shippingFee);
+            
         request.getRequestDispatcher("/common/checkout.jsp").forward(request, response);
     }
 

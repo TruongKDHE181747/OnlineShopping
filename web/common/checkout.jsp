@@ -148,7 +148,7 @@
 
                         </form>
                         <div class="row">
-                            <h2 class="text-center mb-4">Payment Method</h2>
+                            <h3 class="text-center mb-4">Payment Method</h3>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="payment-option w-100">
@@ -156,8 +156,8 @@
                                         <div class="card h-100">
                                             <div class="card-body text-center">
                                                 <div class="payment-icon">💵</div>
-                                                <h5 class="card-title">COD</h5>
-                                                <p class="card-text">Cash on Delivery</p>
+                                                <h5 class="card-title">Cash on Delivery</h5>
+                                                
                                             </div>
                                         </div>
                                     </label>
@@ -168,8 +168,8 @@
                                         <div class="card h-100">
                                             <div class="card-body text-center">
                                                 <div class="payment-icon">💳</div>
-                                                <h5 class="card-title">VNPAY</h5>
-                                                <p class="card-text">Online Payment</p>
+                                                <h5 class="card-title">Online Payment</h5>
+                                                
                                             </div>
                                         </div>
                                     </label>
@@ -222,8 +222,19 @@
                                 <h3 style="font-weight: bold;">Order Total</h3>
                                 <hr style="border: 0.1px solid black;">
                                 <ul class="checkout__total__all" style="border:none">
-                                    <li>Subtotal <span>$750.99</span></li>
-                                    <li>Total <span>$750.99</span></li>
+                                    <li style="font-weight: normal ">Subtotal <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                    <li style="font-weight: normal ">Shipping Fee <span class="text-reset"><fmt:formatNumber value="${ship}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                    <c:set var="discountPercent" value="${0}"/>
+                                    <c:if test="${sessionScope.voucher!=null}">
+                                        <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
+                                    <li style="font-weight: normal" >Voucher
+                                        <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
+                                        </li>
+
+                                    </c:if>
+                                    <c:set var="total" value="${subtotal - subtotal*discountPercent + ship}"/>
+                                    <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                            
                                 </ul>
                                 <hr style="border: 0.1px solid black;">
                                 <button type="submit" class="site-btn">PLACE ORDER</button>
