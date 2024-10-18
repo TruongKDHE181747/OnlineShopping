@@ -190,7 +190,7 @@
 
                                     <td><%= ps.getPaymentStatusName()%></td>
                                     
-                                    td><%= user.getFirst_name() + " " + user.getLast_name()%></td>
+                                    <td><%= user.getFirst_name() + " " + user.getLast_name()%></td>
 
                                     <td>
                                         <div class="edit" style="background-color: greenyellow">

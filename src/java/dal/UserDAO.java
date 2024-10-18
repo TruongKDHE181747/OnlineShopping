@@ -762,9 +762,12 @@ public class UserDAO extends DBContext {
     
     public User getUserByRoleId(int rid) {
         RoleDAO roleDAO = new RoleDAO();
-        ResultSet rs = getData("select * from Users where username ="+rid);
+        String sql = "select * from Users where role_id = ?";
         User user = null;
         try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, rid);
+            ResultSet rs = pre.executeQuery();
             if (rs.next()) {
                 int user_id = rs.getInt(1);
                 String username = rs.getString(2);
@@ -784,7 +787,6 @@ public class UserDAO extends DBContext {
                 Role role = roleDAO.getRoleById(rs.getInt(16));
                 user = new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role);
             }
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
