@@ -49,17 +49,17 @@
                 <div class="row g-5" style="justify-content: center;">
 
                     <c:set var="s" value="${sessionScope.s}"></c:set>
-                   
 
-                    <div class="col-md-8">
-                        <form class="needs-validation" action="../updateslider" method="post" enctype="multipart/form-data">
-                            <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <label for="id" class="form-label"> Id</label>
-                                    <input readonly value="${s.id}" name="id" type="text" class="form-control" id="id" required>
+
+                        <div class="col-md-8">
+                            <form class="needs-validation" action="../updateslider" method="post" enctype="multipart/form-data">
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <label for="id" class="form-label"> Id</label>
+                                        <input readonly value="${s.id}" name="id" type="text" class="form-control" id="id" required>
 
                                 </div>
-                            <input type="text" hidden="" value="${s.img}" name="currentimg">
+                                <input type="text" hidden="" value="${s.img}" name="currentimg">
                                 <div class="col-sm-6">
                                     <label for="title" class="form-label">Title</label>
                                     <input  value="${s.title}" name="title" type="text" class="form-control" id="title" required>
@@ -74,34 +74,34 @@
 
                                 <div class="my-3 col-sm-6">
                                     <label for="status" class="form-label">Status</label>
-                                   <div class="form-check">
-    <input value="1" id="status" name="status" type="radio" class="form-check-input"
-        <c:if test="${s.status == 1}"> checked</c:if>>
-    <label class="form-check-label" for="status">Active</label>
-</div>
-<div class="form-check">
-    <input value="0" id="status" name="status" type="radio" class="form-check-input"
-        <c:if test="${s.status == 0}"> checked</c:if>>
-    <label class="form-check-label" for="status">Inactive</label>
-</div>
-                                </div>
-                                
-                              <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <label for="description" class="form-label">Description</label>
-                                    <input  value="${s.description}" name="description" type="text" class="form-control" id="id" required>
+                                    <div class="form-check">
+                                        <input value="1" id="status" name="status" type="radio" class="form-check-input"
+                                               <c:if test="${s.status == 1}"> checked</c:if>>
+                                               <label class="form-check-label" for="status">Active</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input value="0" id="status" name="status" type="radio" class="form-check-input"
+                                            <c:if test="${s.status == 0}"> checked</c:if>>
+                                            <label class="form-check-label" for="status">Inactive</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-sm-6">
+                                            <label for="description" class="form-label">Description</label>
+                                            <input  value="${s.description}" name="description" type="text" class="form-control" id="id" required>
+
+                                    </div>
+
+
 
                                 </div>
-                             
+
+                                <hr class="my-4">
+                                <!-- Error check Username and Password -->
 
 
-                            </div>
-
-                            <hr class="my-4">
-                            <!-- Error check Username and Password -->
-                            
-
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
+                                <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
                         </form>
                     </div>
                 </div>
