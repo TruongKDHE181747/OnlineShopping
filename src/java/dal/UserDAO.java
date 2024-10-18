@@ -760,4 +760,35 @@ public class UserDAO extends DBContext {
         }
     }
     
+    public User getUserByRoleId(int rid) {
+        RoleDAO roleDAO = new RoleDAO();
+        ResultSet rs = getData("select * from Users where username ="+rid);
+        User user = null;
+        try {
+            if (rs.next()) {
+                int user_id = rs.getInt(1);
+                String username = rs.getString(2);
+                String password = rs.getString(3);
+                String first_name = rs.getString(4);
+                String last_name = rs.getString(5);
+                String phone = rs.getString(6);
+                String email = rs.getString(7);
+                boolean gender = rs.getBoolean(8);
+                String dob = rs.getString(9);
+                String verification_code = rs.getString(10);
+                String reset_password_code = rs.getString(11);
+                String google_id = rs.getString(12);
+                String profile_picture_url = rs.getString(13);
+                boolean is_active = rs.getBoolean(14);
+                boolean is_banned = rs.getBoolean(15);
+                Role role = roleDAO.getRoleById(rs.getInt(16));
+                user = new User(user_id, username, password, first_name, last_name, phone, email, gender, dob, verification_code, reset_password_code, google_id, profile_picture_url, is_active, is_banned, role);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+
+    }
 }
