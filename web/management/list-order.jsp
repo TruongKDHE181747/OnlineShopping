@@ -3,8 +3,6 @@
 <%@page import="model.PaymentStatus"%>
 <%@page import="dal.PaymentStatusDAO"%>
 <%@page import="java.util.*" %>
-<%@page import="java.text.DecimalFormatSymbols"%>
-<%@page import="java.text.NumberFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -158,7 +156,7 @@
                                     <th scope="col">No.</th>
                                     <th scope="col">Order Date</th>
                                     <th scope="col">Receiver Name</th>
-                                    <th scope="col">Total Amount</th>
+                                    <th scope="col">Total Price(VND)</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -172,16 +170,7 @@
                                     PaymentStatusDAO psdao = new PaymentStatusDAO();
                                     int i = 1;
                                     
-                                    Locale locale = new Locale("vi", "VN");
-                                    Currency currency = Currency.getInstance("VND");
-                                    DecimalFormatSymbols df = DecimalFormatSymbols.getInstance(locale);
-                                    df.setCurrency(currency);
-                                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
-                                    numberFormat.setCurrency(currency);
-                                    
                                     for (Order o : oList) {
-                                        int price = o.getTotalPrice();
-                                        String cmoney = numberFormat.format(price);
                                         PaymentStatus ps = psdao.getPaymentStatusById(o.getPaymentStatusId());
                                 %>
                                 <tr>
@@ -192,7 +181,7 @@
 
                                     <td><%= o.getReceiverName()%></td>
 
-                                    <td><%= cmoney%></td>
+                                    <td><%= o.getTotalPrice()%></td>
 
                                     <td><%= ps.getPaymentStatusName()%></td>
 
