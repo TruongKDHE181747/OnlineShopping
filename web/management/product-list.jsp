@@ -1,8 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Product"%>
 <%@page import="java.util.*" %>
-<%@page import="java.text.DecimalFormatSymbols"%>
-<%@page import="java.text.NumberFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -167,8 +165,8 @@
                                     <th scope="col" style="width: 20%">Name</th>
                                     <th scope="col">Image</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Discount</th>
+                                    <th scope="col">Price(VND)</th>
+                                    <th scope="col">Discount(%)</th>
                                     <th scope="col">Rating</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -179,18 +177,8 @@
                                 <!-- START Product item -->
                                 <%
                                     List<Product> pList = (ArrayList<Product>) session.getAttribute("product_list");
-                                    
-                                    Locale locale = new Locale("vi", "VN");
-                                    Currency currency = Currency.getInstance("VND");
-                                    DecimalFormatSymbols df = DecimalFormatSymbols.getInstance(locale);
-                                    df.setCurrency(currency);
-                                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
-                                    numberFormat.setCurrency(currency);
-                                    
                                     int num = 1;
                                     for (Product p : pList) {
-                                        int price = p.getPrice();
-                                        String cmoney = numberFormat.format(price);
                                 %>
                                 <tr>
 
@@ -216,9 +204,9 @@
                                         %>   
                                     </td>
 
-                                    <td><%= cmoney%></td>
+                                    <td><%= p.getPrice()%></td>
 
-                                    <td><%= p.getDiscount()%>%</td>
+                                    <td><%= p.getDiscount()%></td>
 
                                     <td><%= p.getRated_star()%></td>
 

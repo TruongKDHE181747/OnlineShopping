@@ -63,13 +63,13 @@
 
                                 <!-- Price -->
                                 <div class="col-sm-6">
-                                    <label for="price" class="form-label">Price</label>
+                                    <label for="price" class="form-label">Price(VND)</label>
                                     <input value="<%= p.getPrice()%>" name="price" type="number" class="form-control" id="price" required min="0" max="10000000">
                                 </div>
 
                                 <!-- Discount -->
                                 <div class="col-sm-6">
-                                    <label for="discount" class="form-label">Discount (%)</label>
+                                    <label for="discount" class="form-label">Discount(%)</label>
                                     <input value="<%= p.getDiscount()%>" name="discount" type="number" class="form-control" id="discount" required min="0" max="100">
                                 </div>
 
