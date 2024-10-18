@@ -18,10 +18,47 @@ public class ProductFeedback {
     Date create_at, update_at;
     String customer_name, customer_img;
     
+    
+    Product product;
+    User user;
+    
 
     public ProductFeedback() {
     }
 
+    public ProductFeedback(int feedback_id, int customer_id, int order_id, String review, String thumbnail, int rating, int is_active, Date create_at, Date update_at, Product product, User user) {
+        this.feedback_id = feedback_id;
+        this.customer_id = customer_id;
+        this.order_id = order_id;
+        this.review = review;
+        this.thumbnail = thumbnail;
+        this.rating = rating;
+        this.is_active = is_active;
+        this.create_at = create_at;
+        this.update_at = update_at;
+        this.product = product;
+        this.user = user;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    
+    
+    
     public ProductFeedback(int feedback_id, int customer_id, int order_id, int product_id, String review, String thumbnail, int rating, int is_active, Date create_at, Date update_at, String customer_name, String customer_img) {
         this.feedback_id = feedback_id;
         this.customer_id = customer_id;
