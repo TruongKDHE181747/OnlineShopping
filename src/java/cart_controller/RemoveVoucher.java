@@ -34,7 +34,11 @@ public class RemoveVoucher extends HttpServlet {
         HttpSession session = request.getSession();
 
         session.removeAttribute("voucher");
-        boolean isCheckout = request.getParameter("isCheckout").equals("true");
+        String checkout = request.getParameter("isCheckout");
+        boolean isCheckout = false;
+        if (checkout != null) {
+            isCheckout = checkout.equals("true");
+        }
         if (isCheckout) {
             response.sendRedirect(request.getContextPath() + "/checkout");
         } else {

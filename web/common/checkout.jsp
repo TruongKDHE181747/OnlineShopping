@@ -66,9 +66,10 @@
                         <div class="breadcrumb__text">
                             <h4>Shopping Cart</h4>
                             <div class="breadcrumb__links">
-                                <a href="#">Home</a>
-                                <a href="#">Shop</a>
-                                <span>Shopping Cart</span>
+                                <a href="homeslider">Home</a>
+                                <a href="homeproduct">Shop</a>
+                                 <a href="cart">Cart</a>
+                                <span>Checkout</span>
                             </div>
                         </div>
                     </div>
