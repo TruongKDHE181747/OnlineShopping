@@ -48,7 +48,6 @@ public class OrderDAO extends DBContext{
         return oList;        
     }
     
-    
 //    public static void main(String[] args) {
 //        OrderDAO odao = new OrderDAO();
 //        List<Order> o = odao.getAllOrder();

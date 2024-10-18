@@ -158,7 +158,7 @@
         <!-- Add New Address Modal -->
         <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content"  style="width: 600px">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
@@ -213,8 +213,8 @@
 
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" id='submitButton' >Add Address</button>
+                                <button style="width: 80px" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button style="width: 80px" type="submit" class="btn btn-primary" id='submitButton' >Add Address</button>
                             </div>
 
                             <input type="hidden" id="addressId" name="addressId">
@@ -247,7 +247,7 @@
                 $('#addAddressModalLabel').text('Add New Address');
                 $('#addressForm').attr('action', 'addAddress');
                 $('#addressId').val('');
-                $('#submitButton').text('Add Address');
+                $('#submitButton').text('Add');
                 $('#receiver_name').val('');
                 $('#phone').val('');
                 $('#province').val('');
@@ -264,10 +264,10 @@
             function openUpdateForm(addressId, receiverName, phone, provinceId, provinceName
                     , districtId, districtName, wardCode, wardName, address, isDefault) {
 
-                $('#addAddressModalLabel').text('Update Address');
+                $('#addAddressModalLabel').text('Edit Address');
                 $('#addressForm').attr('action', 'updateAddress');
                 $('#addressId').val(addressId);
-                $('#submitButton').text('Update Address');
+                $('#submitButton').text('Save');
 
                 $('#receiver_name').val(receiverName);
                 $('#phone').val(phone);

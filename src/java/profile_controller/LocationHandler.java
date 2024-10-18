@@ -114,7 +114,7 @@ public class LocationHandler extends HttpServlet {
         
         for (int i = 0; i < wards.length(); i++) {
             JSONObject ward = wards.getJSONObject(i);
-            options.append("<option value='").append(ward.getInt("WardCode")).append("#").append(ward.getString("WardName")).append("'>")
+            options.append("<option value='").append(ward.getString("WardCode")).append("#").append(ward.getString("WardName")).append("'>")
                     .append(ward.getString("WardName")).append("</option>");
         }
         return options.toString();

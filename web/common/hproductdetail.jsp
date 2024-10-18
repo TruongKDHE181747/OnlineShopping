@@ -12,6 +12,8 @@
 <%@page import="java.util.*" %>
 <%@page import="java.text.DecimalFormatSymbols"%>
 <%@page import="java.text.NumberFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -236,7 +238,7 @@
                                         Previews(<%=alldpfList.size()%>)</a>
                                 </li>
                             </ul>
-                            <div class="tab-content">
+                                <div class="tab-content" style="margin: 0px 15%;">
                                 <div class="tab-pane <%=dcontent.equals("pdescription")?"active":""%>" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item">
@@ -248,19 +250,26 @@
                                 </div>
                                 <div class="tab-pane <%=dcontent.equals("pfeedback")?"active":""%>" id="tabs-6" role="tabpanel">
                                     <%
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                                     for (ProductFeedback productFeedback : pfList) {
-            
+                                    String date = sdf.format(productFeedback.getUpdate_at());
         
                                     %>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="product__item row" style="margin: 24px 0;">
+                                                
                                                 <div style="height: 120px" class="product__item__pic set-bg col-md-2" data-setbg="../<%=productFeedback.getThumbnail()%>">
-
+                                                    
                                                 </div>
 
                                                 <div class="col-md-10">
-                                                    <h6><%=productFeedback.getReview()%></h6>
+                                                    <div style="padding: 0" class="blog__details__author__pic col-md-12">
+                                                        <img src="../<%=productFeedback.getCustomer_img()%>" alt="">
+                                                        <strong><%=productFeedback.getCustomer_name()%></strong>
+                                                    </div>
+                                                    <div style="    margin-left: 12px;">
+                                                        <h6><%=productFeedback.getReview()%></h6>
 
                                                     <div class="rating">
                                                         <%if(productFeedback.getRating()<=0){
@@ -303,6 +312,9 @@
                                                         <%}%>
 
                                                     </div>
+                                                        <p style="color: #ccc; font-style: italic;"><%=date%></p>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Dell
@@ -13,10 +15,30 @@ public class ProductFeedback {
     String review;
     String thumbnail;
     int rating, is_active;
+    Date create_at, update_at;
+    String customer_name, customer_img;
+    
 
     public ProductFeedback() {
     }
 
+    public ProductFeedback(int feedback_id, int customer_id, int order_id, int product_id, String review, String thumbnail, int rating, int is_active, Date create_at, Date update_at, String customer_name, String customer_img) {
+        this.feedback_id = feedback_id;
+        this.customer_id = customer_id;
+        this.order_id = order_id;
+        this.product_id = product_id;
+        this.review = review;
+        this.thumbnail = thumbnail;
+        this.rating = rating;
+        this.is_active = is_active;
+        this.create_at = create_at;
+        this.update_at = update_at;
+        this.customer_name = customer_name;
+        this.customer_img = customer_img;
+    }
+
+    
+    
     public ProductFeedback(int feedback_id, int customer_id, int order_id, int product_id, String review, int rating, int is_active) {
         this.feedback_id = feedback_id;
         this.customer_id = customer_id;
@@ -37,6 +59,40 @@ public class ProductFeedback {
         this.rating = rating;
         this.is_active = is_active;
     }
+
+    public Date getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(Date create_at) {
+        this.create_at = create_at;
+    }
+
+    public Date getUpdate_at() {
+        return update_at;
+    }
+
+    public void setUpdate_at(Date update_at) {
+        this.update_at = update_at;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getCustomer_img() {
+        return customer_img;
+    }
+
+    public void setCustomer_img(String customer_img) {
+        this.customer_img = customer_img;
+    }
+    
+    
 
     public String getThumbnail() {
         return thumbnail;

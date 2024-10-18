@@ -163,11 +163,7 @@
                                     </div>
 
 
-                                    <div class="">
-                                        <div class="d-flex add" role="search">
-                                            <a href="addslider.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
-                                        </div>
-                                    </div>
+                                  
                                 </div>
                             </nav>
                         </div>
@@ -179,7 +175,9 @@
                                     <th scope="col">Post Img</th>
                                     <th scope="col">Content</th>
                                     <th scope="col"> User</th>
+                                     <th scope="col"> Time Created</th>
                                     <th>Status</th>
+                                    
                                     <th scope="col" style="width: 14%">Action</th>
                                 </tr>
                             </thead>
@@ -208,6 +206,7 @@
                                           <img src="../${s.user.profile_picture_url}" alt="alt"/ style="width: 100px;height: 103px">
                                          ${s.user.first_name} ${s.user.last_name}
                                     </td>
+                                      <td>${s.time_create}</td>
                                       <td>
                                         <c:if test="${s.is_active==1}">
                                             <p style="color: green">Active</p>
@@ -244,7 +243,7 @@
                 box-shadow: 1px 1px 6px gray;" class="bi bi-eye-fill"></i></a> 
                                         
                                         </c:if>
-                                        
+                              
                                     </td>
                                     
                                     
