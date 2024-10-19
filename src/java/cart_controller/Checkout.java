@@ -183,10 +183,11 @@ public class Checkout extends HttpServlet {
             //insert Order Detail
             for (CartItem item : items) {
 
-                int unitPrice = item.getProduct().getPrice();
+                int unitPrice = item.getProduct().getPrice() - item.getProduct().getPrice()*item.getProduct().getDiscount()/100;
                 int productId = item.getProduct().getProduct_id();
                 int sizeId = item.getSize().getSize_id();
                 int itemQuantity = item.getQuantity();
+                
                 OrderDetail od = new OrderDetail(
                         orderId,
                         productId,

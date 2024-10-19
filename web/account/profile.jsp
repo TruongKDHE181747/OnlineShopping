@@ -31,12 +31,12 @@
                                     <!-- Form Group (first name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputFirstName">First name</label>
-                                        <input name="firstname" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="${account.first_name}">
+                                        <input name="firstname" class="form-control" id="inputFirstName" type="text" maxlength="50" placeholder="Enter your first name" value="${account.first_name}">
                                     </div>
                                     <!-- Form Group (last name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputLastName">Last name</label>
-                                        <input name="lastname" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="${account.last_name}">
+                                        <input name="lastname" class="form-control" id="inputLastName" type="text" maxlength="50" placeholder="Enter your last name" value="${account.last_name}">
                                     </div>
                                 </div>
 
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <input name="phone" class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="${account.phone}">
+                                    <input name="phone" class="form-control" id="inputPhone" maxlength="15" type="tel" placeholder="Enter your phone number" value="${account.phone}">
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">

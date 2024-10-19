@@ -40,13 +40,13 @@
                                 <form method="post" action="./resetPassword">
                                     <!-- New Password input -->
                                     <div class="form-floating mb-3">
-                                        <input type="password" name="newPassword" class="form-control" id="newPassword" placeholder="New Password" required>
+                                        <input maxlength="50" type="password" name="newPassword" class="form-control" id="newPassword" placeholder="New Password" required>
                                         <label for="newPassword">New Password</label>
                                     </div>
 
                                     <!-- Confirm Password input -->
                                     <div class="form-floating mb-3">
-                                        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                                        <input maxlength="50" type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
                                         <label for="confirmPassword">Confirm Password</label>
                                     </div>
                                     <input type="hidden" name="email" value="${requestScope.email}">

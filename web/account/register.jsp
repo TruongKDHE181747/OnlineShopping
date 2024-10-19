@@ -37,7 +37,7 @@
                                     <div class="row mb-4">
                                         <div class="col-md-12">
                                             <div class="form-floating">
-                                                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
+                                                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required maxlength="50">
                                                 <label for="username">Username</label>
                                             </div>
                                         </div>
@@ -46,13 +46,13 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required maxlength="50">
                                                 <label for="password">Password</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+                                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password" required maxlength="50">
                                                 <label for="confirmPassword">Confirm password</label>
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <div class="form-floating">
-                                            <input type="email" name="email"  class="form-control" id="email" placeholder="Email address" required>
+                                            <input type="email" name="email"  class="form-control" id="email" placeholder="Email address" required maxlength="255">
                                             <label for="email">Email address</label>
                                         </div>
                                     </div>
@@ -68,13 +68,13 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="firstname"  class="form-control" id="firstName" placeholder="First name" >
+                                                <input type="text" name="firstname"  class="form-control" id="firstName" placeholder="First name" maxlength="50">
                                                 <label for="firstName">First name</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Last name" >
+                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Last name" maxlength="50">
                                                 <label for="lastName">Last name</label>
                                             </div>
                                         </div>
@@ -108,7 +108,7 @@
                                     <div class="row mb-4">
                                         <div>
                                             <div class="form-floating">
-                                                <input type="tel" name="phone"  class="form-control" id="phone" placeholder="Phone number" required>
+                                                <input type="tel" name="phone"  pattern="\d{10}" title="Phone number must be exactly 10 digits" class="form-control" id="phone" placeholder="Phone number" required maxlength="15">
                                                 <label for="phone">Phone</label>
                                             </div>
                                         </div>

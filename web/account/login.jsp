@@ -39,13 +39,13 @@
                                 <form method="post" action="./login">
                                     <!-- Username input -->
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="username" class="form-control" id="userInput" placeholder="Username" value="${requestScope.username!=null?requestScope.username:''}" required>
+                                        <input maxlength="50" type="text" name="username" class="form-control" id="userInput" placeholder="Username" value="${requestScope.username!=null?requestScope.username:''}" required>
                                         <label for="userInput">Username</label>
                                     </div>
 
                                     <!-- Password input -->
                                     <div class="form-floating mb-3">
-                                        <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Password" required>
+                                        <input maxlength="50" type="password" name="password" class="form-control" id="passwordInput" placeholder="Password" required>
                                         <label for="passwordInput">Password</label>
                                     </div>
 
