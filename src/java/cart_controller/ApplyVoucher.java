@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import model.Voucher;
 
 /**
@@ -53,7 +55,42 @@ public class ApplyVoucher extends HttpServlet {
             }
             return;
         }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(voucher.getStart_date(), formatter);
+        LocalDate endDate = LocalDate.parse(voucher.getEnd_date(), formatter);
+        LocalDate currentDate = LocalDate.now();
+        
+        if(currentDate.isBefore(startDate)){
+            session.setAttribute("voucherError", "Voucher is not yet valid !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        
+        if(currentDate.isAfter(endDate)){
+            session.setAttribute("voucherError", "Voucher has expired !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        
+        if(voucher.getQuantity() <= 0){
+            session.setAttribute("voucherError", "Voucher out of quantity !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        
+                
         session.setAttribute("voucher", voucher);
         if (isCheckout) {
             response.sendRedirect(request.getContextPath() + "/checkout");

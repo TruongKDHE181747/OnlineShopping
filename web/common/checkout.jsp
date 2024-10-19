@@ -189,10 +189,12 @@
                             </div>
                             <hr style="border: 0.1px solid black;">
                             <div class="mb-2">
+                                <c:if test="${address != null}">
                                 <p class="mb-1"><strong>${address.receiver_name}</strong></p>
                                 <p class="mb-1">${address.address}, ${address.ward_name}, </p>
                                 <p class="mb-1">${address.district_name}, ${address.province_name}</p>
                                 <p class="mb-1">Phone: ${address.phone}</p>
+                                </c:if>
                             </div>
 
                         </div>

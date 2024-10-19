@@ -70,6 +70,13 @@ public class Checkout extends HttpServlet {
         
         CustomerAddress address = addressDAO.getDefaultAddress(customer.getUser_id());
         
+        if(address == null){
+            session.setAttribute("noAddressError",
+                    "No address found. Please add an address before checkout.");
+            response.sendRedirect(request.getContextPath()+"/cart");
+            return;
+        }
+        
         request.setAttribute("address", address);
         
         int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(),totalQuantity);
