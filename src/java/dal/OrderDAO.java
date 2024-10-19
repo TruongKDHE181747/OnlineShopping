@@ -17,46 +17,6 @@ import java.util.logging.Logger;
  */
 public class OrderDAO extends DBContext {
     
-    public static void main(String[] args) {
-        OrderDAO orderDAO= new OrderDAO();
-        Order order = new Order();
-        
-        order.setCustomerId(1);
-        order.setOrderedDate("2024-10-19");
-        order.setReceiverName("John Doe");
-        order.setPhone("123456789");
-        order.setEmail("john.doe@example.com");
-        order.setAddress("123 Main Street");
-        order.setWardCode("WC001");
-        order.setWardName("Ward A");
-        order.setDistrictId(12);
-        order.setDistrictName("District B");
-        order.setProvinceId(34);
-        order.setProvinceName("Province C");
-        order.setTotalPrice(5000);
-        order.setShippingFee(100);
-        order.setVoucherId(1);
-        order.setVoucherPercent(10);
-        order.setTotalAmount(4500);
-        order.setTotalGram(1500);
-        order.setPaymentMethodId(1); // Assume 2 = VNPay, 1 = Cash, etc.
-        order.setVnpTxnRef("VN123456789");
-        order.setVnpCreateDate("2024-10-19 10:30:00");
-        order.setPaymentStatusId(1); // Assume 1 = Paid, 2 = Pending, etc.
-        order.setOrderStatusId(1); // Assume 1 = Processing, 2 = Shipped, etc.
-        order.setShippingCode("SH123456789");
-
-            // Insert the order and get the generated order_id
-            int generatedOrderId = orderDAO.insertOrder(order);
-
-            // Output the result
-            if (generatedOrderId != -1) {
-                System.out.println("Order inserted successfully! Generated Order ID: " + generatedOrderId);
-            } else {
-                System.out.println("Failed to insert order.");
-            }
-    }
-
     public int insertOrder(Order order) {
 
         String sql = """
