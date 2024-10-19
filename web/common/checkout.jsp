@@ -68,7 +68,7 @@
                             <div class="breadcrumb__links">
                                 <a href="homeslider">Home</a>
                                 <a href="homeproduct">Shop</a>
-                                 <a href="cart">Cart</a>
+                                <a href="cart">Cart</a>
                                 <span>Checkout</span>
                             </div>
                         </div>
@@ -83,94 +83,93 @@
                 <div class="row">
 
                     <div class="col-lg-8">
-                        <form method="GET" action="updateCart">
-                            <div class="shopping__cart__table">
-                                <table>
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th class="text-left">No.</th>
-                                            <th>Product</th>
-                                            <th>Size</th>
-                                            <th>Quantity</th>
-                                            <th>Total</th>
+                        <div class="shopping__cart__table">
+                            <table>
+                                <thead>
+                                    <tr class="text-center">
+                                        <th class="text-left">No.</th>
+                                        <th>Product</th>
+                                        <th>Size</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
 
-                                        </tr>
-                                    </thead>
+                                    </tr>
+                                </thead>
 
-                                    <tbody>
-                                        <c:set var="subtotal" value="${0}"/>
-                                        <c:forEach var="o" items="${items}" varStatus="status">
-                                            <fmt:setLocale value="vi_VN" />
-                                            <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
+                                <tbody>
+                                    <c:set var="subtotal" value="${0}"/>
+                                    <c:forEach var="o" items="${items}" varStatus="status">
+                                        <fmt:setLocale value="vi_VN" />
+                                        <c:set var="price" value="${o.product.price - (o.product.price * o.product.discount / 100)}" />             
 
-                                            <tr>
-                                                <td class="text-left" style="width: 70px">${status.index +1}</td>
-                                                <td class="product__cart__item">
-                                                    <div class="product__cart__item__pic">
-                                                        <img style="width: 100px;height: 100px" src="${o.product.thumbnail}" alt="">
-                                                    </div>
-                                                    <div class="product__cart__item__text">
-                                                        <h6 style="max-width: 90%">${o.product.product_name}</h6>
-                                                        <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
-                                                    </div>
-                                                </td>
-                                                <td class="">
+                                        <tr>
+                                            <td class="text-left" style="width: 70px">${status.index +1}</td>
+                                            <td class="product__cart__item">
+                                                <div class="product__cart__item__pic">
+                                                    <img style="width: 100px;height: 100px" src="${o.product.thumbnail}" alt="">
+                                                </div>
+                                                <div class="product__cart__item__text">
+                                                    <h6 style="max-width: 90%">${o.product.product_name}</h6>
+                                                    <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
+                                                </div>
+                                            </td>
+                                            <td class="">
+                                                <div class="text-center">
+                                                    ${o.size.size_name}
+                                                </div>
+                                            </td>
+                                            <td class="" style="width: 150px">
+                                                <div class="quantity">
                                                     <div class="text-center">
-                                                        ${o.size.size_name}
+                                                        x${o.quantity}
                                                     </div>
-                                                </td>
-                                                <td class="" style="width: 150px">
-                                                    <div class="quantity">
-                                                        <div class="text-center">
-                                                            x${o.quantity}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price text-center"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                                <c:set var="subtotal" value="${subtotal + (price*o.quantity)}"/>
+                                                </div>
+                                            </td>
+                                            <td class="cart__price text-center"><fmt:formatNumber value="${price*o.quantity}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                            <c:set var="subtotal" value="${subtotal + (price*o.quantity)}"/>
 
 
 
-                                        <input type="hidden" name="pid_${status.index}" value="${o.product.product_id}">
+                                    <input type="hidden" name="pid_${status.index}" value="${o.product.product_id}">
 
-                                        </tr>
+                                    </tr>
 
-                                        <c:set var="maxIndex" value="${status.index}" />
-                                    </c:forEach>
+                                    <c:set var="maxIndex" value="${status.index}" />
+                                </c:forEach>
 
-                                    <input type="hidden" name="maxIndex" value="${maxIndex}">
+                                <input type="hidden" name="maxIndex" value="${maxIndex}">
 
 
 
-                                    </tbody>
-                                </table>
+                                </tbody>
+                            </table>
 
-                            </div>
+                        </div>
 
-                        </form>
+
                         <div class="row">
                             <h3 class="text-center mb-4">Payment Method</h3>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="payment-option w-100">
-                                        <input type="radio" name="paymentMethod" value="cod" class="d-none" checked>
+                                        <input type="radio" name="paymentMethod" value="1" class="d-none" checked onclick="setPaymentMethod(this.value)">
                                         <div class="card h-100">
                                             <div class="card-body text-center">
                                                 <div class="payment-icon">💵</div>
                                                 <h5 class="card-title">Cash on Delivery</h5>
-                                                
+
                                             </div>
                                         </div>
                                     </label>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="payment-option w-100">
-                                        <input type="radio" name="paymentMethod" value="vnpay" class="d-none" >
+                                        <input type="radio" name="paymentMethod" value="2" class="d-none" onclick="setPaymentMethod(this.value)">
                                         <div class="card h-100">
                                             <div class="card-body text-center">
                                                 <div class="payment-icon">💳</div>
                                                 <h5 class="card-title">Online Payment</h5>
-                                                
+
                                             </div>
                                         </div>
                                     </label>
@@ -190,10 +189,10 @@
                             <hr style="border: 0.1px solid black;">
                             <div class="mb-2">
                                 <c:if test="${address != null}">
-                                <p class="mb-1"><strong>${address.receiver_name}</strong></p>
-                                <p class="mb-1">${address.address}, ${address.ward_name}, </p>
-                                <p class="mb-1">${address.district_name}, ${address.province_name}</p>
-                                <p class="mb-1">Phone: ${address.phone}</p>
+                                    <p class="mb-1"><strong>${address.receiver_name}</strong></p>
+                                    <p class="mb-1">${address.address}, ${address.ward_name}, </p>
+                                    <p class="mb-1">${address.district_name}, ${address.province_name}</p>
+                                    <p class="mb-1">Phone: ${address.phone}</p>
                                 </c:if>
                             </div>
 
@@ -227,20 +226,29 @@
                                 <ul class="checkout__total__all" style="border:none">
                                     <li style="font-weight: normal ">Subtotal <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                                     <li style="font-weight: normal ">Shipping Fee <span class="text-reset"><fmt:formatNumber value="${ship}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
-                                    <c:set var="discountPercent" value="${0}"/>
-                                    <c:if test="${sessionScope.voucher!=null}">
-                                        <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
-                                    <li style="font-weight: normal" >Voucher
-                                        <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
+                                        <c:set var="discountPercent" value="${0}"/>
+                                        <c:if test="${sessionScope.voucher!=null}">
+                                            <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
+                                        <li style="font-weight: normal" >Voucher
+                                            <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                         </li>
 
                                     </c:if>
                                     <c:set var="total" value="${subtotal - subtotal*discountPercent + ship}"/>
                                     <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
-                            
+
                                 </ul>
                                 <hr style="border: 0.1px solid black;">
-                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                                <form action="checkout" method="post">
+                                    <input type="hidden" name="totalPrice" value="${subtotal}">
+                                    <input type="hidden" name="shippingFee" value="${ship}">
+                                    <input type="hidden" name="voucherId" value="${sessionScope.voucher.voucher_id}">
+                                    <input type="hidden" name="totalAmount" value="${total}">
+                                    <input id="selectedPaymentMethod" type="hidden" name="paymentMethod" >
+
+
+                                    <button type="submit" class="site-btn">PLACE ORDER</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -252,6 +260,13 @@
         <!-- Bootstrap JS with Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="../common/js.jsp" />
+
+        <script>
+                                        function setPaymentMethod(value) {
+                                            document.getElementById('selectedPaymentMethod').value = value;
+
+                                        }
+        </script>
     </body>
 
 </html>

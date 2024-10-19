@@ -10,7 +10,7 @@ public class Order {
 
     private int orderId;
     private int customerId;
-    private Date orderedDate;
+    private String orderedDate;
     private String receiverName;
     private String phone;
     private String email;
@@ -37,7 +37,33 @@ public class Order {
     public Order() {
     }
 
-    public Order(int orderId, int customerId, Date orderedDate, String receiverName, String phone, String email, String address, String wardCode, String wardName, int districtId, String districtName, int provinceId, String provinceName, int totalPrice, int shippingFee, int voucherId, int voucherPercent, int totalAmount, int totalGram, int paymentMethodId, String vnpTxnRef, String vnpCreateDate, int paymentStatusId, int orderStatusId, String shippingCode) {
+    public Order(int customerId, String orderedDate, String receiverName, String phone, String email, String address, String wardCode, String wardName, int districtId, String districtName, int provinceId, String provinceName, int totalPrice, int shippingFee, int voucherId, int voucherPercent, int totalAmount, int totalGram, int paymentMethodId, int paymentStatusId, int orderStatusId) {
+        this.customerId = customerId;
+        this.orderedDate = orderedDate;
+        this.receiverName = receiverName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.wardCode = wardCode;
+        this.wardName = wardName;
+        this.districtId = districtId;
+        this.districtName = districtName;
+        this.provinceId = provinceId;
+        this.provinceName = provinceName;
+        this.totalPrice = totalPrice;
+        this.shippingFee = shippingFee;
+        this.voucherId = voucherId;
+        this.voucherPercent = voucherPercent;
+        this.totalAmount = totalAmount;
+        this.totalGram = totalGram;
+        this.paymentMethodId = paymentMethodId;
+        this.paymentStatusId = paymentStatusId;
+        this.orderStatusId = orderStatusId;
+    }
+    
+    
+
+    public Order(int orderId, int customerId, String orderedDate, String receiverName, String phone, String email, String address, String wardCode, String wardName, int districtId, String districtName, int provinceId, String provinceName, int totalPrice, int shippingFee, int voucherId, int voucherPercent, int totalAmount, int totalGram, int paymentMethodId, String vnpTxnRef, String vnpCreateDate, int paymentStatusId, int orderStatusId, String shippingCode) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderedDate = orderedDate;
@@ -81,11 +107,11 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public Date getOrderedDate() {
+    public String getOrderedDate() {
         return orderedDate;
     }
 
-    public void setOrderedDate(Date orderedDate) {
+    public void setOrderedDate(String orderedDate) {
         this.orderedDate = orderedDate;
     }
 
@@ -264,5 +290,7 @@ public class Order {
     public void setShippingCode(String shippingCode) {
         this.shippingCode = shippingCode;
     }
+
+    
 
 }

@@ -5,6 +5,8 @@
 package cart_controller;
 
 import dal.CustomerAddressDAO;
+import dal.OrderDAO;
+import dal.VoucherDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -13,11 +15,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import model.Cart;
 import model.CartItem;
 import model.CustomerAddress;
+import model.Order;
 import model.User;
+import model.Voucher;
 import utils.Constants;
 import utils.ShippingFee;
 
@@ -28,7 +34,6 @@ import utils.ShippingFee;
 @WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
 public class Checkout extends HttpServlet {
 
-   
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -40,11 +45,10 @@ public class Checkout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         Cookie[] cookies = request.getCookies();
         CustomerAddressDAO addressDAO = new CustomerAddressDAO();
-        
 
         String txt = "";
         for (Cookie cookie : cookies) {
@@ -54,35 +58,35 @@ public class Checkout extends HttpServlet {
             }
         }
         Cart cart = new Cart(txt);
-        
+
         int totalQuantity = cart.cartSize(txt);
-        
-        if(totalQuantity == 0){
-            response.sendRedirect(request.getContextPath()+"/cart");
+
+        if (totalQuantity == 0) {
+            response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }
-        
+
         List<CartItem> items = cart.getItems();
-        
+
         request.setAttribute("items", items);
-        
+
         User customer = (User) session.getAttribute("account");
-        
+
         CustomerAddress address = addressDAO.getDefaultAddress(customer.getUser_id());
-        
-        if(address == null){
+
+        if (address == null) {
             session.setAttribute("noAddressError",
                     "No address found. Please add an address before checkout.");
-            response.sendRedirect(request.getContextPath()+"/cart");
+            response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }
-        
+
         request.setAttribute("address", address);
-        
-        int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(),totalQuantity);
-        
+
+        int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(), totalQuantity);
+
         request.setAttribute("ship", shippingFee);
-            
+
         request.getRequestDispatcher("/common/checkout.jsp").forward(request, response);
     }
 
@@ -97,9 +101,76 @@ public class Checkout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-    }
 
- 
+        HttpSession session = request.getSession();
+        Cookie[] cookies = request.getCookies();
+        CustomerAddressDAO addressDAO = new CustomerAddressDAO();
+        VoucherDAO voucherDAO = new VoucherDAO();
+        OrderDAO orderDAO = new OrderDAO();
+
+        String txt = "";
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(Constants.COOKIE_CART)) {
+                txt = cookie.getValue();
+                break;
+            }
+        }
+        Cart cart = new Cart(txt);
+
+        int totalQuantity = cart.cartSize(txt);
+
+        List<CartItem> items = cart.getItems();
+
+        User customer = (User) session.getAttribute("account");
+
+        CustomerAddress address = addressDAO.getDefaultAddress(customer.getUser_id());
+
+        try {
+            int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+            int shippingFee = Integer.parseInt(request.getParameter("shippingFee"));
+            String voucherId = request.getParameter("voucherId");
+            int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
+            int paymentMethod = Integer.parseInt(request.getParameter("paymentMethod"));
+
+            int intVoucherId = 1;
+            if (voucherId != null) {
+                intVoucherId = Integer.parseInt(voucherId);
+            }
+
+            Voucher voucher = voucherDAO.getVoucherbyId(intVoucherId);
+
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String currentDateString = currentDate.format(formatter);
+
+            Order order = new Order(
+                    customer.getUser_id(),
+                    currentDateString,
+                    address.getReceiver_name(),
+                    address.getPhone(),
+                    customer.getEmail(),
+                    address.getAddress(),
+                    address.getWard_code(),
+                    address.getWard_name(),
+                    address.getDistrict_id(),
+                    address.getDistrict_name(),
+                    address.getProvince_id(),
+                    address.getProvince_name(),
+                    totalPrice,
+                    shippingFee,
+                    intVoucherId,
+                    voucher.getPercent(),
+                    totalAmount,
+                    1000,
+                    paymentMethod,
+                    1,
+                    1);
+
+            int orderId = orderDAO.insertOrder(order);
+            
+        } catch (Exception e) {
+
+        }
+    }
 
 }
