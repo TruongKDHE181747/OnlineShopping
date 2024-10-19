@@ -244,7 +244,7 @@
                                     <input type="hidden" name="shippingFee" value="${ship}">
                                     <input type="hidden" name="voucherId" value="${sessionScope.voucher.voucher_id}">
                                     <input type="hidden" name="totalAmount" value="${total}">
-                                    <input id="selectedPaymentMethod" type="hidden" name="paymentMethod" >
+                                    <input id="selectedPaymentMethod" type="hidden" name="paymentMethod" value="1">
 
 
                                     <button type="submit" class="site-btn">PLACE ORDER</button>
@@ -261,11 +261,21 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="../common/js.jsp" />
 
-        <script>
-                                        function setPaymentMethod(value) {
-                                            document.getElementById('selectedPaymentMethod').value = value;
+        <c:if test="${not empty sessionScope.systemError}">
+            <script>
+                    alert('Something went wrong. Try again later !');
+            </script>
 
-                                        }
+            <%session.removeAttribute("noAddressError");%>
+        </c:if>
+
+
+        <script>
+            function setPaymentMethod(value) {
+                document.getElementById('selectedPaymentMethod').value = value;
+
+            }
+
         </script>
     </body>
 

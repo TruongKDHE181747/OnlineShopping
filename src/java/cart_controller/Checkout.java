@@ -6,6 +6,8 @@ package cart_controller;
 
 import dal.CustomerAddressDAO;
 import dal.OrderDAO;
+import dal.OrderDetailDAO;
+import dal.ProductSizeDAO;
 import dal.VoucherDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,6 +24,7 @@ import model.Cart;
 import model.CartItem;
 import model.CustomerAddress;
 import model.Order;
+import model.OrderDetail;
 import model.User;
 import model.Voucher;
 import utils.Constants;
@@ -107,6 +110,8 @@ public class Checkout extends HttpServlet {
         CustomerAddressDAO addressDAO = new CustomerAddressDAO();
         VoucherDAO voucherDAO = new VoucherDAO();
         OrderDAO orderDAO = new OrderDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        ProductSizeDAO productSizeDAO = new ProductSizeDAO();
 
         String txt = "";
         for (Cookie cookie : cookies) {
@@ -115,9 +120,8 @@ public class Checkout extends HttpServlet {
                 break;
             }
         }
-        Cart cart = new Cart(txt);
 
-        int totalQuantity = cart.cartSize(txt);
+        Cart cart = new Cart(txt);
 
         List<CartItem> items = cart.getItems();
 
@@ -126,14 +130,15 @@ public class Checkout extends HttpServlet {
         CustomerAddress address = addressDAO.getDefaultAddress(customer.getUser_id());
 
         try {
-            int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+            //insert Order
+            int totalPrice = (int) Double.parseDouble(request.getParameter("totalPrice"));
             int shippingFee = Integer.parseInt(request.getParameter("shippingFee"));
             String voucherId = request.getParameter("voucherId");
-            int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
+            int totalAmount = (int) Double.parseDouble(request.getParameter("totalAmount"));
             int paymentMethod = Integer.parseInt(request.getParameter("paymentMethod"));
 
             int intVoucherId = 1;
-            if (voucherId != null) {
+            if (voucherId != null && !voucherId.isEmpty()) {
                 intVoucherId = Integer.parseInt(voucherId);
             }
 
@@ -167,9 +172,59 @@ public class Checkout extends HttpServlet {
                     1);
 
             int orderId = orderDAO.insertOrder(order);
-            
-        } catch (Exception e) {
 
+            if (orderId == -1) {
+                session.setAttribute("systemError", "error");
+                response.sendRedirect(request.getContextPath() + "/checkout");
+                return;
+            }
+
+            //end insert Order
+            //insert Order Detail
+            for (CartItem item : items) {
+
+                int unitPrice = item.getProduct().getPrice();
+                int productId = item.getProduct().getProduct_id();
+                int sizeId = item.getSize().getSize_id();
+                int itemQuantity = item.getQuantity();
+                OrderDetail od = new OrderDetail(
+                        orderId,
+                        productId,
+                        item.getProduct().getProduct_name(),
+                        item.getProduct().getThumbnail(),
+                        sizeId,
+                        itemQuantity,
+                        unitPrice,
+                        unitPrice * itemQuantity);
+
+                boolean check = orderDetailDAO.insertOrderDetail(od);
+
+                //if insert success
+                if (check) {
+
+                    int stock = productSizeDAO.getQuantityOfEachSize(sizeId, productId);
+
+                    productSizeDAO.updateSizeProduct(sizeId, productId, stock - itemQuantity);
+
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals(Constants.COOKIE_CART)) {
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                            break;
+                        }
+                    }
+
+                } else {
+                    session.setAttribute("systemError", "error");
+                    response.sendRedirect(request.getContextPath() + "/checkout");
+                    return;
+                }
+
+            }
+            //end insert
+
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/cart");
         }
     }
 
