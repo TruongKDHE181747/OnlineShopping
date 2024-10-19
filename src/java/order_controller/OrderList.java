@@ -37,12 +37,12 @@ public class OrderList extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        OrderDAO odao = new OrderDAO();
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("account");
-        List<Order> order = odao.getOrderBySale(user.getUsername());
-        
-        session.setAttribute("order_list", order);
+//        OrderDAO odao = new OrderDAO();
+//        HttpSession session = request.getSession();
+//        User user = (User)session.getAttribute("account");
+//        List<Order> order = odao.getOrderBySale(user.getUsername());
+//        
+//        session.setAttribute("order_list", order);
         response.sendRedirect(request.getContextPath() + "/management/list-order.jsp");
     } 
 
