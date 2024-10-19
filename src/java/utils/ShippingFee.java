@@ -19,8 +19,10 @@ import org.json.JSONObject;
  */
 public class ShippingFee {
 
-    public static int caculateShippingFee(String wardCode, int districtId) throws IOException {
-
+    public static int caculateShippingFee(String wardCode, int districtId,int quantity) throws IOException {
+        
+        int totalWeight = 500 * quantity;
+        
         String apiURL = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?weight=1000&service_id=53321";
 
         URL url = new URL(apiURL);
@@ -34,7 +36,7 @@ public class ShippingFee {
 
         String requestBody = new JSONObject()
             .put("service_id", 53321)
-            .put("weight", 1000)
+            .put("weight", totalWeight)
             .put("to_ward_code", wardCode)
             .put("to_district_id", districtId)
             .toString();

@@ -55,7 +55,9 @@ public class Checkout extends HttpServlet {
         }
         Cart cart = new Cart(txt);
         
-        if(cart.cartSize(txt) == 0){
+        int totalQuantity = cart.cartSize(txt);
+        
+        if(totalQuantity == 0){
             response.sendRedirect(request.getContextPath()+"/cart");
             return;
         }
@@ -70,7 +72,7 @@ public class Checkout extends HttpServlet {
         
         request.setAttribute("address", address);
         
-        int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id());
+        int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(),totalQuantity);
         
         request.setAttribute("ship", shippingFee);
             
