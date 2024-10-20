@@ -208,7 +208,7 @@
                                 %>
                             </c:if>
                             <form action="applyVoucher" method="POST">
-                                <input type="text" name="voucherCode" placeholder="Voucher code">
+                                <input type="text" name="voucherCode" placeholder="Voucher code" maxlength="255" >
                                 <input type="hidden" name="isCheckout" value="true">
                                 <button type="submit">Apply</button>
                             </form>

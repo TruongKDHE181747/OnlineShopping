@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <input name="phone" class="form-control" id="inputPhone" maxlength="15" type="tel" placeholder="Enter your phone number" value="${account.phone}">
+                                    <input name="phone" class="form-control" id="inputPhone" maxlength="15" pattern="\d{10}" title="Phone number must be exactly 10 digits" type="tel" placeholder="Enter your phone number" value="${account.phone}">
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">

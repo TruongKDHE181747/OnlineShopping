@@ -156,9 +156,9 @@
 
         </div>
         <!-- Add New Address Modal -->
-        <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content"  style="width: 600px">
+        <div class="modal fade" id="addAddressModal"  tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" >
                     <div class="modal-header">
                         <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
