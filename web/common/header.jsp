@@ -1,5 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@page import="model.User" %>
+<%@page import="jakarta.servlet.http.Cookie" %>
+<%@page import="model.Cart" %>
+<%@page import="utils.Constants" %>
 
 <!-- Offcanvas Menu Begin -->
 <div class="offcanvas-menu-overlay"></div>
@@ -36,8 +39,9 @@
 
                 </div>
                 <%
-                String s = request.getContextPath();;
+                String s = request.getContextPath();
                 %>
+
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
@@ -46,8 +50,17 @@
                                 <a href="<%=s%>/register">Sign up</a>                      
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
-                                
-                                <a href="<%=s%>/profile"><img style="width: 25px;height: 25px;border-radius: 50%" src="<%=s%>/${sessionScope.account.profile_picture_url}" alt="alt"/> ${sessionScope.account.username}</a>
+                                <%
+                    
+                                                    User account = (User) session.getAttribute("account");
+                                    String profilePictureUrl = (String) account.getProfile_picture_url();
+                                    String profileImgSrc = profilePictureUrl != null && (profilePictureUrl.startsWith("http://") || profilePictureUrl.startsWith("https://")) 
+                                                            ? profilePictureUrl 
+                                                            : request.getContextPath() + "/" + profilePictureUrl;
+                                %>
+                                <a href="<%=s%>/profile">
+                                    <img style="width: 25px;height: 25px;border-radius: 50%" 
+                                         src=" <%=profileImgSrc %>" alt=""/> ${sessionScope.account.username}</a>
                                 <a href="<%=s%>/logout">Logout</a>                      
                             </c:if>
                         </div>
@@ -99,7 +112,26 @@
                         </form>
 
                     </div>
-                            <div style="display: flex; align-items: center;padding: 0;width: 100%" class="col-md-2"><a href="<%=s%>/cart"><img style="width: 25px"  src="<%=s%>/common/img/icon/cart.png" alt=""> <span style="font-weight: bold;width: 100%;text-align: center;padding-right: 8px">${sessionScope.cartSize != null ? sessionScope.cartSize :0}</span></a></div>
+                    <%
+                        Cookie[] cookies = request.getCookies();
+
+                        String txt = "";
+                        if (cookies != null) {
+                            for (Cookie cookie : cookies) {
+                                if (cookie.getName().equals(Constants.COOKIE_CART)) {
+                                    txt = cookie.getValue();
+                                    break; 
+                                }
+                            }
+                        }
+
+                        Cart cart = new Cart(txt);
+                        int cartSize = cart.cartSize(txt);
+                    %>
+                    <div style="display: flex; align-items: center;padding: 0;width: 100%" class="col-md-2">
+                        <a href="<%=s%>/cart"><img style="width: 25px"  src="<%=s%>/common/img/icon/cart.png" alt=""> 
+                            <span style="font-weight: bold;width: 100%;text-align: center;padding-right: 8px">
+                                ${sessionScope.cartSize != null ? sessionScope.cartSize :0}</span></a></div>
 
 
 

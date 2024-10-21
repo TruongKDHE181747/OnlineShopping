@@ -47,7 +47,7 @@
                                 <form method="get" action="./resetPassword">
                                     <!-- Email input -->
                                     <div class="form-floating mb-3">
-                                        <input type="email" name="email" class="form-control" id="emailInput" placeholder="Email" required>
+                                        <input maxlength="255" type="email" name="email" class="form-control" id="emailInput" placeholder="Email" required>
                                         <label for="emailInput">Email</label>
                                     </div>
 

@@ -32,8 +32,8 @@
                         <div class="breadcrumb__text">
                             <h4>Shopping Cart</h4>
                             <div class="breadcrumb__links">
-                                <a href="#">Home</a>
-                                <a href="#">Shop</a>
+                                <a href="homeslider">Home</a>
+                                <a href="homeproduct">Shop</a>
                                 <span>Shopping Cart</span>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                                 %>
                             </c:if>
                             <form action="applyVoucher" method="POST">
-                                <input type="text" name="voucherCode" placeholder="Voucher code">
+                                <input type="text" name="voucherCode" placeholder="Voucher code" maxlength="255">
                                 <button type="submit">Apply</button>
                             </form>
                             <c:if test="${sessionScope.voucher!=null}">
@@ -163,24 +163,34 @@
                                         <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
                                     <li style="font-weight: normal" >Voucher
                                         <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
-                                        </li>
+                                    </li>
 
-                                    </c:if>
-                                    <c:set var="total" value="${subtotal - subtotal*discountPercent}"/>
-                                    <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                </c:if>
+                                <c:set var="total" value="${subtotal - subtotal*discountPercent}"/>
+                                <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                             </ul>
-                            <a href="#" class="primary-btn">Proceed to checkout</a>
+                            <a href="checkout" class="primary-btn">Proceed to checkout</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <!-- End your project here -->
         <jsp:include page="../common/footer.jsp" />
         <!-- Bootstrap JS with Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="../common/js.jsp" />
 
+        <c:if test="${not empty sessionScope.noAddressError}">
+            <script>
+                if (confirm('${sessionScope.noAddressError} Would you like to create one now?')) {
+                    window.location.href = 'address';
+                }
+            </script>
+            
+            <%session.removeAttribute("noAddressError");%>
+        </c:if>
     </body>
 
 </html>

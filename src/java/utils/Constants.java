@@ -6,6 +6,8 @@ package utils;
 
 public class Constants {
 
+    public static final String GHN_SHOP_ID = "194725";
+    
     public static final String GHN_API_KEY = "8f97e0f3-856e-11ef-8e53-0a00184fe694";
 
     public static final int COOKIE_CART_MAXAGE = 30 * 60;

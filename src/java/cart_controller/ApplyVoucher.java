@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import model.Voucher;
 
 /**
@@ -32,24 +34,70 @@ public class ApplyVoucher extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         VoucherDAO dao = new VoucherDAO();
-        
+
         String code = request.getParameter("voucherCode");
-        
+        String checkout = request.getParameter("isCheckout");
+        boolean isCheckout = false;
+        if (checkout != null) {
+            isCheckout = checkout.equals("true");
+        }
         Voucher voucher = dao.getVoucherbyCode(code);
-        
-        if(voucher == null){
+
+        if (voucher == null) {
             session.setAttribute("voucherError", "Voucher is invalid !");
-            response.sendRedirect(request.getContextPath()+"/cart");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(voucher.getStart_date(), formatter);
+        LocalDate endDate = LocalDate.parse(voucher.getEnd_date(), formatter);
+        LocalDate currentDate = LocalDate.now();
+        
+        if(currentDate.isBefore(startDate)){
+            session.setAttribute("voucherError", "Voucher is not yet valid !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
             return;
         }
         
+        if(currentDate.isAfter(endDate)){
+            session.setAttribute("voucherError", "Voucher has expired !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        
+        if(voucher.getQuantity() <= 0){
+            session.setAttribute("voucherError", "Voucher out of quantity !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        
+                
         session.setAttribute("voucher", voucher);
-        response.sendRedirect(request.getContextPath()+"/cart");
-        
-        
+        if (isCheckout) {
+            response.sendRedirect(request.getContextPath() + "/checkout");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/cart");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

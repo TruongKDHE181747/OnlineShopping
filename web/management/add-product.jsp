@@ -51,13 +51,13 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="price" class="form-label">Price</label>
+                                    <label for="price" class="form-label">Price(VND)</label>
                                     <!-- Added step value for better control over increments -->
                                     <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" required min="0" max="10000000" step="100000">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="discount" class="form-label">Discount (%)</label>
+                                    <label for="discount" class="form-label">Discount(%)</label>
                                     <!-- Added step value for 1% increment -->
                                     <input type="number" class="form-control" id="discount" name="discount" placeholder="Enter discount (in %)" required min="0" max="100" step="5">
                                 </div>
