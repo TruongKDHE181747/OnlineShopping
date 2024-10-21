@@ -45,8 +45,8 @@ public class OrderDAO extends DBContext {
                                            ,[payment_status_id]
                                            ,[order_status_id]
                                            ,[shipping_code])
-                                           ,[salerId])
-                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
+                                           
+                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
 
         try {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -74,7 +74,7 @@ public class OrderDAO extends DBContext {
             ps.setInt(22, order.getPaymentStatusId());
             ps.setInt(23, order.getOrderStatusId());
             ps.setString(24, null);
-            ps.setString(25, null);
+            
 
             ps.executeUpdate();
 
