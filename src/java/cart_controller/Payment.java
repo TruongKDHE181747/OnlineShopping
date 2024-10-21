@@ -51,7 +51,7 @@ public class Payment extends HttpServlet {
         OrderDAO orderDAO = new OrderDAO();
         try {
             int orderId = (int) request.getAttribute("orderId");
-            long totalAmount = ((long) request.getAttribute("totalAmount")) * 100;
+            long totalAmount = (long) (((int) request.getAttribute("totalAmount")) * 100);
 
             String vnp_Version = "2.1.0";
             String vnp_Command = "pay";
