@@ -4,6 +4,7 @@
  */
 package cart_controller;
 
+import dal.OrderDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -47,10 +48,10 @@ public class Payment extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-
+        OrderDAO orderDAO = new OrderDAO();
         try {
             int orderId = (int) request.getAttribute("orderId");
-            int totalAmount = ((int) request.getAttribute("totalAmount")) * 100;
+            long totalAmount = ((long) request.getAttribute("totalAmount")) * 100;
 
             String vnp_Version = "2.1.0";
             String vnp_Command = "pay";
@@ -81,6 +82,9 @@ public class Payment extends HttpServlet {
             cld.add(Calendar.MINUTE, 15);
             String vnp_ExpireDate = formatter.format(cld.getTime());
             vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+            
+            orderDAO.updateVnPayField(orderId, vnp_TxnRef, vnp_CreateDate);
+            
 
             List fieldNames = new ArrayList(vnp_Params.keySet());
             Collections.sort(fieldNames);

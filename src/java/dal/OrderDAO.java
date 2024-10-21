@@ -17,6 +17,30 @@ import java.util.logging.Logger;
  */
 public class OrderDAO extends DBContext {
 
+    public boolean updateVnPayField(int orderId, String vnp_TxnRef, String vnp_CreateDate) {
+        String sql = """
+                     UPDATE [dbo].[Orders]
+                        SET 
+                           [vnp_TxnRef] = ?
+                           ,[vnp_CreateDate] = ?
+                      WHERE [order_id] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, vnp_TxnRef);
+            ps.setString(2, vnp_CreateDate);
+            ps.setInt(3, orderId);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public int insertOrder(Order order) {
 
         String sql = """
@@ -74,7 +98,6 @@ public class OrderDAO extends DBContext {
             ps.setInt(22, order.getPaymentStatusId());
             ps.setInt(23, order.getOrderStatusId());
             ps.setString(24, null);
-            
 
             ps.executeUpdate();
 

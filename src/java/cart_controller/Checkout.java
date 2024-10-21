@@ -227,7 +227,9 @@ public class Checkout extends HttpServlet {
             if(paymentMethod == 2){
                 request.setAttribute("orderId", orderId);
                 request.setAttribute("totalAmount", totalAmount);
-                request.getRequestDispatcher("/payment").forward(request, response);
+                request.getRequestDispatcher("/payment").forward(request, response);               
+            }else{
+                request.getRequestDispatcher("/common/thankyou.jsp").forward(request, response);
                 
             }
                     

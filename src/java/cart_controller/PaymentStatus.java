@@ -38,7 +38,7 @@ public class PaymentStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
-        int vnp_Amount = Integer.parseInt(request.getParameter("vnp_Amount")) / 100;
+        long vnp_Amount = Long.parseLong(request.getParameter("vnp_Amount")) / 100;
         String vnp_PayDate = request.getParameter("vnp_PayDate");
 
         boolean isValidSignature = verifySignature(request);
