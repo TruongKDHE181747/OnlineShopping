@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author Thanh Tan
  */
 public class OrderDAO extends DBContext {
-    
+
     public int insertOrder(Order order) {
 
         String sql = """
@@ -45,10 +45,11 @@ public class OrderDAO extends DBContext {
                                            ,[payment_status_id]
                                            ,[order_status_id]
                                            ,[shipping_code])
-                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
+                                           ,[salerId])
+                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
 
         try {
-            PreparedStatement ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, order.getCustomerId());
             ps.setString(2, order.getOrderedDate());
             ps.setString(3, order.getReceiverName());
@@ -73,15 +74,16 @@ public class OrderDAO extends DBContext {
             ps.setInt(22, order.getPaymentStatusId());
             ps.setInt(23, order.getOrderStatusId());
             ps.setString(24, null);
-            
+            ps.setString(25, null);
+
             ps.executeUpdate();
-            
+
             ResultSet rs = ps.getGeneratedKeys();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 return rs.getInt(1);
             }
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
