@@ -60,10 +60,10 @@ public class SearchVoucher extends HttpServlet {
             session.setAttribute("messe", error);
         }else{
         List<Voucher> vlist =vdao.searchVoucher(sql);
-        session.setAttribute("vlist", vlist);
+        session.setAttribute("svlist", vlist);
         session.setAttribute("messe", "");
         }
-        response.sendRedirect(request.getContextPath()+"/management/voucherlist.jsp");
+        response.sendRedirect(request.getContextPath()+"/management/vouchersearch.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
