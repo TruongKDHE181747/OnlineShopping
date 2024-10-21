@@ -33,6 +33,7 @@ public class Order {
     private int paymentStatusId;
     private int orderStatusId;
     private String shippingCode;
+    private int sale_id;
 
     public Order() {
     }
@@ -289,6 +290,14 @@ public class Order {
 
     public void setShippingCode(String shippingCode) {
         this.shippingCode = shippingCode;
+    }
+
+    public int getSale_id() {
+        return sale_id;
+    }
+
+    public void setSale_id(int sale_id) {
+        this.sale_id = sale_id;
     }
 
     
