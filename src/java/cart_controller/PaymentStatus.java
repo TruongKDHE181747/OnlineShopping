@@ -4,6 +4,7 @@
  */
 package cart_controller;
 
+import dal.OrderDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,6 +38,8 @@ public class PaymentStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        OrderDAO orderDAO = new OrderDAO();
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
         long vnp_Amount = Long.parseLong(request.getParameter("vnp_Amount")) / 100;
         String vnp_PayDate = request.getParameter("vnp_PayDate");
@@ -52,8 +55,12 @@ public class PaymentStatus extends HttpServlet {
         request.setAttribute("vnp_Amount", vnp_Amount);
         request.setAttribute("vnp_PayDate", vnp_PayDate);
         if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+            orderDAO.updatePaymentStatus(vnp_TxnRef, 2);
+            orderDAO.updateOrderStatus(vnp_TxnRef, 2);
             request.getRequestDispatcher("/common/payment-success.jsp").forward(request, response);
         } else {
+            orderDAO.updatePaymentStatus(vnp_TxnRef, 3);
+            orderDAO.updateOrderStatus(vnp_TxnRef, 5);
             request.getRequestDispatcher("/common/payment-fail.jsp").forward(request, response);
         }
 

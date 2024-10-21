@@ -17,6 +17,50 @@ import java.util.logging.Logger;
  */
 public class OrderDAO extends DBContext {
 
+    public boolean updateOrderStatus(String vnp_TxnRef, int orderStatusId) {
+        String sql = """
+                     UPDATE [dbo].[Orders]
+                         SET 
+                            [order_status_id] = ?
+                       WHERE [vnp_TxnRef] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderStatusId);
+            ps.setString(2, vnp_TxnRef);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePaymentStatus(String vnp_TxnRef, int paymentStatusId) {
+        String sql = """
+                     UPDATE [dbo].[Orders]
+                        SET 
+                           [payment_status_id] = ?
+                      WHERE [vnp_TxnRef] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, paymentStatusId);
+            ps.setString(2, vnp_TxnRef);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean updateVnPayField(int orderId, String vnp_TxnRef, String vnp_CreateDate) {
         String sql = """
                      UPDATE [dbo].[Orders]
