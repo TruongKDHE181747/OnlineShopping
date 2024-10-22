@@ -88,6 +88,9 @@ public class UpdateProduct extends HttpServlet {
         for (Size size : sizes) {
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
             int weight = Integer.parseInt(request.getParameter("weight_"+ size.getSize_id()));
+            if(quantity == 0 && weight > 0) {
+                weight = 0;
+            }
             if(psdao.getProductSize(size.getSize_id(), product.getProduct_id()) == null) {
                 psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity, weight));
             }else psdao.updateSizeProduct(size.getSize_id(), product.getProduct_id(), quantity, weight);
