@@ -35,11 +35,11 @@ public class OrderListForSaleManager extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-//        OrderDAO odao = new OrderDAO();
-//        HttpSession session = request.getSession();
-//        List<Order> order = odao.getAllOrder();
-//        
-//        session.setAttribute("orders", order);
+        OrderDAO odao = new OrderDAO();
+        HttpSession session = request.getSession();
+        List<Order> order = odao.getAllOrder();
+        
+        session.setAttribute("orders", order);
         response.sendRedirect(request.getContextPath() + "/management/list-order-for-sale-manager.jsp");
     } 
 

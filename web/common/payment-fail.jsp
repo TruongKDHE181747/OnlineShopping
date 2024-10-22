@@ -53,7 +53,7 @@
                                 </ul>
                             </div>
 
-                            <a href="homeslider" class="btn btn-primary btn-lg mt-4">
+                            <a href="orderstatus?status=fail" class="btn btn-primary btn-lg mt-4">
                                 <i class="bi bi-cart me-2"></i>Return to Home
                             </a>
                         </div>

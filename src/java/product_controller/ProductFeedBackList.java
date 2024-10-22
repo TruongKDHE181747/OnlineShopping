@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package order_controller;
+package product_controller;
 
-import dal.OrderDAO;
+import dal.ProductFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,17 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
-import model.Order;
-import model.User;
+import model.ProductFeedback;
 
 /**
  *
- * @author Thanh Tan
+ * @author quanpyke
  */
-@WebServlet(name="OrderList", urlPatterns={"/orderlist"})
-public class OrderList extends HttpServlet {
+@WebServlet(name="ProductFeedBackList", urlPatterns={"/productfeedbacklist"})
+public class ProductFeedBackList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,14 +34,17 @@ public class OrderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+       
+        ProductFeedbackDAO pfdao=new ProductFeedbackDAO();
+       
+        HttpSession session=request.getSession(true);
+       List<ProductFeedback> prfall=pfdao.getAllProductFeedBack();
+       List<ProductFeedback> prflist=pfdao.getProductFeedbackPaging(1);
+            session.setAttribute("prfpage", 1);
+        session.setAttribute("prflist", prflist);
+        session.setAttribute("prfnum", pfdao.getTotalPage(prfall.size(), 5));
+        response.sendRedirect(request.getContextPath()+"/management/productfeedbacklist.jsp");
         
-        OrderDAO odao = new OrderDAO();
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("account");
-        List<Order> order = odao.getOrderBySale(user.getUsername());
-        
-        session.setAttribute("order_list", order);
-        response.sendRedirect(request.getContextPath() + "/management/list-order.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,4 +83,5 @@ public class OrderList extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
 }
