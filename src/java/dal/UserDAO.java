@@ -381,6 +381,7 @@ public class UserDAO extends DBContext {
         return false;
 
     }
+    
 
     public User getUserById(int id) {
         RoleDAO roleDAO = new RoleDAO();
@@ -793,4 +794,24 @@ public class UserDAO extends DBContext {
         return user;
 
     }
+    public boolean checkExistPhone(String phone) {
+
+        ResultSet rs = getData("select * from Users where phone = '" + phone + "'");
+
+        try {
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+
+    }
+//    public static void main(String[] args) {
+//        UserDAO u= new UserDAO();
+//        Boolean check=u.checkExistPhone("0123456789");
+//        System.out.println(check );
+//    }
 }
