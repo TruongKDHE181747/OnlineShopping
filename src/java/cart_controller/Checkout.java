@@ -223,9 +223,22 @@ public class Checkout extends HttpServlet {
 
             }
             //end insert
+            
+            if(paymentMethod == 2){
+                request.setAttribute("orderId", orderId);
+                request.setAttribute("totalAmount", totalAmount);
+                request.getRequestDispatcher("/payment").forward(request, response);               
+            }else{
+                request.getRequestDispatcher("/common/thankyou.jsp").forward(request, response);
+                
+            }
+                    
+            
+            
 
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/cart");
+            
         }
     }
 

@@ -244,7 +244,7 @@
 
 
                                 <!-- START Product item -->
-                                <c:forEach var="vl" items="${sessionScope.vlist}">
+                                <c:forEach var="vl" items="${sessionScope.svlist}">
                                     <tr>
                                         <th scope="row">${vl.voucher_id}</th>
                                         <td>${vl.voucher_name}</td>
@@ -296,35 +296,7 @@
 
                         <!-- START PAGE -->
 
-                        <div style="display: flex;
-                             justify-content: center;">
-
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <c:if test="${sessionScope.curentpage>1}" >
-                                        <li class="page-item">
-                                            <a class="page-link" href="../voucherpaging?p=${sessionScope.curentpage-1}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                    </c:if>
-                                    <c:forEach begin="1" end="${sessionScope.npage}" var="p">
-
-                                        <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.curentpage==p}">active</c:if>" href="../voucherpaging?p=${p}">${p}</a></li>
-
-                                    </c:forEach>
-
-                                    <c:if test="${sessionScope.curentpage<numberpage}" >
-                                        <li class="page-item">
-                                            <a class="page-link" href="../voucherpaging?p=${curentpage+1}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </c:if>
-                                </ul>
-                            </nav>
-
-                        </div>
+                        
                         <!-- END PAGE -->
 
                     </div>

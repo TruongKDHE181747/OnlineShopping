@@ -77,6 +77,15 @@
                         Post Feedback
                     </a>
                 </li>
+                        <li>
+                        <a href="../voucherlist" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('voucherlist')}">active</c:if>">
+                        <!-- Post Feedback Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
+                            <path d="M0 3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2l-1 1V3z"/>
+                        </svg>
+                        Voucher
+                    </a>
+                </li>
             </ul>
         <hr>
     </div>
