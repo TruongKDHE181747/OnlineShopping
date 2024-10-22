@@ -179,8 +179,8 @@ public class ProductFeedbackDAO extends DBContext{
     }
     public int getTotalPage(int p,int n)
     {
-        if(p%n==0) return p%n;
-        else return p%n+1;
+        if(p%n==0) return p/n;
+        else return p/n+1;
     }
     
 
