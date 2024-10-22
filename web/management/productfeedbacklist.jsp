@@ -148,7 +148,7 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Post Feedback List</h5>
+                                    <h5 class="navbar-brand" >Product Feedback List</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../postfeedbackpaging" method="get">
@@ -198,7 +198,7 @@
                                          <img src="../${s.product.thumbnail}" style="width: 106px;height: 98px;" alt="alt"/ >
                                        
                                     </td>
-                                     <td>${s.product.product_name}</td>
+                                    <td><a href="../viewproduct?pid=${s.product.product_id}">${s.product.product_name}</a></td>
                                     <td>${s.rating}⭐</td>
                                     
                                       <td>${s.review}</td>
@@ -239,28 +239,28 @@
                              
                                
                     <!-- START PAGE -->
-                    
+                                              
                     <div style="display: flex;
                                 justify-content: center;">
                         
                         <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <c:if test="${sessionScope.pfpage>1}" >
+                            <c:if test="${sessionScope.prfpage>1}" >
                             <li class="page-item">
-                                <a class="page-link" href="../postfeedbackpaging?p=${sessionScope.pfpage-1}" aria-label="Previous">
+                                <a class="page-link" href="../postfeedbackpaging?p=${sessionScope.prfpage-1}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                           </c:if>
-                            <c:forEach begin="1" end="${sessionScope.pfnum}" var="p">
+                            <c:forEach begin="1" end="${sessionScope.prfnum}" var="p">
                                 
-                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.pfpage==p}">active</c:if>" href="../postfeedbackpaging?p=${p}">${p}</a></li>
+                                <li class="page-item   "><a class="page-link  <c:if test="${sessionScope.prfpage==p}">active</c:if>" href="../productfeedbackpaging?p=${p}">${p}</a></li>
                                 
                             </c:forEach>
                             
-                             <c:if test="${sessionScope.pfpage<pfnum}" >
+                        <c:if test="${sessionScope.prfpage<sessionScope.prfnum}" >
                             <li class="page-item">
-                                <a class="page-link" href="../postfeedbackpaging?p=${pfpage+1}" aria-label="Next">
+                                <a class="page-link" href="../productfeedbackpaging?p=${sessionScope.prfpage+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
