@@ -139,6 +139,10 @@
                                             <label for="size_<%= size.getSize_id() %>" class="form-label">Size: <%= size.getSize_name() %></label>
                                             <input type="number" class="form-control" id="size_<%= size.getSize_id() %>" name="size_<%= size.getSize_id() %>" placeholder="Enter quantity for size <%= size.getSize_name() %>" required min="0" max="100">
                                         </div>
+                                        <div class="col-sm-6">
+                                            <label for="weight_<%= size.getSize_id() %>" class="form-label">Weight For Size: <%= size.getSize_name() %></label>
+                                            <input type="number" class="form-control" id="weight_<%= size.getSize_id() %>" name="weight_<%= size.getSize_id() %>" placeholder="Enter weight for size <%= size.getSize_name() %>" required min="0" max="1000">
+                                        </div>
                                         <%
                                             }
                                         %>     

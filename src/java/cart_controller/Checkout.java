@@ -141,6 +141,16 @@ public class Checkout extends HttpServlet {
             if (voucherId != null && !voucherId.isEmpty()) {
                 intVoucherId = Integer.parseInt(voucherId);
             }
+            int weight = 0;
+            for (CartItem item : items) {
+                weight += productSizeDAO.getWeightOfEachSize(item.getSize().getSize_id(), item.getProduct().getProduct_id());
+            }
+            
+            if (weight == 0) {
+                session.setAttribute("systemError", "error");
+                response.sendRedirect(request.getContextPath() + "/checkout");
+                return;
+            }
 
             Voucher voucher = voucherDAO.getVoucherbyId(intVoucherId);
 
@@ -166,7 +176,7 @@ public class Checkout extends HttpServlet {
                     intVoucherId,
                     voucher.getPercent(),
                     totalAmount,
-                    1000,
+                    weight,
                     paymentMethod,
                     1,
                     1);
@@ -183,11 +193,11 @@ public class Checkout extends HttpServlet {
             //insert Order Detail
             for (CartItem item : items) {
 
-                int unitPrice = item.getProduct().getPrice() - item.getProduct().getPrice()*item.getProduct().getDiscount()/100;
+                int unitPrice = item.getProduct().getPrice() - item.getProduct().getPrice() * item.getProduct().getDiscount() / 100;
                 int productId = item.getProduct().getProduct_id();
                 int sizeId = item.getSize().getSize_id();
                 int itemQuantity = item.getQuantity();
-                
+
                 OrderDetail od = new OrderDetail(
                         orderId,
                         productId,
@@ -205,7 +215,7 @@ public class Checkout extends HttpServlet {
 
                     int stock = productSizeDAO.getQuantityOfEachSize(sizeId, productId);
 
-                    productSizeDAO.updateSizeProduct(sizeId, productId, stock - itemQuantity);
+                    productSizeDAO.updateQuantityOfEachSize(sizeId, productId, stock - itemQuantity);
 
                     for (Cookie cookie : cookies) {
                         if (cookie.getName().equals(Constants.COOKIE_CART)) {
@@ -223,22 +233,19 @@ public class Checkout extends HttpServlet {
 
             }
             //end insert
-            
-            if(paymentMethod == 2){
+
+            if (paymentMethod == 2) {
                 request.setAttribute("orderId", orderId);
                 request.setAttribute("totalAmount", totalAmount);
-                request.getRequestDispatcher("/payment").forward(request, response);               
-            }else{
+                request.getRequestDispatcher("/payment").forward(request, response);
+            } else {
                 request.getRequestDispatcher("/common/thankyou.jsp").forward(request, response);
-                
+
             }
-                    
-            
-            
 
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/cart");
-            
+
         }
     }
 

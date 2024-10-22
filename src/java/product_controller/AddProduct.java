@@ -80,7 +80,8 @@ public class AddProduct extends HttpServlet {
         Product product = pdao.getHighestId();
         for (Size size : sizes) {
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
-            psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity));
+            int weight = Integer.parseInt(request.getParameter("weight_"+ size.getSize_id()));
+            psdao.addSizeProduct(new ProductSize(size.getSize_id(), product.getProduct_id(), quantity, weight));
         }
         
         pidao.addProductImage(new ProductImg(product.getProduct_id(), img));

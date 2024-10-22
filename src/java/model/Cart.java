@@ -5,6 +5,7 @@
 package model;
 
 import dal.ProductDAO;
+import dal.ProductSizeDAO;
 import dal.SizeDAO;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Cart {
                 Product product = daoP.getProductById(Integer.parseInt(s[0]));
                 Size size = daoS.getSizeById(Integer.parseInt(s[1]));
                 int quantity = Integer.parseInt(s[2]);
-
+                
                 if (quantity > 0) {
 
                     CartItem existItem = findCartItemByProductSize(product, size);
