@@ -49,8 +49,7 @@ public class ShowCart extends HttpServlet {
         
         Cart cart = new Cart(txt);
         int cartSize = cart.cartSize(txt);
-        
-        session.setAttribute("cartSize", cartSize);
+       
         
         if(cartSize == 0){
             request.getRequestDispatcher("/common/emptycart.jsp").forward(request, response);
