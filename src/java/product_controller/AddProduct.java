@@ -64,10 +64,12 @@ public class AddProduct extends HttpServlet {
         int status = Integer.parseInt(request.getParameter("status"));
         int brand = Integer.parseInt(request.getParameter("brand"));
         int category = Integer.parseInt(request.getParameter("category"));
+        int weight = 0;
         
         for (Size size : sizes) {
             int quantity = Integer.parseInt(request.getParameter("size_"+ size.getSize_id()));
             total_quantity += quantity;
+            weight = Integer.parseInt(request.getParameter("weight_"+ size.getSize_id()));
         }
         
         if(status == 1) {
