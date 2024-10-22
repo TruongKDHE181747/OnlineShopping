@@ -81,7 +81,7 @@
                                                     <div class="text-center">
                                                         <select id="sid_${status.index}" name="sid_${status.index}" >
                                                             <c:forEach var="s" items="${listSize}">
-                                                                <c:if test="${o.product.product_id == s.product_id}">
+                                                                <c:if test="${o.product.product_id == s.product_id && s.quantity > 0}">
                                                                     <option ${o.size.size_id == s.size_id ? "selected":""} value="${s.size_id}">${s.size_name}</option>
                                                                 </c:if>
                                                             </c:forEach>
@@ -184,11 +184,11 @@
 
         <c:if test="${not empty sessionScope.noAddressError}">
             <script>
-                if (confirm('${sessionScope.noAddressError} Would you like to create one now?')) {
-                    window.location.href = 'address';
-                }
+                                        if (confirm('${sessionScope.noAddressError} Would you like to create one now?')) {
+                                            window.location.href = 'address';
+                                        }
             </script>
-            
+
             <%session.removeAttribute("noAddressError");%>
         </c:if>
     </body>

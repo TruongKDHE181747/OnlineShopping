@@ -20,6 +20,29 @@ import model.ProductSize;
  */
 public class ProductSizeDAO extends DBContext {
 
+    public List<ProductSize> getProductSizes() {
+        List<ProductSize> list = new ArrayList<>();
+        String sql = "select distinct ps.size_id,ps.product_id,s.size_name,ps.quantity\n"
+                + "from Product_Size ps join Sizes s on ps.size_id = s.size_id \n"
+                + "group by ps.size_id,ps.product_id,s.size_name,ps.quantity";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int size_id = rs.getInt("size_id");
+                int product_id = rs.getInt("product_id");
+                String size_name = rs.getString("size_name");
+                int quantity = rs.getInt("quantity");
+
+                list.add(new ProductSize(size_id, product_id, quantity, size_name));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public List<ProductSize> getAll() {
         List<ProductSize> list = new ArrayList<>();
         String sql = "select distinct ps.size_id,ps.product_id,s.size_name\n"
@@ -101,7 +124,7 @@ public class ProductSizeDAO extends DBContext {
 
         return quantity;
     }
-    
+
     public int getWeightOfEachSize(int sid, int pid) {
         String sql = "SELECT ps.weight FROM Product_Size AS ps, Sizes AS s "
                 + "WHERE ps.size_id = s.size_id AND ps.size_id = ? AND product_id = ?";
@@ -122,7 +145,7 @@ public class ProductSizeDAO extends DBContext {
 
         return weight;
     }
-    
+
     public void updateQuantityOfEachSize(int size, int pid, int quantity) {
         String sql = """
                      update Product_Size set 
@@ -154,7 +177,7 @@ public class ProductSizeDAO extends DBContext {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public ProductSize getProductSize(int size, int pid) {
         String sql = "select * from Product_Size \n"
                 + "where size_id = ? and product_id = ?";
@@ -163,14 +186,14 @@ public class ProductSizeDAO extends DBContext {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, size);
             pre.setInt(2, pid);
-            ResultSet rs = pre.executeQuery(); 
+            ResultSet rs = pre.executeQuery();
             if (rs.next()) {
                 int size_id = rs.getInt("size_id");
                 int product_id = rs.getInt("product_id");
                 int quantity = rs.getInt("quantity");
                 int weight = rs.getInt("weight");
                 p = new ProductSize(size_id, product_id, quantity, weight);
-        }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

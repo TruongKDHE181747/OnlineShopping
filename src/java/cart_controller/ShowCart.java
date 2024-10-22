@@ -57,7 +57,7 @@ public class ShowCart extends HttpServlet {
         }
                 
         
-        request.setAttribute("listSize", daoProductSize.getAll());
+        request.setAttribute("listSize", daoProductSize.getProductSizes());
         request.setAttribute("cart", cart.getItems());
        
         

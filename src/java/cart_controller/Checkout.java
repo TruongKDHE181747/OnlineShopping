@@ -52,6 +52,7 @@ public class Checkout extends HttpServlet {
         HttpSession session = request.getSession();
         Cookie[] cookies = request.getCookies();
         CustomerAddressDAO addressDAO = new CustomerAddressDAO();
+        ProductSizeDAO productSizeDAO = new ProductSizeDAO();
 
         String txt = "";
         for (Cookie cookie : cookies) {
@@ -86,7 +87,14 @@ public class Checkout extends HttpServlet {
 
         request.setAttribute("address", address);
 
-        int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(), totalQuantity);
+        int weight = 0;
+        for (CartItem item : items) {
+            int sid = item.getSize().getSize_id();
+            int pid = item.getProduct().getProduct_id();
+            weight += (productSizeDAO.getWeightOfEachSize(sid, pid) * item.getQuantity());
+        }
+
+        int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(), weight);
 
         request.setAttribute("ship", shippingFee);
 
@@ -143,9 +151,9 @@ public class Checkout extends HttpServlet {
             }
             int weight = 0;
             for (CartItem item : items) {
-                weight += productSizeDAO.getWeightOfEachSize(item.getSize().getSize_id(), item.getProduct().getProduct_id());
+                weight += productSizeDAO.getWeightOfEachSize(item.getSize().getSize_id(), item.getProduct().getProduct_id()) * item.getQuantity();
             }
-            
+
             if (weight == 0) {
                 session.setAttribute("systemError", "error");
                 response.sendRedirect(request.getContextPath() + "/checkout");
@@ -239,7 +247,7 @@ public class Checkout extends HttpServlet {
                 request.setAttribute("totalAmount", totalAmount);
                 request.getRequestDispatcher("/payment").forward(request, response);
             } else {
-                request.getRequestDispatcher("/common/thankyou.jsp").forward(request, response);
+                request.getRequestDispatcher("/common/order-success.jsp").forward(request, response);
 
             }
 

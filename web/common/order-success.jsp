@@ -18,8 +18,7 @@
     </head>
 
     <body>
-
-        <jsp:include page="../common/header.jsp" />
+        <%@include file="../common/header.jsp" %>
 
         <!-- Start your project here -->
         <div class="col-md-12 text-center" style="margin: 100px 0">
