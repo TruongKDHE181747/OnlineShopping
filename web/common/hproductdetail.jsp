@@ -39,7 +39,7 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
 
-        
+
 
     </head>
 
@@ -81,6 +81,7 @@
                     
                     int price =product.getPrice() - product.getPrice()*product.getDiscount()/100;
                     String cmoney = numberFormat.format(price);
+                    String omoney = numberFormat.format(product.getPrice());
                     %>
                     <div class="row">
                         <div class="col-lg-3 col-md-3">
@@ -178,7 +179,24 @@
                                     <%}%>
                                     <span> - <%=alldpfList.size()%> Reviews</span>
                                 </div>
-                                <h3><%=cmoney%></h3>
+                                <h3><%
+                                    if(product.getDiscount()!=0){
+                                    %>
+                                    <del style="color: gray; font-size: 14px;"><%=omoney%></del>
+                                    <% }%>
+                                    <%=cmoney%>
+                                    <%
+                                    if(product.getDiscount()!=0){
+                                    %>
+                                    <p style="margin-left: 10px;
+                                       font-size: 14px;
+                                       padding: 2px 16px;
+                                       background-color: black;
+                                       color: white;
+                                       display: inline-block;">-<%=product.getDiscount()%>%</p>
+                                    <% }%>
+                                </h3>
+
                                 <p><%=product.getDescription()%></p>
                                 <div class="product__details__option">
 
@@ -238,7 +256,7 @@
                                         Previews(<%=alldpfList.size()%>)</a>
                                 </li>
                             </ul>
-                                <div class="tab-content" style="margin: 0px 15%;">
+                            <div class="tab-content" style="margin: 0px 15%;">
                                 <div class="tab-pane <%=dcontent.equals("pdescription")?"active":""%>" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item">
@@ -258,9 +276,9 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="product__item row" style="margin: 24px 0;">
-                                                
+
                                                 <div style="height: 120px" class="product__item__pic set-bg col-md-2" data-setbg="../<%=productFeedback.getThumbnail()%>">
-                                                    
+
                                                 </div>
 
                                                 <div class="col-md-10">
@@ -271,50 +289,50 @@
                                                     <div style="    margin-left: 12px;">
                                                         <h6><%=productFeedback.getReview()%></h6>
 
-                                                    <div class="rating">
-                                                        <%if(productFeedback.getRating()<=0){
-                                                        %>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <% } else if(productFeedback.getRating()<=1){%>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <% } else if(productFeedback.getRating()<=2){  %>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <%} else if(productFeedback.getRating()<=3){%>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <%} else if(productFeedback.getRating()<=4){%>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <%} else { %>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <%}%>
+                                                        <div class="rating">
+                                                            <%if(productFeedback.getRating()<=0){
+                                                            %>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <% } else if(productFeedback.getRating()<=1){%>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <% } else if(productFeedback.getRating()<=2){  %>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <%} else if(productFeedback.getRating()<=3){%>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <%} else if(productFeedback.getRating()<=4){%>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <%} else { %>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <%}%>
 
-                                                    </div>
+                                                        </div>
                                                         <p style="color: #ccc; font-style: italic;"><%=date%></p>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>

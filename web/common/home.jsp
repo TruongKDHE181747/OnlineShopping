@@ -11,6 +11,8 @@
 <%@page import="java.util.*" %>
 <%@page import="java.text.DecimalFormatSymbols"%>
 <%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -112,6 +114,7 @@
                     <%
                     for (Product product : pList) {
                     int price =product.getPrice() - product.getPrice()*product.getDiscount()/100;
+                    String omoney = numberFormat.format(product.getPrice());
                     String cmoney = numberFormat.format(price);
                     if(product.isIs_active()){
                     %>
@@ -173,7 +176,12 @@
                                     <i class="fa fa-star"></i>
                                     <%}%>
                                 </div>
-                                <h5><%=cmoney%> 
+                                <h5><%
+                                if(product.getDiscount()!=0){
+                                %>
+                                <del style="color: gray; font-size: 12px;"><%=omoney%></del>
+                                <% }%>
+                                <%=cmoney%>
 
                                 </h5>
                                 <div class="product__color__select">
@@ -217,6 +225,7 @@
 
                 <%
                 List<Post> poList = (List<Post>)session.getAttribute("poList");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                  int i = 0;
                 %>
                 <div class="row">
@@ -224,12 +233,13 @@
                     <%
                     for (Post post : poList) {
                     if(post.getIs_active()==1){
+                    String date = sdf.format(post.getModified_at());
                     %>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic set-bg" data-setbg="../<%=post.getThumbnail()%>"></div>
                             <div class="blog__item__text">
-                                <span><img src="img/icon/calendar.png" alt=""> <%=post.getModified_at()%></span>
+                                <span><img src="img/icon/calendar.png" alt=""> <%=date%></span>
                                 <h5><%=post.getTitle()%></h5>
                                 <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
                             </div>
