@@ -155,8 +155,7 @@ public class Checkout extends HttpServlet {
             }
 
             if (weight == 0) {
-                session.setAttribute("systemError", "error");
-                response.sendRedirect(request.getContextPath() + "/checkout");
+                response.sendRedirect(request.getContextPath()+"/orderstatus?status=fail");
                 return;
             }
 
@@ -192,8 +191,7 @@ public class Checkout extends HttpServlet {
             int orderId = orderDAO.insertOrder(order);
 
             if (orderId == -1) {
-                session.setAttribute("systemError", "error");
-                response.sendRedirect(request.getContextPath() + "/checkout");
+                response.sendRedirect(request.getContextPath()+"/orderstatus?status=fail");
                 return;
             }
 
@@ -234,8 +232,7 @@ public class Checkout extends HttpServlet {
                     }
 
                 } else {
-                    session.setAttribute("systemError", "error");
-                    response.sendRedirect(request.getContextPath() + "/checkout");
+                    response.sendRedirect(request.getContextPath()+"/orderstatus?status=fail");
                     return;
                 }
 
@@ -247,7 +244,7 @@ public class Checkout extends HttpServlet {
                 request.setAttribute("totalAmount", totalAmount);
                 request.getRequestDispatcher("/payment").forward(request, response);
             } else {
-                request.getRequestDispatcher("/common/order-success.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath()+"/orderstatus?status=success");
 
             }
 
