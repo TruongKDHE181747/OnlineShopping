@@ -8,7 +8,7 @@
 
     </head>
     <body>
-        <jsp:include page="../common/header.jsp" />
+        <%@include file="../common/header.jsp" %>
 
         <div class="container-xl px-4 mt-4">
 

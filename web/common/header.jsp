@@ -131,7 +131,7 @@
                     <div style="display: flex; align-items: center;padding: 0;width: 100%" class="col-md-2">
                         <a href="<%=s%>/cart"><img style="width: 25px"  src="<%=s%>/common/img/icon/cart.png" alt=""> 
                             <span style="font-weight: bold;width: 100%;text-align: center;padding-right: 8px">
-                                ${sessionScope.cartSize != null ? sessionScope.cartSize :0}</span></a></div>
+                                <%=cartSize%></span></a></div>
 
 
 
