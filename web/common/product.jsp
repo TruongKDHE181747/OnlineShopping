@@ -276,6 +276,7 @@ if(sql1.equals("null")) sql1 = "";
                         for (Product product : pList) {
                         int price =product.getPrice() - product.getPrice()*product.getDiscount()/100;
                         String cmoney = numberFormat.format(price);
+                        String omoney = numberFormat.format(product.getPrice());
                         if(product.isIs_active()){
 
                             %>
@@ -337,7 +338,12 @@ if(sql1.equals("null")) sql1 = "";
                                             <i class="fa fa-star"></i>
                                             <%}%>
                                         </div>
-                                        <h5><%=cmoney%> 
+                                        <h5><%
+                                            if(product.getDiscount()!=0){
+                                            %>
+                                            <del style="color: gray; font-size: 12px;"><%=omoney%></del>
+                                            <% }%>
+                                            <%=cmoney%> 
                                         </h5>
 
                                     </div>
