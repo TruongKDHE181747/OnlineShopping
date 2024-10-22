@@ -12,14 +12,16 @@ public class ProductSize {
 
     int size_id, product_id, quantity;
     String size_name;
+    int weight;
 
     public ProductSize() {
     }
 
-    public ProductSize(int size_id, int product_id, int quantity) {
+    public ProductSize(int size_id, int product_id, int quantity, int weight) {
         this.size_id = size_id;
         this.product_id = product_id;
         this.quantity = quantity;
+        this.weight = weight;
     }
 
     public ProductSize(int size_id, int product_id, String size_name) {
@@ -65,6 +67,14 @@ public class ProductSize {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
 }
