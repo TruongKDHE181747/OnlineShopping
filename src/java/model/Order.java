@@ -120,6 +120,34 @@ public class Order {
         this.shippingCode = shippingCode;
         this.saleId = saleId;
     }
+    
+    public Order(int customerId, String orderedDate, String receiverName, String phone, String email, String address, String wardCode, String wardName, int districtId, String districtName, int provinceId, String provinceName, int totalPrice, int shippingFee, int voucherId, int voucherPercent, int totalAmount, int totalGram, int paymentMethodId, String vnpTxnRef, String vnpCreateDate, int paymentStatusId, int orderStatusId, String shippingCode, int saleId) {
+        this.customerId = customerId;
+        this.orderedDate = orderedDate;
+        this.receiverName = receiverName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.wardCode = wardCode;
+        this.wardName = wardName;
+        this.districtId = districtId;
+        this.districtName = districtName;
+        this.provinceId = provinceId;
+        this.provinceName = provinceName;
+        this.totalPrice = totalPrice;
+        this.shippingFee = shippingFee;
+        this.voucherId = voucherId;
+        this.voucherPercent = voucherPercent;
+        this.totalAmount = totalAmount;
+        this.totalGram = totalGram;
+        this.paymentMethodId = paymentMethodId;
+        this.vnpTxnRef = vnpTxnRef;
+        this.vnpCreateDate = vnpCreateDate;
+        this.paymentStatusId = paymentStatusId;
+        this.orderStatusId = orderStatusId;
+        this.shippingCode = shippingCode;
+        this.saleId = saleId;
+    }
 
     public int getOrderId() {
         return orderId;
