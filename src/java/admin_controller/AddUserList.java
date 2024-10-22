@@ -34,6 +34,7 @@ public class AddUserList extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String PHONE_REGEX = "^\\d{10}$";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -55,13 +56,20 @@ public class AddUserList extends HttpServlet {
         
         boolean checkExistUsername = ud.checkExistUsername(username);
         boolean checkExistEmail = ud.checkExistEmail(email);
+        boolean checkExistPhone=ud.checkExistPhone(phone);
         String error="";
+        
         if(checkExistUsername){
             error="Username is existed!";
         }else{
             if(checkExistEmail){
                 error="Email is existed!";
+            }else if(checkExistPhone){
+                error="Phone number is existed";
             }
+        }
+        if(!phone.matches(PHONE_REGEX)){
+            error="Phone number must have 10 digits number";
         }
         if(picture.isEmpty()){
             picture="profile_img/default.jpg";

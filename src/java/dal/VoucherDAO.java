@@ -220,9 +220,9 @@ public class VoucherDAO extends DBContext {
         }
         
     }
-    public static void main(String[] args) {
-        VoucherDAO vdao = new VoucherDAO();
-        Voucher vlist = vdao.getVoucherbyId(1);
-        System.out.println(vlist);
-    }
+//    public static void main(String[] args) {
+//        VoucherDAO vdao = new VoucherDAO();
+//        Voucher vlist = vdao.getVoucherbyId(1);
+//        System.out.println(vlist);
+//    }
 }
