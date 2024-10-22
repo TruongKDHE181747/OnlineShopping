@@ -33,7 +33,7 @@ public class Order {
     private int paymentStatusId;
     private int orderStatusId;
     private String shippingCode;
-    private int sale_id;
+    private int saleId;
 
     public Order() {
     }
@@ -90,6 +90,35 @@ public class Order {
         this.paymentStatusId = paymentStatusId;
         this.orderStatusId = orderStatusId;
         this.shippingCode = shippingCode;
+    }
+    
+    public Order(int orderId, int customerId, String orderedDate, String receiverName, String phone, String email, String address, String wardCode, String wardName, int districtId, String districtName, int provinceId, String provinceName, int totalPrice, int shippingFee, int voucherId, int voucherPercent, int totalAmount, int totalGram, int paymentMethodId, String vnpTxnRef, String vnpCreateDate, int paymentStatusId, int orderStatusId, String shippingCode, int saleId) {
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.orderedDate = orderedDate;
+        this.receiverName = receiverName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.wardCode = wardCode;
+        this.wardName = wardName;
+        this.districtId = districtId;
+        this.districtName = districtName;
+        this.provinceId = provinceId;
+        this.provinceName = provinceName;
+        this.totalPrice = totalPrice;
+        this.shippingFee = shippingFee;
+        this.voucherId = voucherId;
+        this.voucherPercent = voucherPercent;
+        this.totalAmount = totalAmount;
+        this.totalGram = totalGram;
+        this.paymentMethodId = paymentMethodId;
+        this.vnpTxnRef = vnpTxnRef;
+        this.vnpCreateDate = vnpCreateDate;
+        this.paymentStatusId = paymentStatusId;
+        this.orderStatusId = orderStatusId;
+        this.shippingCode = shippingCode;
+        this.saleId = saleId;
     }
 
     public int getOrderId() {
@@ -292,12 +321,12 @@ public class Order {
         this.shippingCode = shippingCode;
     }
 
-    public int getSale_id() {
-        return sale_id;
+    public int getSaleId() {
+        return saleId;
     }
 
-    public void setSale_id(int sale_id) {
-        this.sale_id = sale_id;
+    public void setSaleId(int saleId) {
+        this.saleId = saleId;
     }
 
     

@@ -158,74 +158,101 @@ public class OrderDAO extends DBContext {
         return -1;
     }
 
-//    public List<Order> getAllOrder() {
-//        List<Order> oList = new ArrayList<>();
-//        String sql = "select * from Orders";
-//        
-//        try {
-//            PreparedStatement pre = connection.prepareStatement(sql);
-//            ResultSet rs = pre.executeQuery();
-//            while (rs.next()) {
-//                int oid = rs.getInt("order_id");
-//                Date orderedDate = rs.getDate("ordered_date");
-//                Date receivedDate = rs.getDate("received_date");
-//                int shippingFee = rs.getInt("shipping_fee");
-//                int totalPrice = rs.getInt("total_price");
-//                int totalAmount = rs.getInt("total_amount");
-//                String phoneNumber = rs.getString("phoneNumber");
-//                Date paymentDate = rs.getDate("payment_date");
-//                int paymentMethodId = rs.getInt("payment_method_id");
-//                int paymentStatusId = rs.getInt("payment_status_id");
-//                String receiverName = rs.getString("receiver_name");
-//                String email = rs.getString("email");
-//                int statusId = rs.getInt("status_id");
-//                int voucherId = rs.getInt("voucherId");
-//                int salerId = rs.getInt("salerId");
-//                Order order = new Order(oid, orderedDate, receivedDate, shippingFee, totalPrice, totalAmount, phoneNumber, paymentDate, paymentMethodId, paymentStatusId, receiverName, email, statusId, voucherId, salerId);
-//                oList.add(order);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        return oList;        
-//    }
-//    
-//    public List<Order> getOrderBySale(String sName) {
-//        List<Order> oList = new ArrayList<>();
-//        String sql = "select * from Orders "
-//                + "join Users on Orders.salerId = Users.role_id "
-//                + "where Users.username=?";
-//        
-//        try {
-//            PreparedStatement pre = connection.prepareStatement(sql);
-//            pre.setString(1, sName);
-//            ResultSet rs = pre.executeQuery();
-//            while (rs.next()) {
-//                int oid = rs.getInt("order_id");
-//                Date orderedDate = rs.getDate("ordered_date");
-//                Date receivedDate = rs.getDate("received_date");
-//                int shippingFee = rs.getInt("shipping_fee");
-//                int totalPrice = rs.getInt("total_price");
-//                int totalAmount = rs.getInt("total_amount");
-//                String phoneNumber = rs.getString("phoneNumber");
-//                Date paymentDate = rs.getDate("payment_date");
-//                int paymentMethodId = rs.getInt("payment_method_id");
-//                int paymentStatusId = rs.getInt("payment_status_id");
-//                String receiverName = rs.getString("receiver_name");
-//                String email = rs.getString("email");
-//                int statusId = rs.getInt("status_id");
-//                int voucherId = rs.getInt("voucherId");
-//                int salerId = rs.getInt("salerId");
-//                Order order = new Order(oid, orderedDate, receivedDate, shippingFee, totalPrice, totalAmount, phoneNumber, paymentDate, paymentMethodId, paymentStatusId, receiverName, email, statusId, voucherId, salerId);
-//                oList.add(order);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        return oList;  
-//    }
+    public List<Order> getAllOrder() {
+        List<Order> oList = new ArrayList<>();
+        String sql = "select * from Orders";
+        
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int oid = rs.getInt("order_id");
+                int cid = rs.getInt("customer_id");
+                String orderedDate = rs.getString("ordered_date");
+                String receiverName = rs.getString("receiver_name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String wardCode = rs.getString("ward_code");
+                String wardName = rs.getString("ward_name");
+                int districtId = rs.getInt("district_id");
+                String districtName = rs.getString("district_name");
+                int provinceId = rs.getInt("province_id");
+                String provinceName = rs.getString("province_name");
+                int totalPrice = rs.getInt("total_price");
+                int shippingFee = rs.getInt("shipping_fee");
+                int voucherId = rs.getInt("voucher_id");
+                int voucherPercent = rs.getInt("voucher_percent");
+                int totalAmount = rs.getInt("total_amount");
+                int totalGram = rs.getInt("total_gram");
+                int paymentMethodId = rs.getInt("payment_method_id");
+                String vnpTxnRef = rs.getString("vnp_TxnRef");
+                String vnpCreateDate = rs.getString("vnp_CreateDate");
+                int paymentStatusId = rs.getInt("payment_status_id");
+                int orderStatusId = rs.getInt("order_status_id");
+                String shippingCode = rs.getString("shipping_code");
+                int saleId = rs.getInt("salerId");
+                Order order = new Order(oid, cid, orderedDate, receiverName, phone, email, address, 
+                        wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee, 
+                        voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate, 
+                        paymentStatusId, orderStatusId, shippingCode, saleId);
+                oList.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return oList;        
+    }
+    
+    public List<Order> getOrderBySale(String sName) {
+        List<Order> oList = new ArrayList<>();
+        String sql = "select * from Orders "
+                + "join Users on Orders.salerId = Users.role_id "
+                + "where Users.username=?";
+        
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, sName);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int oid = rs.getInt("order_id");
+                int cid = rs.getInt("customer_id");
+                String orderedDate = rs.getString("ordered_date");
+                String receiverName = rs.getString("receiver_name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String wardCode = rs.getString("ward_code");
+                String wardName = rs.getString("ward_name");
+                int districtId = rs.getInt("district_id");
+                String districtName = rs.getString("district_name");
+                int provinceId = rs.getInt("province_id");
+                String provinceName = rs.getString("province_name");
+                int totalPrice = rs.getInt("total_price");
+                int shippingFee = rs.getInt("shipping_fee");
+                int voucherId = rs.getInt("voucher_id");
+                int voucherPercent = rs.getInt("voucher_percent");
+                int totalAmount = rs.getInt("total_amount");
+                int totalGram = rs.getInt("total_gram");
+                int paymentMethodId = rs.getInt("payment_method_id");
+                String vnpTxnRef = rs.getString("vnp_TxnRef");
+                String vnpCreateDate = rs.getString("vnp_CreateDate");
+                int paymentStatusId = rs.getInt("payment_status_id");
+                int orderStatusId = rs.getInt("order_status_id");
+                String shippingCode = rs.getString("shipping_code");
+                Order order = new Order(oid, cid, orderedDate, receiverName, phone, email, address, 
+                        wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee, 
+                        voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate, 
+                        paymentStatusId, orderStatusId, shippingCode);
+                oList.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return oList;  
+    }
 //    public static void main(String[] args) {
 //        OrderDAO odao = new OrderDAO();
 //        List<Order> o = odao.getAllOrder();
