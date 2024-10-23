@@ -6,6 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*" %>
+<%@page import="model.User"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,13 +51,13 @@
                             <div class="container-fluid p-0">
                                 <div class="row">
 
-                                    <form action="">
+                                    <form action="../saledashboardfilter">
                                         <div class="shop__product__option">
                                             <div class="row">
 
                                                 <%
-                                    String begin = session.getAttribute("pobegin")+"";
-                                String end = session.getAttribute("poend")+"";
+                                    String begin = session.getAttribute("sadbegin")+"";
+                                String end = session.getAttribute("sadend")+"";
 
                                 if(begin.equals("null")) begin = "";
                                 if(end.equals("null")) end = "";
@@ -81,11 +82,19 @@
                                                             </div>
 
                                                         </div>
+                                                        
 
-
+                                                    </div>
+                                                             <%
+                                                    String loi = session.getAttribute("sdloi")+""; 
+                                                    if(loi.equals("null")) loi = "";
+                                                    %>
+                                                    <div style="color: red;">
+                                                        <%=loi%>
                                                     </div>
 
                                                 </div>
+                                                    
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="shop__product__option__right row">
                                                         <div class="col-md-3">
@@ -94,17 +103,30 @@
                                                         </div>
                                                         <div class="col-md-6">
                                                             <!-- Example single danger button -->
-                                                            <div class="btn-group" style="width: 85px;">
-
+                                                            <div class="btn-group" style="min-width: 85px;">
+                                                                <%
+                                                                int sid = 0;
+                                                                String sdsaler = session.getAttribute("sdsaler")+""; 
+                                                                if(sdsaler.equals("null")==false) sid = Integer.parseInt(session.getAttribute("sdsaler")+"");
+                                                                
+                                                                String s = "All";
+                                                                List<User> uList = (List<User>)session.getAttribute("dsalerList");
+                                                                for (User user : uList) {
+                                                                   if(user.getUser_id()==sid){
+                                                                       s = user.getFirst_name()+" "+user.getLast_name();
+                                                                   }
+                                                                }
+                                                                %>
                                                                 <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    All
+                                                                    <%=s%>
+                                                                    
                                                                     <i style="margin-left: 5px;" class="fa-solid fa-caret-down"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu">
-                                                                    <li><a class="dropdown-item" href="#">All</a></li>
+                                                                    <li><a class="dropdown-item" href="../saledashboardfilterbysaler?sid=0">All</a></li>
                                                                     <c:forEach items="${dsalerList}" var="sale">
                                                                     
-                                                                    <li><a class="dropdown-item" href="../filter?sid=${sale.getUser_id()}">${sale.getFirst_name()} ${sale.getLast_name()}</a></li>
+                                                                    <li><a class="dropdown-item" href="../saledashboardfilterbysaler?sid=${sale.getUser_id()}">${sale.getFirst_name()} ${sale.getLast_name()}</a></li>
                                                                     </c:forEach>
                                                                     
 
@@ -116,17 +138,10 @@
 
                                                     </div>
 
-                                                    <%
-                                                    String loi = session.getAttribute("ploi")+"";
-                                                    String postsql = session.getAttribute("postsql")+"";
-                                                    if(loi.equals("null")) loi = "";
-                                                    %>
-                                                    <div style="color: red;">
-                                                        <%=loi%>
-                                                    </div>
+                                                   
                                                 </div>
 
-                                                <!--<%=postsql%>-->
+                    
                                             </div>
                                         </div>
                                     </form>
@@ -251,6 +266,10 @@
                             reverse: true,
                                     gridLines: {
                                     color: "rgba(0,0,0,0.05)"
+                                    },
+                                    ticks: {
+                                        min:0,
+                                        maxTicksLimit:10
                                     }
                             }],
                                     yAxes: [{
@@ -311,6 +330,10 @@
                                             gridLines: {
                                             color: "transparent"
                                             },
+                                     ticks: {
+                                        min:0,
+                                        maxTicksLimit:10
+                                    }
                                     }]
                             }
                     }
@@ -359,6 +382,10 @@
                                             gridLines: {
                                             color: "transparent"
                                             },
+                                            ticks: {
+                                        min:0,
+                                        maxTicksLimit:10
+                                    }
                                     }]
                             }
                     }

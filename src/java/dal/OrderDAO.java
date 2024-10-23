@@ -308,7 +308,7 @@ public class OrderDAO extends DBContext {
     }
     
     
-    public List<SaleChart> getSucsessOnTotalOrder(int saleId, LocalDate startDate, int days){
+    public List<SaleChart> getSucsessOnTotalOrder(int saleId, LocalDate startDate, long days){
         List<SaleChart> sList = new ArrayList<>();
         
         
@@ -318,6 +318,15 @@ public class OrderDAO extends DBContext {
                     "where ordered_date>= ? and ordered_date <= ?\n" +
                     "group by os.order_status_id,os.order_status_name\n" +
                     "order by os.order_status_id";
+        
+        if(saleId!=0)
+            sql = "Select os.order_status_id, os.order_status_name, count(order_id) as Total_Order\n" +
+                "from Order_Status as os\n" +
+                "right join Orders as o on os.order_status_id = o.order_status_id\n" +
+                "where ordered_date>= ? and ordered_date <= ?\n" +
+                "and salerId = " + saleId+" "+
+                "group by os.order_status_id,os.order_status_name\n" +
+                "order by os.order_status_id";
         
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -338,13 +347,17 @@ public class OrderDAO extends DBContext {
         return sList;
     }
     
-    public List<SaleChart> getNumberOfOrderByDay(int saleId, LocalDate startDate, int days){
+    public List<SaleChart> getNumberOfOrderByDay(int saleId, LocalDate startDate, long days){
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        for (int i = 0; i < days; i++) {
-            String sql = "select count(order_id) as Total_number from Orders\n" +
+         String sql = "select count(order_id) as Total_number from Orders\n" +
                     "where ordered_date = ?";
-        
+         
+         if(saleId!=0) sql = "select count(order_id) as Total_number from Orders\n" +
+                    "where ordered_date = ? and salerid = " + saleId;
+         
+        for (int i = 0; i <= days; i++) {
+
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             LocalDate date = startDate.plusDays(i);
@@ -369,13 +382,21 @@ public class OrderDAO extends DBContext {
     }
     
     
-    public List<SaleChart> getTotalRevenueByDay(int saleId, LocalDate startDate, int days){
+    public List<SaleChart> getTotalRevenueByDay(int saleId, LocalDate startDate, long days){
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        for (int i = 0; i < days; i++) {
-            String sql = "select sum(total_price) as Total_Price \n" +
+        String sql = "select sum(total_price) as Total_Price \n" +
                         "from Orders\n" +
                         "where ordered_date = ?";
+        
+        if(saleId!=0){
+            sql ="select sum(total_price) as Total_Price \n" +
+                        "from Orders\n" +
+                        "where ordered_date = ? and salerid = "+saleId;
+        }
+        
+        for (int i = 0; i <= days; i++) {
+            
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -403,13 +424,21 @@ public class OrderDAO extends DBContext {
     
     
     
-    public List<SaleChart> getRevenueAccumulateByDay(int saleId, LocalDate startDate, int days){
+    public List<SaleChart> getRevenueAccumulateByDay(int saleId, LocalDate startDate, long days){
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        for (int i = 0; i < days; i++) {
-            String sql = "select sum(total_price) as Total_Price \n" +
+        String sql = "select sum(total_price) as Total_Price \n" +
                         "from Orders\n" +
                         "where ordered_date <= ?";
+        
+         if(saleId!=0){
+            sql ="select sum(total_price) as Total_Price \n" +
+                        "from Orders\n" +
+                        "where ordered_date <= ? and salerid = "+saleId;
+        }
+        
+        for (int i = 0; i <= days; i++) {
+            
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -439,13 +468,17 @@ public class OrderDAO extends DBContext {
     
     
     
-    public int getTotalOrder(int saleId, LocalDate startDate, int days){
+    public int getTotalOrder(int saleId, LocalDate startDate, long days){
         int total = 0;
         
         
         String sql = "select count(*) as Total_Order\n" +
                     "from Orders where ordered_date>= ? and ordered_date <= ?";
         
+        if(saleId!=0){
+            sql = "select count(*) as Total_Order\n" +
+                    "from Orders where ordered_date>= ? and ordered_date <= ? and salerid = "+saleId;
+        }
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, startDate+"");
