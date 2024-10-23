@@ -68,7 +68,7 @@ public class ProductSizeDAO extends DBContext {
         List<ProductSize> pList = new ArrayList<>();
         String sql = "select distinct ps.*, s.size_name \n"
                 + "from Product_Size as ps, Sizes as s\n"
-                + "where ps.size_id = s.size_id and product_id = " + id;
+                + "where ps.size_id = s.size_id and quantity>0 and product_id = " + id;
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
