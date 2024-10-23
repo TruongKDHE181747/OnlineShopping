@@ -90,25 +90,29 @@
                                                     <div class="shop__product__option__right row">
                                                         <div class="col-md-3">
                                                             <button  style="width: 80%" type="submit" class="btn btn-outline-dark">Apply</button>
-                                                        
+
                                                         </div>
                                                         <div class="col-md-6">
                                                             <!-- Example single danger button -->
-                                                        <div class="btn-group" >
-                                                            
-                                                            <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                All
-                                                                <i style="margin-left: 5px;" class="fa-solid fa-caret-down"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu">
-                                                                <li><a class="dropdown-item" href="#">All</a></li>
-                                                                <li><a class="dropdown-item" href="#">Sale 1</a></li>
-                                                                
-                                                            </ul>
-                                                        </div>
+                                                            <div class="btn-group" style="width: 85px;">
+
+                                                                <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    All
+                                                                    <i style="margin-left: 5px;" class="fa-solid fa-caret-down"></i>
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item" href="#">All</a></li>
+                                                                    <c:forEach items="${dsalerList}" var="sale">
+                                                                    
+                                                                    <li><a class="dropdown-item" href="../filter?sid=${sale.getUser_id()}">${sale.getFirst_name()} ${sale.getLast_name()}</a></li>
+                                                                    </c:forEach>
+                                                                    
+
+                                                                </ul>
+                                                            </div>
                                                         </div>
 
-                                                        
+
 
                                                     </div>
 
@@ -127,28 +131,16 @@
                                         </div>
                                     </form>
                                 </div>
-                                <h1 class="h3 mb-3">Order Statistic</h1>
+                                <h1 class="h3 mb-3">Thống kê đơn hàng</h1>
 
                                 <div class="row">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="card flex-fill w-100">
-                                            <div class="card-header">
-                                                <h5 class="card-title">Line Chart</h5>
-                                                <h6 class="card-subtitle text-muted">A line chart is a way of plotting data points on a line.</h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="chart">
-                                                    <canvas id="chartjs-line"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
 
                                     <div class="col-12 col-lg-6">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title">Bar Chart</h5>
-                                                <h6 class="card-subtitle text-muted">A bar chart provides a way of showing data values represented as vertical bars.</h6>
+                                                <h2 style="font-size: 24px;" class="card-title">Đơn hàng trong từng ngày</h2>
+
                                             </div>
                                             <div class="card-body">
                                                 <div class="chart">
@@ -158,58 +150,47 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-lg-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="card-title">Doughnut Chart</h5>
-                                                <h6 class="card-subtitle text-muted">Doughnut charts are excellent at showing the relational proportions between data.</h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="chart chart-sm">
-                                                    <canvas id="chartjs-doughnut"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-12 col-lg-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="card-title">Pie Chart</h5>
-                                                <h6 class="card-subtitle text-muted">Pie charts are excellent at showing the relational proportions between data.</h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="chart chart-sm">
-                                                    <canvas id="chartjs-pie"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
+                                    <%
+                                    int total = Integer.parseInt(session.getAttribute("ctotalOrder")+"");
+                                    %>
                                     <div class="col-12 col-lg-6">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title">Radar Chart</h5>
-                                                <h6 class="card-subtitle text-muted">A radar chart is a way of showing multiple data points and the variation between them.
-                                                </h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="chart">
-                                                    <canvas id="chartjs-radar"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-lg-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="card-title">Polar Area Chart</h5>
-                                                <h6 class="card-subtitle text-muted">Polar area charts are similar to pie charts, but each segment has the same angle.</h6>
+                                                <h2 style="font-size: 24px;" class="card-title">Tổng số <%=total%> đơn đặt hàng </h2>
                                             </div>
                                             <div class="card-body">
                                                 <div class="chart">
                                                     <canvas id="chartjs-polar-area"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 col-lg-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h2 style="font-size: 24px;" class="card-title">Doanh thu trong từng ngày</h2>
+
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="chart">
+                                                    <canvas id="chartjs-bar2"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-lg-6">
+                                        <div class="card flex-fill w-100">
+                                            <div class="card-header">
+                                                <h5 style="font-size: 24px;" class="card-title">Tổng doanh thu</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="chart">
+                                                    <canvas id="chartjs-line"></canvas>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,252 +217,181 @@
         <script>
 
             document.addEventListener("DOMContentLoaded", function () {
-                // Line chart
-                new Chart(document.getElementById("chartjs-line"), {
-                    type: "line",
+            // Line chart
+            new Chart(document.getElementById("chartjs-line"), {
+            type: "line",
                     data: {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                        datasets: [{
-                                label: "Sales ($)",
-                                fill: true,
-                                backgroundColor: "transparent",
-                                borderColor: window.theme.primary,
-                                data: [1000, 2000, 3000, 4000, 5400]
-                            }, {
-                                label: "Orders",
-                                fill: true,
-                                backgroundColor: "transparent",
-                                borderColor: "#adb5bd",
-                                borderDash: [4, 4],
-                                data: [958, 724, 629, 883, 915, 1214, 1476, 1212, 1554, 2128, 1466, 1827]
+                    labels: [<c:forEach items="${revenueAccumulateByDayList}" var="chart">"${chart.getLabel()}",</c:forEach>],
+                            datasets: [{
+                            label: "Doanh thu(VND)",
+                                    fill: true,
+                                    backgroundColor: "transparent",
+                                    borderColor: window.theme.primary,
+                                    data: [<c:forEach items="${revenueAccumulateByDayList}" var="chart">"${chart.getValue()}",</c:forEach>]
                             }]
                     },
                     options: {
-                        maintainAspectRatio: false,
-                        legend: {
+                    maintainAspectRatio: false,
+                            legend: {
                             display: false
-                        },
-                        tooltips: {
+                            },
+                            tooltips: {
                             intersect: false
-                        },
-                        hover: {
+                            },
+                            hover: {
                             intersect: true
-                        },
-                        plugins: {
+                            },
+                            plugins: {
                             filler: {
-                                propagate: false
+                            propagate: false
                             }
-                        },
-                        scales: {
+                            },
+                            scales: {
                             xAxes: [{
-                                    reverse: true,
+                            reverse: true,
                                     gridLines: {
-                                        color: "rgba(0,0,0,0.05)"
+                                    color: "rgba(0,0,0,0.05)"
                                     }
-                                }],
-                            yAxes: [{
+                            }],
+                                    yAxes: [{
                                     ticks: {
-                                        stepSize: 500
+                                        min:0,
+                                        maxTicksLimit:6,
+                                    stepSize: 500
                                     },
-                                    display: true,
-                                    borderDash: [5, 5],
-                                    gridLines: {
-                                        color: "rgba(0,0,0,0)",
-                                        fontColor: "#fff"
-                                    }
-                                }]
-                        }
+                                            display: true,
+                                            borderDash: [5, 5],
+                                            gridLines: {
+                                            color: "rgba(0,0,0,0)",
+                                                    fontColor: "#fff"
+                                            }
+                                    }]
+                            }
                     }
-                });
+            });
             });
         </script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                // Bar chart
-                new Chart(document.getElementById("chartjs-bar"), {
-                    type: "bar",
+            // Bar chart
+            new Chart(document.getElementById("chartjs-bar"), {
+            type: "bar",
                     data: {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                        datasets: [{
-                                label: "Last year",
-                                backgroundColor: window.theme.primary,
-                                borderColor: window.theme.primary,
-                                hoverBackgroundColor: window.theme.primary,
-                                hoverBorderColor: window.theme.primary,
-                                data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-                                barPercentage: .75,
-                                categoryPercentage: .5
-                            }, {
-                                label: "This year",
-                                backgroundColor: "#dee2e6",
-                                borderColor: "#dee2e6",
-                                hoverBackgroundColor: "#dee2e6",
-                                hoverBorderColor: "#dee2e6",
-                                data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
-                                barPercentage: .75,
-                                categoryPercentage: .5
+                    labels: [<c:forEach items="${orderByDayList}" var="chart">"${chart.getLabel()}",</c:forEach>],
+                            datasets: [{
+                            label: "Số lượng đơn hàng",
+                            backgroundColor: window.theme.primary,
+                                    borderColor: window.theme.primary,
+                                    hoverBackgroundColor: window.theme.primary,
+                                    hoverBorderColor: window.theme.primary,
+                                    data: [<c:forEach items="${orderByDayList}" var="chart">"${chart.getValue()}",</c:forEach>],
+                                    barPercentage: 1,
+                                    categoryPercentage: .5
                             }]
                     },
                     options: {
-                        maintainAspectRatio: false,
-                        legend: {
+                    maintainAspectRatio: false,
+                            legend: {
                             display: false
-                        },
-                        scales: {
+                            },
+                            scales: {
                             yAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    },
+                            gridLines: {
+                            display: false
+                            },
                                     stacked: false,
                                     ticks: {
-                                        stepSize: 20
+                                    min: 0,
+                                    stepSize: 40,
+                                    maxTicksLimit: 6
                                     }
-                                }],
-                            xAxes: [{
+                            }],
+                                    xAxes: [{
                                     stacked: false,
-                                    gridLines: {
-                                        color: "transparent"
+                                            gridLines: {
+                                            color: "transparent"
+                                            },
+                                    }]
+                            }
+                    }
+            });
+            });
+            </script>
+            
+            
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            // Bar chart
+            new Chart(document.getElementById("chartjs-bar2"), {
+            type: "bar",
+                    data: {
+                    labels: [<c:forEach items="${revenueByDayList}" var="chart">"${chart.getLabel()}",</c:forEach>],
+                            datasets: [{
+                            label: "Doanh thu(VND)",
+                            backgroundColor: window.theme.primary,
+                                    borderColor: window.theme.primary,
+                                    hoverBackgroundColor: window.theme.primary,
+                                    hoverBorderColor: window.theme.primary,
+                                    data: [<c:forEach items="${revenueByDayList}" var="chart">"${chart.getValue()}",</c:forEach>],
+                                    barPercentage: 1,
+                                    categoryPercentage: .5
+                            }]
+                    },
+                    options: {
+                    maintainAspectRatio: false,
+                            legend: {
+                            display: false
+                            },
+                            scales: {
+                            yAxes: [{
+                            gridLines: {
+                            display: false
+                            },
+                                    stacked: false,
+                                    ticks: {
+                                    min: 0,
+                                    stepSize: 40,
+                                    maxTicksLimit: 6
                                     }
-                                }]
-                        }
+                            }],
+                                    xAxes: [{
+                                    stacked: false,
+                                            gridLines: {
+                                            color: "transparent"
+                                            },
+                                    }]
+                            }
                     }
-                });
             });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Doughnut chart
-                new Chart(document.getElementById("chartjs-doughnut"), {
-                    type: "doughnut",
-                    data: {
-                        labels: ["Social", "Search Engines", "Direct", "Other"],
-                        datasets: [{
-                                data: [260, 125, 54, 146],
-                                backgroundColor: [
-                                    window.theme.primary,
-                                    window.theme.success,
-                                    window.theme.warning,
-                                    "#dee2e6"
-                                ],
-                                borderColor: "transparent"
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        cutoutPercentage: 65,
-                        legend: {
-                            display: false
-                        }
-                    }
-                });
             });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Pie chart
-                new Chart(document.getElementById("chartjs-pie"), {
-                    type: "pie",
-                    data: {
-                        labels: ["Social", "Search Engines", "Direct", "Other"],
-                        datasets: [{
-                                data: [260, 125, 54, 146],
-                                backgroundColor: [
-                                    window.theme.primary,
-                                    window.theme.warning,
-                                    window.theme.danger,
-                                    "#dee2e6"
-                                ],
-                                borderColor: "transparent"
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false
-                        }
-                    }
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Radar chart
-                new Chart(document.getElementById("chartjs-radar"), {
-                    type: "radar",
-                    data: {
-                        labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
-                        datasets: [{
-                                label: "Model X",
-                                backgroundColor: "rgba(0, 123, 255, 0.2)",
-                                borderColor: window.theme.primary,
-                                pointBackgroundColor: window.theme.primary,
-                                pointBorderColor: "#fff",
-                                pointHoverBackgroundColor: "#fff",
-                                pointHoverBorderColor: window.theme.primary,
-                                data: [70, 53, 82, 60, 33]
-                            }, {
-                                label: "Model S",
-                                backgroundColor: "rgba(220, 53, 69, 0.2)",
-                                borderColor: window.theme.danger,
-                                pointBackgroundColor: window.theme.danger,
-                                pointBorderColor: "#fff",
-                                pointHoverBackgroundColor: "#fff",
-                                pointHoverBorderColor: window.theme.danger,
-                                data: [35, 38, 65, 85, 84]
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false
-                    }
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            </script>
+            
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
                 // Polar Area chart
                 new Chart(document.getElementById("chartjs-polar-area"), {
-                    type: "polarArea",
-                    data: {
-                        labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
-                        datasets: [{
+                type: "polarArea",
+                        data: {
+                        labels: [<c:forEach items="${sotoChart}" var="chart">"${chart.getLabel()}",</c:forEach>],
+                                datasets: [{
                                 label: "Model S",
-                                data: [35, 38, 65, 70, 24],
-                                backgroundColor: [
-                                    window.theme.primary,
-                                    window.theme.success,
-                                    window.theme.danger,
-                                    window.theme.warning,
-                                    window.theme.info
-                                ]
-                            }]
-                    },
-                    options: {
+                                        data: [<c:forEach items="${sotoChart}" var="chart">"${chart.getValue()}",</c:forEach>, ],
+                                        backgroundColor: [
+                                                window.theme.primary,
+                                                window.theme.success,
+                                                window.theme.warning,
+                                                window.theme.danger,
+                                                window.theme.info
+                                        ]
+                                }]
+                        },
+                        options: {
                         maintainAspectRatio: false
-                    }
+                        }
                 });
-            });
+                });
         </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function (event) {
-                setTimeout(function () {
-                    if (localStorage.getItem('popState') !== 'shown') {
-                        window.notyf.open({
-                            type: "success",
-                            message: "Get access to all 500+ components and 45+ pages with AdminKit PRO. <u><a class=\"text-white\" href=\"https://adminkit.io/pricing\" target=\"_blank\">More info</a></u> 🚀",
-                            duration: 10000,
-                            ripple: true,
-                            dismissible: false,
-                            position: {
-                                x: "left",
-                                y: "bottom"
-                            }
-                        });
-
-                        localStorage.setItem('popState', 'shown');
-                    }
-                }, 15000);
-            });
-        </script>
+        
 
     </body>
 
