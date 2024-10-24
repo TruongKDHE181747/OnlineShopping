@@ -10,6 +10,7 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import model.User;
  * @author 84983
  */
 @WebServlet(name="AddUserList", urlPatterns={"/adduserlist"})
+@MultipartConfig()
 public class AddUserList extends HttpServlet {
    
     /** 
@@ -45,7 +47,7 @@ public class AddUserList extends HttpServlet {
         String password=request.getParameter("password");
         String firstname= request.getParameter("first_name");
         String lastname=request.getParameter("last_name");
-        String picture=request.getParameter("profile_picture_url");
+        
         String gender=request.getParameter("gender");
         String phone=request.getParameter("phone");
         String email=request.getParameter("email");
@@ -54,6 +56,19 @@ public class AddUserList extends HttpServlet {
         int role_id=Integer.parseInt(role);
         Role r=rd.getRoleById(role_id);
         
+        Part filePart = request.getPart("img"); 
+        String img = "profile_img/default.jpg";
+       
+        String fileName = filePart.getSubmittedFileName();
+        if (!fileName.isEmpty()) {
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "profile_img";
+
+
+        // Save the uploaded file to the specified path
+        filePart.write(uploadPath + File.separator + fileName);
+
+          img = "profile_img/"+fileName; 
+        }
         boolean checkExistUsername = ud.checkExistUsername(username);
         boolean checkExistEmail = ud.checkExistEmail(email);
         boolean checkExistPhone=ud.checkExistPhone(phone);
@@ -71,16 +86,13 @@ public class AddUserList extends HttpServlet {
         if(!phone.matches(PHONE_REGEX)){
             error="Phone number must have 10 digits number";
         }
-        if(picture.isEmpty()){
-            picture="profile_img/default.jpg";
-            
-        }
+        
         
         if(error.length()>0){
             session.setAttribute("error", error);
             response.sendRedirect(request.getContextPath()+"/management/adduserlist.jsp");
         }else{
-        User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, picture, true, false, r);
+      User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, img, true, false, r);
         ud.addUser(u);
         response.sendRedirect("adminuser");}
     } 

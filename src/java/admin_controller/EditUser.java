@@ -49,17 +49,30 @@ public class EditUser extends HttpServlet {
         String userEmail = request.getParameter("email");
         String firstname = request.getParameter("first_name");
         String lastname = request.getParameter("last_name");
-        String profilepic=request.getParameter("profile_picture_url");
+        String img=request.getParameter("profile_picture_url");
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         String dob = request.getParameter("dob");
         String phone = request.getParameter("phone");
         String rolename=request.getParameter("role");
         String password=request.getParameter("password");
+        
+        Part filePart = request.getPart("profile_picture_url"); 
+       
+        String fileName = filePart.getSubmittedFileName();
+        if (!fileName.isEmpty()) {
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "profile_img";
+
+
+        // Save the uploaded file to the specified path
+        filePart.write(uploadPath + File.separator + fileName);
+
+          img = "profile_img/"+fileName; 
+        }
         User oldu=userDAO.getUserById(user_id);
         
         Role role=rdao.getRolebyname(rolename);
         
-        User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, profilepic, true, false, role);
+        User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, img, true, false, role);
         userDAO.edituser(newu);
         response.sendRedirect("adminuser");
     } 

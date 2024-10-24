@@ -49,7 +49,7 @@
                    
 
                     <div class="col-md-8">
-                        <form class="needs-validation" action="../adduserlist" enctype="multipart/form-data">
+                        <form class="needs-validation" method="post" action="../adduserlist" enctype="multipart/form-data">
                             <div class="row g-3">
                                 
 
@@ -74,8 +74,8 @@
                                 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="profile_picture_url" class="form-label">Profile Image</label>
-                                    <input name="profile_picture_url" type="file" class="form-control" id="profile_picture_url">
+                                    <label for="img" class="form-label">Profile Image</label>
+                                    <input name="img" type="file" class="form-control" id="img">
                                 </div>
 
 

@@ -648,7 +648,7 @@ public class UserDAO extends DBContext {
     public void addUser(User u){
         try {
             String sql = "insert into Users values\n" +
-"(?, ?, ?, ?, ?, ?, ?,?,null,null,null,null,1,0,?)";
+"(?, ?, ?, ?, ?, ?, ?,?,null,null,null,?,1,0,?)";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, u.getUsername());
             pre.setString(2, u.getPassword());
@@ -658,7 +658,8 @@ public class UserDAO extends DBContext {
             pre.setString(6, u.getEmail());
             pre.setBoolean(7, u.isGender());
             pre.setString(8, u.getDob());
-            pre.setInt(9, u.getRole().getRole_id());
+            pre.setString(9, u.getProfile_picture_url());
+            pre.setInt(10, u.getRole().getRole_id());
            pre.executeUpdate();
 
         } catch (SQLException ex) {
