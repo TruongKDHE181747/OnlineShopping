@@ -86,15 +86,6 @@
                     <ul>
                         <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Trang chủ</a></li>
                         <li class="<%=mainpage.equals("shop")?"active":""%>"><a href="<%=s%>/homeproduct">Sản phẩm</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Shop Details</a></li>
-                                <li><a href="#">Shopping Cart</a></li>
-                                <li><a href="#">Check Out</a></li>
-                                <li><a href="#">Blog Details</a></li>
-                            </ul>
-                        </li>
                         <li class="<%=mainpage.equals("blog")?"active":""%>"><a href="<%=s%>/hpostlist">Blogs</a></li>
                         <li><a href="#">Liên hệ</a></li>
                     </ul>
@@ -108,8 +99,8 @@
                 <div class="header__nav__option row" style="padding: 22px 0;">
                     <div class="col-md-10">
                         <form class="d-flex" role="search" action="<%=s%>/homeproductsearch">
-                            <input maxlength="500" value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
+                            <input style="font-size: 13px;padding: 18px" maxlength="500" value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Tên sản phẩm" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Tìm</button>
                         </form>
 
                     </div>
