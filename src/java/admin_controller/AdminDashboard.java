@@ -39,7 +39,7 @@ public class AdminDashboard extends HttpServlet {
         iList.add(1000);
         iList.add(1500);
         iList.add(2000);
-        iList.add(100);
+        iList.add(1900);
         iList.add(2400);
         iList.add(3500);
         iList.add(5000);
@@ -47,7 +47,7 @@ public class AdminDashboard extends HttpServlet {
         
         
         session.setAttribute("dataList", iList);
-        response.sendRedirect(request.getContextPath()+"/chart/admindasboard.jsp");
+        response.sendRedirect(request.getContextPath()+"/management/admindasboard.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

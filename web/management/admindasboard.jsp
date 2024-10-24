@@ -25,15 +25,24 @@
         <jsp:include page="../common/css.jsp" />
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        
+
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        
+
         <link rel="canonical" href="charts-chartjs.html" />
 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
         <link class="js-stylesheet" href="css/light.css" rel="stylesheet">
-       
+
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120946860-10"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-120946860-10', {'anonymize_ip': true});
+        </script>
         <style>
             .criteria{
                 border: 1px solid #bb9797;
@@ -64,9 +73,7 @@
             }
 
             .products{
-                border: 1px solid gray;
-                border-radius: 12px;
-                box-shadow: 1px 1px 4px gray;
+                
             }
 
             .edit{
@@ -148,8 +155,8 @@
 
 
                 <!-- START products -->
-                <main class="content">
-                    <div class="container " >
+                <div class="contract">
+                    <div class="container products" >
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="card flex-fill w-100">
@@ -179,81 +186,25 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-lg-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Doughnut Chart</h5>
-                                        <h6 class="card-subtitle text-muted">Doughnut charts are excellent at showing the relational proportions between data.</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart chart-sm">
-                                            <canvas id="chartjs-doughnut"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
 
-                            <div class="col-12 col-lg-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Pie Chart</h5>
-                                        <h6 class="card-subtitle text-muted">Pie charts are excellent at showing the relational proportions between data.</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart chart-sm">
-                                            <canvas id="chartjs-pie"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-12 col-lg-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Radar Chart</h5>
-                                        <h6 class="card-subtitle text-muted">A radar chart is a way of showing multiple data points and the variation between them.
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart">
-                                            <canvas id="chartjs-radar"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-12 col-lg-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Polar Area Chart</h5>
-                                        <h6 class="card-subtitle text-muted">Polar area charts are similar to pie charts, but each segment has the same angle.</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart">
-                                            <canvas id="chartjs-polar-area"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        
-
-                        
                         </div>
                     </div>
-                </main>
+                </div>
                 <!-- END products -->
 
 
             </div>
         </div>
-            <script src="js/app.js"></script>
+        <script src="js/app.js"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-       
+
         <script src="js/scripts.js"></script>
-             <script>
-            
+        <script>
+
             document.addEventListener("DOMContentLoaded", function () {
                 // Line chart
                 new Chart(document.getElementById("chartjs-line"), {
@@ -265,7 +216,7 @@
                                 fill: true,
                                 backgroundColor: "transparent",
                                 borderColor: window.theme.primary,
-                                data: [<c:forEach  items="${dataList}" var="integer" > "${integer}",</c:forEach>]
+                                     data: [<c:forEach  items="${dataList}" var="integer" > "${integer}",</c:forEach>]
                             }, {
                                 label: "Orders",
                                 fill: true,
@@ -367,141 +318,7 @@
                 });
             });
         </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Doughnut chart
-                new Chart(document.getElementById("chartjs-doughnut"), {
-                    type: "doughnut",
-                    data: {
-                        labels: ["Social", "Search Engines", "Direct", "Other"],
-                        datasets: [{
-                                data: [260, 125, 54, 146],
-                                backgroundColor: [
-                                    window.theme.primary,
-                                    window.theme.success,
-                                    window.theme.warning,
-                                    "#dee2e6"
-                                ],
-                                borderColor: "transparent"
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        cutoutPercentage: 65,
-                        legend: {
-                            display: false
-                        }
-                    }
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Pie chart
-                new Chart(document.getElementById("chartjs-pie"), {
-                    type: "pie",
-                    data: {
-                        labels: ["Social", "Search Engines", "Direct", "Other"],
-                        datasets: [{
-                                data: [260, 125, 54, 146],
-                                backgroundColor: [
-                                    window.theme.primary,
-                                    window.theme.warning,
-                                    window.theme.danger,
-                                    "#dee2e6"
-                                ],
-                                borderColor: "transparent"
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false
-                        }
-                    }
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Radar chart
-                new Chart(document.getElementById("chartjs-radar"), {
-                    type: "radar",
-                    data: {
-                        labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
-                        datasets: [{
-                                label: "Model X",
-                                backgroundColor: "rgba(0, 123, 255, 0.2)",
-                                borderColor: window.theme.primary,
-                                pointBackgroundColor: window.theme.primary,
-                                pointBorderColor: "#fff",
-                                pointHoverBackgroundColor: "#fff",
-                                pointHoverBorderColor: window.theme.primary,
-                                data: [70, 53, 82, 60, 33]
-                            }, {
-                                label: "Model S",
-                                backgroundColor: "rgba(220, 53, 69, 0.2)",
-                                borderColor: window.theme.danger,
-                                pointBackgroundColor: window.theme.danger,
-                                pointBorderColor: "#fff",
-                                pointHoverBackgroundColor: "#fff",
-                                pointHoverBorderColor: window.theme.danger,
-                                data: [35, 38, 65, 85, 84]
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false
-                    }
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Polar Area chart
-                new Chart(document.getElementById("chartjs-polar-area"), {
-                    type: "polarArea",
-                    data: {
-                        labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
-                        datasets: [{
-                                label: "Model S",
-                                data: [35, 38, 65, 70, 24],
-                                backgroundColor: [
-                                    window.theme.primary,
-                                    window.theme.success,
-                                    window.theme.danger,
-                                    window.theme.warning,
-                                    window.theme.info
-                                ]
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false
-                    }
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function (event) {
-                setTimeout(function () {
-                    if (localStorage.getItem('popState') !== 'shown') {
-                        window.notyf.open({
-                            type: "success",
-                            message: "Get access to all 500+ components and 45+ pages with AdminKit PRO. <u><a class=\"text-white\" href=\"https://adminkit.io/pricing\" target=\"_blank\">More info</a></u> 🚀",
-                            duration: 10000,
-                            ripple: true,
-                            dismissible: false,
-                            position: {
-                                x: "left",
-                                y: "bottom"
-                            }
-                        });
-
-                        localStorage.setItem('popState', 'shown');
-                    }
-                }, 15000);
-            });
-        </script>
+        
 
     </body>
 </html>
-c
