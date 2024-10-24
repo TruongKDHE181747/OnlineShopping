@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit Product Page</title>
+        <title>Chỉnh sửa thông tin sản phẩm</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!-- CSS Bootstrap -->
@@ -35,7 +35,7 @@
                 <a href="../productlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <i style="margin-right: 10px;
                        font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
-                    <span class="fs-4">Back</span>
+                    <span class="fs-4">Quay lại</span>
                 </a>                
             </header>
         </div>
@@ -45,7 +45,7 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="#" alt="" width="72">
-                    <h2>Edit Product</h2>
+                    <h2>Chỉnh sửa thông tin sản phẩm</h2>
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
@@ -57,13 +57,13 @@
                             <div class="row g-3">
                                 <!-- Product Name -->
                                 <div class="col-sm-6">
-                                    <label for="productname" class="form-label">Product Name</label>
+                                    <label for="productname" class="form-label">Tên sản phẩm</label>
                                     <input value="<%= p.getProduct_name()%>" name="productname" type="text" class="form-control" id="productname" required>
                                 </div>
 
                                 <!-- Price -->
                                 <div class="col-sm-6">
-                                    <label for="price" class="form-label">Price(VND)</label>
+                                    <label for="price" class="form-label">Giá(₫)</label>
                                     <input value="<%= p.getPrice()%>" name="price" type="number" class="form-control" id="price" required min="0" max="10000000">
                                 </div>
 
@@ -75,7 +75,7 @@
 
                                 <!-- Description -->
                                 <div class="col-12">
-                                    <label for="description" class="form-label">Description</label>
+                                    <label for="description" class="form-label">Mô tả</label>
                                     <textarea class="form-control" id="description" name="description" rows="3"><%= p.getDescription() %></textarea>
                                 </div>
 
@@ -93,7 +93,7 @@
                                     for (int i = 1; i <= 3; i++) {
                                 %>
                                 <div class="col-3">
-                                    <label for="img_<%=i%>" class="form-label">Image <%=i%></label>
+                                    <label for="img_<%=i%>" class="form-label">Ảnh <%=i%></label>
                                     <input type="file" class="form-control" id="img_<%=i%>" name="img_<%=i%>" >
                                     <img style="margin-top: 10px;width: 60%;" src="../<%= productImg.get(i).getImage_url()%>" alt="alt" />
                                 </div>
@@ -103,20 +103,20 @@
 
                                 <!-- Product Status -->
                                 <div class="col-12 my-3">
-                                    <label class="form-label">Status</label>
+                                    <label class="form-label">Trạng thái</label>
                                     <div class="form-check">
                                         <input type="radio" class="form-check-input" id="statusShow" name="status" value="1" <%= p.isIs_active()==true ? "checked" : "" %> >
-                                        <label class="form-check-label" for="statusShow">Show</label>
+                                        <label class="form-check-label" for="statusShow">Hiện</label>
                                     </div>
                                     <div class="form-check">
                                         <input type="radio" class="form-check-input" id="statusHide" name="status" value="0" <%= p.isIs_active()==false ? "checked" : "" %>>
-                                        <label class="form-check-label" for="statusHide">Hidden</label>
+                                        <label class="form-check-label" for="statusHide">Ẩn</label>
                                     </div>
                                 </div>
 
                                 <!-- Brand Selection -->
                                 <div class="col-12">
-                                    <label for="brand" class="form-label">Brand</label>
+                                    <label for="brand" class="form-label">Thương hiệu</label>
                                     <select class="form-select" id="brand" name="brand" required>
                                         <%
                                             BrandDAO bdao = new BrandDAO();
@@ -132,7 +132,7 @@
 
                                 <!-- Category Selection -->
                                 <div class="col-12">
-                                    <label for="category" class="form-label">Category</label>
+                                    <label for="category" class="form-label">Loại sản phẩm</label>
                                     <select class="form-select" id="category" name="category" required>
                                         <%
                                             ProductCategoryDAO pcdao = new ProductCategoryDAO();
@@ -148,7 +148,7 @@
 
                                 <!-- Quantity for Each Size -->
                                 <div class="col-12">
-                                    <label for="sizes" class="form-label">Quantity for Each Size</label>
+                                    <label for="sizes" class="form-label">Số lượng cho từng Size</label>
                                     <div class="row">
                                         <%
                                             SizeDAO sdao = new SizeDAO();
@@ -160,11 +160,11 @@
                                         %>
                                         <div class="col-sm-6">
                                             <label for="size_<%= size.getSize_id() %>" class="form-label">Size: <%= size.getSize_name() %></label>
-                                            <input type="number" class="form-control" id="size_<%= size.getSize_id() %>" name="size_<%= size.getSize_id()%>" placeholder="Enter quantity for size <%= size.getSize_name() %>" value="<%= quantity%>" required min="0" max="100">
+                                            <input type="number" class="form-control" id="size_<%= size.getSize_id() %>" name="size_<%= size.getSize_id()%>" placeholder="Nhập số lượng cho size <%= size.getSize_name() %>" value="<%= quantity%>" required min="0" max="100">
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="weight_<%= size.getSize_id() %>" class="form-label">Weight: </label>
-                                            <input type="number" class="form-control" id="weight_<%= size.getSize_id() %>" name="weight_<%= size.getSize_id()%>" placeholder="Enter weight for size <%= size.getSize_name() %>" value="<%= weight%>" required min="0" max="100">
+                                            <label for="weight_<%= size.getSize_id() %>" class="form-label">Trọng lượng: </label>
+                                            <input type="number" class="form-control" id="weight_<%= size.getSize_id() %>" name="weight_<%= size.getSize_id()%>" placeholder="Nhập trọng lượng cho size <%= size.getSize_name() %>" value="<%= weight%>" required min="0" max="100">
                                         </div>
                                         <%
                                             }
@@ -174,7 +174,7 @@
 
                             </div>
                             <hr class="my-4">
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Lưu</button>
                         </form>
                     </div>
                 </div>
