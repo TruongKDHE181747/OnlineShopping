@@ -39,7 +39,7 @@ public class SearchUser extends HttpServlet {
         UserDAO udao= new UserDAO();
         List<User> ulist= udao.searchUser(usersearch);
         session.setAttribute("ulist", ulist);
-        response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
+        response.sendRedirect(request.getContextPath()+"/management/adminsearchuser.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

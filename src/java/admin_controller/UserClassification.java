@@ -40,7 +40,7 @@ public class UserClassification extends HttpServlet {
         int role_id=Integer.parseInt(rolename);
         List<User> ulist=ud.getALlUserInRole(role_id);
         session.setAttribute("ulist", ulist);
-        response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
+        response.sendRedirect(request.getContextPath()+"/management/adminclassficationuser.jsp");
                 
     } 
 
