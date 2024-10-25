@@ -23,7 +23,7 @@ import model.ProductFeedback;
  */
 @WebServlet(name="ProductFeedBackPaging", urlPatterns={"/productfeedbackpaging"})
 public class ProductFeedBackPaging extends HttpServlet {
-   
+   private static int feedback_per_page=5;
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -36,16 +36,29 @@ public class ProductFeedBackPaging extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession(true);
         ProductFeedbackDAO pfdao=new ProductFeedbackDAO();
-        int p;
+        int p=1;
         if(request.getParameter("p")!=null)
         {
             p=Integer.parseInt(request.getParameter("p"));
         }
-          else
+        
+       
+        List<ProductFeedback> listall=null;
+        if(session.getAttribute("listall")==null)
         {
-                p=(int)session.getAttribute("prfpage");
-         }
-        List<ProductFeedback> prflist=pfdao.getProductFeedbackPaging(p);
+         listall=pfdao.getFeedbackByProduct();
+        }
+       
+        else
+        {
+            listall=(List<ProductFeedback>) session.getAttribute("listall");
+        }
+        int start= (p-1)*feedback_per_page;
+        int end= Math.min(start+feedback_per_page, listall.size());
+        
+        List<ProductFeedback> prflist=listall.subList(start, end);
+        session.setAttribute("prfnum", pfdao.getTotalPage(listall.size(), 5));
+        session.setAttribute("listall", listall);
         session.setAttribute("prflist", prflist);
         session.setAttribute("prfpage", p);
         response.sendRedirect(request.getContextPath()+("/management/productfeedbacklist.jsp"));
