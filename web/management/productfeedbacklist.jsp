@@ -151,12 +151,14 @@
                                     <h5 class="navbar-brand" >Product Feedback List</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../postfeedbackfilter" method="get">
+                                        <form class="d-flex" role="search" action="../productfeedbackfilter" method="get">
                                             <select name="filter">
                                                
-                                                <option value="product"<c:if test="${sessionScope.filter=='product'}"> selected </c:if>>Sort by Product</option>
-                                              <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Sort by User</option>
-                                             <option value="rating"<c:if test="${sessionScope.filter=='rating'}"> selected </c:if>>Sort by rating</option>                                            </select>
+                                                <option value="product_id" selected >Sort by Product</option>
+                                              <option value="customer_id"<c:if test="${sessionScope.filter=='customer_id'}"> selected </c:if>>Sort by User</option>
+                                             <option value="rating"<c:if test="${sessionScope.filter=='rating'}"> selected </c:if>>Sort by rating</option> 
+                                           <option value="create_at"<c:if test="${sessionScope.filter=='create_at'}"> selected </c:if>>Sort by time</option> 
+                                        </select>
                                             <button class="btn btn-outline-success" type="submit"><i class="bi bi-filter"></i></button>
                                         </form>
                                     </div>

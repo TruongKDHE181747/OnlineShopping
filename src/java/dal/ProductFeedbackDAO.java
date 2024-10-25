@@ -206,14 +206,14 @@ public class ProductFeedbackDAO extends DBContext{
       public List<ProductFeedback> sortProductFeedBack (String filter) {
         List<ProductFeedback> pList = new ArrayList<>();
        String sql = "select * from Feedbacks\n "
-               + "order by ?  \n";
+               + "order by "+filter;
               
            
           ProductDAO pdao=new ProductDAO();
            UserDAO udao=new UserDAO();
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, filter);
+          
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 int feedback_id = rs.getInt("feedback_id");
