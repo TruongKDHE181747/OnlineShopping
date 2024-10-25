@@ -34,7 +34,7 @@
                     <a href="./changePassword"  class="nav-item nav-link has-icon nav-link-faded <%= currentPage.contains("changePassword")? "active":"" %>">
                         Security
                     </a>
-                    <a href="#"  class="nav-item nav-link has-icon nav-link-faded">
+                    <a href="./orderHistory"  class="nav-item nav-link has-icon nav-link-faded <%= currentPage.contains("orderHistory")? "active":"" %>">
                         Order History
                     </a>
                     <a href="./address" class="nav-item nav-link has-icon nav-link-faded <%= currentPage.contains("address")? "active":"" %>">
