@@ -213,7 +213,7 @@ public class OrderDAO extends DBContext {
     public List<Order> getOrderBySale(String sName) {
         List<Order> oList = new ArrayList<>();
         String sql = "select * from Orders "
-                + "join Users on Orders.salerId = Users.role_id "
+                + "join Users on Orders.salerId = Users.user_id"
                 + "where Users.username=?";
         
         try {
