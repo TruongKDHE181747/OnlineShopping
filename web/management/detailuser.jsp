@@ -49,7 +49,7 @@
                    
 
                     <div class="col-md-8">
-                        <form class="needs-validation" action="../edituser" enctype="multipart/form-data">
+                        <form class="needs-validation" action="../edituser" method="post" enctype="multipart/form-data">
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="user_id" class="form-label">User ID</label>

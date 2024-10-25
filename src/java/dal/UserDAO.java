@@ -415,6 +415,36 @@ public class UserDAO extends DBContext {
 
     }
 
+    
+    public List<User> getAllSaler(){
+        List<User> sList = new ArrayList<>();
+        
+        
+            String sql = "select * from Users\n" +
+                        "where role_id in (2,3)";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                int user_id = rs.getInt("user_id");
+                String username = rs.getString("username");
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                
+                User user = new User(user_id, username, first_name, last_name);
+                sList.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        return sList;
+    }
+    
+    
     public User getUserByEmail(String uemail) {
         RoleDAO roleDAO = new RoleDAO();
         ResultSet rs = getData("select * from Users where email = '" + uemail + "'");
@@ -618,7 +648,7 @@ public class UserDAO extends DBContext {
     public void addUser(User u){
         try {
             String sql = "insert into Users values\n" +
-"(?, ?, ?, ?, ?, ?, ?,?,null,null,null,null,1,0,?)";
+"(?, ?, ?, ?, ?, ?, ?,?,null,null,null,?,1,0,?)";
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, u.getUsername());
             pre.setString(2, u.getPassword());
@@ -628,7 +658,8 @@ public class UserDAO extends DBContext {
             pre.setString(6, u.getEmail());
             pre.setBoolean(7, u.isGender());
             pre.setString(8, u.getDob());
-            pre.setInt(9, u.getRole().getRole_id());
+            pre.setString(9, u.getProfile_picture_url());
+            pre.setInt(10, u.getRole().getRole_id());
            pre.executeUpdate();
 
         } catch (SQLException ex) {

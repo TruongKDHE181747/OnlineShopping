@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Marketing Page</title>
+        <title>Quản lý đơn hàng cho Sale Manager</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -141,7 +141,7 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Orders</h5>
+                                    <h5 class="navbar-brand" href="#">Quản lý đơn hàng</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchorder" method="get">
@@ -156,11 +156,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
-                                    <th scope="col">Order Date</th>
-                                    <th scope="col">Receiver Name</th>
-                                    <th scope="col">Total Price(VND)</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Saler Name</th>
+                                    <th scope="col">Ngày đặt hàng</th>
+                                    <th scope="col">Tên người nhận</th>
+                                    <th scope="col">Tổng giá(₫)</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Sale đảm nhận</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>

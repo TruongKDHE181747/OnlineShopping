@@ -6,7 +6,6 @@
 package order_controller;
 
 import dal.OrderDAO;
-import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -27,8 +26,8 @@ import model.User;
  *
  * @author Dell
  */
-@WebServlet(name="SaleManagerDashboard", urlPatterns={"/salemanagerdashboard"})
-public class SaleManagerDashboard extends HttpServlet {
+@WebServlet(name="SaleDashboardFilter", urlPatterns={"/saledashboardfilter"})
+public class SaleDashboardFilter extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -41,50 +40,55 @@ public class SaleManagerDashboard extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        OrderDAO odao = new OrderDAO();
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        LocalDate today = LocalDate.now();   
-        LocalDate daybefore = today.minusDays(7);
+        String pobegin = request.getParameter("begin");
+        String poend = request.getParameter("end");
         
-        String pobegin = "2024-10-01";
-        LocalDate poDate = LocalDate.parse(pobegin, formatter);
+        int sid = 0;
+        if(session.getAttribute("sdsaler")!=null){
+            sid = Integer.parseInt(session.getAttribute("sdsaler")+"");
+        }
+        String loi ="";
+        if((pobegin.length()!=0 && poend.length()==0) || (pobegin.length()==0 && poend.length()!=0)){
+            loi = "Please input both From and To";
+            session.setAttribute("sdloi", loi);
+            
+        } else if(pobegin.length()!=0 && poend.length()!=0){
+            session.setAttribute("sadbegin", pobegin);
+            session.setAttribute("sadend", poend);
+            LocalDate beginDate = LocalDate.parse(pobegin,formatter);
+            LocalDate endDate = LocalDate.parse(poend,formatter);
+            
+            long diff = ChronoUnit.DAYS.between(beginDate, endDate);
+            if(diff<0){
+                loi = "To Date must be >= From Date";
+                session.setAttribute("sdloi", loi);
+                
+            } else {
+        List<SaleChart> sList = odao.getSucsessOnTotalOrder(sid, beginDate, diff);
+        int totalOrder = odao.getTotalOrder(-1, beginDate, diff);
+        List<SaleChart> orderByDayList = odao.getNumberOfOrderByDay(sid, beginDate, diff);
+        List<SaleChart> revenueByDayList = odao.getTotalRevenueByDay(sid, beginDate, diff);
+        List<SaleChart> revenueAccumulateByDayList = odao.getRevenueAccumulateByDay(sid, beginDate, diff);
         
-//         LocalDate beginDate = LocalDate.parse(pobegin,formatter);
-//            LocalDate endDate = LocalDate.parse(poend,formatter);
-//            
-//            long diff = ChronoUnit.DAYS.between(beginDate, endDate);
-
-        OrderDAO odao = new OrderDAO();
-        UserDAO udao = new UserDAO();
-        List<SaleChart> sList = odao.getSucsessOnTotalOrder(0, poDate, 7);
-        int totalOrder = odao.getTotalOrder(0, poDate, 7);
-        List<SaleChart> orderByDayList = odao.getNumberOfOrderByDay(0, poDate, 7);
-        List<SaleChart> revenueByDayList = odao.getTotalRevenueByDay(0, poDate, 7);
-        List<SaleChart> revenueAccumulateByDayList = odao.getRevenueAccumulateByDay(0, poDate, 7);
-        List<User> salerList = udao.getAllSaler();
         
         session.setAttribute("sotoChart", sList);
         session.setAttribute("orderByDayList", orderByDayList);
         session.setAttribute("revenueByDayList", revenueByDayList);
         session.setAttribute("revenueAccumulateByDayList", revenueAccumulateByDayList);
-        session.setAttribute("dsalerList", salerList);
-        
         session.setAttribute("ctotalOrder", totalOrder);
-        Reset(session);
+            }
+
+        }
         
-       
         
+        if(loi.length()==0) session.setAttribute("sdloi", "");
         response.sendRedirect(request.getContextPath()+"/management/saledashboard.jsp");
     } 
-    
-    
-    
-     public static void Reset(HttpSession session){
-        session.setAttribute("sdsaler", null);
-        session.setAttribute("sadbegin", null);
-        session.setAttribute("sadend", null);
-        session.setAttribute("sdloi", null);
-    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.

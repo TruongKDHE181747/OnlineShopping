@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -26,6 +26,23 @@
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+
+        <link rel="canonical" href="charts-chartjs.html" />
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
+        <link class="js-stylesheet" href="css/light.css" rel="stylesheet">
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120946860-10"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-120946860-10', {'anonymize_ip': true});
+        </script>
         <style>
             .criteria{
                 border: 1px solid #bb9797;
@@ -56,9 +73,7 @@
             }
 
             .products{
-                border: 1px solid gray;
-                border-radius: 12px;
-                box-shadow: 1px 1px 4px gray;
+                
             }
 
             .edit{
@@ -131,7 +146,7 @@
             <!-- START HEADER -->
 
             <jsp:include page="../common/header.jsp" />
-            <jsp:include page="admin_header.jsp" />
+            <jsp:include page="../management/admin_header.jsp" />
 
             <!-- END menu -->
 
@@ -140,114 +155,43 @@
 
 
                 <!-- START products -->
-                <div class="product">
+                <div class="contract">
                     <div class="container products" >
-                        <div>
-                            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                                <div class="container-fluid">
-                                    <h5 class="navbar-brand" href="#">Manage Products</h5>
-
-                                    <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search">
-                                            <input placeholder="Car name" name="productsearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
-                                        </form>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="card flex-fill w-100">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Line Chart</h5>
+                                        <h6 class="card-subtitle text-muted">A line chart is a way of plotting data points on a line.</h6>
                                     </div>
-
-
-                                    <div class="">
-                                        <div class="d-flex add" role="search">
-                                            <a href="#"><i style="color: white;" class="fa-solid fa-plus"></i></a>
+                                    <div class="card-body">
+                                        <div class="chart">
+                                            <canvas id="chartjs-line"></canvas>
                                         </div>
                                     </div>
                                 </div>
-                            </nav>
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                            </div>
 
-
-                                <!-- START Product item -->
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Car1</td>
-                                    <td class="product-img">
-                                        <img src="img/car1.jpg">
-                                    </td>
-                                    <td>
-                                        <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-
+                            <div class="col-12 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Bar Chart</h5>
+                                        <h6 class="card-subtitle text-muted">A bar chart provides a way of showing data values represented as vertical bars.</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart">
+                                            <canvas id="chartjs-bar"></canvas>
                                         </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
-                                        </div>
-                                    </td>
+                                    </div>
+                                </div>
+                            </div>
 
-                                </tr>
-                                <!-- END Product item -->
-
-                                <!-- START Product item -->
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Car1</td>
-                                    <td class="product-img">
-                                        <img src="img/car1.jpg">
-                                    </td>
-                                    <td>
-                                        <div class="edit">
-                                            <a href="#"><i style="color: black;" class="fa-solid fa-pen"></i></a>
-
-                                        </div>
-                                        <div class="remove">
-                                            <a onclick="return confirm('Do you want to delete carID 1')" href="#"><i style="color: white;" class="fa-solid fa-trash-can"></i></a>     
-                                        </div>
-                                    </td>
-
-                                </tr>
-                                <!-- END Product item -->
-
-                            </tbody>
-                        </table>
-
-                        <!-- START PAGE -->
-
-                        <div style="display: flex;
-                             justify-content: center;">
-
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
+                            
 
 
-                                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">5</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">6</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+
 
                         </div>
-                        <!-- END PAGE -->
-
                     </div>
                 </div>
                 <!-- END products -->
@@ -255,8 +199,126 @@
 
             </div>
         </div>
+        <script src="js/app.js"></script>
 
+
+        <script src="js/scripts.js"></script>
+        <script>
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Line chart
+                new Chart(document.getElementById("chartjs-line"), {
+                    type: "line",
+                    data: {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        datasets: [{
+                                label: "Sales ($)",
+                                fill: true,
+                                backgroundColor: "transparent",
+                                borderColor: window.theme.primary,
+                                     data: [<c:forEach  items="${dataList}" var="integer" > "${integer}",</c:forEach>]
+                            }, {
+                                label: "Orders",
+                                fill: true,
+                                backgroundColor: "transparent",
+                                borderColor: "#adb5bd",
+                                borderDash: [4, 4],
+                                data: [958, 724, 629, 883, 915, 1214, 1476, 1212, 1554, 2128, 1466, 1827]
+                            }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            intersect: false
+                        },
+                        hover: {
+                            intersect: true
+                        },
+                        plugins: {
+                            filler: {
+                                propagate: false
+                            }
+                        },
+                        scales: {
+                            xAxes: [{
+                                    reverse: true,
+                                    gridLines: {
+                                        color: "rgba(0,0,0,0.05)"
+                                    }
+                                }],
+                            yAxes: [{
+                                    ticks: {
+                                        stepSize: 500
+                                    },
+                                    display: true,
+                                    borderDash: [5, 5],
+                                    gridLines: {
+                                        color: "rgba(0,0,0,0)",
+                                        fontColor: "#fff"
+                                    }
+                                }]
+                        }
+                    }
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Bar chart
+                new Chart(document.getElementById("chartjs-bar"), {
+                    type: "bar",
+                    data: {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        datasets: [{
+                                label: "Last year",
+                                backgroundColor: window.theme.primary,
+                                borderColor: window.theme.primary,
+                                hoverBackgroundColor: window.theme.primary,
+                                hoverBorderColor: window.theme.primary,
+                                data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
+                                barPercentage: .75,
+                                categoryPercentage: .5
+                            }, {
+                                label: "This year",
+                                backgroundColor: "#dee2e6",
+                                borderColor: "#dee2e6",
+                                hoverBackgroundColor: "#dee2e6",
+                                hoverBorderColor: "#dee2e6",
+                                data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
+                                barPercentage: .75,
+                                categoryPercentage: .5
+                            }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    stacked: false,
+                                    ticks: {
+                                        stepSize: 20
+                                    }
+                                }],
+                            xAxes: [{
+                                    stacked: false,
+                                    gridLines: {
+                                        color: "transparent"
+                                    }
+                                }]
+                        }
+                    }
+                });
+            });
+        </script>
+        
 
     </body>
 </html>
-c

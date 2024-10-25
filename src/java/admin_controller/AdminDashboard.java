@@ -5,7 +5,6 @@
 
 package admin_controller;
 
-import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +13,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
-import model.User;
 
 /**
  *
  * @author 84983
  */
-@WebServlet(name="SearchUser", urlPatterns={"/searchuser"})
-public class SearchUser extends HttpServlet {
+@WebServlet(name="AdminDashboard", urlPatterns={"/admindashboard"})
+public class AdminDashboard extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,11 +34,20 @@ public class SearchUser extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        String usersearch=request.getParameter("usersearch");
-        UserDAO udao= new UserDAO();
-        List<User> ulist= udao.searchUser(usersearch);
-        session.setAttribute("ulist", ulist);
-        response.sendRedirect(request.getContextPath()+"/management/adminsearchuser.jsp");
+        List<Integer> iList = new ArrayList<>();
+        
+        iList.add(1000);
+        iList.add(1500);
+        iList.add(2000);
+        iList.add(1900);
+        iList.add(2400);
+        iList.add(3500);
+        iList.add(5000);
+        iList.add(5030);
+        
+        
+        session.setAttribute("dataList", iList);
+        response.sendRedirect(request.getContextPath()+"/management/admindasboard.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.User" %>
 <%@page import="jakarta.servlet.http.Cookie" %>
@@ -46,8 +47,8 @@
                     <div class="header__top__right">
                         <div class="header__top__links">
                             <c:if test="${sessionScope.account eq null}">
-                                <a href="<%=s%>/login">Sign in</a>
-                                <a href="<%=s%>/register">Sign up</a>                      
+                                <a href="<%=s%>/login">Đăng nhập</a>
+                                <a href="<%=s%>/register">Đăng ký</a>                      
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
                                 <%
@@ -61,7 +62,7 @@
                                 <a href="<%=s%>/profile">
                                     <img style="width: 25px;height: 25px;border-radius: 50%" 
                                          src=" <%=profileImgSrc %>" alt=""/> ${sessionScope.account.username}</a>
-                                <a href="<%=s%>/logout">Logout</a>                      
+                                <a href="<%=s%>/logout">Đăng xuất</a>                      
                             </c:if>
                         </div>
                     </div>
@@ -83,19 +84,10 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Home</a></li>
-                        <li class="<%=mainpage.equals("shop")?"active":""%>"><a href="<%=s%>/homeproduct">Shop</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Shop Details</a></li>
-                                <li><a href="#">Shopping Cart</a></li>
-                                <li><a href="#">Check Out</a></li>
-                                <li><a href="#">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="<%=mainpage.equals("blog")?"active":""%>"><a href="<%=s%>/hpostlist">Blog</a></li>
-                        <li><a href="#">Contacts</a></li>
+                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Trang chủ</a></li>
+                        <li class="<%=mainpage.equals("shop")?"active":""%>"><a href="<%=s%>/homeproduct">Sản phẩm</a></li>
+                        <li class="<%=mainpage.equals("blog")?"active":""%>"><a href="<%=s%>/hpostlist">Blogs</a></li>
+                        <li><a href="#">Liên hệ</a></li>
                     </ul>
                 </nav>
             </div>
@@ -107,8 +99,8 @@
                 <div class="header__nav__option row" style="padding: 22px 0;">
                     <div class="col-md-10">
                         <form class="d-flex" role="search" action="<%=s%>/homeproductsearch">
-                            <input maxlength="500" value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
+                            <input style="font-size: 13px;padding: 18px" maxlength="500" value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Tên sản phẩm" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Tìm</button>
                         </form>
 
                     </div>
