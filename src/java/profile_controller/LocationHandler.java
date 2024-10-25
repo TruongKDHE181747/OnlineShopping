@@ -78,7 +78,7 @@ public class LocationHandler extends HttpServlet {
 
        
         StringBuilder options = new StringBuilder();
-        options.append("<option value=''>Select Province</option>");
+        options.append("<option value=''>Chọn Tỉnh/Thành</option>");
         
         for (int i = 0; i < provinces.length(); i++) {
             JSONObject province = provinces.getJSONObject(i);
@@ -94,7 +94,7 @@ public class LocationHandler extends HttpServlet {
 
 
         StringBuilder options = new StringBuilder();
-        options.append("<option value=''>Select District</option>");
+        options.append("<option value=''>Chọn Quận/Huyện</option>");
         
         for (int i = 0; i < districts.length(); i++) {
             JSONObject district = districts.getJSONObject(i);
@@ -110,7 +110,7 @@ public class LocationHandler extends HttpServlet {
 
 
         StringBuilder options = new StringBuilder();
-        options.append("<option value=''>Select Ward</option>");
+        options.append("<option value=''>Chọn Phường/Xã</option>");
         
         for (int i = 0; i < wards.length(); i++) {
             JSONObject ward = wards.getJSONObject(i);

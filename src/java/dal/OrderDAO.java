@@ -25,8 +25,11 @@ public class OrderDAO extends DBContext {
     public List<Order> getOrderByCustomer(int id) {
         List<Order> oList = new ArrayList<>();
         String sql = """
-                     SELECT *
-                       FROM [dbo].[Orders]
+                     select o.*,pm.payment_method_name,ps.payment_status_name,os.order_status_name
+                       from Orders o
+                       left join Payment_Methods pm on pm.payment_method_id = o.payment_method_id
+                       left join Payment_Status ps on ps.payment_status_id = o.payment_status_id
+                       left join Order_Status os on os.order_status_id = o.order_status_id
                        WHERE [customer_id] = ?""";
 
         try {
@@ -60,10 +63,11 @@ public class OrderDAO extends DBContext {
                 int orderStatusId = rs.getInt("order_status_id");
                 String shippingCode = rs.getString("shipping_code");
                 int saleId = rs.getInt("salerId");
-                Order order = new Order(oid, cid, orderedDate, receiverName, phone, email, address,
-                        wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee,
-                        voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate,
-                        paymentStatusId, orderStatusId, shippingCode, saleId);
+
+                String paymentMethodName = rs.getString("payment_method_name");
+                String paymentStatusName = rs.getString("payment_status_name");
+                String orderStatusName = rs.getString("order_status_name");
+                Order order = new Order(saleId, saleId, orderedDate, receiverName, phone, email, address, wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee, voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate, paymentStatusId, orderStatusId, shippingCode, saleId, paymentMethodName, paymentStatusName, orderStatusName);
                 oList.add(order);
             }
         } catch (SQLException ex) {
@@ -357,32 +361,31 @@ public class OrderDAO extends DBContext {
 
         return order;
     }
-    
-    
-    public List<SaleChart> getSucsessOnTotalOrder(int saleId, LocalDate startDate, long days){
+
+    public List<SaleChart> getSucsessOnTotalOrder(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
-        
-        
-        String sql = "Select os.order_status_id, os.order_status_name, count(order_id) as Total_Order\n" +
-                    "from Order_Status as os\n" +
-                    "right join Orders as o on os.order_status_id = o.order_status_id\n" +
-                    "where ordered_date>= ? and ordered_date <= ?\n" +
-                    "group by os.order_status_id,os.order_status_name\n" +
-                    "order by os.order_status_id";
-        
-        if(saleId!=0)
-            sql = "Select os.order_status_id, os.order_status_name, count(order_id) as Total_Order\n" +
-                "from Order_Status as os\n" +
-                "right join Orders as o on os.order_status_id = o.order_status_id\n" +
-                "where ordered_date>= ? and ordered_date <= ?\n" +
-                "and salerId = " + saleId+" "+
-                "group by os.order_status_id,os.order_status_name\n" +
-                "order by os.order_status_id";
-        
+
+        String sql = "Select os.order_status_id, os.order_status_name, count(order_id) as Total_Order\n"
+                + "from Order_Status as os\n"
+                + "right join Orders as o on os.order_status_id = o.order_status_id\n"
+                + "where ordered_date>= ? and ordered_date <= ?\n"
+                + "group by os.order_status_id,os.order_status_name\n"
+                + "order by os.order_status_id";
+
+        if (saleId != 0) {
+            sql = "Select os.order_status_id, os.order_status_name, count(order_id) as Total_Order\n"
+                    + "from Order_Status as os\n"
+                    + "right join Orders as o on os.order_status_id = o.order_status_id\n"
+                    + "where ordered_date>= ? and ordered_date <= ?\n"
+                    + "and salerId = " + saleId + " "
+                    + "group by os.order_status_id,os.order_status_name\n"
+                    + "order by os.order_status_id";
+        }
+
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, startDate+"");
-            pre.setString(2, startDate.plusDays(days)+"");
+            pre.setString(1, startDate + "");
+            pre.setString(2, startDate.plusDays(days) + "");
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("order_status_name");
@@ -394,146 +397,134 @@ public class OrderDAO extends DBContext {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
         return sList;
     }
-    
-    public List<SaleChart> getNumberOfOrderByDay(int saleId, LocalDate startDate, long days){
+
+    public List<SaleChart> getNumberOfOrderByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-         String sql = "select count(order_id) as Total_number from Orders\n" +
-                    "where ordered_date = ?";
-         
-         if(saleId!=0) sql = "select count(order_id) as Total_number from Orders\n" +
-                    "where ordered_date = ? and salerid = " + saleId;
-         
+        String sql = "select count(order_id) as Total_number from Orders\n"
+                + "where ordered_date = ?";
+
+        if (saleId != 0) {
+            sql = "select count(order_id) as Total_number from Orders\n"
+                    + "where ordered_date = ? and salerid = " + saleId;
+        }
+
         for (int i = 0; i <= days; i++) {
 
-        try {
-            PreparedStatement pre = connection.prepareStatement(sql);
-            LocalDate date = startDate.plusDays(i);
-            pre.setString(1, date+"");
-            
-            ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date + "");
 
-                String fdate = dtf.format(date);
-                int value = rs.getInt("Total_number");
-                SaleChart saleChart = new SaleChart(fdate, value);
-                sList.add(saleChart);
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("Total_number");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         }
-        
-        
+
         return sList;
     }
-    
-    
-    public List<SaleChart> getTotalRevenueByDay(int saleId, LocalDate startDate, long days){
+
+    public List<SaleChart> getTotalRevenueByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select sum(total_price) as Total_Price \n" +
-                        "from Orders\n" +
-                        "where ordered_date = ?";
-        
-        if(saleId!=0){
-            sql ="select sum(total_price) as Total_Price \n" +
-                        "from Orders\n" +
-                        "where ordered_date = ? and salerid = "+saleId;
+        String sql = "select sum(total_price) as Total_Price \n"
+                + "from Orders\n"
+                + "where ordered_date = ?";
+
+        if (saleId != 0) {
+            sql = "select sum(total_price) as Total_Price \n"
+                    + "from Orders\n"
+                    + "where ordered_date = ? and salerid = " + saleId;
         }
-        
+
         for (int i = 0; i <= days; i++) {
-            
 
-        try {
-            PreparedStatement pre = connection.prepareStatement(sql);
-            LocalDate date = startDate.plusDays(i);
-            pre.setString(1, date+"");
-            
-            ResultSet rs = pre.executeQuery();
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date + "");
 
-            while (rs.next()) {
+                ResultSet rs = pre.executeQuery();
 
-                String fdate = dtf.format(date);
-                int value = rs.getInt("Total_Price");
-                SaleChart saleChart = new SaleChart(fdate, value);
-                sList.add(saleChart);
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("Total_Price");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         }
-        
-        
+
         return sList;
     }
-    
-    
-    
-    public List<SaleChart> getRevenueAccumulateByDay(int saleId, LocalDate startDate, long days){
+
+    public List<SaleChart> getRevenueAccumulateByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select sum(total_price) as Total_Price \n" +
-                        "from Orders\n" +
-                        "where ordered_date <= ?";
-        
-         if(saleId!=0){
-            sql ="select sum(total_price) as Total_Price \n" +
-                        "from Orders\n" +
-                        "where ordered_date <= ? and salerid = "+saleId;
+        String sql = "select sum(total_price) as Total_Price \n"
+                + "from Orders\n"
+                + "where ordered_date <= ?";
+
+        if (saleId != 0) {
+            sql = "select sum(total_price) as Total_Price \n"
+                    + "from Orders\n"
+                    + "where ordered_date <= ? and salerid = " + saleId;
         }
-        
+
         for (int i = 0; i <= days; i++) {
-            
 
-        try {
-            PreparedStatement pre = connection.prepareStatement(sql);
-            LocalDate date = startDate.plusDays(i);
-            pre.setString(1, date+"");
-            
-            ResultSet rs = pre.executeQuery();
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date + "");
 
-            while (rs.next()) {
+                ResultSet rs = pre.executeQuery();
 
-                String fdate = dtf.format(date);
-                int value = rs.getInt("Total_Price");
-                SaleChart saleChart = new SaleChart(fdate, value);
-                sList.add(saleChart);
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("Total_Price");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         }
-        
-        
+
         return sList;
     }
-    
-    
-    
-    
-    
-    public int getTotalOrder(int saleId, LocalDate startDate, long days){
+
+    public int getTotalOrder(int saleId, LocalDate startDate, long days) {
         int total = 0;
-        
-        
-        String sql = "select count(*) as Total_Order\n" +
-                    "from Orders where ordered_date>= ? and ordered_date <= ?";
-        
-        if(saleId!=0){
-            sql = "select count(*) as Total_Order\n" +
-                    "from Orders where ordered_date>= ? and ordered_date <= ? and salerid = "+saleId;
+
+        String sql = "select count(*) as Total_Order\n"
+                + "from Orders where ordered_date>= ? and ordered_date <= ?";
+
+        if (saleId != 0) {
+            sql = "select count(*) as Total_Order\n"
+                    + "from Orders where ordered_date>= ? and ordered_date <= ? and salerid = " + saleId;
         }
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, startDate+"");
-            pre.setString(2, startDate.plusDays(days)+"");
+            pre.setString(1, startDate + "");
+            pre.setString(2, startDate.plusDays(days) + "");
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 total = rs.getInt("Total_Order");
@@ -542,10 +533,9 @@ public class OrderDAO extends DBContext {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
         return total;
     }
-    
+
 //    public static void main(String[] args) {
 //        OrderDAO odao = new OrderDAO();
 //        List<Order> o = odao.getAllOrder();

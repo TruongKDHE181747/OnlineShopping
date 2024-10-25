@@ -64,12 +64,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb__text">
-                            <h4>Shopping Cart</h4>
+                            <h4>Xác nhận đơn hàng</h4>
                             <div class="breadcrumb__links">
-                                <a href="homeslider">Home</a>
-                                <a href="homeproduct">Shop</a>
-                                <a href="cart">Cart</a>
-                                <span>Checkout</span>
+                                <a href="homeslider">Trang chủ</a>
+                                <a href="homeproduct">Sản phẩm</a>
+                                <a href="cart">Giỏ hàng</a>
+                                <span>Xác nhận</span>
                             </div>
                         </div>
                     </div>
@@ -87,11 +87,11 @@
                             <table>
                                 <thead>
                                     <tr class="text-center">
-                                        <th class="text-left">No.</th>
-                                        <th>Product</th>
-                                        <th>Size</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
+                                        <th class="text-left">STT</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Kích cỡ</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng</th>
 
                                     </tr>
                                 </thead>
@@ -113,8 +113,8 @@
                                                     <h5><fmt:formatNumber value="${price}" type="currency" currencySymbol="₫" groupingUsed="true" /></h5>
                                                 </div>
                                             </td>
-                                            <td class="">
-                                                <div class="text-center">
+                                            <td class="" style="width: 150px">
+                                                <div class="text-center" >
                                                     ${o.size.size_name}
                                                 </div>
                                             </td>
@@ -156,7 +156,7 @@
                                         <div class="card h-100">
                                             <div class="card-body text-center">
                                                 <div class="payment-icon">💵</div>
-                                                <h5 class="card-title">Cash on Delivery</h5>
+                                                <h5 class="card-title">Thanh toán khi nhận hàng</h5>
 
                                             </div>
                                         </div>
@@ -168,7 +168,7 @@
                                         <div class="card h-100">
                                             <div class="card-body text-center">
                                                 <div class="payment-icon">💳</div>
-                                                <h5 class="card-title">Online Payment</h5>
+                                                <h5 class="card-title">Thanh toán qua VNPAY</h5>
 
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@
                     <div class="col-lg-4">
                         <div class="checkout__order">
                             <div class="row">
-                                <h4 class="mb-3 col-10" style="font-weight: bold">Delivery Address </h4>
+                                <h4 class="mb-3 col-10" style="font-weight: bold">Địa chỉ giao hàng </h4>
 
                                 <a href="address" class="btn btn-dark col-2" style="height: 40px"><span class="fa fa-pencil"></span></a>
                             </div>
@@ -192,13 +192,13 @@
                                     <p class="mb-1"><strong>${address.receiver_name}</strong></p>
                                     <p class="mb-1">${address.address}, ${address.ward_name}, </p>
                                     <p class="mb-1">${address.district_name}, ${address.province_name}</p>
-                                    <p class="mb-1">Phone: ${address.phone}</p>
+                                    <p class="mb-1">Số điện thoại: ${address.phone}</p>
                                 </c:if>
                             </div>
 
                         </div>
                         <div class="cart__discount" style="margin-top: 20px">
-                            <h6>Discount codes</h6>
+                            <h6>Mã giảm giá</h6>
                             <c:if test="${sessionScope.voucherError!=null}">
                                 <div class="alert-danger alert">
                                     ${sessionScope.voucherError}
@@ -208,9 +208,9 @@
                                 %>
                             </c:if>
                             <form action="applyVoucher" method="POST">
-                                <input type="text" name="voucherCode" placeholder="Voucher code" maxlength="255" >
+                                <input type="text" name="voucherCode" placeholder="Nhập mã giảm giá" maxlength="255" >
                                 <input type="hidden" name="isCheckout" value="true">
-                                <button type="submit">Apply</button>
+                                <button type="submit">Áp dụng</button>
                             </form>
                             <c:if test="${sessionScope.voucher!=null}">
                                 <div class="alert alert-secondary d-flex justify-content-between align-items-center" style="margin-top: 20px;">
@@ -221,21 +221,21 @@
                         </div>
                         <div >
                             <div class="checkout__order">
-                                <h3 style="font-weight: bold;">Order Total</h3>
+                                <h3 style="font-weight: bold;">Tổng đơn hàng</h3>
                                 <hr style="border: 0.1px solid black;">
                                 <ul class="checkout__total__all" style="border:none">
-                                    <li style="font-weight: normal ">Subtotal <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
-                                    <li style="font-weight: normal ">Shipping Fee <span class="text-reset"><fmt:formatNumber value="${ship}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                    <li style="font-weight: normal ">Tổng <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                    <li style="font-weight: normal ">Phí vận chuyển <span class="text-reset"><fmt:formatNumber value="${ship}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                                         <c:set var="discountPercent" value="${0}"/>
                                         <c:if test="${sessionScope.voucher!=null}">
                                             <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
-                                        <li style="font-weight: normal" >Voucher
+                                        <li style="font-weight: normal" >Mã giảm giá
                                             <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                         </li>
 
                                     </c:if>
                                     <c:set var="total" value="${subtotal - subtotal*discountPercent + ship}"/>
-                                    <li style="font-size: 21px;font-weight: bold">Total <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                    <li style="font-size: 21px;font-weight: bold">Thành tiền <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
 
                                 </ul>
                                 <hr style="border: 0.1px solid black;">
@@ -247,7 +247,7 @@
                                     <input id="selectedPaymentMethod" type="hidden" name="paymentMethod" value="1">
 
 
-                                    <button type="submit" class="site-btn">PLACE ORDER</button>
+                                    <button type="submit" class="site-btn">Đặt hàng</button>
                                 </form>
                             </div>
                         </div>
@@ -263,21 +263,12 @@
 
         <c:if test="${not empty sessionScope.systemError}">
             <script>
-                    alert('Something went wrong. Try again later !');
+                    alert('Lỗi hệ thống. Vui lòng thử lại sau !');
             </script>
 
             <%session.removeAttribute("noAddressError");%>
         </c:if>
 
-
-        <script>
-            function setPaymentMethod(value) {
-                document.getElementById('selectedPaymentMethod').value = value;
-
-            }
-
-        </script>
     </body>
 
 </html>
-

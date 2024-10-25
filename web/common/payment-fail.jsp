@@ -5,11 +5,11 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Payment Failed</title>
+        <title>Thanh Toán Thất Bại</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Bootstrap Icons -->
@@ -24,22 +24,21 @@
                             <div class="display-1 text-danger mb-4">
                                 <i class="bi bi-x-circle"></i>
                             </div>
-                            <h2 class="card-title mb-4">Payment Failed</h2>
-                            <p class="card-text">We're sorry, but your payment could not be processed at this time. Please review the details below and try again.</p>
+                            <h2 class="card-title mb-4">Thanh Toán Thất Bại</h2>
+                            <p class="card-text">Chúng tôi xin lỗi, nhưng thanh toán của bạn không thể được xử lý vào lúc này. Vui lòng kiểm tra thông tin bên dưới và thử lại.</p>
                             <hr>
                             <div class="transaction-details mt-4">
-                                <h4 class="mb-3">Transaction Details</h4>
+                                <h4 class="mb-3">Chi Tiết Giao Dịch</h4>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>Transaction ID:</span>
+                                        <span>Mã Giao Dịch:</span>
                                         <span class="badge bg-secondary rounded-pill">${vnp_TxnRef}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>Amount:</span>
+                                        <span>Số Tiền:</span>
                                         <span class="badge bg-danger rounded-pill"><fmt:formatNumber value="${vnp_Amount}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                     </li>
                                     <%
-                                 
                                         String vnpPayDateStr = request.getAttribute("vnp_PayDate").toString();
                                         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                                         SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -47,14 +46,14 @@
                                         String formattedDate = outputFormat.format(date);
                                     %>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>Date:</span>
+                                        <span>Ngày:</span>
                                         <span class="badge bg-secondary rounded-pill"><%=formattedDate%></span>
                                     </li>
                                 </ul>
                             </div>
 
                             <a href="orderstatus?status=fail" class="btn btn-primary btn-lg mt-4">
-                                <i class="bi bi-cart me-2"></i>Return to Home
+                                <i class="bi bi-cart me-2"></i>Trở Về Trang Chủ
                             </a>
                         </div>
 

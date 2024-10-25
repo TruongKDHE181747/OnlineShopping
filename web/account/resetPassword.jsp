@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Reset Password</title>
+        <title>Đặt lại Mật khẩu</title>
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,8 +25,8 @@
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="card shadow-lg p-4">
                             <div class="card-body">
-                                <!-- Title -->
-                                <h2 class="text-center mb-4">Reset Password</h2>
+                                <!-- Tiêu đề -->
+                                <h2 class="text-center mb-4">Đặt lại Mật khẩu</h2>
 
                                 <c:if test="${error != null}">
                                     <div class="alert alert-danger">
@@ -34,25 +34,25 @@
                                     </div>
                                 </c:if>
                                 <div class="form-floating mb-3">
-                                    <h6>Your account: ${requestScope.email}</h6>
+                                    <h6>Tài khoản của bạn: ${requestScope.email}</h6>
                                 </div>
-                                <!-- Form for Reset Password -->
+                                <!-- Form để Đặt lại Mật khẩu -->
                                 <form method="post" action="./resetPassword">
-                                    <!-- New Password input -->
+                                    <!-- Nhập Mật khẩu mới -->
                                     <div class="form-floating mb-3">
-                                        <input maxlength="50" type="password" name="newPassword" class="form-control" id="newPassword" placeholder="New Password" required>
-                                        <label for="newPassword">New Password</label>
+                                        <input maxlength="50" type="password" name="newPassword" class="form-control" id="newPassword" placeholder="Mật khẩu mới" required>
+                                        <label for="newPassword">Mật khẩu mới</label>
                                     </div>
 
-                                    <!-- Confirm Password input -->
+                                    <!-- Nhập lại Mật khẩu -->
                                     <div class="form-floating mb-3">
-                                        <input maxlength="50" type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
-                                        <label for="confirmPassword">Confirm Password</label>
+                                        <input maxlength="50" type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Nhập lại Mật khẩu" required>
+                                        <label for="confirmPassword">Nhập lại Mật khẩu</label>
                                     </div>
                                     <input type="hidden" name="email" value="${requestScope.email}">
-                                    <!-- Centered Submit button -->
+                                    <!-- Nút Gửi -->
                                     <div class="d-grid mb-3">
-                                        <button type="submit" class="btn btn-primary btn-lg">Reset Password</button>
+                                        <button type="submit" class="btn btn-primary btn-lg">Đặt lại Mật khẩu</button>
                                     </div>
                                 </form>
                             </div>
@@ -63,11 +63,11 @@
         </section>
 
         <jsp:include page="../common/footer.jsp" />
-        <!-- Bootstrap JS with Popper.js -->
+        <!-- Bootstrap JS với Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="../common/js.jsp" />
 
-        <!-- JavaScript for client-side validation -->
+        <!-- JavaScript cho xác thực phía máy khách -->
 
 
     </body>

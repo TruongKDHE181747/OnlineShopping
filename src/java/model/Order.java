@@ -34,9 +34,47 @@ public class Order {
     private int orderStatusId;
     private String shippingCode;
     private int saleId;
+    
+    private String paymentMethodName;
+    private String paymentStatusName;
+    private String orderStatusName;
 
     public Order() {
     }
+
+    public Order(int orderId, int customerId, String orderedDate, String receiverName, String phone, String email, String address, String wardCode, String wardName, int districtId, String districtName, int provinceId, String provinceName, int totalPrice, int shippingFee, int voucherId, int voucherPercent, int totalAmount, int totalGram, int paymentMethodId, String vnpTxnRef, String vnpCreateDate, int paymentStatusId, int orderStatusId, String shippingCode, int saleId, String paymentMethodName, String paymentStatusName, String orderStatusName) {
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.orderedDate = orderedDate;
+        this.receiverName = receiverName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.wardCode = wardCode;
+        this.wardName = wardName;
+        this.districtId = districtId;
+        this.districtName = districtName;
+        this.provinceId = provinceId;
+        this.provinceName = provinceName;
+        this.totalPrice = totalPrice;
+        this.shippingFee = shippingFee;
+        this.voucherId = voucherId;
+        this.voucherPercent = voucherPercent;
+        this.totalAmount = totalAmount;
+        this.totalGram = totalGram;
+        this.paymentMethodId = paymentMethodId;
+        this.vnpTxnRef = vnpTxnRef;
+        this.vnpCreateDate = vnpCreateDate;
+        this.paymentStatusId = paymentStatusId;
+        this.orderStatusId = orderStatusId;
+        this.shippingCode = shippingCode;
+        this.saleId = saleId;
+        this.paymentMethodName = paymentMethodName;
+        this.paymentStatusName = paymentStatusName;
+        this.orderStatusName = orderStatusName;
+    }
+    
+    
 
     public Order(int customerId, String orderedDate, String receiverName, String phone, String email, String address, String wardCode, String wardName, int districtId, String districtName, int provinceId, String provinceName, int totalPrice, int shippingFee, int voucherId, int voucherPercent, int totalAmount, int totalGram, int paymentMethodId, int paymentStatusId, int orderStatusId) {
         this.customerId = customerId;
@@ -148,6 +186,32 @@ public class Order {
         this.shippingCode = shippingCode;
         this.saleId = saleId;
     }
+
+    public String getPaymentMethodName() {
+        return paymentMethodName;
+    }
+
+    public void setPaymentMethodName(String paymentMethodName) {
+        this.paymentMethodName = paymentMethodName;
+    }
+
+    public String getPaymentStatusName() {
+        return paymentStatusName;
+    }
+
+    public void setPaymentStatusName(String paymentStatusName) {
+        this.paymentStatusName = paymentStatusName;
+    }
+
+    public String getOrderStatusName() {
+        return orderStatusName;
+    }
+
+    public void setOrderStatusName(String orderStatusName) {
+        this.orderStatusName = orderStatusName;
+    }
+    
+    
 
     public int getOrderId() {
         return orderId;

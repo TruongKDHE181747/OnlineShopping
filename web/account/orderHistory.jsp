@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,16 +28,16 @@
                 <jsp:include page="../account/profile-nav.jsp"/>
                 
                 <div class="table-responsive col-8">
-                    <h3 class="mb-4">Order History</h3>
+                    <h3 class="mb-4">Lịch sử đơn hàng</h3>
                     <table class="table table-striped table-hover">
                         <thead class="table-dark">
                             <tr>
-                                <th>No.</th>
-                                <th>Order Date</th>
-                                <th>Total</th>
-                                <th>Payment Method</th>
-                                <th>Payment Status</th>
-                                <th>Order Status</th>
+                                <th>STT</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Phương thức thanh toán</th>
+                                <th>Trạng thái đơn hàng</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,9 +46,8 @@
                                 <td>${status.index +1}</td>
                                 <td>${o.orderedDate}</td>
                                 <td>${o.totalAmount}</td>
-                                <td></td>
-                                <td></td>
-                                <td><span class="order-status"></span></td>
+                                <td>${o.paymentMethodName}</td>
+                                <td>${o.orderStatusName}</td>
                                 <td><button class="btn btn-sm btn-primary"><span class="fa fa-eye"></span></button></td>
                             </tr>
                             </c:forEach>
@@ -59,10 +57,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
 
         <jsp:include page="../common/footer.jsp" />
         <!-- Bootstrap JS with Popper.js -->

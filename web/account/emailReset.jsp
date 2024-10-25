@@ -1,8 +1,7 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,48 +16,48 @@
     <body>
         <jsp:include page="../common/header.jsp" />
 
-        <!-- Start your project here -->
+        <!-- Bắt đầu dự án của bạn ở đây -->
         <section style="margin: 50px 0">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="card shadow-lg p-4">
                             <div class="card-body">
-                                <!-- Title -->
-                                <h2 class="text-center mb-4">Forgot Password</h2>
+                                <!-- Tiêu đề -->
+                                <h2 class="text-center mb-4">Quên Mật Khẩu</h2>
 
-                                <!-- Info Message -->
+                                <!-- Thông điệp thông tin -->
                                 <p class="text-center text-muted mb-4">
-                                    If you have forgotten your password, you can use this form to reset it. You will receive an email with instructions.
+                                    Nếu bạn đã quên mật khẩu, bạn có thể sử dụng mẫu này để đặt lại mật khẩu. Bạn sẽ nhận được email với hướng dẫn.
                                 </p>
                                 
                                 <c:if test="${error != null}">
-                                    <div class="alert alert-danger" >
+                                    <div class="alert alert-danger">
                                         ${error}
                                     </div>
                                 </c:if>
                                 <c:if test="${success != null}">
-                                    <div class="alert alert-success" >
+                                    <div class="alert alert-success">
                                         ${success}
                                     </div>
                                 </c:if> 
 
-                                <!-- Form -->
+                                <!-- Mẫu -->
                                 <form method="get" action="./resetPassword">
-                                    <!-- Email input -->
+                                    <!-- Nhập email -->
                                     <div class="form-floating mb-3">
                                         <input maxlength="255" type="email" name="email" class="form-control" id="emailInput" placeholder="Email" required>
                                         <label for="emailInput">Email</label>
                                     </div>
 
-                                    <!-- Submit button -->
+                                    <!-- Nút gửi -->
                                     <div class="d-grid mb-3">
-                                        <button type="submit" class="btn btn-primary btn-lg">Send Reset Link</button>
+                                        <button type="submit" class="btn btn-primary btn-lg">Đặt Lại Mật Khẩu</button>
                                     </div>
 
-                                    <!-- Back to login link -->
+                                    <!-- Liên kết quay lại đăng nhập -->
                                     <p class="text-center">
-                                        <a href="./login" class="">Back to Login</a>
+                                        <a href="./login" class="">Quay lại Đăng Nhập</a>
                                     </p>
                                 </form>
                             </div>
@@ -67,14 +66,13 @@
                 </div>
             </div>
         </section>
-        <!-- End your project here -->
+        <!-- Kết thúc dự án của bạn ở đây -->
 
         <jsp:include page="../common/footer.jsp" />
-        <!-- Bootstrap JS with Popper.js -->
+        <!-- Bootstrap JS với Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="../common/js.jsp" />
 
     </body>
 
 </html>
-
