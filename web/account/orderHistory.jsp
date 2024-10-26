@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -35,7 +36,7 @@
                                 <th>STT</th>
                                 <th>Ngày đặt hàng</th>
                                 <th>Tổng tiền</th>
-                                <th>Phương thức thanh toán</th>
+                                <th>Thanh toán</th>
                                 <th>Trạng thái đơn hàng</th>
                                 <th></th>
                             </tr>
@@ -45,10 +46,10 @@
                             <tr>
                                 <td>${status.index +1}</td>
                                 <td>${o.orderedDate}</td>
-                                <td>${o.totalAmount}</td>
+                                <td><fmt:formatNumber value="${o.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                 <td>${o.paymentMethodName}</td>
                                 <td>${o.orderStatusName}</td>
-                                <td><button class="btn btn-sm btn-primary"><span class="fa fa-eye"></span></button></td>
+                                <td><a href="orderhistorydetail?orderId=${o.orderId}" class="btn btn-sm btn-primary"><span class="fa fa-eye"></span></a></td>
                             </tr>
                             </c:forEach>
                             

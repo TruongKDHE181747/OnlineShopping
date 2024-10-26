@@ -22,6 +22,62 @@ import model.User;
  */
 public class OrderDAO extends DBContext {
 
+    public Order getOrderByCustomerIdAndOrderId(int cusId, int ordId) {
+        String sql = """
+                     select o.*,pm.payment_method_name,ps.payment_status_name,os.order_status_name
+                       from Orders o
+                       left join Payment_Methods pm on pm.payment_method_id = o.payment_method_id
+                       left join Payment_Status ps on ps.payment_status_id = o.payment_status_id
+                       left join Order_Status os on os.order_status_id = o.order_status_id
+                       WHERE [customer_id] = ? and [order_id] = ?""";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, cusId);
+            pre.setInt(2, ordId);
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                int oid = rs.getInt("order_id");
+                int cid = rs.getInt("customer_id");
+                String orderedDate = rs.getString("ordered_date");
+                String receiveDate = rs.getString("receive_date");
+                String receiverName = rs.getString("receiver_name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String wardCode = rs.getString("ward_code");
+                String wardName = rs.getString("ward_name");
+                int districtId = rs.getInt("district_id");
+                String districtName = rs.getString("district_name");
+                int provinceId = rs.getInt("province_id");
+                String provinceName = rs.getString("province_name");
+                int totalPrice = rs.getInt("total_price");
+                int shippingFee = rs.getInt("shipping_fee");
+                int voucherId = rs.getInt("voucher_id");
+                int voucherPercent = rs.getInt("voucher_percent");
+                int totalAmount = rs.getInt("total_amount");
+                int totalGram = rs.getInt("total_gram");
+                int paymentMethodId = rs.getInt("payment_method_id");
+                String vnpTxnRef = rs.getString("vnp_TxnRef");
+                String vnpCreateDate = rs.getString("vnp_CreateDate");
+                int paymentStatusId = rs.getInt("payment_status_id");
+                int orderStatusId = rs.getInt("order_status_id");
+                String shippingCode = rs.getString("shipping_code");
+                int saleId = rs.getInt("salerId");
+
+                String paymentMethodName = rs.getString("payment_method_name");
+                String paymentStatusName = rs.getString("payment_status_name");
+                String orderStatusName = rs.getString("order_status_name");
+                return new Order(oid, cid, orderedDate, receiveDate, receiverName, phone, email, address, wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee, voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate, paymentStatusId, orderStatusId, shippingCode, saleId, paymentMethodName, paymentStatusName, orderStatusName);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
     public List<Order> getOrderByCustomer(int id) {
         List<Order> oList = new ArrayList<>();
         String sql = """
@@ -67,7 +123,7 @@ public class OrderDAO extends DBContext {
                 String paymentMethodName = rs.getString("payment_method_name");
                 String paymentStatusName = rs.getString("payment_status_name");
                 String orderStatusName = rs.getString("order_status_name");
-                Order order = new Order(saleId, saleId, orderedDate, receiverName, phone, email, address, wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee, voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate, paymentStatusId, orderStatusId, shippingCode, saleId, paymentMethodName, paymentStatusName, orderStatusName);
+                Order order = new Order(oid, cid, orderedDate, receiverName, phone, email, address, wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee, voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate, paymentStatusId, orderStatusId, shippingCode, saleId, paymentMethodName, paymentStatusName, orderStatusName);
                 oList.add(order);
             }
         } catch (SQLException ex) {
