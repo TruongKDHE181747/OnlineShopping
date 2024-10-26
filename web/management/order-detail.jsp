@@ -109,7 +109,7 @@
                                     <th class="text-center">Số lượng</th>
                                     <th>Giá</th>
                                     <th>Tổng tiền</th>
-                                    <th>Đánh giá</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,7 +125,7 @@
                                         <td class="text-center">${o.quantity}</td>
                                         <td><fmt:formatNumber value="${o.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                         <td><fmt:formatNumber value="${o.totalPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Xem đánh giá</a></td>
+                                        
 
                                         <c:set var="subtotal" value="${subtotal + o.totalPrice}"/>
                                     </tr>
@@ -134,21 +134,21 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="5" class="text-end"><strong>Tạm tính</strong></td>
-                                    <td colspan="4"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                    <td colspan="1"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                 </tr>
 
                                 <tr>
                                     <td colspan="5" class="text-end"><strong>Sử dụng voucher</strong></td>
-                                    <td colspan="4" class="text-danger">-<fmt:formatNumber value="${subtotal*order.voucherPercent/100}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                    <td colspan="1" class="text-danger">-<fmt:formatNumber value="${subtotal*o.voucherPercent/100}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" class="text-end"><strong>Phí vận chuyển</strong></td>
-                                    <td colspan="4"><fmt:formatNumber value="${order.shippingFee}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                    <td colspan="1"><fmt:formatNumber value="${order.shippingFee}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                 </tr>
 
                                 <tr>
                                     <td colspan="5" class="text-end"><strong>Thành tiền</strong></td>
-                                    <td colspan="4" class="text-success"><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                    <td colspan="1" class="text-success"><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -156,7 +156,6 @@
                 </div>
             </div>
         </div>
-        <jsp:include page="../common/footer.jsp" />
         <!-- Bootstrap JS with Popper.js -->
 
         <jsp:include page="../common/js.jsp" />
