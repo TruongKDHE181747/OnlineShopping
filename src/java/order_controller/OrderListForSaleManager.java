@@ -21,7 +21,7 @@ import model.Order;
  *
  * @author Thanh Tan
  */
-@WebServlet(name="OrderListForSaleManager", urlPatterns={"/orderlistforsalemanager"})
+@WebServlet(name="OrderListForSaleManager", urlPatterns={"/orderlistsm"})
 public class OrderListForSaleManager extends HttpServlet {
    
     /** 
@@ -40,7 +40,7 @@ public class OrderListForSaleManager extends HttpServlet {
         List<Order> order = odao.getAllOrder();
         
         session.setAttribute("orders", order);
-        response.sendRedirect(request.getContextPath() + "/management/list-order-for-sale-manager.jsp");
+        response.sendRedirect(request.getContextPath() + "/management/list-order-sm.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
