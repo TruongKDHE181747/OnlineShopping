@@ -70,11 +70,11 @@
                             <p ><strong>Mã vận đơn:</strong> ${order.shippingCode != null ? order.shippingCode: '<span class="text-muted">Không có</span>'} </p>
                             <p><strong>Tổng tiền:</strong> <span class="badge badge-pink"><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></p>
                             <p><strong>Trạng thái đơn hàng:</strong> <span <c:if test="${order.orderStatusId == 1}">class="badge-warning badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 2}">class="badge-primary badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 3}">class="badge-info badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 4}">class="badge-success badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 5}">class="badge-danger badge font-weight-bold"</c:if>                            
-                                                                           >${order.orderStatusName}</span></p>
+                                                                                                                    <c:if test="${order.orderStatusId == 2}">class="badge-primary badge font-weight-bold"</c:if>
+                                                                                                                    <c:if test="${order.orderStatusId == 3}">class="badge-info badge font-weight-bold"</c:if>
+                                                                                                                    <c:if test="${order.orderStatusId == 4}">class="badge-success badge font-weight-bold"</c:if>
+                                                                                                                    <c:if test="${order.orderStatusId == 5}">class="badge-danger badge font-weight-bold"</c:if>                            
+                                                                                                                    >${order.orderStatusName}</span></p>
                         </div>
                     </div>
                 </div>
@@ -155,16 +155,45 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2}">
+                <div class="text-right mt-4 mb-5">
+
+
+                    <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
+                        Hủy đơn hàng
+                    </button>
+                   
+                </div>
+            </c:if>
         </div>
-        <jsp:include page="../common/footer.jsp" />
-        <!-- Bootstrap JS with Popper.js -->
 
-        <jsp:include page="../common/js.jsp" />
+    </div>
+    <jsp:include page="../common/footer.jsp" />
+    <!-- Bootstrap JS with Popper.js -->
 
-        <script>
-            function goBack() {
-                window.history.back();
-            }
-        </script>
-    </body>
+    <jsp:include page="../common/js.jsp" />
+
+    <script>
+        function cancelOrder(orderId, methodId, payStatus) {
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "cancelorder", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+
+            xhr.send("orderId=" + orderId + "&methodId=" + methodId + "&payStatus=" + payStatus);
+
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert("Hủy đơn hàng thành công !");
+                    location.reload();
+                }
+            };
+        }
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
 </html>

@@ -51,7 +51,7 @@
                 <i class="fa fa-arrow-left me-2"></i> Back
             </button>
         </div>
-        <div class="container mt-5" style="margin-bottom: 70px">
+        <div class="container mt-5" style="margin-bottom: 70px;padding-bottom: 100px">
 
             <h2 class="mb-4">Chi tiết đơn hàng</h2>
 
@@ -70,11 +70,11 @@
                             <p ><strong>Mã vận đơn:</strong> ${order.shippingCode != null ? order.shippingCode: '<span class="text-muted">Không có</span>'} </p>
                             <p><strong>Tổng tiền:</strong> <span class="badge badge-pink"><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></p>
                             <p><strong>Trạng thái đơn hàng:</strong> <span <c:if test="${order.orderStatusId == 1}">class="badge-warning badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 2}">class="badge-primary badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 3}">class="badge-info badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 4}">class="badge-success badge font-weight-bold"</c:if>
-                                                                            <c:if test="${order.orderStatusId == 5}">class="badge-danger badge font-weight-bold"</c:if>                            
-                                                                           >${order.orderStatusName}</span></p>
+                                                                                                                    <c:if test="${order.orderStatusId == 2}">class="badge-primary badge font-weight-bold"</c:if>
+                                                                                                                    <c:if test="${order.orderStatusId == 3}">class="badge-info badge font-weight-bold"</c:if>
+                                                                                                                    <c:if test="${order.orderStatusId == 4}">class="badge-success badge font-weight-bold"</c:if>
+                                                                                                                    <c:if test="${order.orderStatusId == 5}">class="badge-danger badge font-weight-bold"</c:if>                            
+                                                                                                                    >${order.orderStatusName}</span></p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                                     <th class="text-center">Số lượng</th>
                                     <th>Giá</th>
                                     <th>Tổng tiền</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,7 +125,7 @@
                                         <td class="text-center">${o.quantity}</td>
                                         <td><fmt:formatNumber value="${o.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                         <td><fmt:formatNumber value="${o.totalPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                        
+
 
                                         <c:set var="subtotal" value="${subtotal + o.totalPrice}"/>
                                     </tr>
@@ -139,7 +139,7 @@
 
                                 <tr>
                                     <td colspan="5" class="text-end"><strong>Sử dụng voucher</strong></td>
-                                    <td colspan="1" class="text-danger">-<fmt:formatNumber value="${subtotal*o.voucherPercent/100}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
+                                    <td colspan="1" class="text-danger">-<fmt:formatNumber value="${subtotal*order.voucherPercent/100}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" class="text-end"><strong>Phí vận chuyển</strong></td>
@@ -155,15 +155,42 @@
                     </div>
                 </div>
             </div>
+            <div class="text-right mt-4 mb-5">
+                <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2}">
+                    <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" >
+                        Hủy đơn hàng
+                    </button>
+                </c:if>
+                <c:if test="${order.orderStatusId == 5 && order.paymentStatusId == 4}">
+                    <button onclick="" type="button" class="btn btn-warning btn-lg" >
+                        Hoàn tiền
+                    </button>
+                </c:if>
+            </div>
         </div>
         <!-- Bootstrap JS with Popper.js -->
 
         <jsp:include page="../common/js.jsp" />
 
+
         <script>
+            function cancelOrder(orderId, methodId, payStatus) {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "cancelorder", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send("orderId=" + orderId + "&methodId=" + methodId + "&payStatus=" + payStatus);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        alert("Hủy đơn hàng thành công !");
+                        location.reload();
+                    }
+                };
+            }
             function goBack() {
-                window.history.back();
+                window.location.href = "${pageContext.request.contextPath}/orderlist";
             }
         </script>
+
     </body>
 </html>

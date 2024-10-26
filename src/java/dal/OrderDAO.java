@@ -188,6 +188,28 @@ public class OrderDAO extends DBContext {
 
         return oList;
     }
+    
+    public boolean updateOrderStatus(int orderId, int orderStatusId) {
+        String sql = """
+                     UPDATE [dbo].[Orders]
+                         SET 
+                            [order_status_id] = ?
+                       WHERE [order_id] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderStatusId);
+            ps.setInt(2, orderId);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean updateOrderStatus(String vnp_TxnRef, int orderStatusId) {
         String sql = """
@@ -200,6 +222,28 @@ public class OrderDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, orderStatusId);
             ps.setString(2, vnp_TxnRef);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean updatePaymentStatus(int orderId, int paymentStatusId) {
+        String sql = """
+                     UPDATE [dbo].[Orders]
+                        SET 
+                           [payment_status_id] = ?
+                      WHERE [order_id] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, paymentStatusId);
+            ps.setInt(2, orderId);
 
             int n = ps.executeUpdate();
 

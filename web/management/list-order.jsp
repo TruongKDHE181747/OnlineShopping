@@ -156,10 +156,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">STT</th>
-                                    <th scope="col">Ngày đặt hàng</th>
-                                    <th scope="col">Tên người nhận</th>
+                                    <th scope="col">Ngày đặt hàng</th>                                   
                                     <th scope="col">Tổng giá tiền(₫)</th>
                                     <th scope="col">Phương thức thanh toán</th>
+                                    <th scope="col">Trạng thái thanh toán</th>
                                     <th scope="col">Trạng thái đơn hàng</th>
                                     <th scope="col">Xem</th>
                                 </tr>
@@ -172,12 +172,15 @@
                                     <tr>
                                         <td>${status.index +1}</td>
                                         <td>${o.orderedDate}</td>
-                                        <td>${o.receiverName}</td>
+                                        
                                         <td><fmt:formatNumber value="${o.totalAmount}" /></td>
                                         <td 
                                             <c:if test="${o.paymentMethodId == 2}">class="text-primary font-weight-bold"</c:if>
-                                            <c:if test="${o.paymentMethodId == 1}">class="text-success font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentMethodId == 1}">class="text-info font-weight-bold"</c:if>
                                             >${o.paymentMethodName}</td>
+                                        
+                                        <td>${o.paymentStatusName}</td>
+                                        
                                         <td
                                             <c:if test="${o.orderStatusId == 1}">class="text-warning  font-weight-bold"</c:if>
                                             <c:if test="${o.orderStatusId == 2}">class="text-primary  font-weight-bold"</c:if>
@@ -188,7 +191,7 @@
                                         <td>
                                             <form action="${pageContext.request.contextPath}/orderdetail" method="get">
                                                 <input type="hidden" name="orderId" value="${o.orderId}">
-                                                <button class="btn btn-sm btn-primary"><span class="fa fa-eye"></span></button>
+                                                <button class="btn btn-sm btn-dark"><span class="fa fa-eye"></span></button>
                                             </form>
                                         </td>
                                     </tr>
