@@ -55,7 +55,7 @@ public class OrderHistoryDetail extends HttpServlet {
             
             
             
-            request.getRequestDispatcher("/account/orderhistorydetail.jsp").forward(request, response);
+            request.getRequestDispatcher("/account/orderHistoryDetail.jsp").forward(request, response);
             
         } catch (NumberFormatException e) {
 
