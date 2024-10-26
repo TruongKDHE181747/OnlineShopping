@@ -16,11 +16,34 @@ public class OrderDetail {
     private int sizeId;         
     private int quantity;      
     private int unitPrice;      
-    private int totalPrice;    
+    private int totalPrice;  
+    private String sizeName;
 
     public OrderDetail() {
     }
 
+    public OrderDetail(int orderId, int productId, String productName, String thumbnail, int sizeId, int quantity, int unitPrice, int totalPrice, String sizeName) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.productName = productName;
+        this.thumbnail = thumbnail;
+        this.sizeId = sizeId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.totalPrice = totalPrice;
+        this.sizeName = sizeName;
+    }
+
+    public String getSizeName() {
+        return sizeName;
+    }
+
+    public void setSizeName(String sizeName) {
+        this.sizeName = sizeName;
+    }
+
+    
+    
     public OrderDetail(int orderId, int productId, String productName, String thumbnail, int sizeId, int quantity, int unitPrice, int totalPrice) {
         this.orderId = orderId;
         this.productId = productId;

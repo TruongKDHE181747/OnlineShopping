@@ -5,6 +5,7 @@
 package profile_controller;
 
 import dal.OrderDAO;
+import dal.OrderDetailDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import model.Order;
+import model.OrderDetail;
 import model.User;
 
 /**
@@ -36,6 +38,7 @@ public class OrderHistoryDetail extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         OrderDAO orderDAO = new OrderDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
         try {
 
             User account = (User) session.getAttribute("account");
@@ -45,9 +48,9 @@ public class OrderHistoryDetail extends HttpServlet {
 
             request.setAttribute("order", order);
             
+            List<OrderDetail> orderDetails = orderDetailDAO.getOrderDetailByOrderId(orderId);
             
-            
-            
+            request.setAttribute("orderDetails", orderDetails);
             
             
             

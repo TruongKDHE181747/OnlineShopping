@@ -225,16 +225,17 @@
                                 <hr style="border: 0.1px solid black;">
                                 <ul class="checkout__total__all" style="border:none">
                                     <li style="font-weight: normal ">Tổng <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
-                                    <li style="font-weight: normal ">Phí vận chuyển <span class="text-reset"><fmt:formatNumber value="${ship}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
-                                        <c:set var="discountPercent" value="${0}"/>
-                                        <c:if test="${sessionScope.voucher!=null}">
-                                            <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
+
+                                    <c:set var="discountPercent" value="${0}"/>
+                                    <c:if test="${sessionScope.voucher!=null}">
+                                        <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
                                         <li style="font-weight: normal" >Mã giảm giá
                                             <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                         </li>
 
                                     </c:if>
-                                    <c:set var="total" value="${subtotal - subtotal*discountPercent + ship}"/>
+                                    <li style="font-weight: normal ">Phí vận chuyển <span class="text-reset"><fmt:formatNumber value="${ship}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
+                                        <c:set var="total" value="${subtotal - subtotal*discountPercent + ship}"/>
                                     <li style="font-size: 21px;font-weight: bold">Thành tiền <span><fmt:formatNumber value="${total}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
 
                                 </ul>
@@ -263,7 +264,7 @@
 
         <c:if test="${not empty sessionScope.systemError}">
             <script>
-                    alert('Lỗi hệ thống. Vui lòng thử lại sau !');
+                                        alert('Lỗi hệ thống. Vui lòng thử lại sau !');
             </script>
 
             <%session.removeAttribute("noAddressError");%>
