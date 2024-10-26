@@ -261,6 +261,13 @@
         <!-- Bootstrap JS with Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="../common/js.jsp" />
+        
+        <script>
+            function setPaymentMethod(id){
+                document.querySelector('#selectedPaymentMethod').value = id;
+            }
+        </script>
+        
 
         <c:if test="${not empty sessionScope.systemError}">
             <script>

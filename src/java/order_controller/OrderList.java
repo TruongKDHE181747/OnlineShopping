@@ -40,7 +40,7 @@ public class OrderList extends HttpServlet {
         OrderDAO odao = new OrderDAO();
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("account");
-        List<Order> order = odao.getOrderBySale(user.getUsername());
+        List<Order> order = odao.getOrderBySale(user.getUser_id());
         
         session.setAttribute("order_list", order);
         response.sendRedirect(request.getContextPath() + "/management/list-order.jsp");

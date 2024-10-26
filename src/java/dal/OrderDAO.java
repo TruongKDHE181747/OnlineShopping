@@ -321,15 +321,14 @@ public class OrderDAO extends DBContext {
         return oList;
     }
 
-    public List<Order> getOrderBySale(String sName) {
+    public List<Order> getOrderBySale(int id) {
         List<Order> oList = new ArrayList<>();
         String sql = "select * from Orders "
-                + "join Users on Orders.salerId = Users.user_id"
-                + "where Users.username=?";
+                + "where salerId=?";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, sName);
+            pre.setInt(1, id);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 int oid = rs.getInt("order_id");

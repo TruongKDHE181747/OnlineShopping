@@ -18,7 +18,7 @@
             <span class="display-3 text-secondary mb-4">
                 <i class="fa fa-times-circle-o fa-lg text-danger"></i>
             </span>
-            <h2 class="display-3 text-black">Đơn Hàng Thất Bại</h2>
+            <h2 class="display-3 text-black">Đặt Hàng Thất Bại</h2>
             <p class="lead mb-5">Rất tiếc, đã có sự cố khi xử lý đơn hàng của bạn. Vui lòng thử lại.</p>
             <p><a href="${pageContext.request.contextPath}/homeproduct" class="btn btn-lg btn-dark">Quay Lại Cửa Hàng</a></p>
         </div>

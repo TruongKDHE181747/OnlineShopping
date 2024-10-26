@@ -18,7 +18,7 @@
             <span class=" display-3 text-secondary mb-4">
                 <i class="fa fa-check-circle-o fa-lg text-success"></i>
             </span>
-            <h2 class="display-3 text-black">Cảm Ơn Bạn</h2>
+            <h2 class="display-3 text-black">Đặt hàng thành công</h2>
             <p class="lead mb-5">Đơn hàng của bạn đã được đặt thành công.</p>
             <p><a href="${pageContext.request.contextPath}/homeproduct" class="btn btn-lg btn-dark ">Quay Lại Cửa Hàng</a></p>
         </div>

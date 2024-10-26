@@ -36,7 +36,7 @@
                                 <th>STT</th>
                                 <th>Ngày đặt hàng</th>
                                 <th>Tổng tiền</th>
-                                <th>Thanh toán</th>
+                                <th>Phương thức thanh toán</th>
                                 <th>Trạng thái đơn hàng</th>
                                 <th></th>
                             </tr>
