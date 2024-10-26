@@ -164,7 +164,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="weight_<%= size.getSize_id() %>" class="form-label">Trọng lượng: </label>
-                                            <input type="number" class="form-control" id="weight_<%= size.getSize_id() %>" name="weight_<%= size.getSize_id()%>" placeholder="Nhập trọng lượng cho size <%= size.getSize_name() %>" value="<%= weight%>" required min="0" max="100">
+                                            <input type="number" class="form-control" id="weight_<%= size.getSize_id() %>" name="weight_<%= size.getSize_id()%>" placeholder="Nhập trọng lượng cho size <%= size.getSize_name() %>" value="<%= weight%>" required min="0" max="1000">
                                         </div>
                                         <%
                                             }
