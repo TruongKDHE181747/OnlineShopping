@@ -56,7 +56,6 @@ public class PaymentStatus extends HttpServlet {
         request.setAttribute("vnp_PayDate", vnp_PayDate);
         if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
             orderDAO.updatePaymentStatus(vnp_TxnRef, 2);
-            orderDAO.updateOrderStatus(vnp_TxnRef, 2);
             request.getRequestDispatcher("/common/payment-success.jsp").forward(request, response);
         } else {
             orderDAO.updatePaymentStatus(vnp_TxnRef, 3);
