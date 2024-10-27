@@ -37,10 +37,7 @@
                 background-color: #007bff;
                 color: white;
             }
-            .card-header{
-                background: black;
 
-            }
         </style>
     </head>
     <body>
@@ -58,7 +55,7 @@
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header" style="background-color: #000000;">
                             <h5 class="mb-0 text-white">Thông tin đơn hàng</h5>
                         </div>
                         <div class="card-body">     
@@ -81,7 +78,7 @@
 
                 <div class="col-md-6 mb-4">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header" style="background-color: #000000;">
                             <h5 class="mb-0 text-white">Thông tin khách hàng</h5>
                         </div>
                         <div class="card-body">
@@ -95,7 +92,7 @@
             </div>
 
             <div class="card mt-4">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #000000;">
                     <h5 class="mb-0 text-white">Sản phẩm</h5>
                 </div>
                 <div class="card-body">

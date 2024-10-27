@@ -5,12 +5,20 @@
 package order_controller;
 
 import dal.OrderDAO;
+import dal.OrderDetailDAO;
+import dal.ProductSizeDAO;
+import dal.VoucherDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import model.Order;
+import model.OrderDetail;
+import model.ProductSize;
+import model.Voucher;
 
 /**
  *
@@ -18,9 +26,6 @@ import java.io.IOException;
  */
 @WebServlet(name = "CancelOrder", urlPatterns = {"/cancelorder"})
 public class CancelOrder extends HttpServlet {
-
-
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -33,29 +38,45 @@ public class CancelOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        try{
-        
+
+        try {
+
             OrderDAO orderDAO = new OrderDAO();
-            
+            OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+            ProductSizeDAO productSizeDAO = new ProductSizeDAO();
+            VoucherDAO voucherDAO = new VoucherDAO();
+
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             int methodId = Integer.parseInt(request.getParameter("methodId"));
             int payStatus = Integer.parseInt(request.getParameter("payStatus"));
-            
+
             orderDAO.updateOrderStatus(orderId, 5);
-            
-            if(methodId == 2 && payStatus == 2){
+
+            if (methodId == 2 && payStatus == 2) {
                 orderDAO.updatePaymentStatus(orderId, 4);
             }
-            
-            
-            
-        }catch(NumberFormatException e){}
-        
-        
-        
-        
-    }
 
+            List<OrderDetail> listDetail = orderDetailDAO.getOrderDetailByOrderId(orderId);
+
+            for (OrderDetail od : listDetail) {
+                int sid = od.getSizeId();
+                int pid = od.getProductId();
+                int quantity = od.getQuantity();
+                ProductSize ps = productSizeDAO.getProductSize(sid, pid);
+                productSizeDAO.updateSizeProduct(sid, pid, ps.getQuantity() + quantity);
+
+            }
+
+            Order order = orderDAO.getOrderById(orderId);
+            int voucherId = order.getVoucherId();
+            if (voucherId != 1) {
+                Voucher voucher = voucherDAO.getVoucherbyId(voucherId);
+                voucherDAO.updateVoucherQuantity(voucherId, voucher.getQuantity() + 1);
+            }
+
+        } catch (NumberFormatException e) {
+        }
+
+    }
 
 }
