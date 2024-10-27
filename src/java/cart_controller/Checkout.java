@@ -155,7 +155,7 @@ public class Checkout extends HttpServlet {
             }
 
             if (weight == 0) {
-                response.sendRedirect(request.getContextPath()+"/orderstatus?status=fail");
+                response.sendRedirect(request.getContextPath() + "/orderstatus?status=fail");
                 return;
             }
 
@@ -191,7 +191,7 @@ public class Checkout extends HttpServlet {
             int orderId = orderDAO.insertOrder(order);
 
             if (orderId == -1) {
-                response.sendRedirect(request.getContextPath()+"/orderstatus?status=fail");
+                response.sendRedirect(request.getContextPath() + "/orderstatus?status=fail");
                 return;
             }
 
@@ -219,6 +219,11 @@ public class Checkout extends HttpServlet {
                 //if insert success
                 if (check) {
 
+                    session.removeAttribute("voucher");
+                    if (intVoucherId != 1) {
+                        voucherDAO.updateVoucherQuantity(intVoucherId, voucher.getQuantity() - 1);
+                    }
+
                     int stock = productSizeDAO.getQuantityOfEachSize(sizeId, productId);
 
                     productSizeDAO.updateQuantityOfEachSize(sizeId, productId, stock - itemQuantity);
@@ -232,7 +237,7 @@ public class Checkout extends HttpServlet {
                     }
 
                 } else {
-                    response.sendRedirect(request.getContextPath()+"/orderstatus?status=fail");
+                    response.sendRedirect(request.getContextPath() + "/orderstatus?status=fail");
                     return;
                 }
 
@@ -244,7 +249,7 @@ public class Checkout extends HttpServlet {
                 request.setAttribute("totalAmount", totalAmount);
                 request.getRequestDispatcher("/payment").forward(request, response);
             } else {
-                response.sendRedirect(request.getContextPath()+"/orderstatus?status=success");
+                response.sendRedirect(request.getContextPath() + "/orderstatus?status=success");
 
             }
 

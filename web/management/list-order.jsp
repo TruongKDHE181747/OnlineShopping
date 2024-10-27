@@ -179,7 +179,14 @@
                                             <c:if test="${o.paymentMethodId == 1}">class="text-info font-weight-bold"</c:if>
                                             >${o.paymentMethodName}</td>
                                         
-                                        <td>${o.paymentStatusName}</td>
+                                        <td
+                                            <c:if test="${o.paymentStatusId == 1}">class="text-dark  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 2}">class="text-success  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 3}">class="text-danger  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 4}">class="text-warning  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 5}">class="text-info font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 5}">class="text-success font-weight-bold"</c:if>
+                                            >${o.paymentStatusName}</td>
                                         
                                         <td
                                             <c:if test="${o.orderStatusId == 1}">class="text-warning  font-weight-bold"</c:if>

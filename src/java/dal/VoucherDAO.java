@@ -19,6 +19,28 @@ import model.Voucher;
  */
 public class VoucherDAO extends DBContext {
 
+    public boolean updateVoucherQuantity(int voucherId, int quantity) {
+        String sql = """
+                     UPDATE [dbo].[Voucher]
+                        SET 
+                           [quantity] = ?
+                      WHERE [voucher_id] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(2, voucherId);
+            ps.setInt(1, quantity);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+
     public List<Voucher> getAllVoucher() {
         List<Voucher> vlist = new ArrayList<>();
         String sql = "select * from Voucher";
@@ -210,15 +232,16 @@ public class VoucherDAO extends DBContext {
         }
         return v;
     }
-    public void updateStatus(){
-        try{
-        String sql="UPDATE Voucher SET is_active = 0 WHERE end_date <= GETDATE()";
-        PreparedStatement pre=connection.prepareStatement(sql);
-        pre.executeUpdate();
-        }catch (SQLException ex) {
+
+    public void updateStatus() {
+        try {
+            String sql = "UPDATE Voucher SET is_active = 0 WHERE end_date <= GETDATE()";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.executeUpdate();
+        } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 //    public static void main(String[] args) {
 //        VoucherDAO vdao = new VoucherDAO();

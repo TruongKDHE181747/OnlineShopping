@@ -21,7 +21,7 @@ import model.User;
  * @author Thanh Tan
  */
 public class OrderDAO extends DBContext {
-    
+
     public Order getOrderBySaleIdAndOrderId(int sid, int ordId) {
         String sql = """
                      select o.*,pm.payment_method_name,ps.payment_status_name,os.order_status_name
@@ -142,7 +142,8 @@ public class OrderDAO extends DBContext {
                        left join Payment_Methods pm on pm.payment_method_id = o.payment_method_id
                        left join Payment_Status ps on ps.payment_status_id = o.payment_status_id
                        left join Order_Status os on os.order_status_id = o.order_status_id
-                       WHERE [customer_id] = ?""";
+                       WHERE [customer_id] = ?
+                        order by o.ordered_date desc""";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -188,7 +189,7 @@ public class OrderDAO extends DBContext {
 
         return oList;
     }
-    
+
     public boolean updateOrderStatus(int orderId, int orderStatusId) {
         String sql = """
                      UPDATE [dbo].[Orders]
@@ -232,7 +233,7 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
-    
+
     public boolean updatePaymentStatus(int orderId, int paymentStatusId) {
         String sql = """
                      UPDATE [dbo].[Orders]
@@ -429,7 +430,8 @@ public class OrderDAO extends DBContext {
                        left join Payment_Methods pm on pm.payment_method_id = o.payment_method_id
                        left join Payment_Status ps on ps.payment_status_id = o.payment_status_id
                        left join Order_Status os on os.order_status_id = o.order_status_id
-                       WHERE [salerId] = ?""";
+                       WHERE [salerId] = ?
+                     order by o.ordered_date desc""";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
