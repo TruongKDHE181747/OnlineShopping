@@ -162,9 +162,16 @@
                     </button>
                 </c:if>
                 <c:if test="${order.orderStatusId == 5 && order.paymentStatusId == 4}">
-                    <button onclick="" type="button" class="btn btn-warning btn-lg" >
-                        Hoàn tiền
-                    </button>
+                    <form action="${pageContext.request.contextPath}/refundpayment" method="post">
+                        <input type="hidden" name="vnp_TxnRef" value="${order.vnpTxnRef}">
+                        <input type="hidden" name="amount" value="${order.totalAmount}">
+                        <input type="hidden" name="vnp_CreateDate" value="${order.vnpCreateDate}">
+                        <input type="hidden" name="vnp_CreateBy" value="${sessionScope.account.username}">
+                        <input type="hidden" name="orderId" value="${order.orderId}">
+                        <button  type="submit" class="btn btn-warning btn-lg" >
+                            Hoàn tiền
+                        </button>
+                    </form>
                 </c:if>
             </div>
         </div>
@@ -187,10 +194,19 @@
                     }
                 };
             }
+
             function goBack() {
                 window.location.href = "${pageContext.request.contextPath}/orderlist";
             }
         </script>
+
+        <c:if test="${not empty sessionScope.refundMsg}">
+            <script>
+                alert('${sessionScope.refundMsg}');
+            </script>
+            <%session.removeAttribute("refundMsg");%>
+        </c:if>
+
 
     </body>
 </html>
