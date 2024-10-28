@@ -161,13 +161,13 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">No.</th>
+                                    <th scope="col">STT</th>
                                     <th scope="col" style="width: 20%">Tên</th>
                                     <th scope="col">Ảnh</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Giá(₫)</th>
                                     <th scope="col">Discount(%)</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Xem</th>
                                 </tr>
                             </thead>
                             <tbody>

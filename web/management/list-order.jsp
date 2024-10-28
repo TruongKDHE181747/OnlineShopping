@@ -131,7 +131,7 @@
         <div class="row">
             <jsp:include page="../common/header.jsp" />
             <!-- START menu -->
-            <jsp:include page="marketing_header.jsp"/>
+            <jsp:include page="sale_header.jsp"/>
             <!-- END menu -->
 
             <div class="col-md-10" style="padding: 40px;">

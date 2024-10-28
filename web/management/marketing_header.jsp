@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Marketing_header
-    Created on : Sep 26, 2024, 3:47:38 PM
-    Author     : quanpyke
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -56,7 +50,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
                                 <path d="M9.293 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5.707l-4.293-4.293A1 1 0 0 0 9.293 0zM11 1v1H5.5a.5.5 0 0 0-.5.5V5h8V3H8zm5 10h1v-8H3v8h10z"/>
                             </svg>
-                            Bài đăng
+                            Blog
                         </a>
                     </li>
                     <li>

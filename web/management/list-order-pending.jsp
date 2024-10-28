@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Order"%>
 <%@page import="model.PaymentStatus"%>
@@ -129,7 +131,7 @@
         <div class="row">
             <jsp:include page="../common/header.jsp" />
             <!-- START menu -->
-            <jsp:include page="marketing_header.jsp"/>
+            <jsp:include page="sale_header.jsp"/>
             <!-- END menu -->
 
             <div class="col-md-10" style="padding: 40px;">
@@ -143,7 +145,11 @@
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchorder" method="get">
-                                            <input placeholder="Tìm kiếm đơn hàng theo tên khách hàng" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ ngày:</h5>
+                                            <input type="date" name="startDate" class="form-control me-2" aria-label="Start Date">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến ngày</h5>
+                                            <input type="date" name="endDate" class="form-control me-2" placeholder="Đến ngày" aria-label="End Date">
+
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -153,49 +159,55 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">No.</th>
-                                    <th scope="col">Ngày đặt hàng</th>
-                                    <th scope="col">Tên người nhận</th>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Ngày đặt hàng</th>                                   
                                     <th scope="col">Tổng giá tiền(₫)</th>
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Phương thức thanh toán</th>
+                                    <th scope="col">Trạng thái thanh toán</th>
+                                    <th scope="col">Trạng thái đơn hàng</th>
+                                    <th scope="col">Xem</th>
                                 </tr>
                             </thead>
                             <tbody>
 
 
                                 <!-- START Order item -->
-                                <%
-                                    List<Order> oList = (ArrayList<Order>) session.getAttribute("pending_order");
-                                    PaymentStatusDAO psdao = new PaymentStatusDAO();
-                                    int i = 1;
-                                    
-                                    for (Order o : oList) {
-                                        PaymentStatus ps = psdao.getPaymentStatusById(o.getPaymentStatusId());
-                                %>
-                                <tr>
+                                <c:forEach items="${sessionScope.pending_order}" var="o" varStatus="status">
+                                    <tr>
+                                        <td>${status.index +1}</td>
+                                        <td>${o.orderedDate}</td>
 
-                                    <td><%= i%></td>
+                                        <td><fmt:formatNumber value="${o.totalAmount}" /></td>
+                                        <td 
+                                            <c:if test="${o.paymentMethodId == 2}">class="text-primary font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentMethodId == 1}">class="text-info font-weight-bold"</c:if>
+                                            >${o.paymentMethodName}</td>
 
-                                    <td><%= o.getOrderedDate()%></td>
+                                        <td
+                                            <c:if test="${o.paymentStatusId == 1}">class="text-dark  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 2}">class="text-success  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 3}">class="text-danger  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 4}">class="text-warning  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 5}">class="text-info font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 5}">class="text-success font-weight-bold"</c:if>
+                                            >${o.paymentStatusName}</td>
 
-                                    <td><%= o.getReceiverName()%></td>
-
-                                    <td><%= o.getTotalPrice()%></td>
-
-                                    <td><%= ps.getPaymentStatusName()%></td>
-
-                                    <td>
-                                        <div class="edit" style="background-color: greenyellow">
-                                            <a href="../vieworderdetails?oid=<%= o.getOrderId()%>&button=view"><i style="color: black;" class="bi bi-eye-fill"></i></a>
-                                        </div>
-                                    </td>
-                                    <%
-                                        i++;
-                                        }
-                                    %>
-
-                                </tr>
+                                        <td
+                                            <c:if test="${o.orderStatusId == 1}">class="text-warning  font-weight-bold"</c:if>
+                                            <c:if test="${o.orderStatusId == 2}">class="text-primary  font-weight-bold"</c:if>
+                                            <c:if test="${o.orderStatusId == 3}">class="text-info  font-weight-bold"</c:if>
+                                            <c:if test="${o.orderStatusId == 4}">class="text-success  font-weight-bold"</c:if>
+                                            <c:if test="${o.orderStatusId == 5}">class="text-danger font-weight-bold"</c:if>
+                                            <c:if test="${o.orderStatusId == 6}">class="text-success font-weight-bold"</c:if>
+                                            >${o.orderStatusName}</td>
+                                        <td>
+                                            <form action="${pageContext.request.contextPath}/updateorderstatus" method="get">
+                                                <input type="hidden" name="orderId" value="${o.orderId}">
+                                                <button class="btn btn-sm btn-dark"><span class="fa fa-arrow-right"></span></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 <!-- END Order item -->
 
                             </tbody>
