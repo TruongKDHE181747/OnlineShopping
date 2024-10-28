@@ -151,7 +151,7 @@
 
 
                                     <div class="">
-                                        <div class="d-flex add" role="search">
+                                        <div class="d-flex add" role="search" style="background-color: black">
                                             <a href="add-product.jsp"><i style="color: white;" class="fa-solid fa-plus"></i></a>
                                         </div>
                                     </div>
@@ -232,12 +232,12 @@
                                             }
                                         %> 
                                         
-                                        <div class="edit"style="background-color: greenyellow">
-                                            <a style="color: black;" href="..\viewproduct?pid=<%= p.getProduct_id()%>"><i class="fa-solid fa-circle-info"></i></a>  
+                                        <div class="edit"style="background-color: black">
+                                            <a style="color: white;" href="..\viewproduct?pid=<%= p.getProduct_id()%>"><i class="fa-solid fa-circle-info"></i></a>  
                                         </div>
 
-                                        <div class="edit">
-                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=edit"><i style="color: black;" class="fa-solid fa-pen"></i></a>
+                                        <div class="edit" style="background-color: black">
+                                            <a href="../editproduct?pid=<%= p.getProduct_id()%>&button=edit"><i style="color: white;" class="fa-solid fa-pen"></i></a>
                                         </div>
                                     </td>
                                     <%
