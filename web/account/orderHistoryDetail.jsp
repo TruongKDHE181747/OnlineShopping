@@ -152,14 +152,11 @@
                     </div>
                 </div>
             </div>
-            <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2}">
+            <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6}">
                 <div class="text-right mt-4 mb-5">
-
-
-                    <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
+                   <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
                         Hủy đơn hàng
-                    </button>
-                   
+                    </button>                   
                 </div>
             </c:if>
         </div>

@@ -155,14 +155,25 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right mt-4 mb-5">
-                <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2}">
-                    <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" >
+            <div class="text-right mt-4 mb-5 d-flex justify-content-end">
+
+                <c:if test="${order.orderStatusId == 2}">
+                    
+                    <form action="${pageContext.request.contextPath}/packagedone" method="post" style="margin-left: 20px">
+                            <input type="hidden" name="orderId" value="${order.orderId}">                      
+                            <button type="submit" class="btn btn-info btn-lg" >
+                                Đóng gói thành công
+                            </button>
+                        </form>
+                    
+                </c:if>
+                <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6}">
+                    <button style="margin-left: 20px" onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg me-2" >
                         Hủy đơn hàng
                     </button>
                 </c:if>
                 <c:if test="${order.orderStatusId == 5 && order.paymentStatusId == 4}">
-                    <form action="${pageContext.request.contextPath}/refundpayment" method="post">
+                    <form style="margin-left: 20px" action="${pageContext.request.contextPath}/refundpayment" method="post" class="me-2"> 
                         <input type="hidden" name="vnp_TxnRef" value="${order.vnpTxnRef}">
                         <input type="hidden" name="amount" value="${order.totalAmount}">
                         <input type="hidden" name="vnp_CreateDate" value="${order.vnpCreateDate}">
@@ -173,6 +184,8 @@
                         </button>
                     </form>
                 </c:if>
+
+
             </div>
         </div>
         <!-- Bootstrap JS with Popper.js -->
@@ -199,6 +212,13 @@
                 window.location.href = "${pageContext.request.contextPath}/orderlist";
             }
         </script>
+        
+        <c:if test="${not empty sessionScope.notify}">
+            <script>
+                alert('${sessionScope.notify}');
+            </script>
+            <%session.removeAttribute("notify");%>
+        </c:if>
 
         <c:if test="${not empty sessionScope.refundMsg}">
             <script>

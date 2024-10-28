@@ -57,6 +57,7 @@
                                         <c:if test="${o.orderStatusId == 3}">class="text-info  font-weight-bold"</c:if>
                                         <c:if test="${o.orderStatusId == 4}">class="text-success  font-weight-bold"</c:if>
                                         <c:if test="${o.orderStatusId == 5}">class="text-danger font-weight-bold"</c:if>
+                                        <c:if test="${o.orderStatusId == 6}">class="text-success font-weight-bold"</c:if>
                                         >${o.orderStatusName}</td>
                                     <td>
                                         <form action="orderhistorydetail" method="get">
