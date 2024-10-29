@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Brand;
 import model.SaleChart;
 import model.User;
 
@@ -976,9 +977,53 @@ public class OrderDAO extends DBContext {
             }
         return count;
     }
+    public List<SaleChart> getTotalByBrandInMonth(int year){
+        Map<String, Integer> months = new LinkedHashMap<>();
+        months.put("January", 1);
+        months.put("February", 2);
+        months.put("March", 3);
+        months.put("April", 4);
+        months.put("May", 5);
+        months.put("June", 6);
+        months.put("July", 7);
+        months.put("August", 8);
+        months.put("September", 9);
+        months.put("October", 10);
+        months.put("November", 11);
+        months.put("December", 12);
+        List<SaleChart> sList = new ArrayList<>();
+        String sql="SELECT b.brand_name, COUNT(o.order_id) AS total_order\n" +
+                    "FROM Orders o\n" +
+                    "INNER JOIN Order_Details od ON o.order_id = od.order_id\n" +
+                    "INNER JOIN Products p ON od.product_id = p.product_id\n" +
+                    "INNER JOIN Brands b ON p.brand_id = b.brand_id\n" +
+                    "where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? \n" +
+                    "GROUP BY b.brand_name";
+        for (Map.Entry<String, Integer> entry : months.entrySet()){
+                try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                pre.setInt(1, entry.getValue()); // Giá trị của tháng từ Map
+                pre.setInt(2, year);
+                ResultSet rs = pre.executeQuery();
+
+                while (rs.next()) {
+                    String label = entry.getKey(); // Tên tháng làm nhãn
+                    int value = rs.getInt("total_order");
+                    String name=rs.getString("brand_name");
+                    SaleChart saleChart = new SaleChart(label, value,name); // Dùng label thay cho fdate
+                    sList.add(saleChart);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+        
+        return sList;
+    }
     public static void main(String[] args) {
         OrderDAO odao = new OrderDAO();
-        List<SaleChart> o = odao.getNumberOfOrderByMonth(2004);
+        List<SaleChart> o = odao.getTotalByBrandInMonth(2024);
         System.out.println(o);
     }
 

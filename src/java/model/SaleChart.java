@@ -11,7 +11,7 @@ package model;
 public class SaleChart {
     private String label;
     private int value;
-
+    private String brand;
     public SaleChart() {
     }
 
@@ -20,6 +20,12 @@ public class SaleChart {
         this.value = value;
     }
 
+    public SaleChart(String label, int value, String brand) {
+        this.label = label;
+        this.value = value;
+        this.brand = brand;
+    }
+    
     public String getLabel() {
         return label;
     }
@@ -36,12 +42,18 @@ public class SaleChart {
         this.value = value;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     @Override
     public String toString() {
-        return "SaleChart{" + "label=" + label + ", value=" + value + '}';
+        return "SaleChart{" + "label=" + label + ", value=" + value + ", brand=" + brand + '}';
     }
-    
-    
     
     
 }

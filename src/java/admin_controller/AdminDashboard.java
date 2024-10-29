@@ -44,13 +44,15 @@ public class AdminDashboard extends HttpServlet {
         int year= currentDate.getYear();
         OrderDAO odao= new OrderDAO();
         
-        List<SaleChart> monthchart= odao.getRevenueAccumulateByMonth(year);
+        List<SaleChart> monthChart= odao.getRevenueAccumulateByMonth(year);
         List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth(year);
         List<SaleChart> monthStatus= odao.getNumberStatusOrderByMonth(month,year);
+        List<SaleChart> mmonthBrand= odao.getTotalByBrandInMonth(year);
         int totalOrder = odao.getTotalOrderInMonth(month, year);
         session.setAttribute("monthOrder", monthOrder);
-        session.setAttribute("daychart", monthchart);
+        session.setAttribute("monthChart", monthChart);
         session.setAttribute("monthStatus", monthStatus);
+        session.setAttribute("monthBrand", mmonthBrand);
         session.setAttribute("month", month);
         session.setAttribute("year", year);
         session.setAttribute("totalOrder", totalOrder);
