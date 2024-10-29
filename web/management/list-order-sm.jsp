@@ -154,33 +154,29 @@
                                 <div class="container-fluid">
                                     <h5 class="navbar-brand" href="#">Quản lý đơn hàng</h5>
                                     <div class="" id="navbarSupportedContent">
-                                        <form action="../orderlist" class="d-flex" role="search">
-                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ:</h5>
-                                            <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
-                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến:</h5>
-                                            <input value="<%=end%>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
-                                            <select class="form-select" id="sale" name="sale" required>
-                                                <%
+                                        <form action="../orderlistsm" class="d-flex" role="search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand">Từ:</h5>
+                                            <input value="<%= begin %>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand">Đến:</h5>
+                                            <input value="<%= end %>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
+                                            <select class="form-select" id="sale" name="sale">
+                                                <option value="">Tất cả</option> <!-- Default "All" option -->
+                                                <% 
                                                     List<User> users = udao.getListUserByRoleId(3);
-                                                    if(sale.equals("null")) {
-                                                        for (User u : users) {
+                                                    for (User u : users) { 
                                                 %>
-                                                <option value="<%=u.getUser_id()%>"><%= u.getFirst_name() + " " + u.getLast_name()%></option>
-                                                <%
-                                                        }   
-                                                    } else {
-                                                        User u = udao.getUserByRoleId(Integer.parseInt("sale"));
-                                                %>
-                                                <option value="sale"><%= u.getFirst_name() + " " + u.getLast_name()%></option>
-                                                <%
-                                                    }
-                                                %>
+                                                <option value="<%= u.getUser_id() %>" <%= sale.equals(String.valueOf(u.getUser_id())) ? "selected" : "" %>>
+                                                    <%= u.getFirst_name() + " " + u.getLast_name() %>
+                                                </option>
+                                                <% } %>
                                             </select>
+
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
-                                        <c:if test="${not empty error_dmy}">
-                                            ${error_dmy}
+                                        <c:if test="${not empty error_sm}">
+                                            <div class="text-danger">${error_sm}</div>
                                         </c:if>
+
                                     </div> 
                                 </div>
                             </nav>
@@ -203,11 +199,9 @@
                                 <!-- START Order item -->
                                 <%
                                     List<Order> oList = (ArrayList<Order>) session.getAttribute("orders");
-                                    PaymentStatusDAO psdao = new PaymentStatusDAO();
                                     int i = 1;
                                     
                                     for (Order o : oList) {
-                                        PaymentStatus ps = psdao.getPaymentStatusById(o.getPaymentStatusId());
                                         User user = udao.getUserByRoleId(o.getSaleId());
                                 %>
                                 <tr>
@@ -220,19 +214,54 @@
 
                                     <td><%= o.getTotalPrice()%></td>
 
-                                    <td><%= ps.getPaymentStatusName()%></td>
+                                    <%
+                                        String orderStatusClass = "";
+                                        switch (o.getOrderStatusId()) {
+                                            case 1:
+                                                orderStatusClass = "text-warning font-weight-bold";
+                                                break;
+                                            case 2:
+                                                orderStatusClass = "text-primary font-weight-bold";
+                                                break;
+                                            case 3:
+                                                orderStatusClass = "text-info font-weight-bold";
+                                                break;
+                                            case 4:
+                                                orderStatusClass = "text-success font-weight-bold";
+                                                break;
+                                            case 5:
+                                                orderStatusClass = "text-danger font-weight-bold";
+                                                break;
+                                            case 6:
+                                                orderStatusClass = "text-success font-weight-bold";
+                                                break;
+                                            default:
+                                                orderStatusClass = ""; // Default class if needed
+                                                break;
+                                        }
+                                    %>
+                                    <td class="<%= orderStatusClass %>"><%=o.getOrderStatusName()%></td>
+
 
                                     <td><%= user.getFirst_name() + " " + user.getLast_name()%></td>
 
-                                    <td>
-                                        <div class="edit" style="background-color: greenyellow">
-                                            <a href="../vieworderdetails?oid=<%= o.getOrderId()%>&button=view"><i style="color: black;" class="bi bi-eye-fill"></i></a>
-                                        </div>
-                                    </td>
                                     <%
-                                        i++;
-                                        }
+                                        String contextPath = request.getContextPath();
+                                        int orderId = o.getOrderId();
                                     %>
+                                    <td>
+                                        <form action="<%= contextPath %>/orderdetail" method="get">
+                                            <input type="hidden" name="orderId" value="<%= orderId %>">
+                                            <button class="btn btn-sm btn-dark">
+                                                <span class="fa fa-eye"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <%
+                                            i++;
+                                            }
+                                        %>
 
                                 </tr>
                                 <!-- END Order item -->
