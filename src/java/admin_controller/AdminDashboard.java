@@ -5,6 +5,7 @@
 
 package admin_controller;
 
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,8 +14,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import model.SaleChart;
 
 /**
  *
@@ -34,19 +39,17 @@ public class AdminDashboard extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        List<Integer> iList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate today = LocalDate.now();   
+        LocalDate daybefore = today.minusDays(7);
+        String pobegin = "2024-10-01";
+        LocalDate poDate = LocalDate.parse(pobegin, formatter);
+        OrderDAO odao= new OrderDAO();
         
-        iList.add(1000);
-        iList.add(1500);
-        iList.add(2000);
-        iList.add(1900);
-        iList.add(2400);
-        iList.add(3500);
-        iList.add(5000);
-        iList.add(5030);
+        List<SaleChart> monthchart= odao.getRevenueAccumulateByMonth();
         
-        
-        session.setAttribute("dataList", iList);
+        session.setAttribute("daychart", monthchart);
         response.sendRedirect(request.getContextPath()+"/management/admindasboard.jsp");
     } 
 
