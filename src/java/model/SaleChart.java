@@ -35,6 +35,11 @@ public class SaleChart {
     public void setValue(int value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "SaleChart{" + "label=" + label + ", value=" + value + '}';
+    }
     
     
     
