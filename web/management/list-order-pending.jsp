@@ -134,6 +134,13 @@
             <jsp:include page="sale_header.jsp"/>
             <!-- END menu -->
 
+            <%
+                String begin = session.getAttribute("begin_date_order")+"";
+                String end = session.getAttribute("end_date_order")+"";
+                if(begin.equals("null")) begin = "";
+                if(end.equals("null")) end = "";
+            %>
+
             <div class="col-md-10" style="padding: 40px;">
 
                 <div class="product">
@@ -144,14 +151,16 @@
                                     <h5 class="navbar-brand" href="#">Quản lý đơn hàng</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchorder" method="get">
-                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ ngày:</h5>
-                                            <input type="date" name="startDate" class="form-control me-2" aria-label="Start Date">
-                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến ngày</h5>
-                                            <input type="date" name="endDate" class="form-control me-2" placeholder="Đến ngày" aria-label="End Date">
-
+                                        <form action="../pendinglist" class="d-flex" role="search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ:</h5>
+                                            <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến:</h5>
+                                            <input value="<%=end%>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
+                                        <c:if test="${not empty error_date}">
+                                            ${error_date}
+                                        </c:if>
                                     </div>
                                 </div>
                             </nav>
