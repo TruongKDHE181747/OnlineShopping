@@ -48,7 +48,7 @@ public class MarkertingDashboard extends HttpServlet {
                 
         List<SaleChart> postchart=pdao.getNumberPostByDay(poDate,endDate );
           List<SaleChart> posteachday=pdao.getPostEachDay(poDate,endDate );
-//        session.setAttribute("posteachday", posteachday);
+       session.setAttribute("posteachday", posteachday);
              session.setAttribute("postchart", postchart);
         response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
         

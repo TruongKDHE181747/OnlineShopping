@@ -71,12 +71,12 @@
         
         <script>
             const ctx2 = document.getElementById("totalPostchart2").getContext('2d');
-            const labels2 = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+            const labels2 = [<c:forEach items="${sessionScope.posteachday}" var="c"> '${c.label}',    </c:forEach>];
             const data2 = {
                 labels: labels2,
                 datasets: [{
                     label: 'Dataset 2',
-                    data: [70, 65, 75, 90, 60, 50, 45],
+                    data: [<c:forEach items="${sessionScope.posteachday}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(153, 102, 255)',
                     tension: 0.1
@@ -85,10 +85,20 @@
             const config2 = {
                 type: 'line',
                 data: data2,
+                
+                 options: {
+            scales: {
+                y: {
+                    ticks: {
+                        stepSize: 1 
+                    }
+                }
+            }
+        }
             };
             new Chart(ctx2, config2);
         </script>
-        
+ 
         <script>
             const ctx3 = document.getElementById("totalPostchart3").getContext('2d');
             const labels3 = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];

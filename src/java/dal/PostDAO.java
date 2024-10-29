@@ -592,7 +592,7 @@ public class PostDAO extends DBContext{
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String sql = "select count(post_id) as Total_number from Posts\n"
-                + "where created_at = ?";
+                + "where YEAR(created_at)=? AND MONTH(created_at)=? AND DAY(created_at)=?  ";
 
           int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
 
@@ -602,8 +602,9 @@ public class PostDAO extends DBContext{
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
                 LocalDate date = startDate.plusDays(i);
-                pre.setString(1, date + "");
-
+                pre.setString(1, date.getYear()+  "");
+         pre.setString(2, date.getMonthValue()+  "");
+             pre.setString(3, date.getDayOfMonth() +  "");
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
 
@@ -623,15 +624,15 @@ public class PostDAO extends DBContext{
     
     
     
-//    public static void main(String[] args) {
-//        PostDAO pdao = new PostDAO();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-//              String pobegin = "2024-09-21";
-//                      LocalDate poDate = LocalDate.parse(pobegin, formatter);
-//
-//        List<SaleChart> list=pdao.getNumberPostByDay(poDate, 10);
-//        System.out.println(list.get(5).getValue());
-//    
-//    }
+    public static void main(String[] args) {
+        PostDAO pdao = new PostDAO();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+              String pobegin = "2024-09-21";
+                      LocalDate poDate = LocalDate.parse(pobegin, formatter);
+
+        List<SaleChart> list=pdao.getPostEachDay(poDate, LocalDate.now());
+        System.out.println(list.get(0).getValue());
+    
+    }
 }
