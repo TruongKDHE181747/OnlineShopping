@@ -7,6 +7,8 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import model.PostCategories;
 import model.PostCategory;
 import model.Product;
 import model.Role;
+import model.SaleChart;
 import model.User;
 
 /**
@@ -546,6 +549,45 @@ public class PostDAO extends DBContext{
         }
         return pList;
     }
+    
+    
+    
+    public List<SaleChart> getNumberPostByDay(LocalDate startDate, long days) {
+        List<SaleChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select count(post_id) as Total_number from Posts\n"
+                + "where created_at = ?";
+
+       
+
+        for (int i = 0; i <= days; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date + "");
+
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("Total_number");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        return sList;
+    }
+    
+    
+    
+    
+    
     
 //    public static void main(String[] args) {
 //        PostDAO pdao = new PostDAO();
