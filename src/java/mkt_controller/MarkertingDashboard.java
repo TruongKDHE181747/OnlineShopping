@@ -5,6 +5,7 @@
 
 package mkt_controller;
 
+import dal.PostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import model.SaleChart;
 
 /**
  *
@@ -30,6 +37,21 @@ public class MarkertingDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PostDAO pdao=new PostDAO();
+                HttpSession session = request.getSession();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+              String pobegin = "2024-09-20";
+        LocalDate poDate = LocalDate.parse(pobegin, formatter);
+            
+        LocalDate endDate= LocalDate.now();
+                
+        List<SaleChart> postchart=pdao.getNumberPostByDay(poDate,endDate );
+          List<SaleChart> posteachday=pdao.getPostEachDay(poDate,endDate );
+//        session.setAttribute("posteachday", posteachday);
+             session.setAttribute("postchart", postchart);
+        response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
+        
        
     } 
 
