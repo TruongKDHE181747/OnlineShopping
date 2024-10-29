@@ -772,17 +772,19 @@ public class OrderDAO extends DBContext {
         return oList;
     }
 
-    public void updatePendingOrderStatus(int uid, int orderId) {
-        String sql = "update Orders set order_status_id = 2, salerId = ?"
+    public boolean updatePendingOrderStatus(int uid, int orderId) {
+        String sql = "update Orders set order_status_id = 2, salerId = ?\n"
                 + "where order_id = ?";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, uid);
             pre.setInt(2, orderId);
-            pre.executeUpdate();
+            int n = pre.executeUpdate();
+            return n > 0;
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
 
 //    public static void main(String[] args) {

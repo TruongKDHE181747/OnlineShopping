@@ -40,7 +40,7 @@ public class UpdateOrderStatus extends HttpServlet {
         int oid =  Integer.parseInt(request.getParameter("orderId"));
         
         odao.updatePendingOrderStatus(user.getUser_id(), oid);
-        request.getRequestDispatcher("pendinglist").forward(request, response);
+        request.getRequestDispatcher("orderlist").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
