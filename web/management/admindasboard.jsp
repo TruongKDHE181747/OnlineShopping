@@ -76,11 +76,11 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Doanh thu theo ngày</h5>
+                                        <h5 class="card-title">Tổng số đơn hàng trong tháng ${sessionScope.month}/${sessionScope.year}: ${sessionScope.totalOrder}</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
-                                            <canvas id="chartjs-bar"></canvas>
+                                            <canvas id="chartjs-polar-area"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -202,6 +202,31 @@
                     }
                 });
             });
+        </script>
+        <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                // Polar Area chart
+                new Chart(document.getElementById("chartjs-polar-area"), {
+                type: "polarArea",
+                        data: {
+                        labels: [<c:forEach items="${sessionScope.monthStatus}" var="chart">"${chart.getLabel()}",</c:forEach>],
+                                datasets: [{
+                                label: "Model S",
+                                        data: [<c:forEach items="${sessionScope.monthStatus}" var="chart">"${chart.getValue()}",</c:forEach>, ],
+                                        backgroundColor: [
+                                                window.theme.primary,
+                                                window.theme.success,
+                                                window.theme.warning,
+                                                window.theme.danger,
+                                                window.theme.info
+                                        ]
+                                }]
+                        },
+                        options: {
+                        maintainAspectRatio: false
+                        }
+                });
+                });
         </script>
         
 

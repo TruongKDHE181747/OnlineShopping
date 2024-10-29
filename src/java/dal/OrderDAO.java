@@ -776,7 +776,7 @@ public class OrderDAO extends DBContext {
         return oList;
     }
 
-    public List<SaleChart> getRevenueAccumulateByMonth() {
+    public List<SaleChart> getRevenueAccumulateByMonth(int year) {
         Map<String, Integer> months = new LinkedHashMap<>();
         months.put("January", 1);
         months.put("February", 2);
@@ -794,12 +794,13 @@ public class OrderDAO extends DBContext {
         List<SaleChart> sList = new ArrayList<>();
         String sql = "select sum(total_price) as Total_Price "
                 + "from Orders "
-                + "where Month(ordered_date) = ?";
+                + "where Month(ordered_date) = ? and Year(ordered_date)=?";
 
         for (Map.Entry<String, Integer> entry : months.entrySet()) {
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
                 pre.setInt(1, entry.getValue()); // Giá trị của tháng từ Map
+                pre.setInt(2, year);
                 ResultSet rs = pre.executeQuery();
 
                 while (rs.next()) {
@@ -829,7 +830,7 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
-    public List<SaleChart> getNumberOfOrderByMonth(){
+    public List<SaleChart> getNumberOfOrderByMonth(int year){
         Map<String, Integer> months = new LinkedHashMap<>();
         months.put("January", 1);
         months.put("February", 2);
@@ -846,11 +847,12 @@ public class OrderDAO extends DBContext {
 
         List<SaleChart> sList = new ArrayList<>();
         String sql="select count(order_id) as Total_number from Orders\n" +
-"                where Month(ordered_date) = ?";
+"                where Month(ordered_date) = ? and Year(ordered_date)=?";
         for (Map.Entry<String, Integer> entry : months.entrySet()) {
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
                 pre.setInt(1, entry.getValue()); // Giá trị của tháng từ Map
+                pre.setInt(2, year);
                 ResultSet rs = pre.executeQuery();
 
                 while (rs.next()) {
@@ -930,9 +932,53 @@ public class OrderDAO extends DBContext {
 
         return oList;
     }
+    public List<SaleChart> getNumberStatusOrderByMonth(int month, int year){
+        List<SaleChart> sList= new ArrayList<>();
+        String sql="Select  os.order_status_name, count(order_id) as Total_Order\n" +
+"                from Order_Status as os\n" +
+"                right join Orders as o on os.order_status_id = o.order_status_id\n" +
+"                where Month(ordered_date) = ? and Year(ordered_date)=?\n" +
+"                group by os.order_status_id,os.order_status_name\n" +
+"                order by os.order_status_id";
+        try{
+            PreparedStatement pre= connection.prepareStatement(sql);
+            pre.setInt(1, month);
+            pre.setInt(2, year);
+            ResultSet rs=pre.executeQuery();
+            while (rs.next()){
+                String name=rs.getString("order_status_name");
+                int value= rs.getInt("Total_Order");
+                sList.add(new SaleChart(name, value));
+            }
+        }catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return sList;
+        }
+    
+    
+    
+    public int getTotalOrderInMonth(int month, int year){
+        int count = 0;
+        String sql="select count(order_id) as Total_number from Orders\n" +
+                    "where Month(ordered_date) = ? and Year(ordered_date)=?";
+        try{
+            PreparedStatement pre= connection.prepareStatement(sql);
+            pre.setInt(1, month);
+            pre.setInt(2, year);
+            ResultSet rs= pre.executeQuery();
+            while(rs.next()){
+                count=rs.getInt("Total_number");
+            }
+            
+        }catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return count;
+    }
     public static void main(String[] args) {
         OrderDAO odao = new OrderDAO();
-        List<SaleChart> o = odao.getNumberOfOrderByMonth();
+        List<SaleChart> o = odao.getNumberOfOrderByMonth(2004);
         System.out.println(o);
     }
 

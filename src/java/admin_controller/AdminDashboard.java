@@ -39,18 +39,21 @@ public class AdminDashboard extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        LocalDate today = LocalDate.now();   
-        LocalDate daybefore = today.minusDays(7);
-        String pobegin = "2024-10-01";
-        LocalDate poDate = LocalDate.parse(pobegin, formatter);
+        LocalDate currentDate = LocalDate.now();
+        int month=currentDate.getMonthValue();
+        int year= currentDate.getYear();
         OrderDAO odao= new OrderDAO();
         
-        List<SaleChart> monthchart= odao.getRevenueAccumulateByMonth();
-        List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth();
+        List<SaleChart> monthchart= odao.getRevenueAccumulateByMonth(year);
+        List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth(year);
+        List<SaleChart> monthStatus= odao.getNumberStatusOrderByMonth(month,year);
+        int totalOrder = odao.getTotalOrderInMonth(month, year);
         session.setAttribute("monthOrder", monthOrder);
         session.setAttribute("daychart", monthchart);
+        session.setAttribute("monthStatus", monthStatus);
+        session.setAttribute("month", month);
+        session.setAttribute("year", year);
+        session.setAttribute("totalOrder", totalOrder);
         response.sendRedirect(request.getContextPath()+"/management/admindasboard.jsp");
     } 
 
