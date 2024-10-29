@@ -51,7 +51,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card flex-fill w-100">
                                     <div class="card-header">
-                                        <h5 class="card-title">Doanh thu theo ngày</h5>
+                                        <h5 class="card-title">Doanh thu theo tháng</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
@@ -113,7 +113,7 @@
                     data: {
                         labels: [<c:forEach  items="${sessionScope.daychart}" var="dc" > "${dc.label}",</c:forEach>],
                         datasets: [{
-                                label: "Sales ($)",
+                                label: "Doanh thu (VND)",
                                 fill: true,
                                 backgroundColor: "transparent",
                                 borderColor: window.theme.primary,
@@ -165,23 +165,14 @@
                 new Chart(document.getElementById("chartjs-bar"), {
                     type: "bar",
                     data: {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        labels: [<c:forEach items="${sessionScope.monthOrder}" var="chart">"${chart.label}",</c:forEach>],
                         datasets: [{
-                                label: "Last year",
+                                label: "Số lượng đơn hàng",
                                 backgroundColor: window.theme.primary,
                                 borderColor: window.theme.primary,
                                 hoverBackgroundColor: window.theme.primary,
                                 hoverBorderColor: window.theme.primary,
-                                data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-                                barPercentage: .75,
-                                categoryPercentage: .5
-                            }, {
-                                label: "This year",
-                                backgroundColor: "#dee2e6",
-                                borderColor: "#dee2e6",
-                                hoverBackgroundColor: "#dee2e6",
-                                hoverBorderColor: "#dee2e6",
-                                data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
+                                data: [<c:forEach items="${sessionScope.monthOrder}" var="chart">"${chart.value}",</c:forEach>],
                                 barPercentage: .75,
                                 categoryPercentage: .5
                             }]

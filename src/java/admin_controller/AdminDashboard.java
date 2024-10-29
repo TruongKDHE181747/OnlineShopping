@@ -48,7 +48,8 @@ public class AdminDashboard extends HttpServlet {
         OrderDAO odao= new OrderDAO();
         
         List<SaleChart> monthchart= odao.getRevenueAccumulateByMonth();
-        
+        List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth();
+        session.setAttribute("monthOrder", monthOrder);
         session.setAttribute("daychart", monthchart);
         response.sendRedirect(request.getContextPath()+"/management/admindasboard.jsp");
     } 
