@@ -5,6 +5,7 @@
 
 package order_controller;
 
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
@@ -31,7 +34,13 @@ public class UpdateOrderStatus extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        OrderDAO odao = new OrderDAO();
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("account");
+        int oid =  Integer.parseInt(request.getParameter("orderId"));
         
+        odao.updatePendingOrderStatus(user.getUser_id(), oid);
+        request.getRequestDispatcher("pendinglist").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -661,13 +661,10 @@ public class OrderDAO extends DBContext {
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql.toString());
-
-            // Set date parameters only if both dates are provided
             if (startDate != null && endDate != null) {
                 pre.setString(1, startDate);
                 pre.setString(2, endDate);
             }
-
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 int oid = rs.getInt("order_id");
@@ -710,7 +707,7 @@ public class OrderDAO extends DBContext {
 
         return oList;
     }
-    
+
     public List<Order> getOrderBySale(int id, String begin, String end) {
         List<Order> oList = new ArrayList<>();
         StringBuilder sql = new StringBuilder("""
@@ -773,6 +770,19 @@ public class OrderDAO extends DBContext {
         }
 
         return oList;
+    }
+
+    public void updatePendingOrderStatus(int uid, int orderId) {
+        String sql = "update Orders set order_status_id = 2, salerId = ?"
+                + "where order_id = ?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, uid);
+            pre.setInt(2, orderId);
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 //    public static void main(String[] args) {
