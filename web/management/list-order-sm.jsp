@@ -134,6 +134,17 @@
             <jsp:include page="marketing_header.jsp"/>
             <!-- END menu -->
 
+            <%
+                String begin = session.getAttribute("begin_date")+"";
+                String end = session.getAttribute("end_date")+"";
+                String sale = session.getAttribute("sale")+"";
+                if(begin.equals("null")) begin = "";
+                if(end.equals("null")) end = "";
+                
+                UserDAO udao = new UserDAO();
+                
+            %>
+
             <div class="col-md-10" style="padding: 40px;">
 
                 <div class="product">
@@ -142,26 +153,48 @@
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
                                     <h5 class="navbar-brand" href="#">Quản lý đơn hàng</h5>
-
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchorder" method="get">
-                                            <input placeholder="Search order by customer name" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <form action="../orderlist" class="d-flex" role="search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ:</h5>
+                                            <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến:</h5>
+                                            <input value="<%=end%>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
+                                            <select class="form-select" id="sale" name="sale" required>
+                                                <%
+                                                    List<User> users = udao.getListUserByRoleId(3);
+                                                    if(sale.equals("null")) {
+                                                        for (User u : users) {
+                                                %>
+                                                <option value="<%=u.getUser_id()%>"><%= u.getFirst_name() + " " + u.getLast_name()%></option>
+                                                <%
+                                                        }   
+                                                    } else {
+                                                        User u = udao.getUserByRoleId(Integer.parseInt("sale"));
+                                                %>
+                                                <option value="sale"><%= u.getFirst_name() + " " + u.getLast_name()%></option>
+                                                <%
+                                                    }
+                                                %>
+                                            </select>
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
-                                    </div>
+                                        <c:if test="${not empty error_dmy}">
+                                            ${error_dmy}
+                                        </c:if>
+                                    </div> 
                                 </div>
                             </nav>
                         </div>
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">No.</th>
+                                    <th scope="col">STT</th>
                                     <th scope="col">Ngày đặt hàng</th>
                                     <th scope="col">Tên người nhận</th>
                                     <th scope="col">Tổng giá(₫)</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Sale đảm nhận</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Xem</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -171,7 +204,6 @@
                                 <%
                                     List<Order> oList = (ArrayList<Order>) session.getAttribute("orders");
                                     PaymentStatusDAO psdao = new PaymentStatusDAO();
-                                    UserDAO udao = new UserDAO();
                                     int i = 1;
                                     
                                     for (Order o : oList) {
@@ -189,7 +221,7 @@
                                     <td><%= o.getTotalPrice()%></td>
 
                                     <td><%= ps.getPaymentStatusName()%></td>
-                                    
+
                                     <td><%= user.getFirst_name() + " " + user.getLast_name()%></td>
 
                                     <td>
