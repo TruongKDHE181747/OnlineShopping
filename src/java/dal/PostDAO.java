@@ -7,8 +7,10 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -552,15 +554,50 @@ public class PostDAO extends DBContext{
     
     
     
-    public List<SaleChart> getNumberPostByDay(LocalDate startDate, long days) {
+    public List<SaleChart> getNumberPostByDay(LocalDate startDate, LocalDate endDate) {
+        List<SaleChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select count(post_id) as Total_number from Posts\n"
+                + "where created_at <= ?";
+
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
+
+
+        for (int i = 0; i <= daybetween; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date + "");
+
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("Total_number");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        return sList;
+    }
+    
+    
+     public List<SaleChart> getPostEachDay(LocalDate startDate, LocalDate endDate) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String sql = "select count(post_id) as Total_number from Posts\n"
                 + "where created_at = ?";
 
-       
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
 
-        for (int i = 0; i <= days; i++) {
+
+        for (int i = 0; i <= daybetween; i++) {
 
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
@@ -586,14 +623,15 @@ public class PostDAO extends DBContext{
     
     
     
-    
-    
-    
 //    public static void main(String[] args) {
 //        PostDAO pdao = new PostDAO();
-//        Post p = pdao.getPostByID("1");
-//        System.out.println(p.getTitle());
-//        PostCategories pc = pdao.getPostCategoryByPostID("1");
-//        System.out.println(pc.getPost_category_name());
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+//              String pobegin = "2024-09-21";
+//                      LocalDate poDate = LocalDate.parse(pobegin, formatter);
+//
+//        List<SaleChart> list=pdao.getNumberPostByDay(poDate, 10);
+//        System.out.println(list.get(5).getValue());
+//    
 //    }
 }

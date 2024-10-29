@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -110,12 +111,12 @@
 
         <script>
             const ctx4 = document.getElementById("totalPostchart4").getContext('2d');
-            const labels4 = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+            const labels4 = [<c:forEach items="${sessionScope.postchart}" var="c"> '${c.label}',    </c:forEach>];
             const data4 = {
                 labels: labels4,
                 datasets: [{
                     label: 'Dataset 4',
-                    data: [100, 110, 120, 130, 140, 150, 160],
+                    data: [<c:forEach items="${sessionScope.postchart}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(54, 162, 235)',
                     tension: 0.1
