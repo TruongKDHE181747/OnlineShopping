@@ -134,6 +134,13 @@
             <jsp:include page="sale_header.jsp"/>
             <!-- END menu -->
 
+            <%
+                String begin = session.getAttribute("begin_date_o")+"";
+                String end = session.getAttribute("end_date_o")+"";
+                if(begin.equals("null")) begin = "";
+                if(end.equals("null")) end = "";
+            %>
+
             <div class="col-md-10" style="padding: 40px;">
 
                 <div class="product">
@@ -142,13 +149,18 @@
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
                                     <h5 class="navbar-brand" href="#">Quản lý đơn hàng</h5>
-
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../searchorder" method="get">
-                                            <input placeholder="Tìm kiếm đơn hàng theo tên khách hàng" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <form action="../orderlist" class="d-flex" role="search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ:</h5>
+                                            <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến:</h5>
+                                            <input value="<%=end%>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
-                                    </div>
+                                        <c:if test="${not empty error_dmy}">
+                                            ${error_dmy}
+                                        </c:if>
+                                    </div> 
                                 </div>
                             </nav>
                         </div>
@@ -172,13 +184,13 @@
                                     <tr>
                                         <td>${status.index +1}</td>
                                         <td>${o.orderedDate}</td>
-                                        
+
                                         <td><fmt:formatNumber value="${o.totalAmount}" /></td>
                                         <td 
                                             <c:if test="${o.paymentMethodId == 2}">class="text-primary font-weight-bold"</c:if>
                                             <c:if test="${o.paymentMethodId == 1}">class="text-info font-weight-bold"</c:if>
                                             >${o.paymentMethodName}</td>
-                                        
+
                                         <td
                                             <c:if test="${o.paymentStatusId == 1}">class="text-dark  font-weight-bold"</c:if>
                                             <c:if test="${o.paymentStatusId == 2}">class="text-success  font-weight-bold"</c:if>
@@ -187,7 +199,7 @@
                                             <c:if test="${o.paymentStatusId == 5}">class="text-info font-weight-bold"</c:if>
                                             <c:if test="${o.paymentStatusId == 5}">class="text-success font-weight-bold"</c:if>
                                             >${o.paymentStatusName}</td>
-                                        
+
                                         <td
                                             <c:if test="${o.orderStatusId == 1}">class="text-warning  font-weight-bold"</c:if>
                                             <c:if test="${o.orderStatusId == 2}">class="text-primary  font-weight-bold"</c:if>
