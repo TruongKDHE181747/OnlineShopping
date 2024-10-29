@@ -1,8 +1,7 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
     <head>
 
@@ -17,17 +16,17 @@
 
     <body>
         <%@include file="../common/header.jsp" %>
-        <!-- Start your project here -->
+        <!-- Bắt đầu dự án của bạn ở đây -->
         <section style="margin: 40px 0" class="full-height">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-10 col-lg-8">
                         <div class="card shadow-lg p-4">
                             <div class="card-body">
-                                <!-- Register Title -->
-                                <h2 class="text-center mb-4">Register</h2>
+                                <!-- Tiêu đề Đăng ký -->
+                                <h2 class="text-center mb-4">Đăng Ký</h2>
                                 <c:if test="${error != null}">
-                                    <div class="alert alert-danger" >
+                                    <div class="alert alert-danger">
                                         ${error}
                                     </div>
                                 </c:if>
@@ -37,106 +36,98 @@
                                     <div class="row mb-4">
                                         <div class="col-md-12">
                                             <div class="form-floating">
-                                                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required maxlength="50">
-                                                <label for="username">Username</label>
+                                                <input type="text" name="username" class="form-control" id="username" placeholder="Tên người dùng" required maxlength="50">
+                                                <label for="username">Tên người dùng</label>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required maxlength="50">
-                                                <label for="password">Password</label>
+                                                <input type="password" name="password" class="form-control" id="password" placeholder="Mật khẩu" required maxlength="50">
+                                                <label for="password">Mật khẩu</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password" required maxlength="50">
-                                                <label for="confirmPassword">Confirm password</label>
+                                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Xác nhận mật khẩu" required maxlength="50">
+                                                <label for="confirmPassword">Xác nhận mật khẩu</label>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="mb-4">
                                         <div class="form-floating">
-                                            <input type="email" name="email"  class="form-control" id="email" placeholder="Email address" required maxlength="255">
-                                            <label for="email">Email address</label>
+                                            <input type="email" name="email" class="form-control" id="email" placeholder="Địa chỉ email" required maxlength="255">
+                                            <label for="email">Địa chỉ email</label>
                                         </div>
                                     </div>
-                                    <!-- First and Last Name -->
+                                    <!-- Họ và Tên -->
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="firstname"  class="form-control" id="firstName" placeholder="First name" maxlength="50">
-                                                <label for="firstName">First name</label>
+                                                <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Tên" maxlength="50">
+                                                <label for="firstName">Tên</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Last name" maxlength="50">
-                                                <label for="lastName">Last name</label>
+                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Họ" maxlength="50">
+                                                <label for="lastName">Họ</label>
                                             </div>
                                         </div>
                                     </div>
 
-
-
-                                    <!-- Gender and Date of Birth inputs -->
+                                    <!-- Giới tính và Ngày sinh -->
                                     <div class="row mb-4">
                                         <div class="col-md-6 d-flex align-items-center">
-                                            <label class="form-label me-3">Gender:</label>
+                                            <label class="form-label me-3">Giới tính:</label>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender" id="male" value="true" required checked="">
-                                                <label class="form-check-label" for="male">Male</label>
+                                                <label class="form-check-label" for="male">Nam</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender" id="female" value="false" required>
-                                                <label class="form-check-label" for="female">Female</label>
+                                                <label class="form-check-label" for="female">Nữ</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="date" name="dob" class="form-control" id="dob" >
-                                                <label for="dob">Date of Birth</label>
+                                                <input type="date" name="dob" class="form-control" id="dob">
+                                                <label for="dob">Ngày sinh</label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Phone and Address in the same row -->
+                                    <!-- Số điện thoại -->
                                     <div class="row mb-4">
                                         <div>
                                             <div class="form-floating">
-                                                <input type="tel" name="phone"  pattern="\d{10}" title="Phone number must be exactly 10 digits" class="form-control" id="phone" placeholder="Phone number" required maxlength="15">
-                                                <label for="phone">Phone</label>
+                                                <input type="tel" name="phone" pattern="\d{10}" title="Số điện thoại phải có đúng 10 chữ số" class="form-control" id="phone" placeholder="Số điện thoại" required maxlength="15">
+                                                <label for="phone">Số điện thoại</label>
                                             </div>
                                         </div>
-
                                     </div>
 
-                                    <!-- Email input -->
-
-
-                                    <!-- Centered Submit button -->
+                                    <!-- Nút gửi trung tâm -->
                                     <div class="d-grid mb-3">
-                                        <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                                        <button type="submit" class="btn btn-primary btn-lg">Đăng Ký</button>
                                     </div>
 
-                                    <!-- Register link -->
-                                    <p class="text-center">Already have an account?
-                                        <a href="login" class="custom-link">Login here</a>
+                                    <!-- Liên kết đăng nhập -->
+                                    <p class="text-center">Bạn đã có tài khoản?
+                                        <a href="login" class="custom-link">Đăng nhập ở đây</a>
                                     </p>
 
-                                    <!-- Divider -->
+                                    <!-- Phân cách -->
                                     <div class="divider my-4">
-                                        <p class="text-muted">OR</p>
+                                        <p class="text-muted">HOẶC</p>
                                     </div>
 
-                                    <!-- Centered Google sign-in button -->
+                                    <!-- Nút đăng nhập Google ở giữa -->
                                     <div class="d-grid">
                                         <a class="btn btn-google btn-lg text-white" href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:8080/OnlineShopping/loginGoogle&response_type=code&client_id=450628772818-p20skk8fdd4nog131u03npn16l27gk9q.apps.googleusercontent.com&approval_prompt=force" role="button">
-                                            <i class="fab fa-google me-2"></i>Sign in with Google
+                                            <i class="fab fa-google me-2"></i>Đăng nhập bằng Google
                                         </a>
                                     </div>
                                 </form>
@@ -147,13 +138,12 @@
                 </div>
             </div>
         </section>
-        <!-- End your project here -->
+        <!-- Kết thúc dự án của bạn -->
 
         <%@include file="../common/footer.jsp" %>
-        <!-- Bootstrap JS with Popper.js -->
+        <!-- Bootstrap JS với Popper.js -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <%@include file="../common/js.jsp" %>
     </body>
 
 </html>
-

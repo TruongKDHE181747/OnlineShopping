@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import model.Order;
 
@@ -21,8 +24,8 @@ import model.Order;
  *
  * @author Thanh Tan
  */
-@WebServlet(name="OrderListForSaleManager", urlPatterns={"/orderlistsm"})
-public class OrderListForSaleManager extends HttpServlet {
+@WebServlet(name="OrderPending", urlPatterns={"/pendinglist"})
+public class OrderPending extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,12 +38,53 @@ public class OrderListForSaleManager extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        OrderDAO odao = new OrderDAO();
         HttpSession session = request.getSession();
-        List<Order> order = odao.getAllOrder();
+        OrderDAO odao = new OrderDAO();
         
-        session.setAttribute("orders", order);
-        response.sendRedirect(request.getContextPath() + "/management/list-order-sm.jsp");
+        String beginDate = request.getParameter("begindate");
+        String endDate = request.getParameter("enddate");
+
+        if (beginDate == null) {
+            beginDate = (String) session.getAttribute("begin_date_order");
+            if (beginDate == null) beginDate = "";
+        }
+        
+        if (endDate == null) {
+            endDate = (String) session.getAttribute("end_date_order");
+            if (endDate == null) endDate = "";
+        }
+        
+        session.setAttribute("begin_date_order", beginDate);
+        session.setAttribute("end_date_order", endDate);
+        
+        String err = "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        if ((beginDate.isEmpty() && !endDate.isEmpty()) || (!beginDate.isEmpty() && endDate.isEmpty())) {
+            err = "Hãy nhập cả ngày bắt đầu và kết thúc";
+            session.setAttribute("error_date", err);
+        } else if (!beginDate.isEmpty() && !endDate.isEmpty()) {
+            LocalDate begin = LocalDate.parse(beginDate, formatter);
+            LocalDate end = LocalDate.parse(endDate, formatter);
+            
+            long diff = ChronoUnit.DAYS.between(begin, end);
+            if (diff < 0) {
+                err = "Từ yyyy-MM-dd phải >= Đến yyyy-MM-dd";
+                session.setAttribute("error_date", err);
+            } else {
+                session.setAttribute("begin_date_order", beginDate);
+                session.setAttribute("end_date_order", endDate);
+                session.removeAttribute("error_date");
+            }
+        }
+
+        List<Order> order = odao.getOrderPending(
+            beginDate.isEmpty() ? null : beginDate,
+            endDate.isEmpty() ? null : endDate
+        );
+
+        session.setAttribute("pending_order", order);
+        response.sendRedirect(request.getContextPath() + "/management/list-order-pending.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

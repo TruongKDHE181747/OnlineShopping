@@ -5,11 +5,11 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successful</title>
+    <title>Thanh Toán Thành Công</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -24,23 +24,22 @@
                         <div class="display-1 text-success mb-4">
                             <i class="bi bi-check-circle"></i>
                         </div>
-                        <h2 class="card-title mb-4">Payment Successful!</h2>
-                        <p class="card-text">Thank you for your purchase. Your transaction has been completed successfully.</p>
+                        <h2 class="card-title mb-4">Thanh Toán Thành Công!</h2>
+                        <p class="card-text">Cảm ơn bạn đã mua hàng. Giao dịch của bạn đã được hoàn tất thành công.</p>
                         <hr>
                         <div class="transaction-details mt-4">
-                            <h4 class="mb-3">Transaction Details</h4>
+                            <h4 class="mb-3">Chi Tiết Giao Dịch</h4>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>Transaction ID:</span>
+                                    <span>Mã Giao Dịch:</span>
                                     <span class="badge bg-primary rounded-pill">${vnp_TxnRef}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>Amount:</span>
+                                    <span>Số Tiền:</span>
                                     <span class="badge bg-success rounded-pill"><fmt:formatNumber value="${vnp_Amount}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                 </li>
                                 
                                 <%
-                                 
                                     String vnpPayDateStr = request.getAttribute("vnp_PayDate").toString();
                                     SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                                     SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -48,13 +47,13 @@
                                     String formattedDate = outputFormat.format(date);
                                 %>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>Date:</span>
+                                    <span>Ngày:</span>
                                     <span class="badge bg-secondary rounded-pill"><%=formattedDate%></span>
                                 </li>
                             </ul>
                         </div>
                         <a href="orderstatus?status=success" class="btn btn-primary btn-lg mt-4">
-                            <i class="bi bi-house-door me-2"></i>Return to Home
+                            <i class="bi bi-house-door me-2"></i>Trở Về Trang Chủ
                         </a>
                     </div>
                 </div>

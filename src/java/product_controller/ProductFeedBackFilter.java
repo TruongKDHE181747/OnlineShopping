@@ -21,8 +21,8 @@ import model.ProductFeedback;
  *
  * @author quanpyke
  */
-@WebServlet(name="ProductFeedBackList", urlPatterns={"/productfeedbacklist"})
-public class ProductFeedBackList extends HttpServlet {
+@WebServlet(name="ProductFeedBackList", urlPatterns={"/productfeedbackfilter"})
+public class ProductFeedBackFilter extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,12 +38,14 @@ public class ProductFeedBackList extends HttpServlet {
         ProductFeedbackDAO pfdao=new ProductFeedbackDAO();
        
         HttpSession session=request.getSession(true);
-       List<ProductFeedback> prfall=pfdao.getAllProductFeedBack();
-       List<ProductFeedback> prflist=pfdao.getProductFeedbackPaging(1);
-            session.setAttribute("prfpage", 1);
-        session.setAttribute("prflist", prflist);
-        session.setAttribute("prfnum", pfdao.getTotalPage(prfall.size(), 5));
-        response.sendRedirect(request.getContextPath()+"/management/productfeedbacklist.jsp");
+  
+        String filter=request.getParameter("filter");
+        List<ProductFeedback> listall=pfdao.sortProductFeedBack(filter);
+        session.setAttribute("listall", listall);
+        
+        session.setAttribute("filter", filter);
+
+        response.sendRedirect(request.getContextPath()+"/productfeedbackpaging");
         
     } 
 

@@ -135,8 +135,8 @@
             <!-- END menu -->
 
             <%
-                String begin = session.getAttribute("begin_date_o")+"";
-                String end = session.getAttribute("end_date_o")+"";
+                String begin = session.getAttribute("begin_date_order")+"";
+                String end = session.getAttribute("end_date_order")+"";
                 if(begin.equals("null")) begin = "";
                 if(end.equals("null")) end = "";
             %>
@@ -149,18 +149,19 @@
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
                                     <h5 class="navbar-brand" href="#">Quản lý đơn hàng</h5>
+
                                     <div class="" id="navbarSupportedContent">
-                                        <form action="../orderlist" class="d-flex" role="search">
+                                        <form action="../pendinglist" class="d-flex" role="search">
                                             <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ:</h5>
                                             <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
                                             <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến:</h5>
                                             <input value="<%=end%>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
-                                        <c:if test="${not empty error_dmy}">
-                                            ${error_dmy}
+                                        <c:if test="${not empty error_date}">
+                                            ${error_date}
                                         </c:if>
-                                    </div> 
+                                    </div>
                                 </div>
                             </nav>
                         </div>
@@ -180,7 +181,7 @@
 
 
                                 <!-- START Order item -->
-                                <c:forEach items="${sessionScope.order_list}" var="o" varStatus="status">
+                                <c:forEach items="${sessionScope.pending_order}" var="o" varStatus="status">
                                     <tr>
                                         <td>${status.index +1}</td>
                                         <td>${o.orderedDate}</td>
@@ -209,9 +210,9 @@
                                             <c:if test="${o.orderStatusId == 6}">class="text-success font-weight-bold"</c:if>
                                             >${o.orderStatusName}</td>
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/orderdetail" method="get">
+                                            <form action="${pageContext.request.contextPath}/updateorderstatus" method="get">
                                                 <input type="hidden" name="orderId" value="${o.orderId}">
-                                                <button class="btn btn-sm btn-dark"><span class="fa fa-eye"></span></button>
+                                                <button class="btn btn-sm btn-dark"><span class="fa fa-arrow-right"></span></button>
                                             </form>
                                         </td>
                                     </tr>

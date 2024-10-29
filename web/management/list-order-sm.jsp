@@ -176,7 +176,7 @@
                                     
                                     for (Order o : oList) {
                                         PaymentStatus ps = psdao.getPaymentStatusById(o.getPaymentStatusId());
-                                        User user = udao.getUserByRoleId(o.getSalerId());
+                                        User user = udao.getUserByRoleId(o.getSaleId());
                                 %>
                                 <tr>
 

@@ -6,6 +6,8 @@ package dal;
 
 import model.OrderDetail;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +34,6 @@ public class OrderDetailDAO extends DBContext {
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
 
-            // Set values for each placeholder
             ps.setInt(1, od.getOrderId());
             ps.setInt(2, od.getProductId());
             ps.setString(3, od.getProductName());
@@ -51,6 +52,39 @@ public class OrderDetailDAO extends DBContext {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    public List<OrderDetail> getOrderDetailByOrderId(int oid) {
+        String sql = """
+                     select od.*,s.size_name 
+                     from Order_Details od
+                     join Sizes s on s.size_id = od.size_id
+                     where order_id = ?""";
+        List<OrderDetail> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, oid);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int orderId = rs.getInt(1);
+                int productId = rs.getInt(2);
+                String productName = rs.getString(3);
+                String thumbnail = rs.getString(4);
+                int sizeId = rs.getInt(5);
+                int quantity = rs.getInt(6);
+                int unitPrice = rs.getInt(7);
+                int totalPrice = rs.getInt(8);
+                String sizeName = rs.getString(9);
+
+                list.add(new OrderDetail(orderId, productId, productName, thumbnail, sizeId, quantity, unitPrice, totalPrice, sizeName));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
 }

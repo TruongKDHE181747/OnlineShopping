@@ -21,8 +21,8 @@
                     if (provinceId) {
                         loadDistricts(provinceId);
                     } else {
-                        $('#district').html('<option value="">Select District</option>');
-                        $('#ward').html('<option value="">Select Ward</option>');
+                        $('#district').html('<option value="">Chọn Quận/Huyện</option>');
+                        $('#ward').html('<option value="">Chọn Phường/Xã</option>');
                     }
                 });
 
@@ -31,7 +31,7 @@
                     if (districtId) {
                         loadWards(districtId);
                     } else {
-                        $('#ward').html('<option value="">Select Ward</option>');
+                        $('#ward').html('<option value="">Chọn Phường/Xã</option>');
                     }
                 });
 
@@ -40,12 +40,12 @@
             function loadProvinces() {
                 $.get("location?action=getProvinces", function (data) {
                     $('#province').html(data);
-                    $('#district').html('<option value="">Select District</option>');
-                    $('#ward').html('<option value="">Select Ward</option>');
+                    $('#district').html('<option value="">Chọn Quận/Huyện</option>');
+                    $('#ward').html('<option value="">Chọn Phường/Xã</option>');
                 }).fail(function () {
-                    $('#province').html('<option value="">Fail to load data</option>');
-                    $('#district').html('<option value="">Fail to load data</option>');
-                    $('#ward').html('<option value="">Fail to load data</option>');
+                    $('#province').html('<option value="">Lỗi hệ thống</option>');
+                    $('#district').html('<option value="">Lỗi hệ thống</option>');
+                    $('#ward').html('<option value="">Lỗi hệ thống</option>');
                 });
             }
             ;
@@ -53,10 +53,10 @@
             function loadDistricts(provinceId) {
                 $.get("location?action=getDistricts&provinceId=" + provinceId, function (data) {
                     $('#district').html(data);
-                    $('#ward').html('<option value="">Select Ward</option>');
+                    $('#ward').html('<option value="">Chọn Phường/Xã</option>');
                 }).fail(function () {
-                    $('#district').html('<option value="">Fail to load data</option>');
-                    $('#ward').html('<option value="">Fail to load data</option>');
+                    $('#district').html('<option value="">Lỗi hệ thống</option>');
+                    $('#ward').html('<option value="">Lỗi hệ thống</option>');
                 });
 
             }
@@ -66,7 +66,7 @@
                 $.get("location?action=getWards&districtId=" + districtId, function (data) {
                     $('#ward').html(data);
                 }).fail(function () {
-                    $('#ward').html('<option value="">Fail to load data</option>');
+                    $('#ward').html('<option value="">Lỗi hệ thống</option>');
                 });
             }
             ;
@@ -88,7 +88,7 @@
                 <div class="col-lg-8">
                     <!-- Change password card-->
                     <div class="card mb-4">
-                        <div class="card-header">Addresses</div>
+                        <div class="card-header">Địa chỉ</div>
 
                         <div class="card-body">
                             <!-- View Addresses -->
@@ -105,12 +105,12 @@
                                             <div class="card" style="margin: 20px 0">
                                                 <div class="card-body">
                                                     <c:if test="${o.is_default}">
-                                                        <p class="text-success text-small">Default Address</p>
+                                                        <p class="text-success text-small">Địa chỉ mặc định</p>
                                                     </c:if>
                                                     <p class="card-text">
-                                                    <div>Name: ${o.receiver_name}</div>
-                                                    <div>Phone: ${o.phone}</div>
-                                                    <div>Address: ${o.address}, ${o.ward_name}, ${o.district_name}, ${o.province_name}</div>
+                                                        <div>Tên: ${o.receiver_name}</div>
+                                                        <div>Số điện thoại: ${o.phone}</div>
+                                                        <div>Địa chỉ: ${o.address}, ${o.ward_name}, ${o.district_name}, ${o.province_name}</div>
                                                     </p>
 
                                                 </div>
@@ -135,7 +135,7 @@
 
                                                     <c:if test="${!o.is_default}">
                                                         <button style="width: 80px" onclick="confirmDelete(${o.customer_addresses_id})" class="btn btn-sm btn-outline-danger"><span class="fa-trash fa"></span></button>
-                                                        <button style="width: fit-content" onclick="window.location.href = 'setDefaultAddress?addressId=${o.customer_addresses_id}'" class="btn btn-sm btn-outline-success">Set default</button>
+                                                        <button style="width: fit-content" onclick="window.location.href = 'setDefaultAddress?addressId=${o.customer_addresses_id}'" class="btn btn-sm btn-outline-success">Đặt làm mặc định</button>
                                                         </c:if>
                                                 </div>
                                             </div>
@@ -160,23 +160,23 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" >
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
+                        <h5 class="modal-title" id="addAddressModalLabel">Thêm địa chỉ</h5>
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
                         <form id="addressForm" action="addAddress" method="POST">
 
                             <div class="mb-3">
-                                <label for="receiver_name" class="form-label">Receiver Name:</label>
+                                <label for="receiver_name" class="form-label">Tên người nhận:</label>
                                 <input type="text" class="form-control" id="receiver_name" name="receiver_name" maxlength="255" required="">
                             </div>
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Phone:</label>
+                                <label for="phone" class="form-label">Số điện thoại:</label>
                                 <input type="tel" pattern="\d{10}" title="Phone number must be exactly 10 digits" class="form-control" id="phone" name="phone" maxlength="20" required="">
                             </div>
 
                             <div class="mb-3">
-                                <label for="province" class="form-label">Province:</label>
+                                <label for="province" class="form-label">Tỉnh/Thành phố:</label>
                                 <select class="form-control" id="province" name="province" required>
 
 
@@ -184,7 +184,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="district" class="form-label">District:</label>
+                                <label for="district" class="form-label">Quận/Huyện:</label>
                                 <select class="form-control" id="district" name="district" required>
 
 
@@ -192,7 +192,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="ward" class="form-label">Ward:</label>
+                                <label for="ward" class="form-label">Phường/Xã:</label>
                                 <select class="form-control" id="ward" name="ward" required>
 
 
@@ -200,7 +200,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="address" class="form-label">Address:</label>
+                                <label for="address" class="form-label">Địa chỉ cụ thể:</label>
                                 <textarea class="form-control" id="address" name="address" maxlength="2000" rows="3" required=""></textarea>
                             </div>
 
@@ -208,13 +208,13 @@
                             <div class="mb-3 form-check" id="default-address">
 
                                 <input type="checkbox" class="form-check-input" id="is_default" name="is_default" value="On">
-                                <label class="form-check-label" for="is_default">Is Default</label>
+                                <label class="form-check-label" for="is_default">Địa chỉ mặc định?</label>
                             </div>
 
 
                             <div class="modal-footer">
-                                <button style="width: 80px" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button style="width: 80px" type="submit" class="btn btn-primary" id='submitButton' >Add Address</button>
+                                <button style="width: 80px" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button style="width: 80px" type="submit" class="btn btn-primary" id='submitButton' >Thêm</button>
                             </div>
 
                             <input type="hidden" id="addressId" name="addressId">
@@ -236,7 +236,7 @@
 
         <script>
             function confirmDelete(addressId) {
-                if (confirm("Are you sure you want to delete this address?")) {
+                if (confirm("Bạn có chắc chắn muốn xóa địa chỉ này không?")) {
                     window.location.href = 'deleteAddress?addressId=' + addressId;
                 }
             }
@@ -244,10 +244,10 @@
 
 
             function openAddForm() {
-                $('#addAddressModalLabel').text('Add New Address');
+                $('#addAddressModalLabel').text('Thêm địa chỉ');
                 $('#addressForm').attr('action', 'addAddress');
                 $('#addressId').val('');
-                $('#submitButton').text('Add');
+                $('#submitButton').text('Thêm');
                 $('#receiver_name').val('');
                 $('#phone').val('');
                 $('#province').val('');
@@ -264,10 +264,10 @@
             function openUpdateForm(addressId, receiverName, phone, provinceId, provinceName
                     , districtId, districtName, wardCode, wardName, address, isDefault) {
 
-                $('#addAddressModalLabel').text('Edit Address');
+                $('#addAddressModalLabel').text('Sửa địa chỉ');
                 $('#addressForm').attr('action', 'updateAddress');
                 $('#addressId').val(addressId);
-                $('#submitButton').text('Save');
+                $('#submitButton').text('Lưu');
 
                 $('#receiver_name').val(receiverName);
                 $('#phone').val(phone);

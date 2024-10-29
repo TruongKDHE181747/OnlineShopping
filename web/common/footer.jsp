@@ -1,64 +1,37 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="../common/css.jsp" />
 <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="footer__about">
-                            <div class="footer__logo">
-                                <a href="#"><img src="./common/img/footer-logo.png" alt=""></a>
-                            </div>
-                            <p>The customer is at the heart of our unique business model, which includes design.</p>
-                            <a href="#"><img src="./common/img/payment.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Clothing Store</a></li>
-                                <li><a href="#">Trending Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Delivary</a></li>
-                                <li><a href="#">Return & Exchanges</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>NewLetter</h6>
-                            <div class="footer__newslatter">
-                                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Your email">
-                                    <button type="submit"><span class="icon_mail_alt"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <iframe style="width: 100%; height: 200px" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10971.851007145786!2d105.56398356479062!3d21.086312384866847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134584fa63b2f87%3A0xe32074883f9b0849!2zVHLGsOG7m2MgTmfDoyA0IE5n4buNYyBMw6J1IDIwME0gKFjDoyDEkOG6oWkgxJDhu5NuZyAtIEh1eeG7h24gVGjhuqFjaCBUaOG6pXQpIC0gxJDGsOG7nW5nIFThu4luaCBM4buZIDQxOQ!5e0!3m2!1svi!2s!4v1729960752312!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="footer__copyright__text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            <p>Copyright �
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>
-                                All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                                                                    aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            </p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Địa chỉ liên hệ</h6>
+                    <ul>
+                        <li style="color: white;">Số nhà 43, thôn 3, xã Đại Đồng, Huyện Thạch Thất, Thành phố Hà Nội</li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Hỗ trợ</h6>
+                    <div class="footer__newslatter">
+                        <p style="color: white;">Hãy cho chúng tôi biết nếu bạn có bất kì thắc mắc hoặc yêu cầu hỗ trợ nào!</p>
+                        <ul>
+                            <li><a style="padding: 10px;
+                                border: 1px solid white;
+                                color: white;" href="../common/contact.jsp">Liên hệ</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+
+    </div>
+</footer>

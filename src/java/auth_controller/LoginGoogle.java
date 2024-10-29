@@ -46,6 +46,10 @@ public class LoginGoogle extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         String code = request.getParameter("code");
+        if(code == null || code.isEmpty()){
+            response.sendRedirect("login");
+            return;
+        }
         String accessToken = getToken(code);
         GoogleUser ggUser = getUserInfo(accessToken);
 
@@ -77,7 +81,7 @@ public class LoginGoogle extends HttpServlet {
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
-        // call api to get token
+        
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
                 .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
                         .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)

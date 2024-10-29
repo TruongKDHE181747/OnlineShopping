@@ -2,50 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
-package order_controller;
+package profile_controller;
 
 import dal.OrderDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
+import dal.OrderDetailDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import model.Order;
+import model.OrderDetail;
+import model.User;
 
 /**
  *
- * @author Thanh Tan
+ * @author Admin
  */
-@WebServlet(name="OrderListForSaleManager", urlPatterns={"/orderlistsm"})
-public class OrderListForSaleManager extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        OrderDAO odao = new OrderDAO();
-        HttpSession session = request.getSession();
-        List<Order> order = odao.getAllOrder();
-        
-        session.setAttribute("orders", order);
-        response.sendRedirect(request.getContextPath() + "/management/list-order-sm.jsp");
-    } 
+@WebServlet(name = "OrderHistoryDetail", urlPatterns = {"/orderhistorydetail"})
+public class OrderHistoryDetail extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -53,12 +35,37 @@ public class OrderListForSaleManager extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        OrderDAO orderDAO = new OrderDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        try {
 
-    /** 
+            User account = (User) session.getAttribute("account");
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+
+            Order order = orderDAO.getOrderByCustomerIdAndOrderId(account.getUser_id(), orderId);
+
+            request.setAttribute("order", order);
+            
+            List<OrderDetail> orderDetails = orderDetailDAO.getOrderDetailByOrderId(orderId);
+            
+            request.setAttribute("orderDetails", orderDetails);
+            
+            
+            
+            
+            request.getRequestDispatcher("/account/orderHistoryDetail.jsp").forward(request, response);
+            
+        } catch (NumberFormatException e) {
+
+        }
+
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -66,12 +73,13 @@ public class OrderListForSaleManager extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

@@ -151,13 +151,14 @@
                                     <h5 class="navbar-brand" >Product Feedback List</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form class="d-flex" role="search" action="../postfeedbackpaging" method="get">
+                                        <form class="d-flex" role="search" action="../productfeedbackfilter" method="get">
                                             <select name="filter">
-                                                <option value="post" >Sort by Post</option>
-                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Sort by User</option>
-                                              <option value="show"<c:if test="${sessionScope.filter=='show'}"> selected </c:if>>Only show active</option>
-                                                <option value="hidden"<c:if test="${sessionScope.filter=='hidden'}"> selected </c:if>>Only show hidden</option>
-                                            </select>
+                                               
+                                                <option value="product_id" selected >Sort by Product</option>
+                                              <option value="customer_id"<c:if test="${sessionScope.filter=='customer_id'}"> selected </c:if>>Sort by User</option>
+                                             <option value="rating"<c:if test="${sessionScope.filter=='rating'}"> selected </c:if>>Sort by rating</option> 
+                                           <option value="create_at"<c:if test="${sessionScope.filter=='create_at'}"> selected </c:if>>Sort by time</option> 
+                                        </select>
                                             <button class="btn btn-outline-success" type="submit"><i class="bi bi-filter"></i></button>
                                         </form>
                                     </div>

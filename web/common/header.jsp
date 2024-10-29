@@ -87,7 +87,7 @@
                         <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Trang chủ</a></li>
                         <li class="<%=mainpage.equals("shop")?"active":""%>"><a href="<%=s%>/homeproduct">Sản phẩm</a></li>
                         <li class="<%=mainpage.equals("blog")?"active":""%>"><a href="<%=s%>/hpostlist">Blogs</a></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li class="<%=mainpage.equals("contact")?"active":""%>"><a href="<%=s%>/common/contact.jsp">Liên hệ</a></li>
                     </ul>
                 </nav>
             </div>

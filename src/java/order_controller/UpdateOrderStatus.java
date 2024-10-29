@@ -5,7 +5,6 @@
 
 package order_controller;
 
-import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Order;
 
 /**
  *
  * @author Thanh Tan
  */
-@WebServlet(name="OrderListForSaleManager", urlPatterns={"/orderlistsm"})
-public class OrderListForSaleManager extends HttpServlet {
+@WebServlet(name="UpdateOrderStatus", urlPatterns={"/updateorderstatus"})
+public class UpdateOrderStatus extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,12 +31,7 @@ public class OrderListForSaleManager extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        OrderDAO odao = new OrderDAO();
-        HttpSession session = request.getSession();
-        List<Order> order = odao.getAllOrder();
         
-        session.setAttribute("orders", order);
-        response.sendRedirect(request.getContextPath() + "/management/list-order-sm.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
