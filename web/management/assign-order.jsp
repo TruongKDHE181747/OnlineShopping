@@ -1,9 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Order"%>
-<%@page import="model.PaymentStatus"%>
-<%@page import="dal.PaymentStatusDAO"%>
+<%@page import="model.*"%>
+<%@page import="dal.*"%>
 <%@page import="java.util.*" %>
 
 <!DOCTYPE html>
@@ -151,7 +150,7 @@
                                     <h5 class="navbar-brand" href="#">Quản lý đơn hàng</h5>
 
                                     <div class="" id="navbarSupportedContent">
-                                        <form action="../pendinglist" class="d-flex" role="search">
+                                        <form action="../assignorder" class="d-flex" role="search">
                                             <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ:</h5>
                                             <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
                                             <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến:</h5>
@@ -210,14 +209,47 @@
                                             <c:if test="${o.orderStatusId == 6}">class="text-success font-weight-bold"</c:if>
                                             >${o.orderStatusName}</td>
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/assignorder" method="get">
-                                                <input type="hidden" name="orderId" value="${o.orderId}">
-                                                <button class="btn btn-sm btn-dark"><span class="fa fa-arrow-right"></span></button>
-                                            </form>
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#salesModal${o.orderId}">
+                                                Chọn Sale
+                                            </button>
                                         </td>
-                                    </tr>
-                                </c:forEach>
-                                <!-- END Order item -->
+
+                                        <!-- Modal for Selecting Sales Representative -->
+                                <div class="modal fade" id="salesModal${o.orderId}" tabindex="-1" aria-labelledby="salesModalLabel${o.orderId}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="${pageContext.request.contextPath}/assignsale" method="post">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="salesModalLabel${o.orderId}">Select Sales Representative</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="orderId" value="${o.orderId}">
+                                                    <label for="salesRep" class="form-label">Sales Representative:</label>
+                                                    <select class="form-select" name="salesRepId" id="salesRep" required>
+                                                        <option value="">Chọn Sale</option> <!-- Default "All" option -->
+                                                        <% 
+                                                            UserDAO udao = new UserDAO();
+                                                            List<User> users = udao.getListUserByRoleId(3);
+                                                            for (User u : users) { 
+                                                        %>
+                                                        <option value="<%= u.getUser_id()%>">
+                                                            <%= u.getFirst_name() + " " + u.getLast_name() %>
+                                                        </option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                    <button type="submit" class="btn btn-primary">Giao</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                </tr>
+                            </c:forEach>
+                            <!-- END Order item -->
 
                             </tbody>
                         </table>

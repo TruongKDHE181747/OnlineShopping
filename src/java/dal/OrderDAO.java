@@ -1021,10 +1021,23 @@ public class OrderDAO extends DBContext {
         
         return sList;
     }
-    public static void main(String[] args) {
-        OrderDAO odao = new OrderDAO();
-        List<SaleChart> o = odao.getTotalByBrandInMonth(2024);
-        System.out.println(o);
+    
+    public boolean unsignSale(int orderId) {
+        String sql = "UPDATE Orders SET salerId = null WHERE order_id = ?";
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            pre.setInt(1, orderId);
+            int n = pre.executeUpdate();
+            return n > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
+    
+//    public static void main(String[] args) {
+//        OrderDAO odao = new OrderDAO();
+//        List<SaleChart> o = odao.getTotalByBrandInMonth(2024);
+//        System.out.println(o);
+//    }
 
 }
