@@ -48,7 +48,7 @@
                                 <input type="hidden" name="oid" value="${oid}">
                                 <input type="hidden" name="pid" value="${pid}">
                                 <div class="mb-3">
-                                    <p class="text-secondary text-center">Cảm nhận của bạn về sản phẩm ${product.product_name}</p>
+                                    <h5 class="font-weight-bold text-dark text-center">Cảm nhận của bạn về sản phẩm ${product.product_name}</h5>
                                 </div>
                                 <div class="mb-3 star-rating text-center">
                                     <button type="button" data-value="1"><i class="fa fa-star"></i></button>
@@ -60,20 +60,21 @@
 
                                 <input type="hidden" name="rating" id="rating" value="${pf.rating}" >
 
+
+                                <div class="mb-3"> 
+                                    Đánh giá:
+                                    <textarea name="review" required="" class="form-control" rows="4" >${pf.review}</textarea>
+                                </div>
                                 <div class="mb-3">
                                     Ảnh:<br/>
                                     <input type="file" name="thumbnail">
                                 </div>
                                 <c:if test="${pf!=null}">
-                                    
-                                    <div class="mb-3" style="width: 150px;height: 100%">
+
+                                    <div class="mb-3" style="width: 150px;height: 200px">
                                         <img src="${pf.thumbnail}" alt="img"/>
                                     </div>
                                 </c:if>
-                                <div class="mb-3"> 
-                                    Đánh giá:
-                                    <textarea name="review" required="" class="form-control" rows="4" >${pf.review}</textarea>
-                                </div>
 
 
                                 <div class="modal-footer">
@@ -90,8 +91,8 @@
         <!-- Bootstrap JS với Popper.js -->
 
         <jsp:include page="../common/js.jsp" />
-        
-        
+
+
         <c:if test="${not empty sessionScope.feedbackMsg}">
             <script>
                 alert('${sessionScope.feedbackMsg}');
@@ -102,30 +103,30 @@
         <script>
             function goBack() {
                 window.location.href = '${pageContext.request.contextPath}/orderhistorydetail?orderId=${oid}';
-            }
+                    }
 
-            // Get the stored rating from the hidden input field
-            const storedRating = parseInt(document.getElementById('rating').value) || 0;
+                    // Get the stored rating from the hidden input field
+                    const storedRating = parseInt(document.getElementById('rating').value) || 0;
 
 // Function to update star colors based on a rating value
-            function updateStars(rating) {
-                const stars = document.querySelectorAll('.star-rating button i');
-                stars.forEach((star, index) => {
-                    star.style.color = index < rating ? '#ffc107' : '#dee2e6';
-                });
-            }
+                    function updateStars(rating) {
+                        const stars = document.querySelectorAll('.star-rating button i');
+                        stars.forEach((star, index) => {
+                            star.style.color = index < rating ? '#ffc107' : '#dee2e6';
+                        });
+                    }
 
 // Initial load: Set stars based on stored rating
-            updateStars(storedRating);
+                    updateStars(storedRating);
 
 // Handle star clicks to update the rating dynamically
-            document.querySelectorAll('.star-rating button').forEach((button, index) => {
-                button.addEventListener('click', () => {
-                    const ratingValue = index + 1;
-                    document.getElementById('rating').value = ratingValue; // Set new rating in hidden input
-                    updateStars(ratingValue); // Update the star colors
-                });
-            });
+                    document.querySelectorAll('.star-rating button').forEach((button, index) => {
+                        button.addEventListener('click', () => {
+                            const ratingValue = index + 1;
+                            document.getElementById('rating').value = ratingValue; // Set new rating in hidden input
+                            updateStars(ratingValue); // Update the star colors
+                        });
+                    });
 
         </script>
     </script>
