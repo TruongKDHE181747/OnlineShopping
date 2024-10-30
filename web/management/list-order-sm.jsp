@@ -131,7 +131,7 @@
         <div class="row">
             <jsp:include page="../common/header.jsp" />
             <!-- START menu -->
-            <jsp:include page="marketing_header.jsp"/>
+            <jsp:include page="sm-header.jsp"/>
             <!-- END menu -->
 
             <%
