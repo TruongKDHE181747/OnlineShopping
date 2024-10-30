@@ -69,7 +69,7 @@
                             <ul>
                                 <li>By <%=ppostauthor.getFirst_name()%> <%=ppostauthor.getLast_name()%></li>
                                 <li><%=date%></li>
-                                <li><%=allpostfblist.size()%> Comments</li>
+                                <li><%=allpostfblist.size()%> Bình luận</li>
                             </ul>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <div class="col-lg-8">
                         <div class="blog__details__content">
                             <div class="blog__details__share">
-                                <span>share</span>
+                                <span>chia sẻ</span>
                                 <ul>
                                     <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                     <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
@@ -155,7 +155,7 @@
                                         if(beforePost!=null) {
                                         %>
                                         <a href="../hpostdetail?bid=<%=beforePost.getPost_id()%>" class="blog__details__btns__item">
-                                            <p><span class="arrow_left"></span> Previous Pod</p>
+                                            <p><span class="arrow_left"></span> Bài viết trước</p>
                                             <h5><%=beforePost.getTitle()%></h5>
                                         </a>
                                         <%
@@ -168,7 +168,7 @@
                                         if(afterPost!=null){
                                         %>
                                         <a href="../hpostdetail?bid=<%=afterPost.getPost_id()%>" class="blog__details__btns__item blog__details__btns__item--next">
-                                            <p>Next Pod <span class="arrow_right"></span></p>
+                                            <p>Bài viết tiếp theo <span class="arrow_right"></span></p>
                                             <h5><%=afterPost.getTitle()%></h5>
                                         </a>
                                         <%
@@ -179,13 +179,13 @@
                                 </div>
                             </div>
                             <div class="blog__details__comment">
-                                <h4>Leave A Comment</h4>
+                                <h4>Để lại bình luận</h4>
                                 <form action="../customerpostcomment">
                                     <div class="row">
                                         
                                         <div class="col-lg-12 text-center">
                                             <textarea maxlength="500" required="" name="postcomment" placeholder="Comment"></textarea>
-                                            <button type="submit" class="site-btn">Post Comment</button>
+                                            <button type="submit" class="site-btn">Bình luận</button>
                                         </div>
                                     </div>
                                 </form>
@@ -256,8 +256,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title">
-                            <span>Related News</span>
-                            <h2>Similar <%=ppostcategory.getPost_category_name()%> Posts </h2>
+                            <span>Tin liên quan</span>
+                            <h2>Bài đăng tương tự về: <%=ppostcategory.getPost_category_name()%></h2>
                         </div>
                     </div>
                 </div>
@@ -279,7 +279,7 @@
                             <div class="blog__item__text">
                                 <span><img src="img/icon/calendar.png" alt=""> <%=date%></span>
                                 <h5><%=post.getTitle()%></h5>
-                                <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
+                                <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Đọc bài viết</a>
                             </div>
                         </div>
                     </div>
@@ -293,70 +293,7 @@
         </section>
         <!-- Latest Blog Section End -->
         <!-- Footer Section Begin -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="footer__about">
-                            <div class="footer__logo">
-                                <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                            </div>
-                            <p>The customer is at the heart of our unique business model, which includes design.</p>
-                            <a href="#"><img src="img/payment.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Clothing Store</a></li>
-                                <li><a href="#">Trending Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Delivary</a></li>
-                                <li><a href="#">Return & Exchanges</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>NewLetter</h6>
-                            <div class="footer__newslatter">
-                                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Your email">
-                                    <button type="submit"><span class="icon_mail_alt"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="footer__copyright__text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            <p>Copyright ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>2020
-                                All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                                                                    aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            </p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+       <jsp:include page="../common/footer.jsp" />
         <!-- Footer Section End -->
 
         <!-- Search Begin -->

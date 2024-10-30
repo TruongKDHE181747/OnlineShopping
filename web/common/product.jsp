@@ -54,10 +54,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb__text">
-                            <h4>Shop</h4>
+                            <h4>Sản phẩm</h4>
                             <div class="breadcrumb__links">
-                                <a href="./index.html">Home</a>
-                                <span>Shop</span>
+                                <a>Trang chủ</a>
+                                <span>Sản phẩm</span>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                 <div class="accordion" id="accordionExample">
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                            <a data-toggle="collapse" data-target="#collapseOne">Phân loại</a>
                                         </div>
                                         <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
@@ -118,7 +118,7 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
+                                            <a data-toggle="collapse" data-target="#collapseTwo">Thương hiệu</a>
                                         </div>
                                         <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">Lọc theo giá</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
@@ -168,24 +168,24 @@
                                                 <form action="../productfilter">
                                                     <div class="row" style="margin-top: 14px;">
                                                         <div class="col-md-5">
-                                                            <input value="<%=price1%>" name="price1" type="number" min="0" max="1000000000" required="" placeholder="From" style="width: 100%;"> 
+                                                            <input value="<%=price1%>" name="price1" type="number" min="0" max="1000000000" required="" placeholder="Từ" style="width: 100%;"> 
                                                         </div>
                                                         <div class="col-md-2">
                                                             --
                                                         </div>
                                                         <div class="col-md-5">
-                                                            <input value="<%=price2%>" name="price2" type="number" min="0" max="1000000000" required="" placeholder="To" style="width: 100%;"> 
+                                                            <input value="<%=price2%>" name="price2" type="number" min="0" max="1000000000" required="" placeholder="Đến" style="width: 100%;"> 
                                                         </div>
                                                     </div>
                                                     <button style="margin-top: 10px;
-                                                            width: 100%;" type="submit" class="btn btn-dark">Apply</button> 
+                                                            width: 100%;" type="submit" class="btn btn-dark">Áp dụng</button> 
                                                 </form>                 
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseFour">Size</a>
+                                            <a data-toggle="collapse" data-target="#collapseFour">Kích cỡ</a>
                                         </div>
                                         <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
@@ -241,7 +241,7 @@ if(sql1.equals("null")) sql1 = "";
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="shop__product__option__left">
-                                        <p>Showing <%=curpage*9+1%>–<%=curpage*9+pList.size()%> of <%=totalProduct%> results</p>
+                                        <p>Hiển thị <%=curpage*9+1%>–<%=curpage*9+pList.size()%> trên <%=totalProduct%> kết quả</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -251,14 +251,14 @@ if(sql1.equals("null")) sql1 = "";
                                         if(sortValue.equals("null")) sortValue = "";
                                         %>
                                         <form action="../productsort">
-                                            <p>Sort by:</p>
+                                            <p>Sắp xếp theo:</p>
                                             <select name="sortValue">
-                                                <option <%=sortValue.equals("low")?"selected":""%> value="low">Price: Low To High</option>
-                                                <option <%=sortValue.equals("high")?"selected":""%> value="high">Price: High To Low</option>
-                                                <option <%=sortValue.equals("rate")?"selected":""%> value="rate">Rating</option>
-                                                <option <%=sortValue.equals("best")?"selected":""%> value="best">Best Seller</option>
+                                                <option <%=sortValue.equals("low")?"selected":""%> value="low">Giá: Thấp đến Cao</option>
+                                                <option <%=sortValue.equals("high")?"selected":""%> value="high">Giá: Cao đến Thấp</option>
+                                                <option <%=sortValue.equals("rate")?"selected":""%> value="rate">Đánh giá của người dùng</option>
+                                                <option <%=sortValue.equals("best")?"selected":""%> value="best">Bán chạy nhất</option>
                                             </select>
-                                            <button type="submit" class="btn btn-outline-dark">Apply</button>
+                                            <button type="submit" class="btn btn-outline-dark">Áp dụng</button>
                                         </form>
 
                                     </div>
@@ -377,70 +377,8 @@ if(sql1.equals("null")) sql1 = "";
         <!-- Shop Section End -->
 
         <!-- Footer Section Begin -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="footer__about">
-                            <div class="footer__logo">
-                                <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                            </div>
-                            <p>The customer is at the heart of our unique business model, which includes design.</p>
-                            <a href="#"><img src="img/payment.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Clothing Store</a></li>
-                                <li><a href="#">Trending Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Delivary</a></li>
-                                <li><a href="#">Return & Exchanges</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>NewLetter</h6>
-                            <div class="footer__newslatter">
-                                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Your email">
-                                    <button type="submit"><span class="icon_mail_alt"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="footer__copyright__text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            <p>Copyright ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>2020
-                                All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                                                                    aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            </p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <jsp:include page="../common/footer.jsp" />
+   
         <!-- Footer Section End -->
 
         <!-- Search Begin -->

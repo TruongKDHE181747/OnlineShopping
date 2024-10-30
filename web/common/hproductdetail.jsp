@@ -59,9 +59,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__details__breadcrumb">
-                                <a href="./index.html">Home</a>
-                                <a href="./shop.html">Shop</a>
-                                <span>Product Details</span>
+                                <a>Trang chủ</a>
+                                <a>Sản phẩm</a>
+                                <span>Thông tin chi tiết</span>
                             </div>
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <%}%>
-                                    <span> - <%=alldpfList.size()%> Reviews</span>
+                                    <span> - <%=alldpfList.size()%> Đánh giá</span>
                                 </div>
                                 <h3><%
                                     if(product.getDiscount()!=0){
@@ -201,7 +201,7 @@
                                 <div class="product__details__option">
 
                                     <div class="product__details__option__size">
-                                        <span>Size:</span>
+                                        <span>Kích cỡ:</span>
 
                                         <div class="shop__sidebar__tags">
                                             <%
@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="product__details__cart__option">
                                     <form action="../addToCart" method="get">
-                                        <span style="margin-right: 12px;  font-weight: bold;">In stock: <%=dquantity%></span>
+                                        <span style="margin-right: 12px;  font-weight: bold;">Kho: <%=dquantity%></span>
                                         <div class="quantity">
                                             <div class="">
                                                 <input name="quantity" value="1" type="number" min="1" max="<%=dquantity%>">
@@ -233,7 +233,7 @@
                                         </div>
                                         <input type="hidden" name="pid" value="<%=product.getProduct_id()%>">
                                         <input type="hidden" name="sid" value="<%=dsize%>">
-                                        <button type="submit" class="primary-btn">add to cart</button>
+                                        <button type="submit" class="primary-btn">thêm giỏ hàng</button>
                                     </form>
                                 </div>
                             </div>
@@ -249,18 +249,17 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link <%=dcontent.equals("pdescription")?"active":""%>" data-toggle="tab" href="#tabs-5"
-                                       role="tab">Description</a>
+                                       role="tab">Mô tả sản phẩm</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link <%=dcontent.equals("pfeedback")?"active":""%>" data-toggle="tab" href="#tabs-6" role="tab">Customer
-                                        Previews(<%=alldpfList.size()%>)</a>
+                                    <a class="nav-link <%=dcontent.equals("pfeedback")?"active":""%>" data-toggle="tab" href="#tabs-6" role="tab">Đánh giá của người dùng(<%=alldpfList.size()%>)</a>
                                 </li>
                             </ul>
                             <div class="tab-content" style="margin: 0px 15%;">
                                 <div class="tab-pane <%=dcontent.equals("pdescription")?"active":""%>" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item">
-                                            <h5>Products Infomation</h5>
+                                            <h5>Thông tin sản phẩm</h5>
                                             <p><p><%=product.getDescription()%></p></p>
 
                                         </div>
@@ -373,7 +372,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="related-title">Related Product</h3>
+                    <h3 class="related-title">Sản phẩm tương tự</h3>
                 </div>
             </div>
             <%
@@ -463,70 +462,7 @@
     <!-- Related Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                        </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>NewLetter</h6>
-                        <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
-                                <input type="text" placeholder="Your email">
-                                <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="footer__copyright__text">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p>Copyright ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>2020
-                            All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                                                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <jsp:include page="../common/footer.jsp" />
     <!-- Footer Section End -->
 
     <!-- Search Begin -->

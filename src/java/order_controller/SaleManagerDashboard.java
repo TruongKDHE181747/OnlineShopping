@@ -47,6 +47,7 @@ public class SaleManagerDashboard extends HttpServlet {
         LocalDate daybefore = today.minusDays(7);
         
         String pobegin = "2024-10-01";
+        String poend = "2024-10-07";
         LocalDate poDate = LocalDate.parse(pobegin, formatter);
         
 //         LocalDate beginDate = LocalDate.parse(pobegin,formatter);
@@ -73,7 +74,8 @@ public class SaleManagerDashboard extends HttpServlet {
         Reset(session);
         
        
-        
+        session.setAttribute("sadbegin", pobegin);
+        session.setAttribute("sadend", poend);
         response.sendRedirect(request.getContextPath()+"/management/saledashboard.jsp");
     } 
     
