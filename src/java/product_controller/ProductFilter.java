@@ -139,6 +139,7 @@ public class ProductFilter extends HttpServlet {
             
         }
         List<Product> apList = pdao.getAllProductFilter(sql);
+        apList = selectProductWithQuantity(apList);
         int cpage = 0;
         int totalProduct = apList.size();
         int npage = totalProduct/9 + 1;
@@ -156,6 +157,17 @@ public class ProductFilter extends HttpServlet {
         response.sendRedirect(request.getContextPath()+"/common/product.jsp");
         
     } 
+    
+    public static List<Product> selectProductWithQuantity( List<Product> pList){
+        List<Product> productList = new ArrayList<>();
+        for (Product product : pList) {
+            if(product.getTotal_quantity()>0){
+                productList.add(product);
+            }
+        }
+        
+        return productList;
+    }
     
     
     public static List<Product> select9Products( List<Product> pList, int pageNum){
