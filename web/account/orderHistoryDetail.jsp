@@ -6,7 +6,8 @@
 <html lang="vi">
     <head>
         <jsp:include page="../common/css.jsp" />
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <style>
             body {
                 background-color: #f8f9fa;
@@ -37,6 +38,8 @@
                 background-color: #007bff;
                 color: white;
             }
+            
+            
 
         </style>
     </head>
@@ -122,7 +125,17 @@
                                         <td class="text-center">${o.quantity}</td>
                                         <td><fmt:formatNumber value="${o.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                         <td><fmt:formatNumber value="${o.totalPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Xem đánh giá</a></td>
+                                        
+                                        
+                 
+                                        
+                                        <td>
+                                            <form action="${pageContext.request.contextPath}/productfeedback" method="get">
+                                                <input type="hidden" name="pid" value="${o.productId}">
+                                                <input type="hidden" name="oid" value="${order.orderId}">
+                                                <button type="submit" class="btn btn-sm btn-outline-dark">Xem đánh giá</button>
+                                            </form>
+                                        </td>
 
                                         <c:set var="subtotal" value="${subtotal + o.totalPrice}"/>
                                     </tr>
@@ -154,40 +167,55 @@
             </div>
             <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6}">
                 <div class="text-right mt-4 mb-5">
-                   <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
+                    <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
                         Hủy đơn hàng
                     </button>                   
                 </div>
             </c:if>
         </div>
 
-    </div>
-    <jsp:include page="../common/footer.jsp" />
-    <!-- Bootstrap JS with Popper.js -->
 
-    <jsp:include page="../common/js.jsp" />
-
-    <script>
-        function cancelOrder(orderId, methodId, payStatus) {
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "cancelorder", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        <jsp:include page="../common/footer.jsp" />
+        <!-- Bootstrap JS with Popper.js -->
 
 
-            xhr.send("orderId=" + orderId + "&methodId=" + methodId + "&payStatus=" + payStatus);
+
+        <script>
+
+           
 
 
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    alert("Hủy đơn hàng thành công !");
-                    location.reload();
-                }
-            };
-        }
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-</body>
+            
+
+
+            function cancelOrder(orderId, methodId, payStatus) {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "cancelorder", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+
+                xhr.send("orderId=" + orderId + "&methodId=" + methodId + "&payStatus=" + payStatus);
+
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        alert("Hủy đơn hàng thành công !");
+                        location.reload();
+                    }
+                };
+            }
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+
+        <script src="${pageContext.request.contextPath}/common/js/jquery.nice-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.nicescroll.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.countdown.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.slicknav.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/mixitup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/owl.carousel.min.js"></script>
+    </body>
 </html>

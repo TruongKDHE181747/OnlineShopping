@@ -277,13 +277,13 @@
                                         <div class="col-lg-12">
                                             <div class="product__item row" style="margin: 24px 0;">
 
-                                                <div style="height: 120px" class="product__item__pic set-bg col-md-2" data-setbg="../<%=productFeedback.getThumbnail()%>">
-
+                                                <div style="height: 120px" class="product__item__pic col-md-2">
+                                                    <img style="width: 100%;height: 100%" src="${pageContext.request.contextPath}/<%=productFeedback.getThumbnail()%>" alt="img"/>
                                                 </div>
 
                                                 <div class="col-md-10">
                                                     <div style="padding: 0" class="blog__details__author__pic col-md-12">
-                                                        <img src="../<%=productFeedback.getCustomer_img()%>" alt="">
+                                                        <img src="${pageContext.request.contextPath}/<%=productFeedback.getCustomer_img()%>" alt="">
                                                         <strong><%=productFeedback.getCustomer_name()%></strong>
                                                     </div>
                                                     <div style="    margin-left: 12px;">

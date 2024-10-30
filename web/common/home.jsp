@@ -134,8 +134,8 @@
                                 </ul>
                             </div>
                             <div class="product__item__text">
-                                <h6><%=product.getProduct_name()%></h6>
-                                <a href="#" class="add-cart">+ Add To Cart</a>
+                                <h5 style="cursor: pointer" onclick="window.location.href = '../hproductdetail?proid=<%=product.getProduct_id()%>'"><%=product.getProduct_name()%></h5>
+                                
                                 <div class="rating">
                                     <%if(product.getRated_star()<=0){
                                     %>
@@ -184,17 +184,7 @@
                                 <%=cmoney%>
 
                                 </h5>
-                                <div class="product__color__select">
-                                    <label for="pc-1">
-                                        <input type="radio" id="pc-1">
-                                    </label>
-                                    <label class="active black" for="pc-2">
-                                        <input type="radio" id="pc-2">
-                                    </label>
-                                    <label class="grey" for="pc-3">
-                                        <input type="radio" id="pc-3">
-                                    </label>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

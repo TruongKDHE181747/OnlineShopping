@@ -26,6 +26,39 @@ public class ProductFeedback {
     public ProductFeedback() {
     }
 
+    public ProductFeedback(int feedback_id, String review, String thumbnail, int rating) {
+        this.feedback_id = feedback_id;
+        this.review = review;
+        this.thumbnail = thumbnail;
+        this.rating = rating;
+    }
+    
+    
+
+    public ProductFeedback(int customer_id, int order_id, int product_id, String review, String thumbnail, int rating) {
+        this.customer_id = customer_id;
+        this.order_id = order_id;
+        this.product_id = product_id;
+        this.review = review;
+        this.thumbnail = thumbnail;
+        this.rating = rating;
+    }
+
+    
+    
+    public ProductFeedback(int feedback_id, int customer_id, int order_id, String review, String thumbnail, int rating, Date create_at, Date update_at, Product product) {
+        this.feedback_id = feedback_id;
+        this.customer_id = customer_id;
+        this.order_id = order_id;
+        this.review = review;
+        this.thumbnail = thumbnail;
+        this.rating = rating;
+        this.create_at = create_at;
+        this.update_at = update_at;
+        this.product = product;
+    }
+
+    
     public ProductFeedback(int feedback_id, int customer_id, int order_id, String review, String thumbnail, int rating, int is_active, Date create_at, Date update_at, Product product, User user) {
         this.feedback_id = feedback_id;
         this.customer_id = customer_id;
