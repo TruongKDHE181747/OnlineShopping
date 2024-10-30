@@ -257,8 +257,19 @@
                                             </button>
                                         </form>
                                     </td>
+                                    <%
+                                        if (o.getOrderStatusId() == 1) {
+                                    %>
                                     <td>
+                                        <form action="<%= contextPath %>/assignorder" method="get">
+                                            <input type="hidden" name="orderId" value="<%= orderId %>">
+                                            <button class="btn btn-sm btn-dark">
+                                                <span class="fa fa-arrow-right"></span>
+                                            </button>
+                                        </form>
+                                    </td>
                                         <%
+                                            }
                                             i++;
                                             }
                                         %>
