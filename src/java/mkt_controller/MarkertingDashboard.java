@@ -50,13 +50,19 @@ public class MarkertingDashboard extends HttpServlet {
                 
         List<SaleChart> postchart=pdao.getNumberPostByDay(poDate,endDate );
           List<SaleChart> posteachday=pdao.getPostEachDay(poDate,endDate );
-          List<SaleChart> totalfeedback= pfdao.getNumberPostFeedBaclByDay(poDate, endDate);
+          List<SaleChart> totalfeedback= pfdao.getNewFeedBackEachDay(poDate, endDate);
           List<SaleChart> newfeedback=pfdao.getNumberPostFeedBaclByDay(poDate, endDate);
           
        session.setAttribute("chart2", posteachday);
              session.setAttribute("chart1", postchart);
              session.setAttribute("chart3", totalfeedback);
              session.setAttribute("chart4", newfeedback);
+             
+             session.setAttribute("chart1name", "Tổng số bài post");
+                 session.setAttribute("chart2name", "Số bài post theo ngày ");
+                     session.setAttribute("chart3name", "Bình luận mới");
+                         session.setAttribute("chart4name", "Tổng số bình luận");
+             
         response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
         
        

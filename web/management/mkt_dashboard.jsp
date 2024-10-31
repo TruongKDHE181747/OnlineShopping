@@ -49,12 +49,12 @@
                 
                 <div class="col-md-12">
 
-                                                 <form>     <div class="row" >
+                    <form action="../mktdashboardfilter" >     <div class="row" >
                                                       
                                                         <div class="col-md-2">
                                                             <div class="input-group mb-2">
                                                                 <span class="input-group-text" id="inputGroup-sizing-default">From</span>
-                                                                <input value="" name="begin" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                                <input  value="" name="begin" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1">
@@ -70,6 +70,7 @@
                                                         </div>
                                                          <div class="col-md-2">
                                                             <button  style="width: 80%" type="submit" class="btn btn-outline-dark">Apply</button>
+                                                            <p>${sessionScope.mkt_de} </p>
                                                          </div>
                                                             
                                                     </div>
@@ -81,8 +82,8 @@
                                             <select name="filter">
                                                
                                                 <option value="post" selected >Bài đăng</option>
-                                              <option value="product"<c:if test="${sessionScope.filter=='customer_id'}"> selected </c:if>>Sản phẩm</option>
-                                             <option value="customer"<c:if test="${sessionScope.filter=='rating'}"> selected </c:if>>Khách hàng</option> 
+                                              <option value="product"<c:if test="${sessionScope.filter=='product'}"> selected </c:if>>Sản phẩm</option>
+                                             <option value="customer"<c:if test="${sessionScope.filter=='customer'}"> selected </c:if>>Khách hàng</option> 
                                            
                                         </select>
 
@@ -125,7 +126,7 @@
             const data1 = {
                 labels: labels1,
                 datasets: [{
-                    label: 'Tổng số bài post ',
+                    label: '${sessionScope.chart1name} ',
                     data: [<c:forEach items="${sessionScope.chart1}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
@@ -145,12 +146,12 @@
             const data2 = {
                 labels: labels2,
                 datasets: [{
-                    label: 'Số bài post theo ngày',
+                    label: '${sessionScope.chart2name}',
                     data: [<c:forEach items="${sessionScope.chart2}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(153, 102, 255)',
                     tension: 0.1
-                }]s
+                }]
             };
             const config2 = {
                 type: 'line',
@@ -175,8 +176,8 @@
             const data3 = {
                 labels: labels3,
                 datasets: [{
-                    label: 'Bình luận mới',
-                    data: [<c:forEach items="${sessionScope.chart2}" var="c"> ${c.value},    </c:forEach>],
+                    label: '${sessionScope.chart3name}',
+                    data: [<c:forEach items="${sessionScope.chart3}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(255, 99, 132)',
                     tension: 0.1
@@ -204,7 +205,7 @@
             const data4 = {
                 labels: labels4,
                 datasets: [{
-                    label: 'Tổng số bình luận',
+                    label: '${sessionScope.chart4name}',
                     data: [<c:forEach items="${sessionScope.chart4}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(54, 162, 235)',
