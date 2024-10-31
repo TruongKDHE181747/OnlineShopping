@@ -28,8 +28,8 @@
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
               crossorigin="anonymous">
         <jsp:include page="../common/css.jsp" />
-        
-        
+
+
     </head>
     <body>
         <div class="row">
@@ -76,18 +76,29 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Doanh thu theo ngày</h5>
+                                        <h5 class="card-title">Tổng số đơn hàng trong tháng ${sessionScope.month}/${sessionScope.year}: ${sessionScope.totalOrder}</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
-                                            <canvas id="chartjs-bar"></canvas>
+                                            <canvas id="chartjs-polar-area"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="col-12 col-lg-6">
+                                <div class="card flex-fill w-100">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Doanh thu theo nhãn hàng</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart">
+                                            <canvas id="chartjs-line1"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            
+
 
 
 
@@ -107,103 +118,198 @@
         <script>
 
             document.addEventListener("DOMContentLoaded", function () {
-                // Line chart
-                new Chart(document.getElementById("chartjs-line"), {
-                    type: "line",
+            // Line chart
+            new Chart(document.getElementById("chartjs-line"), {
+            type: "line",
                     data: {
-                        labels: [<c:forEach  items="${sessionScope.daychart}" var="dc" > "${dc.label}",</c:forEach>],
-                        datasets: [{
-                                label: "Doanh thu (VND)",
-                                fill: true,
-                                backgroundColor: "transparent",
-                                borderColor: window.theme.primary,
-                                     data: [<c:forEach  items="${sessionScope.daychart}" var="dc" > "${dc.value}",</c:forEach>]
+                    labels: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.label}",</c:forEach>],
+                            datasets: [{
+                            label: "Doanh thu (VND)",
+                                    fill: true,
+                                    backgroundColor: "transparent",
+                                    borderColor: window.theme.primary,
+                                    data: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.value}",</c:forEach>]
                             }, ]
                     },
                     options: {
-                        maintainAspectRatio: false,
-                        legend: {
+                    maintainAspectRatio: false,
+                            legend: {
                             display: false
-                        },
-                        tooltips: {
+                            },
+                            tooltips: {
                             intersect: false
-                        },
-                        hover: {
+                            },
+                            hover: {
                             intersect: true
-                        },
-                        plugins: {
+                            },
+                            plugins: {
                             filler: {
-                                propagate: false
+                            propagate: false
                             }
-                        },
-                        scales: {
+                            },
+                            scales: {
                             xAxes: [{
-                                    reverse: true,
+                            reverse: true,
                                     gridLines: {
-                                        color: "rgba(0,0,0,0.05)"
+                                    color: "rgba(0,0,0,0.05)"
                                     }
-                                }],
-                            yAxes: [{
+                            }],
+                                    yAxes: [{
                                     ticks: {
-                                        stepSize: 500
+                                    stepSize: 500
                                     },
-                                    display: true,
-                                    borderDash: [5, 5],
-                                    gridLines: {
-                                        color: "rgba(0,0,0,0)",
-                                        fontColor: "#fff"
-                                    }
-                                }]
-                        }
+                                            display: true,
+                                            borderDash: [5, 5],
+                                            gridLines: {
+                                            color: "rgba(0,0,0,0)",
+                                                    fontColor: "#fff"
+                                            }
+                                    }]
+                            }
                     }
-                });
             });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            });
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
                 // Bar chart
                 new Chart(document.getElementById("chartjs-bar"), {
-                    type: "bar",
-                    data: {
-                        labels: [<c:forEach items="${sessionScope.monthOrder}" var="chart">"${chart.label}",</c:forEach>],
-                        datasets: [{
+                type: "bar",
+                        data: {
+                        labels: [<c:forEach items="${sessionScope.monthOrder}" var="mo">"${mo.label}",</c:forEach>],
+                                datasets: [{
                                 label: "Số lượng đơn hàng",
-                                backgroundColor: window.theme.primary,
-                                borderColor: window.theme.primary,
-                                hoverBackgroundColor: window.theme.primary,
-                                hoverBorderColor: window.theme.primary,
-                                data: [<c:forEach items="${sessionScope.monthOrder}" var="chart">"${chart.value}",</c:forEach>],
-                                barPercentage: .75,
-                                categoryPercentage: .5
-                            }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            yAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    },
-                                    stacked: false,
-                                    ticks: {
-                                        stepSize: 20
-                                    }
-                                }],
-                            xAxes: [{
-                                    stacked: false,
-                                    gridLines: {
-                                        color: "transparent"
-                                    }
+                                        backgroundColor: window.theme.primary,
+                                        borderColor: window.theme.primary,
+                                        hoverBackgroundColor: window.theme.primary,
+                                        hoverBorderColor: window.theme.primary,
+                                        data: [<c:forEach items="${sessionScope.monthOrder}" var="mo">"${mo.value}",</c:forEach>],
+                                        barPercentage: .75,
+                                        categoryPercentage: .5
                                 }]
+                        },
+                        options: {
+                        maintainAspectRatio: false,
+                                legend: {
+                                display: false
+                                },
+                                scales: {
+                                yAxes: [{
+                                gridLines: {
+                                display: false
+                                },
+                                        stacked: false,
+                                        ticks: {
+                                        stepSize: 20
+                                        }
+                                }],
+                                        xAxes: [{
+                                        stacked: false,
+                                                gridLines: {
+                                                color: "transparent"
+                                                }
+                                        }]
+                                }
                         }
-                    }
                 });
-            });
+                });
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                // Polar Area chart
+                new Chart(document.getElementById("chartjs-polar-area"), {
+                type: "polarArea",
+                        data: {
+                        labels: [<c:forEach items="${sessionScope.monthStatus}" var="ms">"${ms.label}",</c:forEach>],
+                                datasets: [{
+                                label: "Model S",
+                                        data: [<c:forEach items="${sessionScope.monthStatus}" var="ms">"${ms.value}",</c:forEach>, ],
+                                        backgroundColor: [
+                                                window.theme.primary,
+                                                window.theme.success,
+                                                window.theme.warning,
+                                                window.theme.danger,
+                                                window.theme.info
+                                        ]
+                                }]
+                        },
+                        options: {
+                        maintainAspectRatio: false
+                        }
+                });
+                });
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                // Line chart for multiple brands
+                new Chart(document.getElementById("chartjs-line1"), {
+                type: "line",
+                        data: {
+                        // Labels for each month, assuming month labels are consistent across brands
+                        labels: [
+            <c:forEach items="${sessionScope.monthBrand}" var="mb" varStatus="status">
+                    "${mb.label}"<c:if test="${!status.last}">,</c:if>
+            </c:forEach>
+                        ],
+                                datasets: [
+                                        // Loop through each unique brand to create a dataset
+            <c:forEach items="${sessionScope.monthBrand}" var="brandData" varStatus="status">
+                                {
+                                label: "${brandData.brand}", // Brand name as line label
+                                        fill: false, // Lines without fill
+                                        backgroundColor: "transparent",
+                                        borderColor: getRandomColor(), // Assign a random color for each line
+                                        data: [
+                <c:forEach items="${sessionScope.monthBrand}" var="dataPoint">
+                    <c:if test="${dataPoint.brand == brandData.brand}">${dataPoint.value},</c:if>
+                </c:forEach>
+                                        ]
+                                }<c:if test="${!status.last}">,</c:if>
+            </c:forEach>
+                                ]
+                        },
+                        options: {
+                        maintainAspectRatio: false,
+                                plugins: {
+                                legend: {
+                                display: true,
+                                        position: 'top'
+                                },
+                                        tooltip: {
+                                        intersect: false
+                                        }
+                                },
+                                scales: {
+                                x: {
+                                grid: {
+                                color: "rgba(0, 0, 0, 0.05)"
+                                }
+                                },
+                                        y: {
+                                        ticks: {
+                                        stepSize: 500
+                                        },
+                                                grid: {
+                                                color: "rgba(0, 0, 0, 0.1)"
+                                                }
+                                        }
+                                }
+                        }
+                });
+                // Helper function to generate a random color for each brand line
+                function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+                }
+                });
         </script>
-        
+
+
+
 
     </body>
 </html>

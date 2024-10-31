@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package admin_controller;
+package order_controller;
 
 import dal.OrderDAO;
 import java.io.IOException;
@@ -14,19 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import model.SaleChart;
 
 /**
  *
- * @author 84983
+ * @author Thanh Tan
  */
-@WebServlet(name="AdminDashboard", urlPatterns={"/admindashboard"})
-public class AdminDashboard extends HttpServlet {
+@WebServlet(name="AssignSale", urlPatterns={"/assignsale"})
+public class AssignSale extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,25 +32,19 @@ public class AdminDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session=request.getSession();
-        LocalDate currentDate = LocalDate.now();
-        int month=currentDate.getMonthValue();
-        int year= currentDate.getYear();
-        OrderDAO odao= new OrderDAO();
         
-        List<SaleChart> monthChart= odao.getRevenueAccumulateByMonth(year);
-        List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth(year);
-        List<SaleChart> monthStatus= odao.getNumberStatusOrderByMonth(month,year);
-        List<SaleChart> mmonthBrand= odao.getTotalByBrandInMonth(year);
-        int totalOrder = odao.getTotalOrderInMonth(month, year);
-        session.setAttribute("monthOrder", monthOrder);
-        session.setAttribute("monthChart", monthChart);
-        session.setAttribute("monthStatus", monthStatus);
-        session.setAttribute("monthBrand", mmonthBrand);
-        session.setAttribute("month", month);
-        session.setAttribute("year", year);
-        session.setAttribute("totalOrder", totalOrder);
-        response.sendRedirect(request.getContextPath()+"/management/admindasboard.jsp");
+        OrderDAO odao = new OrderDAO();
+        HttpSession session = request.getSession();
+        int oid =  Integer.parseInt(request.getParameter("orderId"));
+        String saleId = request.getParameter("salesRepId");
+        
+        if(saleId != null && !saleId.isEmpty()){
+            int sid = Integer.parseInt(saleId);
+            odao.updatePendingOrderStatus(sid, oid);
+        } else {
+            odao.unsignSale(oid);
+        }
+        request.getRequestDispatcher("assignorder").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

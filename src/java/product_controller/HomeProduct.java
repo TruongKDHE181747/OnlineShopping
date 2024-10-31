@@ -58,7 +58,7 @@ public class HomeProduct extends HttpServlet {
         
         
         
-        List<Product> apList = pdao.getAllProduct();
+        List<Product> apList = pdao.getAllProductWithQuantity();
         List<ProductCategory> pcList = pcdao.getAllProductCategory();
         List<Brand> bList = bdao.getAllBrand();
         List<Size> sList = sdao.getAllSize();

@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../common/css.jsp" />
-<footer class="footer">
+<footer class="footer" style="background: #212529">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6">

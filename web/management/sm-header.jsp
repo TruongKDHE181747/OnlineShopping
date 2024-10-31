@@ -9,16 +9,16 @@
         <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="../dashboard" class="nav-link text-white home-link <c:if test="${pageContext.request.requestURI.endsWith('dashboard')}">active bg-secondary</c:if>" aria-current="page">
+                    <a href="../dashboard" class="nav-link text-white home-link <c:if test="${pageContext.request.requestURI.endsWith('mkt_dashboard')}">active bg-secondary</c:if>" aria-current="page">
                             <!-- Dashboard Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-house-fill" viewBox="0 0 16 16">
                                 <path d="M8 .5l-6 6h1v8a1 1 0 0 0 1 1h3v-5h2v5h3a1 1 0 0 0 1-1v-8h1l-6-6z"/>
                             </svg>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="../orderlist" class="nav-link text-white order-link <c:if test="${pageContext.request.requestURI.endsWith('list-order.jsp')}">active bg-secondary</c:if>">
+                        <a href="../orderlistsm" class="nav-link text-white order-link <c:if test="${pageContext.request.requestURI.endsWith('list-order-sm.jsp')}">active bg-secondary</c:if>">
                             <!-- Orders Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-check" viewBox="0 0 16 16">
                                 <path d="M10.854 6.146a.5.5 0 1 0-.708.708l-2.5 2.5a.5.5 0 0 0-.708 0L5 8.5a.5.5 0 1 0-.708.708l2.5 2.5a.5.5 0 0 0 .708 0l3-3z"/>
@@ -28,12 +28,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../pendinglist" class="nav-link text-white order-link <c:if test="${pageContext.request.requestURI.endsWith('list-order-pending.jsp')}">active bg-secondary</c:if>">
+                        <a href="../assignorder" class="nav-link text-white order-link <c:if test="${pageContext.request.requestURI.endsWith('assign-order.jsp')}">active bg-secondary</c:if>">
                         <!-- Unprocessed Orders Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
                             <path d="M8.515 3.667a.5.5 0 0 0-.882 0L5.66 7.763a.5.5 0 0 0 .442.737h4.39a.5.5 0 0 0 .442-.737l-1.973-4.096zm-5.86-.666C2.5 1.003 3.835 0 5.5 0a5.5 5.5 0 0 1 0 11c-1.665 0-3-1.003-3.865-2.667A5.507 5.507 0 0 1 0 5.5a5.507 5.507 0 0 1 2.655-4.498z"/>
                         </svg>
-                        Nhận đơn
+                        Giao đơn
                     </a>
                 </li>
             </ul>

@@ -36,8 +36,11 @@
             .btn-outline-primary:hover {
                 background-color: #007bff;
                 color: white;
-            }
 
+            }
+            .table td, .table th {
+                vertical-align: middle !important;
+            }
         </style>
     </head>
     <body>
@@ -97,7 +100,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered " >
                             <thead class="table-gray">
                                 <tr>
                                     <th class="text-center">STT</th>
@@ -106,14 +109,14 @@
                                     <th class="text-center">Số lượng</th>
                                     <th>Giá</th>
                                     <th>Tổng tiền</th>
-                                    <th>Đánh giá</th>
+                                    <th class="text-center">Đánh giá</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:set var="subtotal" value="0"></c:set>
                                 <c:forEach var="o" items="${orderDetails}" varStatus="status">
                                     <tr>
-                                        <td class="text-center">${status.index + 1}</td>
+                                        <td class="text-center"> ${status.index + 1}</td>
                                         <td>
                                             <img src="${o.thumbnail}" alt="Sản phẩm" class="img-thumbnail me-2" style="width: 50px;height: 50px">
                                             ${o.productName}
@@ -122,7 +125,22 @@
                                         <td class="text-center">${o.quantity}</td>
                                         <td><fmt:formatNumber value="${o.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                         <td><fmt:formatNumber value="${o.totalPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Xem đánh giá</a></td>
+
+
+
+
+                                        <td class="text-center">
+                                            <c:if test="${order.orderStatusId == 4}">
+                                                <form action="${pageContext.request.contextPath}/productfeedback" method="get">
+                                                    <input type="hidden" name="pid" value="${o.productId}">
+                                                    <input type="hidden" name="oid" value="${order.orderId}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-dark">Đánh giá</button>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${order.orderStatusId != 4}">
+                                                <button onclick="alert('Bạn chỉ có thể đánh giá khi đã nhận hàng.')" type="button" class="btn btn-sm btn-outline-dark">Đánh giá</button>
+                                            </c:if>
+                                        </td>
 
                                         <c:set var="subtotal" value="${subtotal + o.totalPrice}"/>
                                     </tr>
@@ -154,40 +172,55 @@
             </div>
             <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6}">
                 <div class="text-right mt-4 mb-5">
-                   <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
+                    <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
                         Hủy đơn hàng
                     </button>                   
                 </div>
             </c:if>
         </div>
 
-    </div>
-    <jsp:include page="../common/footer.jsp" />
-    <!-- Bootstrap JS with Popper.js -->
 
-    <jsp:include page="../common/js.jsp" />
-
-    <script>
-        function cancelOrder(orderId, methodId, payStatus) {
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "cancelorder", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        <jsp:include page="../common/footer.jsp" />
+        <!-- Bootstrap JS with Popper.js -->
 
 
-            xhr.send("orderId=" + orderId + "&methodId=" + methodId + "&payStatus=" + payStatus);
+
+        <script>
 
 
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    alert("Hủy đơn hàng thành công !");
-                    location.reload();
-                }
-            };
-        }
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-</body>
+
+
+
+
+
+            function cancelOrder(orderId, methodId, payStatus) {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "cancelorder", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+
+                xhr.send("orderId=" + orderId + "&methodId=" + methodId + "&payStatus=" + payStatus);
+
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        alert("Hủy đơn hàng thành công !");
+                        location.reload();
+                    }
+                };
+            }
+            function goBack() {
+                window.location.href = '${pageContext.request.contextPath}/orderHistory';
+            }
+        </script>
+
+        <script src="${pageContext.request.contextPath}/common/js/jquery.nice-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.nicescroll.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.countdown.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/jquery.slicknav.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/mixitup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/common/js/owl.carousel.min.js"></script>
+    </body>
 </html>

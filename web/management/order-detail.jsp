@@ -41,6 +41,9 @@
                 background: black;
 
             }
+            .table td, .table th {
+                vertical-align: middle !important;
+            }
         </style>
     </head>
     <body>

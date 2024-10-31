@@ -145,7 +145,7 @@
             <!-- END menu -->
 
             
-            <div class="col-md-10" style="padding: 40px;">
+            <div class="col-md-10">
                 
                 <%
                     User user = (User)session.getAttribute("account");
@@ -172,17 +172,17 @@
         if(pcmktName.equals("null")) pcmktName = "";
             %>
                 <!-- START products -->
-                <div class="product">
+                <div class="product" style="padding: 40px;">
                     <div class="container products" >
                         <div class="" id="navbarSupportedContent" style="margin: 10px 0;">
                             <form action="../listpostfiltermkt" class="d-flex" role="search">
-                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">From:</h5>
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Từ:</h5>
                                             <input value="<%=begin%>" name="begindate" class="form-control me-2" type="date" aria-label="Search">
-                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">To:</h5>
+                                            <h5 style="font-weight: bold;" class="navbar-brand" href="#">Đến:</h5>
                                             <input value="<%=end%>" name="enddate" class="form-control me-2" type="date" aria-label="Search">
-                                            <input maxlength="500" value="<%=title%>" placeholder="Post title" name="title" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                            <input maxlength="500" value="<%=author%>" placeholder="Author name" name="author" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                            <input maxlength="500" value="<%=title%>" placeholder="Tiêu đề" name="title" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <input maxlength="500" value="<%=author%>" placeholder="Tên tác giả" name="author" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <button class="btn btn-outline-success" type="submit">Tìm </button>
                                         </form>
                             <%
                         String loi = session.getAttribute("pmktloi")+"";
@@ -196,7 +196,7 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 style="font-weight: bold;" class="navbar-brand" href="#">Manage Post</h5>
+                                    <h5 style="font-weight: bold;" class="navbar-brand" href="#">Quản lí bài viết</h5>
 
                                     <%
                                         
@@ -204,7 +204,7 @@
                                     %>
                                     <div class="btn-group" style="">
                                       <button  style="color: black;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <%=pcmktName.equals("")?"Select category":pcmktName%>
+                                        <%=pcmktName.equals("")?"Phân loại":pcmktName%>
                                       </button>
                                       <ul class="dropdown-menu">
                                           <%
@@ -225,11 +225,11 @@
                                       <div class="btn-group" style="">
                                       <button  style="color: black;"type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         
-                                        <%=(authorfiltermkt.length()==0||authorfiltermkt.equals("all"))?"All Post":"Your Post"%>
+                                        <%=(authorfiltermkt.length()==0||authorfiltermkt.equals("all"))?"Tất cả bài viết":"Bài viết của bạn"%>
                                       </button>
                                       <ul class="dropdown-menu">
-                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=all">All Post</a></li>
-                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=<%=user.getUser_id()%>">Your Post</a></li>
+                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=all">Tất cả bài viết</a></li>
+                                          <li class=""><a class="dropdown-item " href="../filterpostbyauthor?aid=<%=user.getUser_id()%>">Bài viết của bạn</a></li>
                                       </ul>
                                     </div>
                                     
@@ -248,12 +248,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Created Day</th>
-                                    <th scope="col">Modified Day</th>
-                                    <th style="width: 20%;" scope="col">Action</th>
+                                    <th scope="col">Tiêu đề</th>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col">Tác giả</th>
+                                    <th scope="col">Ngày tạo</th>
+                                    <th scope="col">Ngày sửa đổi</th>
+                                    <th style="width: 20%;" scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -359,9 +359,11 @@
                 </div>
                 <!-- END products -->
                 
-                
+                <jsp:include page="../common/footer.jsp" />
             </div>
+            
         </div>
+                                    
 
         
     </body>
