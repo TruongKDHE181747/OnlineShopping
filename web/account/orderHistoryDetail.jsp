@@ -6,8 +6,7 @@
 <html lang="vi">
     <head>
         <jsp:include page="../common/css.jsp" />
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
         <style>
             body {
                 background-color: #f8f9fa;
@@ -37,10 +36,11 @@
             .btn-outline-primary:hover {
                 background-color: #007bff;
                 color: white;
+
             }
-
-
-
+            .table td, .table th {
+                vertical-align: middle !important;
+            }
         </style>
     </head>
     <body>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered " >
                             <thead class="table-gray">
                                 <tr>
                                     <th class="text-center">STT</th>
@@ -116,7 +116,7 @@
                                 <c:set var="subtotal" value="0"></c:set>
                                 <c:forEach var="o" items="${orderDetails}" varStatus="status">
                                     <tr>
-                                        <td class="text-center">${status.index + 1}</td>
+                                        <td class="text-center"> ${status.index + 1}</td>
                                         <td>
                                             <img src="${o.thumbnail}" alt="Sản phẩm" class="img-thumbnail me-2" style="width: 50px;height: 50px">
                                             ${o.productName}
