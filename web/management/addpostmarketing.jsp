@@ -149,7 +149,7 @@
                     <main>
                         <div class="py-5 text-center" >
                             <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                            <h2>Add new post</h2>
+                            <h2>Thêm bài viết</h2>
                         </div>
 
                         <div class="row g-5" style="justify-content: center;">
@@ -163,18 +163,18 @@
 
 
                                         <div class="col-sm-6">
-                                            <label for="posttitle" class="form-label">Post title</label>
+                                            <label for="posttitle" class="form-label">Tiêu đề</label>
                                             <input maxlength="500" name="posttitle" type="text" class="form-control" id="posttitle" required>
 
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="image" class="form-label">Post Image</label>
+                                            <label for="image" class="form-label">Ảnh minh họa</label>
                                             <input name="image" type="file" class="form-control" id="image" required>
 
                                         </div>
 
                                         <div class="col-sm-12">
-                                            <label for="postcontent" class="form-label">Post content</label>
+                                            <label for="postcontent" class="form-label">Nội dung</label>
                                             <textarea maxlength="1000" style="min-height: 200px;" id="postcontent" required="" name="postcontent" class="form-control"></textarea>
 
                                         </div>
@@ -184,7 +184,7 @@
                                         %>
 
                                         <div class="col-12">
-                                            <label for="stationid" class="form-label">Post Category</label>
+                                            <label for="stationid" class="form-label">Phân loại</label>
                                             <select name="postcategory" class="form-control" required="">
                                                 <%
                                           for (PostCategory postCategory : postcategorylist) {
@@ -200,14 +200,14 @@
                                             </select>
                                         </div>
                                         <div class="my-3 col-sm-6">
-                                            <label for="available" class="form-label">Status</label>
+                                            <label for="available" class="form-label">Trạng thía</label>
                                             <div class="form-check">
                                                 <input checked="" value="1" id="available" name="is_active" type="radio" class="form-check-input">
-                                                <label class="form-check-label" for="available">Show</label>
+                                                <label class="form-check-label" for="available">Hiện</label>
                                             </div>
                                             <div class="form-check">
                                                 <input value="0" id="available1" name="is_active" type="radio" class="form-check-input">
-                                                <label class="form-check-label" for="available1">Hide</label>
+                                                <label class="form-check-label" for="available1">Ẩn</label>
                                             </div>
                                         </div>
 
@@ -226,7 +226,7 @@
                                         <%=e%>
                                     </div>
 
-                                    <button class="w-100 btn btn-primary btn-lg" type="submit">Add</button>
+                                    <button class="w-100 btn btn-primary btn-lg" type="submit">Thêm</button>
                                 </form>
                             </div>
                         </div>

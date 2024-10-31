@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -1021,10 +1022,100 @@ public class OrderDAO extends DBContext {
         
         return sList;
     }
+    
+    public boolean unsignSale(int orderId) {
+        String sql = "UPDATE Orders SET salerId = null WHERE order_id = ?";
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            pre.setInt(1, orderId);
+            int n = pre.executeUpdate();
+            return n > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    
+    public List<SaleChart> getAmmountPerDay(LocalDate startDate, LocalDate endDate)
+    {
+        List<SaleChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select Sum(total_amount) as totalamount\n" +
+                               "from Orders \n" +
+                                 
+                "where YEAR(ordered_date)=? AND MONTH(ordered_date)=? AND DAY(ordered_date)=? AND status_id=? ";
+
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
+
+
+        for (int i = 0; i <= daybetween; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date.getYear()+  "");
+         pre.setString(2, date.getMonthValue()+  "");
+             pre.setString(3, date.getDayOfMonth() +  "");
+             pre.setInt(4, 3);
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("totalamount");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            return sList;
+    }
+     public List<SaleChart> getTotalAmountByDay(LocalDate startDate, LocalDate endDate)
+    {
+        List<SaleChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select Sum(total_amount) as totalamount\n" +
+                               "from Orders \n" +
+                                 
+                "where ordered_date <= ? AND status_id= ? ";
+
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
+
+
+        for (int i = 0; i <= daybetween; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                 pre.setString(1, date + "");
+      
+             pre.setInt(2, 3);
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("totalamount");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            return sList;
+    }
+    
+    
+
     public static void main(String[] args) {
         OrderDAO odao = new OrderDAO();
-        List<SaleChart> o = odao.getTotalByBrandInMonth(2024);
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        List<SaleChart> o = odao.getTotalAmountByDay(LocalDate.parse("2024-09-01")   , LocalDate.now() );
         System.out.println(o);
     }
-
 }
+    
+
+
+

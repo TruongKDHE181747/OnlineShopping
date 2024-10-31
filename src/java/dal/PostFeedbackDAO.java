@@ -7,6 +7,10 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Post;
 import model.PostFeedback;
+import model.SaleChart;
 import model.User;
 
 /**
@@ -241,6 +246,86 @@ public class PostFeedbackDAO extends DBContext{
     }
     return pf;
 }
+public List<SaleChart> getNumberPostFeedBaclByDay(LocalDate startDate, LocalDate endDate) {
+        List<SaleChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select COUNT(post_feedback_id) as totalfeedback \n" +
+                                  "from Post_Feedbacks\n"
+                +          "where create_at <= ? ";
 
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
+
+
+        for (int i = 0; i <= daybetween; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date + "");
+
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("totalfeedback");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        return sList;
+    }
+    
+    
+     public List<SaleChart> getNewFeedBackEachDay(LocalDate startDate, LocalDate endDate) {
+        List<SaleChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select COUNT(post_feedback_id) as totalfeedback\n" +
+                                  "from Post_Feedbacks\n"
+                + "where YEAR(create_at)=? AND MONTH(create_at)=? AND DAY(create_at)=?  ";
+
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
+
+
+        for (int i = 0; i <= daybetween; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date.getYear()+  "");
+         pre.setString(2, date.getMonthValue()+  "");
+             pre.setString(3, date.getDayOfMonth() +  "");
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("totalfeedback");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        return sList;
+    }
+    public static void main(String[] args) {
+                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+              String pobegin = "2024-10-01";
+        LocalDate poDate = LocalDate.parse(pobegin, formatter);
+            
+        LocalDate endDate= LocalDate.now();
+         PostFeedbackDAO pfdao=new PostFeedbackDAO();
+        List<SaleChart> list= pfdao.getNewFeedBackEachDay(poDate, endDate);
+         System.out.println(list.get(0).getValue());
+        
+    }
        
 }

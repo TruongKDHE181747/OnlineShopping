@@ -65,7 +65,7 @@
                                 <div class="hero__text">                        
                                     <h2 style="color: white;"><%=slider.getTitle()%></h2>
                                     <p style="color: white;"><%=slider.getDescription()%></p>
-                                    <a href="../homeproduct" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                    <a href="../homeproduct" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
 
                                 </div>
                             </div>
@@ -134,8 +134,8 @@
                                 </ul>
                             </div>
                             <div class="product__item__text">
-                                <h6><%=product.getProduct_name()%></h6>
-                                <a href="#" class="add-cart">+ Add To Cart</a>
+                                <h5 style="cursor: pointer" onclick="window.location.href = '../hproductdetail?proid=<%=product.getProduct_id()%>'"><%=product.getProduct_name()%></h5>
+                                
                                 <div class="rating">
                                     <%if(product.getRated_star()<=0){
                                     %>
@@ -184,17 +184,7 @@
                                 <%=cmoney%>
 
                                 </h5>
-                                <div class="product__color__select">
-                                    <label for="pc-1">
-                                        <input type="radio" id="pc-1">
-                                    </label>
-                                    <label class="active black" for="pc-2">
-                                        <input type="radio" id="pc-2">
-                                    </label>
-                                    <label class="grey" for="pc-3">
-                                        <input type="radio" id="pc-3">
-                                    </label>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -217,8 +207,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title">
-                            <span>Latest News</span>
-                            <h2>Fashion New Trends</h2>
+                            <span>Tin mới nhất</span>
+                            <h2>Xu Hướng Mới Nhất</h2>
                         </div>
                     </div>
                 </div>
@@ -241,7 +231,7 @@
                             <div class="blog__item__text">
                                 <span><img src="img/icon/calendar.png" alt=""> <%=date%></span>
                                 <h5><%=post.getTitle()%></h5>
-                                <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
+                                <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Đọc bài viết</a>
                             </div>
                         </div>
                     </div>
@@ -260,60 +250,9 @@
         <!-- Latest Blog Section End -->
 
         <!-- Footer Section Begin -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="footer__about">
-                            <div class="footer__logo">
-                                <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                            </div>
-                            <p>The customer is at the heart of our unique business model, which includes design.</p>
-                            <a href="#"><img src="img/payment.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Clothing Store</a></li>
-                                <li><a href="#">Trending Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Delivary</a></li>
-                                <li><a href="#">Return & Exchanges</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>NewLetter</h6>
-                            <div class="footer__newslatter">
-                                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Your email">
-                                    <button type="submit"><span class="icon_mail_alt"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        
-                    </div>
-                </div>
-            </div>
-        </footer>
+         <!-- Contact Section End -->
+    <jsp:include page="../common/footer.jsp" />
+   
         <!-- Footer Section End -->
 
         <!-- Search Begin -->

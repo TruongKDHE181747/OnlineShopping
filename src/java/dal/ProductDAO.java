@@ -154,6 +154,34 @@ public class ProductDAO extends DBContext {
     }
 
     
+    public List<Product> getAllProductWithQuantity() {
+        List<Product> pList = new ArrayList<>();
+        String sql = "select * from Products where total_quantity > 0";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int product_id = rs.getInt("product_id");
+                String product_name = rs.getString("product_name");
+                int price = rs.getInt("price");
+                int total_quantity = rs.getInt("total_quantity");
+                int discount = rs.getInt("discount");
+                String description = rs.getString("description");
+                String thumbnail = rs.getString("thumbnail");
+                boolean is_active = rs.getBoolean("is_active");
+                int rated_star = rs.getInt("rated_star");
+                int brand_id = rs.getInt("brand_id");
+                int product_category_id = rs.getInt("product_category_id");
+                Product product = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                pList.add(product);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pList;
+    }
+    
     public List<Product> getAllRelatedProduct(String id) {
         List<Product> pList = new ArrayList<>();
         String sql = "select top 3 * from Products\n" +
@@ -193,7 +221,7 @@ public class ProductDAO extends DBContext {
         List<Product> pList = new ArrayList<>();
         String sql = "select top 8 p.product_id, p.product_name,p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id, sum(od.TotalPrice) as TotalPrice\n"
                 + "from Products as p, Order_Details as od, Orders as o\n"
-                + "where p.product_id = od.product_id and od.order_id = o.order_id\n"
+                + "where p.product_id = od.product_id and od.order_id = o.order_id and p.total_quantity > 0\n"
                 + "and o.payment_status_id = 2\n"
                 + "group by p.product_id, p.product_name, p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id\n"
                 + "order by sum(od.TotalPrice) desc, p.product_id";
@@ -260,7 +288,7 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getNewProduct() {
         List<Product> pList = new ArrayList<>();
-        String sql = "select top 8 * from Products\n"
+        String sql = "select top 8 * from Products where total_quantity > 0\n"
                 + "order by product_id desc";
 
         try {
@@ -290,7 +318,7 @@ public class ProductDAO extends DBContext {
     
     public List<Product> getRatingProduct() {
         List<Product> pList = new ArrayList<>();
-        String sql = "select * from Products\n" +
+        String sql = "select * from Products where total_quantity > 0 \n" +
                     "order by rated_star desc";
 
         try {
@@ -320,7 +348,7 @@ public class ProductDAO extends DBContext {
     public List<Product> getSaleProduct() {
         List<Product> pList = new ArrayList<>();
         String sql = "select top 8 * from Products\n"
-                + "where discount!=0";
+                + "where discount!=0 and total_quantity > 0";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -436,7 +464,7 @@ public class ProductDAO extends DBContext {
     public List<Product> searchProduct(String s) {
         List<Product> list = new ArrayList<>();
         String sql = "select * from Products \n "
-                + "where product_name like ?";
+                + "where product_name like ? and total_quantity > 0";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, "%"+s+"%");

@@ -68,7 +68,7 @@
                                                     <div class="row" >
                                                         <div class="col-md-6">
                                                             <div class="input-group mb-3">
-                                                                <span class="input-group-text" id="inputGroup-sizing-default">From</span>
+                                                                <span class="input-group-text" id="inputGroup-sizing-default">Từ</span>
                                                                 <input value="<%=begin%>" name="begin" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                                             </div>
                                                         </div>
@@ -77,7 +77,7 @@
                                                         </div>
                                                         <div class="col-md-5">
                                                             <div class="input-group mb-3">
-                                                                <span class="input-group-text" id="inputGroup-sizing-default">To</span>
+                                                                <span class="input-group-text" id="inputGroup-sizing-default">Đến</span>
                                                                 <input value="<%=end%>" name="end" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                                             </div>
 
@@ -98,7 +98,7 @@
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="shop__product__option__right row">
                                                         <div class="col-md-3">
-                                                            <button  style="width: 80%" type="submit" class="btn btn-outline-dark">Apply</button>
+                                                            <button  style="width: 80%" type="submit" class="btn btn-outline-dark">Áp dụng</button>
 
                                                         </div>
                                                         <div class="col-md-6">
@@ -109,7 +109,7 @@
                                                                 String sdsaler = session.getAttribute("sdsaler")+""; 
                                                                 if(sdsaler.equals("null")==false) sid = Integer.parseInt(session.getAttribute("sdsaler")+"");
                                                                 
-                                                                String s = "All";
+                                                                String s = "Tất cả đơn hàng";
                                                                 List<User> uList = (List<User>)session.getAttribute("dsalerList");
                                                                 for (User user : uList) {
                                                                    if(user.getUser_id()==sid){
@@ -123,7 +123,7 @@
                                                                     <i style="margin-left: 5px;" class="fa-solid fa-caret-down"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu">
-                                                                    <li><a class="dropdown-item" href="../saledashboardfilterbysaler?sid=0">All</a></li>
+                                                                    <li><a class="dropdown-item" href="../saledashboardfilterbysaler?sid=0">Tất cả đơn hàng</a></li>
                                                                     <c:forEach items="${dsalerList}" var="sale">
                                                                     
                                                                     <li><a class="dropdown-item" href="../saledashboardfilterbysaler?sid=${sale.getUser_id()}">${sale.getFirst_name()} ${sale.getLast_name()}</a></li>
