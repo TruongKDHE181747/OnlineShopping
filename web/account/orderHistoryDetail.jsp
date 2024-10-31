@@ -38,8 +38,8 @@
                 background-color: #007bff;
                 color: white;
             }
-            
-            
+
+
 
         </style>
     </head>
@@ -109,7 +109,7 @@
                                     <th class="text-center">Số lượng</th>
                                     <th>Giá</th>
                                     <th>Tổng tiền</th>
-                                    <th>Đánh giá</th>
+                                    <th class="text-center">Đánh giá</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,16 +125,21 @@
                                         <td class="text-center">${o.quantity}</td>
                                         <td><fmt:formatNumber value="${o.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                         <td><fmt:formatNumber value="${o.totalPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                        
-                                        
-                 
-                                        
-                                        <td>
-                                            <form action="${pageContext.request.contextPath}/productfeedback" method="get">
-                                                <input type="hidden" name="pid" value="${o.productId}">
-                                                <input type="hidden" name="oid" value="${order.orderId}">
-                                                <button type="submit" class="btn btn-sm btn-outline-dark">Xem đánh giá</button>
-                                            </form>
+
+
+
+
+                                        <td class="text-center">
+                                            <c:if test="${order.orderStatusId == 4}">
+                                                <form action="${pageContext.request.contextPath}/productfeedback" method="get">
+                                                    <input type="hidden" name="pid" value="${o.productId}">
+                                                    <input type="hidden" name="oid" value="${order.orderId}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-dark">Đánh giá</button>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${order.orderStatusId != 4}">
+                                                <button onclick="alert('Bạn chỉ có thể đánh giá khi đã nhận hàng.')" type="button" class="btn btn-sm btn-outline-dark">Đánh giá</button>
+                                            </c:if>
                                         </td>
 
                                         <c:set var="subtotal" value="${subtotal + o.totalPrice}"/>
@@ -182,10 +187,10 @@
 
         <script>
 
-           
 
 
-            
+
+
 
 
             function cancelOrder(orderId, methodId, payStatus) {
@@ -206,7 +211,7 @@
                 };
             }
             function goBack() {
-                window.history.back();
+                window.location.href = '${pageContext.request.contextPath}/orderHistory';
             }
         </script>
 
