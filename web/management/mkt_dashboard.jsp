@@ -150,7 +150,7 @@
                     fill: false,
                     borderColor: 'rgb(153, 102, 255)',
                     tension: 0.1
-                }]
+                }]s
             };
             const config2 = {
                 type: 'line',
@@ -171,12 +171,12 @@
  
         <script>
             const ctx3 = document.getElementById("totalPostchart3").getContext('2d');
-            const labels3 = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+            const labels3 = [<c:forEach items="${sessionScope.chart3}" var="c"> '${c.label}',    </c:forEach>];
             const data3 = {
                 labels: labels3,
                 datasets: [{
-                    label: 'Dataset 3',
-                    data: [50, 60, 65, 80, 70, 75, 60],
+                    label: 'Bình luận mới',
+                    data: [<c:forEach items="${sessionScope.chart2}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(255, 99, 132)',
                     tension: 0.1
@@ -185,18 +185,27 @@
             const config3 = {
                 type: 'line',
                 data: data3,
+                     options: {
+            scales: {
+                y: {
+                    ticks: {
+                        stepSize: 1 
+                    }
+                }
+            }
+        }
             };
             new Chart(ctx3, config3);
         </script>
 
         <script>
             const ctx4 = document.getElementById("totalPostchart4").getContext('2d');
-            const labels4 = [<c:forEach items="${sessionScope.chart1}" var="c"> '${c.label}',    </c:forEach>];
+            const labels4 = [<c:forEach items="${sessionScope.chart4}" var="c"> '${c.label}',    </c:forEach>];
             const data4 = {
                 labels: labels4,
                 datasets: [{
-                    label: 'Dataset 4',
-                    data: [<c:forEach items="${sessionScope.chart1}" var="c"> ${c.value},    </c:forEach>],
+                    label: 'Tổng số bình luận',
+                    data: [<c:forEach items="${sessionScope.chart4}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(54, 162, 235)',
                     tension: 0.1
@@ -205,6 +214,7 @@
             const config4 = {
                 type: 'line',
                 data: data4,
+                
             };
             new Chart(ctx4, config4);
         </script>

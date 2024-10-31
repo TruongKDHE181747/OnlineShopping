@@ -6,6 +6,7 @@
 package mkt_controller;
 
 import dal.PostDAO;
+import dal.PostFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -38,6 +39,7 @@ public class MarkertingDashboard extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PostDAO pdao=new PostDAO();
+        PostFeedbackDAO pfdao=new PostFeedbackDAO();
                 HttpSession session = request.getSession();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -48,8 +50,13 @@ public class MarkertingDashboard extends HttpServlet {
                 
         List<SaleChart> postchart=pdao.getNumberPostByDay(poDate,endDate );
           List<SaleChart> posteachday=pdao.getPostEachDay(poDate,endDate );
-       session.setAttribute("posteachday", posteachday);
-             session.setAttribute("postchart", postchart);
+          List<SaleChart> totalfeedback= pfdao.getNumberPostFeedBaclByDay(poDate, endDate);
+          List<SaleChart> newfeedback=pfdao.getNumberPostFeedBaclByDay(poDate, endDate);
+          
+       session.setAttribute("chart2", posteachday);
+             session.setAttribute("chart1", postchart);
+             session.setAttribute("chart3", totalfeedback);
+             session.setAttribute("chart4", newfeedback);
         response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
         
        

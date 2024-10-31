@@ -7,6 +7,7 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -248,9 +249,9 @@ public class PostFeedbackDAO extends DBContext{
 public List<SaleChart> getNumberPostFeedBaclByDay(LocalDate startDate, LocalDate endDate) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select COUNT(post_feedback_id) as totalfeedback\n" +
+        String sql = "select COUNT(post_feedback_id) as totalfeedback \n" +
                                   "from Post_Feedbacks\n"
-                +          "where created_at <= ?";
+                +          "where create_at <= ? ";
 
           int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
 
@@ -285,7 +286,7 @@ public List<SaleChart> getNumberPostFeedBaclByDay(LocalDate startDate, LocalDate
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String sql = "select COUNT(post_feedback_id) as totalfeedback\n" +
                                   "from Post_Feedbacks\n"
-                + "where YEAR(created_at)=? AND MONTH(created_at)=? AND DAY(created_at)=?  ";
+                + "where YEAR(create_at)=? AND MONTH(create_at)=? AND DAY(create_at)=?  ";
 
           int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
 
@@ -314,6 +315,17 @@ public List<SaleChart> getNumberPostFeedBaclByDay(LocalDate startDate, LocalDate
 
         return sList;
     }
-    
+    public static void main(String[] args) {
+                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+              String pobegin = "2024-09-20";
+        LocalDate poDate = LocalDate.parse(pobegin, formatter);
+            
+        LocalDate endDate= LocalDate.now();
+         PostFeedbackDAO pfdao=new PostFeedbackDAO();
+        List<SaleChart> list= pfdao.getNumberPostFeedBaclByDay(poDate, endDate);
+         System.out.println(list.get(0).getValue());
+        
+    }
        
 }
