@@ -22,11 +22,81 @@
     <jsp:include page="../common/header.jsp" />
     <body>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+       
+            
+          
 
+        
+        
+        
         <div class="row">
             <jsp:include page="marketing_header.jsp"/>
+            
+            
+   
+            
             <div class="row col-md-10">
+                
+<!--                <div class="col-md-6">
+               
+    <button type="button" class="btn btn-primary btn-lg mx-2">Primary</button>
+    <button type="button" class="btn btn-success btn-lg mx-2">Success</button>
+    <button type="button" class="btn btn-info btn-lg mx-2">Info</button>
+</div>              
                 <!-- Biểu đồ đầu tiên -->
+                
+              
+                
+                <div class="col-md-12">
+
+                                                 <form>     <div class="row" >
+                                                      
+                                                        <div class="col-md-2">
+                                                            <div class="input-group mb-2">
+                                                                <span class="input-group-text" id="inputGroup-sizing-default">From</span>
+                                                                <input value="" name="begin" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            --
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="input-group mb-2">
+                                                                <span class="input-group-text" id="inputGroup-sizing-default">To</span>
+                                                                <input value="" name="end" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                            </div>
+                                                          
+                                                            
+                                                        </div>
+                                                         <div class="col-md-2">
+                                                            <button  style="width: 80%" type="submit" class="btn btn-outline-dark">Apply</button>
+                                                         </div>
+                                                            
+                                                    </div>
+                  
+                    
+                    <div class="row">
+                        
+                        <div class="col-md-3">
+                                            <select name="filter">
+                                               
+                                                <option value="post" selected >Bài đăng</option>
+                                              <option value="product"<c:if test="${sessionScope.filter=='customer_id'}"> selected </c:if>>Sản phẩm</option>
+                                             <option value="customer"<c:if test="${sessionScope.filter=='rating'}"> selected </c:if>>Khách hàng</option> 
+                                           
+                                        </select>
+
+                                        </div>
+                        
+                    </div>
+                     </form>
+                    
+                    
+<!--                    <button type="button" class="btn btn-primary btn-lg mx-2 col-md-2" style="width: 126px;height:44px">Bài đăng</button>
+    <button type="button" class="btn btn-success btn-lg mx-2 col-md-2" style="width: 126px;height:44px" >Sản phẩm</button>
+    <button type="button" class="btn btn-info btn-lg mx-2 col-md-2" style="width: 146px;height:44px">Khách hàng</button>-->
+                    </div>
+                
                 <div class="col-md-6">
                     <canvas id="totalPostchart"></canvas>
                 </div>
@@ -51,12 +121,12 @@
         <!-- Mã biểu đồ -->
         <script>
             const ctx1 = document.getElementById("totalPostchart").getContext('2d');
-            const labels1 = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+            const labels1 = [<c:forEach items="${sessionScope.chart1}" var="c"> '${c.label}',    </c:forEach>];
             const data1 = {
                 labels: labels1,
                 datasets: [{
-                    label: 'Dataset 1',
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    label: 'Tổng số bài post ',
+                    data: [<c:forEach items="${sessionScope.chart1}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1
@@ -71,12 +141,12 @@
         
         <script>
             const ctx2 = document.getElementById("totalPostchart2").getContext('2d');
-            const labels2 = [<c:forEach items="${sessionScope.posteachday}" var="c"> '${c.label}',    </c:forEach>];
+            const labels2 = [<c:forEach items="${sessionScope.chart2}" var="c"> '${c.label}',    </c:forEach>];
             const data2 = {
                 labels: labels2,
                 datasets: [{
-                    label: 'Dataset 2',
-                    data: [<c:forEach items="${sessionScope.posteachday}" var="c"> ${c.value},    </c:forEach>],
+                    label: 'Số bài post theo ngày',
+                    data: [<c:forEach items="${sessionScope.chart2}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(153, 102, 255)',
                     tension: 0.1
@@ -121,12 +191,12 @@
 
         <script>
             const ctx4 = document.getElementById("totalPostchart4").getContext('2d');
-            const labels4 = [<c:forEach items="${sessionScope.postchart}" var="c"> '${c.label}',    </c:forEach>];
+            const labels4 = [<c:forEach items="${sessionScope.chart1}" var="c"> '${c.label}',    </c:forEach>];
             const data4 = {
                 labels: labels4,
                 datasets: [{
                     label: 'Dataset 4',
-                    data: [<c:forEach items="${sessionScope.postchart}" var="c"> ${c.value},    </c:forEach>],
+                    data: [<c:forEach items="${sessionScope.chart1}" var="c"> ${c.value},    </c:forEach>],
                     fill: false,
                     borderColor: 'rgb(54, 162, 235)',
                     tension: 0.1
