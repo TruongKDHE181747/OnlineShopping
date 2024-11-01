@@ -8,6 +8,7 @@ package mkt_controller;
 import dal.OrderDAO;
 import dal.PostDAO;
 import dal.PostFeedbackDAO;
+import dal.ProductFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import model.MKTChart;
 import model.SaleChart;
 
 /**
@@ -48,6 +50,7 @@ public class MKTDashboardFilter extends HttpServlet {
         PostDAO pdao=new PostDAO();
         OrderDAO odao=new OrderDAO();
         PostFeedbackDAO pfdao=new PostFeedbackDAO();
+        ProductFeedbackDAO prfdao=new ProductFeedbackDAO();
          LocalDate beginDate;
          LocalDate endDate;
         String loi ="";
@@ -105,7 +108,16 @@ public class MKTDashboardFilter extends HttpServlet {
                      
                      
         }
-           
+        else if(filter.equals("customer"))
+        {
+            List<MKTChart> avgrating=prfdao.getAvgRatingByDay(beginDate, endDate);
+             session.setAttribute("chart1", avgrating);
+                   session.setAttribute("chart1name", "Đánh giá trung bình");
+            chart2=prfdao.getNewFeedBackEachDay(beginDate, endDate);
+             session.setAttribute("chart2", chart2);
+                   session.setAttribute("chart2name", "Lượt đánh  giá mới");
+            
+        }
         
           session.setAttribute("filter", filter);
         
