@@ -91,8 +91,8 @@ public class PostFeedbackDAO extends DBContext{
      
      public void AddCustomerPostFeedback (PostFeedback pf) {
         
-       String sql = "INSERT INTO Post_Feedbacks (customer_id, post_id, review, is_active) VALUES\n" +
-                    "(?, ?, ?, 1)";
+       String sql = "INSERT INTO Post_Feedbacks (customer_id, post_id, review, is_active,create_at, modified_at) VALUES\n" +
+                    "(?, ?, ?, 1,GETDATE(), GETDATE())";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, pf.getCustomer_id());
