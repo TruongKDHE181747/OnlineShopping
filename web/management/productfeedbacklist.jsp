@@ -179,8 +179,8 @@
                                     <th scope="col"> User</th>
                                    <th scope="col"> Time Created</th>
                                     <th>Status</th>
-                                    
-                                    <th scope="col" style="width: 14%">Action</th>
+                                    <th>Chi tiết</th>
+                                    <th>Chỉnh sửa</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -196,7 +196,7 @@
                                      
                                      <td class="product-img">
                                         
-                                         <img src="../${s.product.thumbnail}" style="width: 106px;height: 98px;" alt="alt"/ >
+                                         <img src="../${s.product.thumbnail}" style="width: 106px;height: 98px;" alt="alt" >
                                        
                                     </td>
                                     <td><a href="../viewproduct?pid=${s.product.product_id}">${s.product.product_name}</a></td>
@@ -218,11 +218,45 @@
                                             <p style="color: red">Inactive</p>
                                         
                                         </c:if>
-                                        
+                                         
                                         
                                     </td>
-                               
-                                    
+                                    <td>
+                                        <div class="remove" style="background-color: yellow">
+                                            <a href="../productfeedbackdetail?pfid=${s.feedback_id}"><i style="color: black;" class="bi bi-info-circle"></i></a>     
+                                        </div> 
+                                       
+                                        
+                                    </td>
+                                    <td>
+                                        <c:if test="${s.is_active==1}">
+                                            
+                                        <div class="edit" style="background-color: red">
+                                            
+                                              
+                                                  
+                                              
+                                                
+                                         <i style="color: black;" class="bi bi-eye-slash-fill"></i>
+                                            
+                                        </div>
+                                        </c:if>
+                                       
+                                          <c:if test="${s.is_active==0}">
+                                            
+                                        <div class="edit" style="background-color: greenyellow">
+                                      
+                                              
+                                                  
+                                              
+                                                
+                                           
+                                                    <i style="color: black;" class="bi bi-eye-fill"></i>
+
+                                            
+                                        </div>
+                                        </c:if>
+                                    </td>
                                     
                                 </tr>
                                   

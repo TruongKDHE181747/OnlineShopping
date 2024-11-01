@@ -30,10 +30,10 @@
 
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="../sliderlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <a href="../productfeedbackpaging" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <i style="margin-right: 10px;
                        font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
-                    <span class="fs-4">Back to home</span>
+                    <span class="fs-4">Back</span>
                 </a>                
             </header>
         </div>
@@ -44,37 +44,37 @@
                 <div class="py-5 text-center" >
                     <h2>Chi tiết đánh giá</h2>
                 </div>
-
+                <c:set var="pf" value="${sessionScope.pf}"></c:set>
                 <div class="row g-5" style="justify-content: center;">
 
                 
 
 
                         <div class="col-md-8">
-                            <form class="needs-validation" action="../updateslider" method="post" enctype="multipart/form-data">
+                           
                                 <div class="row g-3">
                                     <div class="col-sm-6">
                                         <label for="id" class="form-label"> Khách hàng</label>
-                                        <input readonly value="" name="id" type="text" class="form-control" id="id" required>
+                                        <input readonly value="${pf.user.first_name} ${pf.user.last_name}   " name="id" type="text" class="form-control" id="id" required>
                                       
                                 </div>
-                                <input type="text" hidden="" value="${s.img}" name="currentimg">
+                               
                                 <div class="col-sm-6">
                                         
-                                        <img src="src" alt="alt"/>
+                                    <img src="../${pf.user.profile_picture_url}" style="width: 85px;height: 85px" alt="alt"/>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="img" class="form-label"> Sản phẩm</label>
-                                        <input readonly value="" name="id" type="text" class="form-control" id="id" required>
+                                        <input readonly value="${pf.product.product_name}" name="id" type="text" class="form-control" id="id" required>
                                 </div>
                                    <div class="col-sm-6">
-                                        <img src="src" alt="alt"/>
+                                        <img src="../${pf.product.thumbnail}" style="width: 147px;height: 114px" alt="alt"/>
 
                                 </div>
 
                                 <div class="my-3 col-sm-6">
                                     <label for="status" class="form-label">Đánh giá</label>
-                                    <p>  Ảnh thực tế </p> <img style="margin-top: 10px;width:  285px;height: 141px;" src="../${s.img}" alt="alt"/>
+                                    <p>  Ảnh thực tế </p> <img style="margin-top: 10px;width:  147px;height: 114px;" src="../${pf.thumbnail}" alt="alt"/>
 
                                         
                                     
@@ -82,28 +82,32 @@
                                     </div>
 
                                    
-                                        <div class="col-sm-6">
-                                            <label for="description" class="form-label">Rating</label>
-                                            <input  value="${s.description}" name="description" type="text" class="form-control" id="id" required>
-
-                                    </div>
+                                       
 
                                         <div class="col-sm-12">
                                             <label for="description" class="form-label">Nội dung</label>
-                                            <input style="width: 566px;height: 146px"  value="${s.description}" name="description" type="text" class="form-control" id="id" required>
+                                            <input style="width: 285px;height: 100px" value="${pf.review}" name="description" type="text" class="form-control" id="id" required>
 
                                         </div>
+                                             <div class="col-sm-6">
+                                            <label for="description" class="form-label">Rating</label>
+                                            <p>
+                                            <c:forEach begin="1" end="${pf.rating}" >
+                                                ⭐
+                                            </c:forEach> </p>
+
+                                    </div>
                                             <div class="col-sm-6">  
                                                   <div class="my-3 col-sm-6">
                                     <label for="status" class="form-label">Status</label>
                                     <div class="form-check">
                                         <input value="1" id="status" name="status" type="radio" class="form-check-input"
-                                               <c:if test="${s.status == 1}"> checked</c:if>>
+                                               <c:if test="${pf.is_active == 1}"> checked</c:if>>
                                                <label class="form-check-label" for="status">Active</label>
                                         </div>
                                         <div class="form-check">
                                             <input value="0" id="status" name="status" type="radio" class="form-check-input"
-                                            <c:if test="${s.status == 0}"> checked</c:if>>
+                                            <c:if test="${pf.is_active == 0}"> checked</c:if>>
                                             <label class="form-check-label" for="status">Inactive</label>
                                         </div>
                                     </div>
@@ -114,8 +118,8 @@
                                 <!-- Error check Username and Password -->
 
 
-                                <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
-                        </form>
+                               
+                        
                     </div>
                 </div>
             </main>

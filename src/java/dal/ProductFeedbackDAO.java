@@ -292,6 +292,41 @@ public class ProductFeedbackDAO extends DBContext {
         }
         return pList;
     }
+    
+        public ProductFeedback getProductFeedBackById(int id) {
+            ProductFeedback pf=null;
+        String sql = "select * from Feedbacks where feedback_id=?  \n";
+
+        ProductDAO pdao = new ProductDAO();
+        UserDAO udao = new UserDAO();
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+              pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+           
+            while (rs.next()) {
+                int feedback_id = rs.getInt("feedback_id");
+                int customer_id = rs.getInt("customer_id");
+                int order_id = rs.getInt("order_id");
+                int product_id = rs.getInt("product_id");
+                String review = rs.getString("review");
+                String thumnail = rs.getString("thumbnail");
+                int rating = rs.getInt("rating");
+                int is_active = rs.getInt("is_active");
+                Date create_at = rs.getDate("create_at");
+                Date modified_at = rs.getDate("modified_at");
+                Product product = pdao.getProductById(product_id);
+                User user = udao.getUserById(customer_id);
+                 pf = new ProductFeedback(feedback_id, customer_id, order_id, review, thumnail, rating, is_active, create_at, create_at, product, user);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pf;
+    }
+    
+    
 
     public List<ProductFeedback> sortProductFeedBack(String filter) {
         List<ProductFeedback> pList = new ArrayList<>();
@@ -406,13 +441,7 @@ public class ProductFeedbackDAO extends DBContext {
     
     
 
-//    public static void main(String[] args) {
-//        ProductFeedbackDAO pdao = new ProductFeedbackDAO();
-//        List<ProductFeedback> alldpfList = pdao.getAllFeetBackByProductId("1");
-//        for (ProductFeedback productFeedback : alldpfList) {
-//            System.out.println(productFeedback.getCustomer_img()+" "+productFeedback.getUpdate_at());
-//        }
-//    }
+ 
     public String showReview(String review) {
         if (review.length() < 15) {
             return review;
