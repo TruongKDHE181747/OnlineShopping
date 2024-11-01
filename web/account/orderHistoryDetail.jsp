@@ -6,8 +6,7 @@
 <html lang="vi">
     <head>
         <jsp:include page="../common/css.jsp" />
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
         <style>
             body {
                 background-color: #f8f9fa;
@@ -37,10 +36,11 @@
             .btn-outline-primary:hover {
                 background-color: #007bff;
                 color: white;
-            }
-            
-            
 
+            }
+            .table td, .table th {
+                vertical-align: middle !important;
+            }
         </style>
     </head>
     <body>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered " >
                             <thead class="table-gray">
                                 <tr>
                                     <th class="text-center">STT</th>
@@ -109,14 +109,14 @@
                                     <th class="text-center">Số lượng</th>
                                     <th>Giá</th>
                                     <th>Tổng tiền</th>
-                                    <th>Đánh giá</th>
+                                    <th class="text-center">Đánh giá</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:set var="subtotal" value="0"></c:set>
                                 <c:forEach var="o" items="${orderDetails}" varStatus="status">
                                     <tr>
-                                        <td class="text-center">${status.index + 1}</td>
+                                        <td class="text-center"> ${status.index + 1}</td>
                                         <td>
                                             <img src="${o.thumbnail}" alt="Sản phẩm" class="img-thumbnail me-2" style="width: 50px;height: 50px">
                                             ${o.productName}
@@ -125,16 +125,21 @@
                                         <td class="text-center">${o.quantity}</td>
                                         <td><fmt:formatNumber value="${o.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                         <td><fmt:formatNumber value="${o.totalPrice}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
-                                        
-                                        
-                 
-                                        
-                                        <td>
-                                            <form action="${pageContext.request.contextPath}/productfeedback" method="get">
-                                                <input type="hidden" name="pid" value="${o.productId}">
-                                                <input type="hidden" name="oid" value="${order.orderId}">
-                                                <button type="submit" class="btn btn-sm btn-outline-dark">Xem đánh giá</button>
-                                            </form>
+
+
+
+
+                                        <td class="text-center">
+                                            <c:if test="${order.orderStatusId == 4}">
+                                                <form action="${pageContext.request.contextPath}/productfeedback" method="get">
+                                                    <input type="hidden" name="pid" value="${o.productId}">
+                                                    <input type="hidden" name="oid" value="${order.orderId}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-dark">Đánh giá</button>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${order.orderStatusId != 4}">
+                                                <button onclick="alert('Bạn chỉ có thể đánh giá khi đã nhận hàng.')" type="button" class="btn btn-sm btn-outline-dark">Đánh giá</button>
+                                            </c:if>
                                         </td>
 
                                         <c:set var="subtotal" value="${subtotal + o.totalPrice}"/>
@@ -182,10 +187,10 @@
 
         <script>
 
-           
 
 
-            
+
+
 
 
             function cancelOrder(orderId, methodId, payStatus) {
@@ -206,7 +211,7 @@
                 };
             }
             function goBack() {
-                window.history.back();
+                window.location.href = '${pageContext.request.contextPath}/orderHistory';
             }
         </script>
 

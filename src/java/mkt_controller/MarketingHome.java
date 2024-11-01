@@ -6,7 +6,8 @@
 package mkt_controller;
 
 import dal.PostDAO;
-import dal.PostFeedbackDAO;
+import dal.ProductDAO;
+import dal.SliderDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,18 +16,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import model.SaleChart;
+import model.Post;
+import model.Product;
+import model.Slider;
 
 /**
  *
  * @author quanpyke
  */
-@WebServlet(name="MarkertingDashboard", urlPatterns={"/markertingdashboard"})
-public class MarkertingDashboard extends HttpServlet {
+@WebServlet(name="MarketingHome", urlPatterns={"/marketinghome"})
+public class MarketingHome extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,35 +38,23 @@ public class MarkertingDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PostDAO pdao=new PostDAO();
-        PostFeedbackDAO pfdao=new PostFeedbackDAO();
-                HttpSession session = request.getSession();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-              String pobegin = "2024-09-20";
-        LocalDate poDate = LocalDate.parse(pobegin, formatter);
-            
-        LocalDate endDate= LocalDate.now();
-                
-        List<SaleChart> postchart=pdao.getNumberPostByDay(poDate,endDate );
-          List<SaleChart> posteachday=pdao.getPostEachDay(poDate,endDate );
-          List<SaleChart> totalfeedback= pfdao.getNewFeedBackEachDay(poDate, endDate);
-          List<SaleChart> newfeedback=pfdao.getNumberPostFeedBaclByDay(poDate, endDate);
-          
-       session.setAttribute("chart2", posteachday);
-             session.setAttribute("chart1", postchart);
-             session.setAttribute("chart3", totalfeedback);
-             session.setAttribute("chart4", newfeedback);
-             
-             session.setAttribute("chart1name", "Tổng số bài post");
-                 session.setAttribute("chart2name", "Số bài post theo ngày ");
-                     session.setAttribute("chart3name", "Bình luận mới");
-                         session.setAttribute("chart4name", "Tổng số bình luận");
-             
-        response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
+  HttpSession session = request.getSession();
+        SliderDao sld = new SliderDao();
+        ProductDAO pdao = new ProductDAO();
+        PostDAO podao = new PostDAO();
+        List<Slider> sList = sld.getAllSliders();  
+        List<Product> pList = pdao.getHotProduct();
+        List<Post> poList = podao.getNewPost();
+        String tabfilter = "hot";
         
-       
-    } 
+        session.setAttribute("mainpage", "home");
+        session.setAttribute("hsList", sList);
+        session.setAttribute("hpList", pList);
+        session.setAttribute("poList", poList);
+        session.setAttribute("tabfilter", tabfilter);
+        response.sendRedirect(request.getContextPath()+"/common/home_marketing.jsp");
+        }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
