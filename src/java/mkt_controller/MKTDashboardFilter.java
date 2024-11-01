@@ -51,6 +51,7 @@ public class MKTDashboardFilter extends HttpServlet {
          LocalDate beginDate;
          LocalDate endDate;
         String loi ="";
+            String filter=request.getParameter("filter");
         if(pobegin.length()==0 || poend.length()==0){
             loi = "Please input both From and To";
             session.setAttribute("mkt_de", loi);
@@ -73,7 +74,7 @@ public class MKTDashboardFilter extends HttpServlet {
         List<SaleChart> chart4;
               
             
-        String filter=request.getParameter("filter");
+    
         
         if(filter.equals("post"))
         {
@@ -95,10 +96,18 @@ public class MKTDashboardFilter extends HttpServlet {
                      chart2=odao.getTotalAmountByDay(beginDate, endDate);
                      session.setAttribute("chart2", chart2);
                      session.setAttribute("chart2name", "Tổng số sản phẩm bán được");
+                     chart3=odao.getRevenueAccumulateByDay(0, beginDate, diff);
+                      session.setAttribute("chart3", chart3);
+                     session.setAttribute("chart3name", "Tổng doanh số");
+                     chart4=odao.getTotalRevenueByDay(0, beginDate, diff);
+                        session.setAttribute("chart4", chart4);
+                     session.setAttribute("chart4name", "Doanh số theo ngày");
+                     
+                     
         }
            
         
-        
+          session.setAttribute("filter", filter);
         
         
         
@@ -110,6 +119,7 @@ public class MKTDashboardFilter extends HttpServlet {
         
         
     }
+      
          response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
     }
 
