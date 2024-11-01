@@ -220,10 +220,10 @@
                 new Chart(document.getElementById("chartjs-polar-area"), {
                 type: "polarArea",
                         data: {
-                        labels: [<c:forEach items="${sessionScope.monthBrand}" var="mb">"${mb.label}",</c:forEach>],
+                        labels: [<c:forEach items="${sessionScope.monthStatus}" var="mb">"${mb.label}",</c:forEach>],
                                 datasets: [{
                                 label: "Model S",
-                                        data: [<c:forEach items="${sessionScope.monthBrand}" var="mb">"${mb.value}",</c:forEach>, ],
+                                        data: [<c:forEach items="${sessionScope.monthStatus}" var="mb">"${mb.value}",</c:forEach>, ],
                                         backgroundColor: [
                                                 window.theme.primary,
                                                 window.theme.success,
@@ -246,10 +246,10 @@
                 new Chart(document.getElementById("chartjs-polar-area1"), {
                 type: "polarArea",
                         data: {
-                        labels: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.label}",</c:forEach>],
+                        labels: [<c:forEach  items="${sessionScope.monthBrand}" var="mc" > "${mc.label}",</c:forEach>],
                                 datasets: [{
                                 label: "Model S",
-                                        data: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.value}",</c:forEach>, ],
+                                        data: [<c:forEach  items="${sessionScope.monthBrand}" var="mc" > "${mc.value}",</c:forEach>, ],
                                         backgroundColor: [
                                                 window.theme.primary,
                                                 window.theme.success,
