@@ -315,17 +315,17 @@ public List<SaleChart> getNumberPostFeedBaclByDay(LocalDate startDate, LocalDate
 
         return sList;
     }
-    public static void main(String[] args) {
-                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-              String pobegin = "2024-10-01";
-        LocalDate poDate = LocalDate.parse(pobegin, formatter);
-            
-        LocalDate endDate= LocalDate.now();
-         PostFeedbackDAO pfdao=new PostFeedbackDAO();
-        List<SaleChart> list= pfdao.getNewFeedBackEachDay(poDate, endDate);
-         System.out.println(list.get(0).getValue());
-        
-    }
+//    public static void main(String[] args) {
+//                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+//              String pobegin = "2024-10-01";
+//        LocalDate poDate = LocalDate.parse(pobegin, formatter);
+//            
+//        LocalDate endDate= LocalDate.now();
+//         PostFeedbackDAO pfdao=new PostFeedbackDAO();
+//        List<SaleChart> list= pfdao.getNewFeedBackEachDay(poDate, endDate);
+//         System.out.println(list.get(0).getValue());
+//        
+//    }
        
 }

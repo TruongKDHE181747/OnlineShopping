@@ -8,6 +8,7 @@ package mkt_controller;
 import dal.OrderDAO;
 import dal.PostDAO;
 import dal.PostFeedbackDAO;
+import dal.ProductFeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import model.MKTChart;
 import model.SaleChart;
 
 /**
@@ -48,9 +50,11 @@ public class MKTDashboardFilter extends HttpServlet {
         PostDAO pdao=new PostDAO();
         OrderDAO odao=new OrderDAO();
         PostFeedbackDAO pfdao=new PostFeedbackDAO();
+        ProductFeedbackDAO prfdao=new ProductFeedbackDAO();
          LocalDate beginDate;
          LocalDate endDate;
         String loi ="";
+            String filter=request.getParameter("filter");
         if(pobegin.length()==0 || poend.length()==0){
             loi = "Please input both From and To";
             session.setAttribute("mkt_de", loi);
@@ -73,7 +77,7 @@ public class MKTDashboardFilter extends HttpServlet {
         List<SaleChart> chart4;
               
             
-        String filter=request.getParameter("filter");
+    
         
         if(filter.equals("post"))
         {
@@ -95,10 +99,27 @@ public class MKTDashboardFilter extends HttpServlet {
                      chart2=odao.getTotalAmountByDay(beginDate, endDate);
                      session.setAttribute("chart2", chart2);
                      session.setAttribute("chart2name", "Tổng số sản phẩm bán được");
+                     chart3=odao.getRevenueAccumulateByDay(0, beginDate, diff);
+                      session.setAttribute("chart3", chart3);
+                     session.setAttribute("chart3name", "Tổng doanh số");
+                     chart4=odao.getTotalRevenueByDay(0, beginDate, diff);
+                        session.setAttribute("chart4", chart4);
+                     session.setAttribute("chart4name", "Doanh số theo ngày");
+                     
+                     
         }
-           
+        else if(filter.equals("customer"))
+        {
+            List<MKTChart> avgrating=prfdao.getAvgRatingByDay(beginDate, endDate);
+             session.setAttribute("chart1", avgrating);
+                   session.setAttribute("chart1name", "Đánh giá trung bình");
+            chart2=prfdao.getNewFeedBackEachDay(beginDate, endDate);
+             session.setAttribute("chart2", chart2);
+                   session.setAttribute("chart2name", "Lượt đánh  giá mới");
+            
+        }
         
-        
+          session.setAttribute("filter", filter);
         
         
         
@@ -110,6 +131,7 @@ public class MKTDashboardFilter extends HttpServlet {
         
         
     }
+      
          response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
     }
 

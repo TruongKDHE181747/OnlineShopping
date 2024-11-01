@@ -106,7 +106,7 @@
                 <div class="col-md-6">
                     <canvas id="totalPostchart2"></canvas>
                 </div>
-                
+                                             <c:if test="${sessionScope.filter!='customer'}">
                 <!-- Biểu đồ thứ ba -->
                 <div class="col-md-6 mt-5">
                     <canvas id="totalPostchart3"></canvas>
@@ -116,6 +116,7 @@
                 <div class="col-md-6 mt-5">
                     <canvas id="totalPostchart4"></canvas>
                 </div>
+                </c:if>
             </div>
         </div>
         

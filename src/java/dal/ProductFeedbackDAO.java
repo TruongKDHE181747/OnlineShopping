@@ -7,13 +7,18 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.MKTChart;
 import model.Product;
 import model.ProductFeedback;
+import model.SaleChart;
 import model.User;
 
 /**
@@ -287,6 +292,41 @@ public class ProductFeedbackDAO extends DBContext {
         }
         return pList;
     }
+    
+        public ProductFeedback getProductFeedBackById(int id) {
+            ProductFeedback pf=null;
+        String sql = "select * from Feedbacks where feedback_id=?  \n";
+
+        ProductDAO pdao = new ProductDAO();
+        UserDAO udao = new UserDAO();
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+              pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+           
+            while (rs.next()) {
+                int feedback_id = rs.getInt("feedback_id");
+                int customer_id = rs.getInt("customer_id");
+                int order_id = rs.getInt("order_id");
+                int product_id = rs.getInt("product_id");
+                String review = rs.getString("review");
+                String thumnail = rs.getString("thumbnail");
+                int rating = rs.getInt("rating");
+                int is_active = rs.getInt("is_active");
+                Date create_at = rs.getDate("create_at");
+                Date modified_at = rs.getDate("modified_at");
+                Product product = pdao.getProductById(product_id);
+                User user = udao.getUserById(customer_id);
+                 pf = new ProductFeedback(feedback_id, customer_id, order_id, review, thumnail, rating, is_active, create_at, create_at, product, user);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pf;
+    }
+    
+    
 
     public List<ProductFeedback> sortProductFeedBack(String filter) {
         List<ProductFeedback> pList = new ArrayList<>();
@@ -321,14 +361,87 @@ public class ProductFeedbackDAO extends DBContext {
         }
         return pList;
     }
+    
+    public List<MKTChart> getAvgRatingByDay(LocalDate startDate, LocalDate endDate) {
+        List<MKTChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select AVG(rating) as totalfeedback \n" +
+                                  "from Feedbacks\n"
+                +          "where create_at <= ? ";
 
-//    public static void main(String[] args) {
-//        ProductFeedbackDAO pdao = new ProductFeedbackDAO();
-//        List<ProductFeedback> alldpfList = pdao.getAllFeetBackByProductId("1");
-//        for (ProductFeedback productFeedback : alldpfList) {
-//            System.out.println(productFeedback.getCustomer_img()+" "+productFeedback.getUpdate_at());
-//        }
-//    }
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
+
+
+        for (int i = 0; i <= daybetween; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date + "");
+
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    double value = rs.getDouble("totalfeedback");
+                    MKTChart mktchart=new MKTChart(fdate, value);
+                    sList.add(mktchart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        return sList;
+    }
+    
+    
+     public List<SaleChart> getNewFeedBackEachDay(LocalDate startDate, LocalDate endDate) {
+        List<SaleChart> sList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String sql = "select COUNT(feedback_id) as totalfeedback\n" +
+                                  "from Feedbacks\n"
+                + "where YEAR(create_at)=? AND MONTH(create_at)=? AND DAY(create_at)=?  ";
+
+          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
+
+
+        for (int i = 0; i <= daybetween; i++) {
+
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
+                LocalDate date = startDate.plusDays(i);
+                pre.setString(1, date.getYear()+  "");
+         pre.setString(2, date.getMonthValue()+  "");
+             pre.setString(3, date.getDayOfMonth() +  "");
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+
+                    String fdate = dtf.format(date);
+                    int value = rs.getInt("totalfeedback");
+                    SaleChart saleChart = new SaleChart(fdate, value);
+                    sList.add(saleChart);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        return sList;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+ 
     public String showReview(String review) {
         if (review.length() < 15) {
             return review;
