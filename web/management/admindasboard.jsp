@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
-                                            <canvas id="chartjs-line1"></canvas>
+                                            <canvas id="chartjs-polar-area1"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -239,62 +239,32 @@
                 });
                 });
             </script>
+            
             <script>
-
-            document.addEventListener("DOMContentLoaded", function () {
-            // Line chart
-            new Chart(document.getElementById("chartjs-line"), {
-            type: "line",
-                    data: {
-                    labels: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.label}",</c:forEach>],
-                            datasets: [{
-                            label: "Doanh thu (VND)",
-                                    fill: true,
-                                    backgroundColor: "transparent",
-                                    borderColor: window.theme.primary,
-                                    data: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.value}",</c:forEach>]
-                            }, ]
-                    },
-                    options: {
-                    maintainAspectRatio: false,
-                            legend: {
-                            display: false
-                            },
-                            tooltips: {
-                            intersect: false
-                            },
-                            hover: {
-                            intersect: true
-                            },
-                            plugins: {
-                            filler: {
-                            propagate: false
-                            }
-                            },
-                            scales: {
-                            xAxes: [{
-                            reverse: true,
-                                    gridLines: {
-                                    color: "rgba(0,0,0,0.05)"
-                                    }
-                            }],
-                                    yAxes: [{
-                                    ticks: {
-                                    stepSize: 500
-                                    },
-                                            display: true,
-                                            borderDash: [5, 5],
-                                            gridLines: {
-                                            color: "rgba(0,0,0,0)",
-                                                    fontColor: "#fff"
-                                            }
-                                    }]
-                            }
-                    }
-            });
-            });
+                document.addEventListener("DOMContentLoaded", function () {
+                // Polar Area chart
+                new Chart(document.getElementById("chartjs-polar-area1"), {
+                type: "polarArea",
+                        data: {
+                        labels: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.label}",</c:forEach>],
+                                datasets: [{
+                                label: "Model S",
+                                        data: [<c:forEach  items="${sessionScope.monthChart}" var="mc" > "${mc.value}",</c:forEach>, ],
+                                        backgroundColor: [
+                                                window.theme.primary,
+                                                window.theme.success,
+                                                window.theme.warning,
+                                                window.theme.danger,
+                                                window.theme.info
+                                        ]
+                                }]
+                        },
+                        options: {
+                        maintainAspectRatio: false
+                        }
+                });
+                });
             </script>
-
 
 
 
