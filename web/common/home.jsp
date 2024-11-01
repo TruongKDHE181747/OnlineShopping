@@ -266,13 +266,17 @@
         </div>
         <!-- Search End -->
 
-         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-<df-messenger
-  intent="WELCOME"
-  chat-title="Clothes_Test"
-  agent-id="8aa23345-6a5f-4ef6-8580-b78f67115fcb"
-  language-code="en"
-></df-messenger>  
+         <script type="text/javascript">
+    (function(d, m){
+        var kommunicateSettings = 
+            {"appId":"25bad573165478c1ff3ece638dcf09b54","popupWidget":true,"automaticChatOpenOnNavigation":true};
+        var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+        s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+        var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
+        window.kommunicate = m; m._globals = kommunicateSettings;
+    })(document, window.kommunicate || {});
+/* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
+</script>
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
