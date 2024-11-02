@@ -76,7 +76,8 @@
                                                                                                                     <c:if test="${order.orderStatusId == 2}">class="badge-primary badge font-weight-bold"</c:if>
                                                                                                                     <c:if test="${order.orderStatusId == 3}">class="badge-info badge font-weight-bold"</c:if>
                                                                                                                     <c:if test="${order.orderStatusId == 4}">class="badge-success badge font-weight-bold"</c:if>
-                                                                                                                    <c:if test="${order.orderStatusId == 5}">class="badge-danger badge font-weight-bold"</c:if>                            
+                                                                                                                    <c:if test="${order.orderStatusId == 5}">class="badge-danger badge font-weight-bold"</c:if>
+                                                                                                                    <c:if test="${order.orderStatusId == 6}">class="badge-success badge font-weight-bold"</c:if>
                                                                                                                     >${order.orderStatusName}</span></p>
                         </div>
                     </div>
@@ -160,6 +161,17 @@
             </div>
             <div class="text-right mt-4 mb-5 d-flex justify-content-end">
 
+                <c:if test="${order.orderStatusId == 6}">
+                    
+                    <form action="${pageContext.request.contextPath}/createorderghn" method="post" style="margin-left: 20px">
+                            <input type="hidden" name="orderId" value="${order.orderId}">                      
+                            <button type="submit" class="btn btn-info btn-lg" >
+                                Tạo đơn vận chuyển GHN
+                            </button>
+                        </form>
+                    
+                </c:if>
+                
                 <c:if test="${order.orderStatusId == 2}">
                     
                     <form action="${pageContext.request.contextPath}/packagedone" method="post" style="margin-left: 20px">
