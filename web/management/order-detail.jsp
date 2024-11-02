@@ -67,8 +67,17 @@
                         <div class="card-body">     
                             <p><strong>Ngày đặt hàng:</strong> ${order.orderedDate} </p>
                             <p><strong>Ngày nhận hàng:</strong> ${order.receiveDate != null ? order.receiveDate: '<span class="text-muted">Không có</span>'}</p>
-                            <p><strong>Phương thức thanh toán:</strong> ${order.paymentMethodName}</p>
-                            <p><strong>Trạng thái thanh toán:</strong> ${order.paymentStatusName}</p>
+                            <p><strong>Phương thức thanh toán:</strong> <span 
+                                                                        <c:if test="${order.paymentMethodId == 2}">class="badge-primary badge font-weight-bold"</c:if>
+                                                                        <c:if test="${order.paymentMethodId == 1}">class="badge-info badge font-weight-bold"</c:if>
+                                                                        > ${order.paymentMethodName}</span></p>
+                            <p><strong>Trạng thái thanh toán:</strong> <span  <c:if test="${order.paymentStatusId == 1}">class="badge-warning badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 2}">class="badge-success badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 3}">class="badge-danger badge font-weight-bold"</c:if>
+                                                                               s                                          <c:if test="${order.paymentStatusId == 4}">class="badge-warning badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 5}">class="badge-info badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 5}">class="badge-success badge font-weight-bold"</c:if>
+                                                                                                                         >${order.paymentStatusName}</span></p>
                             <p ><strong>Mã giao dịch VNPAY:</strong> ${order.vnpTxnRef != null ? order.vnpTxnRef: '<span class="text-muted">Không có</span>'}</p>
                             <p ><strong>Mã vận đơn:</strong> ${order.shippingCode != null ? order.shippingCode: '<span class="text-muted">Không có</span>'} </p>
                             <p><strong>Tổng tiền:</strong> <span class="badge badge-pink"><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></p>
@@ -161,26 +170,37 @@
             </div>
             <div class="text-right mt-4 mb-5 d-flex justify-content-end">
 
-                <c:if test="${order.orderStatusId == 6}">
-                    
-                    <form action="${pageContext.request.contextPath}/createorderghn" method="post" style="margin-left: 20px">
-                            <input type="hidden" name="orderId" value="${order.orderId}">                      
-                            <button type="submit" class="btn btn-info btn-lg" >
-                                Tạo đơn vận chuyển GHN
-                            </button>
-                        </form>
-                    
+                <c:if test="${order.orderStatusId == 3}">
+
+                    <form action="${pageContext.request.contextPath}/" method="post" style="margin-left: 20px">
+                        <input type="hidden" name="orderId" value="${order.orderId}">                      
+                        <button type="submit" class="btn btn-success btn-lg" >
+                            Đã nhận hàng
+                        </button>
+                    </form>
+
                 </c:if>
-                
+
+                <c:if test="${order.orderStatusId == 6}">
+
+                    <form action="${pageContext.request.contextPath}/createorderghn" method="post" style="margin-left: 20px">
+                        <input type="hidden" name="orderId" value="${order.orderId}">                      
+                        <button type="submit" class="btn btn-info btn-lg" >
+                            Tạo đơn vận chuyển GHN
+                        </button>
+                    </form>
+
+                </c:if>
+
                 <c:if test="${order.orderStatusId == 2}">
-                    
+
                     <form action="${pageContext.request.contextPath}/packagedone" method="post" style="margin-left: 20px">
-                            <input type="hidden" name="orderId" value="${order.orderId}">                      
-                            <button type="submit" class="btn btn-info btn-lg" >
-                                Đóng gói thành công
-                            </button>
-                        </form>
-                    
+                        <input type="hidden" name="orderId" value="${order.orderId}">                      
+                        <button type="submit" class="btn btn-info btn-lg" >
+                            Đóng gói thành công
+                        </button>
+                    </form>
+
                 </c:if>
                 <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6}">
                     <button style="margin-left: 20px" onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg me-2" >
@@ -227,7 +247,7 @@
                 window.location.href = "${pageContext.request.contextPath}/orderlist";
             }
         </script>
-        
+
         <c:if test="${not empty sessionScope.notify}">
             <script>
                 alert('${sessionScope.notify}');

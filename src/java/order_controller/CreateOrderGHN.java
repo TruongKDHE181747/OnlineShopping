@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +45,7 @@ public class CreateOrderGHN extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");
 
+        HttpSession session = request.getSession();
         OrderDAO orderDAO = new OrderDAO();
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
 
@@ -123,19 +125,23 @@ public class CreateOrderGHN extends HttpServlet {
             JSONObject jsonResponse = new JSONObject(responseBody);
 
             
-            response.getWriter().print(jsonResponse);
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
-                
-                
-                
-                //response.getWriter().print("Thành công");
+                String shippingCode = jsonResponse.getJSONObject("data").getString("order_code");
+                orderDAO.updateShippingCode(orderId, shippingCode);
+                orderDAO.updateOrderStatus(orderId, 3);
+                session.setAttribute("notify", "Tạo đơn vận chuyển thành công. Mã vận đơn: " + shippingCode);
+                response.sendRedirect(request.getContextPath() + "/orderdetail?orderId=" + orderId);
+
             } else {
-                //response.getWriter().print("Thất bại" + responseCode + " " + jsonResponse);
+                String msgGHN = jsonResponse.getString("code_message_value");
+                session.setAttribute("notify", "Tạo đơn vận chuyển thất bại. " + msgGHN);
+                response.sendRedirect(request.getContextPath() + "/orderdetail?orderId=" + orderId);
+
             }
-            
-        }catch(Exception ex){
-            
+
+        } catch (Exception ex) {
+
         }
     }
 
