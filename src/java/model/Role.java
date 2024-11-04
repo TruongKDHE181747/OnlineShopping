@@ -39,6 +39,11 @@ public class Role {
     public void setRolename(String rolename) {
         this.rolename = rolename;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" + "role_id=" + role_id + ", rolename=" + rolename + '}';
+    }
     
     
 }

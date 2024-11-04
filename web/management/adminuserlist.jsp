@@ -228,12 +228,12 @@
                                 <tr>
                                     <th scope="col">Id</th>
                                     <th scope="col">Username</th>
-                                    <th scope="col">First name</th>
-                                    <th scope="col">Last name</th>
-                                    <th scope="col">Phone number</th>
+                                    <th scope="col">Họ</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Số điện thoại</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Gender</th>
-                                    <th scope="col">Role</th>
+                                    <th scope="col">Giới tính</th>
+                                    <th scope="col">Chức vụ</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>

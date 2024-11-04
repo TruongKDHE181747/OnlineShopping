@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,6 +52,24 @@ public class RoleDAO extends DBContext {
             System.out.println(e);
         }
         return role;
+    }
+    public List<Role> getAllRole(){
+        List<Role> rList= new ArrayList<>();
+        String sql="select * from Roles";
+        try {
+            PreparedStatement pre= connection.prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            while (rs.next()) {
+                String rolename = rs.getString("rolename");
+                
+                int role_id= rs.getInt("role_id"); 
+                rList.add(new Role(role_id, rolename));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rList;
     }
     
 
