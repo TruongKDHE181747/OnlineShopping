@@ -780,18 +780,18 @@ public class OrderDAO extends DBContext {
 
     public List<SaleChart> getRevenueAccumulateByMonth(int year) {
         Map<String, Integer> months = new LinkedHashMap<>();
-        months.put("January", 1);
-        months.put("February", 2);
-        months.put("March", 3);
-        months.put("April", 4);
-        months.put("May", 5);
-        months.put("June", 6);
-        months.put("July", 7);
-        months.put("August", 8);
-        months.put("September", 9);
-        months.put("October", 10);
-        months.put("November", 11);
-        months.put("December", 12);
+        months.put("Tháng 1", 1);
+        months.put("Tháng 2", 2);
+        months.put("Tháng 3", 3);
+        months.put("Tháng 4", 4);
+        months.put("Tháng 5", 5);
+        months.put("Tháng 6", 6);
+        months.put("Tháng 7", 7);
+        months.put("Tháng 8", 8);
+        months.put("Tháng 9", 9);
+        months.put("Tháng 10", 10);
+        months.put("Tháng 11", 11);
+        months.put("Tháng 12", 12);
 
         List<SaleChart> sList = new ArrayList<>();
         String sql = "select sum(total_price) as Total_Price "
@@ -834,18 +834,18 @@ public class OrderDAO extends DBContext {
     }
     public List<SaleChart> getNumberOfOrderByMonth(int year){
         Map<String, Integer> months = new LinkedHashMap<>();
-        months.put("January", 1);
-        months.put("February", 2);
-        months.put("March", 3);
-        months.put("April", 4);
-        months.put("May", 5);
-        months.put("June", 6);
-        months.put("July", 7);
-        months.put("August", 8);
-        months.put("September", 9);
-        months.put("October", 10);
-        months.put("November", 11);
-        months.put("December", 12);
+        months.put("Tháng 1", 1);
+        months.put("Tháng 2", 2);
+        months.put("Tháng 3", 3);
+        months.put("Tháng 4", 4);
+        months.put("Tháng 5", 5);
+        months.put("Tháng 6", 6);
+        months.put("Tháng 7", 7);
+        months.put("Tháng 8", 8);
+        months.put("Tháng 9", 9);
+        months.put("Tháng 10", 10);
+        months.put("Tháng 11", 11);
+        months.put("Tháng 12", 12);
 
         List<SaleChart> sList = new ArrayList<>();
         String sql="select count(order_id) as Total_number from Orders\n" +
