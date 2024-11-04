@@ -41,8 +41,26 @@
             <!-- END menu -->
 
             <div class="col-md-10" style="padding: 40px;">
+                <div style="margin-left: 20px">
+                <form id="filter-form" action="../admindashboardfilter" class="d-flex justify-content-start mb-3">
+                    <label for="month-select" class="form-label me-2">Tháng:</label>
+                    <select id="month-select" name="months" class="form-select form-select-sm me-3" style="width: auto;">
+                        <c:forEach var="months" begin="1" end="12">
+                            <option value="${months}" <c:if test="${months == month}">selected</c:if>>Tháng ${months}</option>
+                        </c:forEach>
 
+                    </select>
 
+                    <label for="year-select" class="form-label me-2">Năm:</label>
+                    <select id="year-select" name="years" class="form-select form-select-sm me-3" style="width: auto;">
+                        <c:forEach var="years" begin="2020" end="2030">
+                            <option value="${years}" <c:if test="${years == year}">selected</c:if>>${years}</option>
+                        </c:forEach>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary">Áp dụng</button>
+                </form>
+                </div>
 
                 <!-- START products -->
                 <div class="contract">
@@ -88,7 +106,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card flex-fill w-100">
                                     <div class="card-header">
-                                        <h5 class="card-title">Doanh thu theo nhãn hàng</h5>
+                                        <h5 class="card-title">Tổng số sản phẩm theo nhãn hàng</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
@@ -239,7 +257,7 @@
                 });
                 });
             </script>
-            
+
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                 // Polar Area chart
@@ -264,7 +282,7 @@
                         }
                 });
                 });
-            </script>
+        </script>
 
 
 
