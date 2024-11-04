@@ -40,14 +40,14 @@ public class AdminDashboard extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
         LocalDate currentDate = LocalDate.now();
-        int month=10;
+        int month=currentDate.getMonthValue();
         int year= currentDate.getYear();
         OrderDAO odao= new OrderDAO();
         
         List<SaleChart> monthChart= odao.getRevenueAccumulateByMonth(year);
         List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth(year);
-        List<SaleChart> monthStatus= odao.getNumberStatusOrderByMonth(10,year);
-        List<SaleChart> mmonthBrand= odao.getTotalByBrandInMonth(10,year);
+        List<SaleChart> monthStatus= odao.getNumberStatusOrderByMonth(month,year);
+        List<SaleChart> mmonthBrand= odao.getTotalByBrandInMonth(month,year);
         int totalOrder = odao.getTotalOrderInMonth(month, year);
         session.setAttribute("monthOrder", monthOrder);
         session.setAttribute("monthChart", monthChart);
