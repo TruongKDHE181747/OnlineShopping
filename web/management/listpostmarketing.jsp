@@ -138,7 +138,7 @@
         
     </head>
     <body>
-        <jsp:include page="../common/header.jsp" />
+        <jsp:include page="../common/headermanage.jsp"/>
         <div class="row">
            <!-- START menu -->
             <jsp:include page="marketing_header.jsp"/>
@@ -358,8 +358,7 @@
                     </div>
                 </div>
                 <!-- END products -->
-                
-                <jsp:include page="../common/footer.jsp" />
+              
             </div>
             
         </div>
