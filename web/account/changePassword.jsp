@@ -44,7 +44,7 @@
                                         <label class="small mb-1" for="confirmPassword">Xác Nhận Mật Khẩu</label>
                                         <input maxlength="50" name="confirmPassword" class="form-control" id="confirmPassword" type="password" placeholder="Xác nhận mật khẩu mới" required>
                                     </div>
-                                    <button class="btn btn-primary" type="submit">Lưu</button>
+                                    <button class="btn btn-dark" type="submit">Lưu</button>
                                 </form>
                             </div>
                         </c:if>

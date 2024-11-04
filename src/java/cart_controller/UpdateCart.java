@@ -4,13 +4,16 @@
  */
 package cart_controller;
 
+import dal.ProductDAO;
 import dal.ProductSizeDAO;
+import dal.SizeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import model.Cart;
@@ -37,7 +40,10 @@ public class UpdateCart extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        HttpSession session = request.getSession();
         ProductSizeDAO psDAO = new ProductSizeDAO();
+        ProductDAO productDAO = new ProductDAO();
+        SizeDAO sizeDAO = new SizeDAO();
 
         try {
 
@@ -47,7 +53,7 @@ public class UpdateCart extends HttpServlet {
 
                 int pid = Integer.parseInt(request.getParameter("pid_" + i));
                 int sid = Integer.parseInt(request.getParameter("sid_" + i));
-                int quantity = Integer.parseInt(request.getParameter("quantity_" + i));              
+                int quantity = Integer.parseInt(request.getParameter("quantity_" + i));
 
                 if (txt.isBlank() || txt.isEmpty()) {
                     txt += pid + ":" + sid + ":" + quantity;
@@ -55,34 +61,35 @@ public class UpdateCart extends HttpServlet {
                     txt += "#" + pid + ":" + sid + ":" + quantity;
                 }
             }
-            
-            
+
             Cart c = new Cart(txt);
             String finalTxt = "";
+            String cartQuantityError = "";
             for (String p : c.getFormatText().split("#")) {
-                
+
                 String[] s = p.split(":");
-                
+
                 int pid = Integer.parseInt(s[0]);
                 int sid = Integer.parseInt(s[1]);
                 int quantity = Integer.parseInt(s[2]);
-                
+
                 ProductSize productSize = psDAO.getProductSize(sid, pid);
 
                 int stock = productSize.getQuantity();
 
                 if (quantity > stock) {
                     quantity = stock;
+                    cartQuantityError += "* " + productDAO.getProductById(pid).getProduct_name() + ", kích cỡ " + sizeDAO.getSizeById(sid).getSize_name() + " chỉ còn " + stock + " chiếc <br>";
                 }
-                
+
                 if (finalTxt.isBlank() || finalTxt.isEmpty()) {
                     finalTxt += pid + ":" + sid + ":" + quantity;
                 } else {
                     finalTxt += "#" + pid + ":" + sid + ":" + quantity;
                 }
             }
-            
-            
+            session.setAttribute("cartQuantityError", cartQuantityError);
+
             Cookie cart = new Cookie(Constants.COOKIE_CART, finalTxt);
             cart.setMaxAge(Constants.COOKIE_CART_MAXAGE);
             response.addCookie(cart);

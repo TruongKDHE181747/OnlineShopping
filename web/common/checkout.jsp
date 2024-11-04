@@ -269,6 +269,14 @@
         </script>
         
 
+        <c:if test="${not empty sessionScope.totalAmountError}">
+            <script>
+                alert('${sessionScope.totalAmountError}');
+            </script>
+
+            <%session.removeAttribute("totalAmountError");%>
+        </c:if>
+            
         <c:if test="${not empty sessionScope.systemError}">
             <script>
                                         alert('Lỗi hệ thống. Vui lòng thử lại sau !');

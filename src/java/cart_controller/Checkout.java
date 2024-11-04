@@ -145,6 +145,12 @@ public class Checkout extends HttpServlet {
             int totalAmount = (int) Double.parseDouble(request.getParameter("totalAmount"));
             int paymentMethod = Integer.parseInt(request.getParameter("paymentMethod"));
 
+            if (paymentMethod == 1 && totalAmount >= 5000000) {
+                session.setAttribute("totalAmountError", "* Phương thức thanh toán khi nhận hàng chỉ áp dụng với đơn hàng dưới 5.000.000đ.\\n* Quý khách vui lòng giảm giá trị đơn hàng hoặc chọn phương thức thanh toán khác để tiếp tục.\\n");
+                response.sendRedirect(request.getContextPath() +"/checkout");
+                return;
+            }
+
             int intVoucherId = 1;
             if (voucherId != null && !voucherId.isEmpty()) {
                 intVoucherId = Integer.parseInt(voucherId);
@@ -196,6 +202,7 @@ public class Checkout extends HttpServlet {
             }
 
             //end insert Order
+            
             //insert Order Detail
             for (CartItem item : items) {
 
@@ -228,14 +235,6 @@ public class Checkout extends HttpServlet {
 
                     productSizeDAO.updateQuantityOfEachSize(sizeId, productId, stock - itemQuantity);
 
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals(Constants.COOKIE_CART)) {
-                            cookie.setMaxAge(0);
-                            response.addCookie(cookie);
-                            break;
-                        }
-                    }
-
                 } else {
                     response.sendRedirect(request.getContextPath() + "/orderstatus?status=fail");
                     return;
@@ -243,7 +242,17 @@ public class Checkout extends HttpServlet {
 
             }
             //end insert
-
+            
+            //remove from cart
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(Constants.COOKIE_CART)) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
+            
+            //payment
             if (paymentMethod == 2) {
                 request.setAttribute("orderId", orderId);
                 request.setAttribute("totalAmount", totalAmount);

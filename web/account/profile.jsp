@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                                 <!-- Save changes button-->
-                                <button class="btn btn-primary" type="submit">Lưu Thay Đổi</button>
+                                <button class="btn btn-dark" type="submit">Lưu Thay Đổi</button>
                             </form>
                         </div>
                     </div>

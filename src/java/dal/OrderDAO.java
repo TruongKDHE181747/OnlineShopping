@@ -1091,7 +1091,27 @@ public class OrderDAO extends DBContext {
             return sList;
     }
     
-    
+    public boolean updateShippingCode(int orderId, String shipping_code) {
+        String sql = """
+                     UPDATE [dbo].[Orders]
+                         SET 
+                            [shipping_code] = ?
+                       WHERE [order_id] = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, shipping_code);
+            ps.setInt(2, orderId);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         OrderDAO odao = new OrderDAO();

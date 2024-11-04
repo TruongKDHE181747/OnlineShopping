@@ -192,7 +192,7 @@
                                             >${o.paymentMethodName}</td>
 
                                         <td
-                                            <c:if test="${o.paymentStatusId == 1}">class="text-dark  font-weight-bold"</c:if>
+                                            <c:if test="${o.paymentStatusId == 1}">class="text-warning  font-weight-bold"</c:if>
                                             <c:if test="${o.paymentStatusId == 2}">class="text-success  font-weight-bold"</c:if>
                                             <c:if test="${o.paymentStatusId == 3}">class="text-danger  font-weight-bold"</c:if>
                                             <c:if test="${o.paymentStatusId == 4}">class="text-warning  font-weight-bold"</c:if>

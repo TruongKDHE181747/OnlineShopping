@@ -95,7 +95,7 @@
                             <div id="" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                                 <!-- Sample addresses (these would be dynamically generated in a real application) -->
                                 <div class="col-lg-12" style="margin: 20px 0">
-                                    <button style="width: 60px" type="button" onclick="openAddForm()" class="btn btn-sm btn-outline-primary me-2" >
+                                    <button style="width: 60px" type="button" onclick="openAddForm()" class="btn btn-sm btn-outline-dark me-2" >
                                         <span class="fa fa-plus"></span>
                                     </button>
                                 </div>
@@ -115,7 +115,7 @@
 
                                                 </div>
                                                 <div class="card-footer">
-                                                    <button style="width: 80px" class="btn btn-sm btn-outline-primary me-2"
+                                                    <button style="width: 80px" class="btn btn-sm btn-outline-dark me-2"
 
                                                             onclick="openUpdateForm('${o.customer_addresses_id}'
                                                                             , '${o.receiver_name}'
@@ -213,8 +213,8 @@
 
 
                             <div class="modal-footer">
-                                <button style="width: 80px" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button style="width: 80px" type="submit" class="btn btn-primary" id='submitButton' >Thêm</button>
+                                <button style="width: 80px" type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                <button style="width: 80px" type="submit" class="btn btn-dark" id='submitButton' >Thêm</button>
                             </div>
 
                             <input type="hidden" id="addressId" name="addressId">

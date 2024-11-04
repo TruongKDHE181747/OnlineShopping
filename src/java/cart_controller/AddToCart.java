@@ -4,13 +4,16 @@
  */
 package cart_controller;
 
+import dal.ProductDAO;
 import dal.ProductSizeDAO;
+import dal.SizeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import model.Cart;
@@ -35,7 +38,11 @@ public class AddToCart extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
         ProductSizeDAO psDAO = new ProductSizeDAO();
+        ProductDAO productDAO = new ProductDAO();
+        SizeDAO sizeDAO = new SizeDAO();
 
         String productId = request.getParameter("pid");
         String sizeId = request.getParameter("sid");
@@ -73,6 +80,8 @@ public class AddToCart extends HttpServlet {
 
             if (qty > stock) {
                 qty = stock;
+                String cartQuantityError = "* " + productDAO.getProductById(pid).getProduct_name() + ", kích cỡ " + sizeDAO.getSizeById(sid).getSize_name() + " chỉ còn " + stock + " chiếc <br>";
+                session.setAttribute("cartQuantityError", cartQuantityError);
             }
 
             if (finalTxt.isBlank() || finalTxt.isEmpty()) {

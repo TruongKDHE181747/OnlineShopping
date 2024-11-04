@@ -33,12 +33,12 @@
                     <table class="table table-striped table-hover">
                         <thead class="table-dark">
                             <tr>
-                                <th>STT</th>
-                                <th>Ngày đặt hàng</th>
-                                <th>Tổng tiền</th>
+                                <th style="vertical-align: top">STT</th>
+                                <th style="vertical-align: top">Ngày đặt hàng</th>
+                                <th style="vertical-align: top">Tổng tiền</th>
                                 <th>Phương thức thanh toán</th>
                                 <th>Trạng thái đơn hàng</th>
-                                <th></th>
+                                <th style="vertical-align: top">Xem</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,7 +62,7 @@
                                     <td>
                                         <form action="orderhistorydetail" method="get">
                                             <input type="hidden" name="orderId" value="${o.orderId}">
-                                            <button class="btn btn-sm btn-primary"><span class="fa fa-eye"></span></button>
+                                            <button class="btn btn-sm btn-dark"><span class="fa fa-eye"></span></button>
                                         </form>
                                     </td>
                                 </tr>
