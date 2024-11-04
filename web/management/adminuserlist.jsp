@@ -197,20 +197,18 @@
                                 <div class="container-fluid">
                                     <div class="" id="navbarSupportedContent">
                                         <div class="dropdown">
-                                            <button class="dropbtn">Classification</button>
+                                            <button class="dropbtn">Phân loại</button>
                                             <div class="dropdown-content">
-                                                <a href="../userclassification?role=1">Admin</a>
-                                                <a href="../userclassification?role=2">Sale manager</a>
-                                                <a href="../userclassification?role=3">Saler</a>
-                                                <a href="../userclassification?role=4">Maketer</a>
-                                                <a href="../userclassification?role=5">User</a>
+                                                <c:forEach var="role" items="${sessionScope.rList}">
+                                                <a href="../userclassification?role=${role.role_id}">${role.rolename}</a>
+                                                </c:forEach>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchuser">
-                                            <input placeholder="Search..." name="usersearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                            <input placeholder="Nhập để tìm kiếm..." name="usersearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <button class="btn btn-outline-success" type="submit">Tìm</button>
                                         </form>
                                     </div>
 

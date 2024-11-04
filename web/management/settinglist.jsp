@@ -199,18 +199,18 @@
                                 <div class="container-fluid">
                                     <div class="" id="navbarSupportedContent">
                                         <div class="dropdown">
-                                            <button class="dropbtn">Classification</button>
+                                            <button class="dropbtn">Phân loại</button>
                                             <div class="dropdown-content">
-                                                <a href="../settingpaging?ptype=product">Product</a>
-                                                <a href="../settingpaging?ptype=post">Post</a>
+                                                <a href="../settingpaging?ptype=product">Sản phẩm</a>
+                                                <a href="../settingpaging?ptype=post">Bài đăng</a>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../settingsearch">
-                                            <input placeholder="Search..." name="psearch" class="form-control me-2" type="search" aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                            <input placeholder="Nhập để tìm kiếm..." name="psearch" class="form-control me-2" type="search" aria-label="Search">
+                                            <button class="btn btn-outline-success" type="submit">Tìm</button>
                                         </form>
                                     </div>
 
@@ -227,9 +227,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Classification</th>
-                                    <th scope="col"> Status</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Phân loại</th>
+                                    <th scope="col">Trạng thái</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -242,14 +242,14 @@
                                 <tr>
                                     <th scope="row">${counter}</th>
                                     <td>${pl.product_category_name}</td>
-                                    <td>Product</td>
+                                    <td>Sản phẩm</td>
                                     <td>
                                     <c:if test="${pl.is_active==1}">
-                                            <p style="color: green">Active</p>
+                                            <p style="color: green">Hoạt động</p>
                                         
                                         </c:if>
                                                <c:if test="${pl.is_active==0}">
-                                            <p style="color: red">Inactive</p>
+                                            <p style="color: red">Ngừng hoạt động</p>
                                         
                                         </c:if></td>
                                     <td>
@@ -276,14 +276,14 @@
                                 <tr>
                                     <th scope="row">${counter}</th>
                                     <td>${p.post_category_name}</td>
-                                    <td>Post</td>
+                                    <td>Bài đăng</td>
                                     <td>
                                     <c:if test="${p.is_active==1}">
-                                            <p style="color: green">Active</p>
+                                            <p style="color: green">Hoạt động</p>
                                         
                                         </c:if>
                                                <c:if test="${p.is_active==0}">
-                                            <p style="color: red">Inactive</p>
+                                            <p style="color: red">Ngừng hoạt động</p>
                                         
                                         </c:if></td>
                                     <td>

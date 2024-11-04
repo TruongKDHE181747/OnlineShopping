@@ -5,6 +5,7 @@
 
 package admin_controller;
 
+import dal.RoleDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Role;
 import model.User;
 
 /**
@@ -34,11 +36,14 @@ public class AdminUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         UserDAO udao= new UserDAO();
+        RoleDAO rdao= new RoleDAO();
+        List<Role> rList= rdao.getAllRole();
         List<User> list=udao.getALlUser();
         List<User> ulist=udao.getUserPaging(1);
         session.setAttribute("curentpage", 1);
         session.setAttribute("numberpage", getNumberOfPage(list.size(), 5));
         session.setAttribute("ulist", ulist);
+        session.setAttribute("rList", rList);
         response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
     } 
 

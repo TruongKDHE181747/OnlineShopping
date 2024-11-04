@@ -199,18 +199,18 @@
                                     <div id="navbarSupportedContent" class="d-flex justify-content-around align-items-center w-100">
                                         <form class="d-flex align-items-center w-75 justify-content-between" role="search" action="../searchvoucher">
                                             <div class="d-flex align-items-center">
-                                                <h5 class="navbar-brand me-2" style="font-weight: bold;">From:</h5>
+                                                <h5 class="navbar-brand me-2" style="font-weight: bold;">Từ:</h5>
                                                 <input value="" name="begindate" class="form-control me-4" type="date" aria-label="From Date">
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <h5 class="navbar-brand me-2" style="font-weight: bold;">To:</h5>
+                                                <h5 class="navbar-brand me-2" style="font-weight: bold;">Đến:</h5>
                                                 <input value="" name="enddate" class="form-control me-4" type="date" aria-label="To Date">
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <input placeholder="Search..." name="vsearch" class="form-control me-4" type="search" aria-label="Search">
-                                                <button class="btn btn-outline-success me-4" type="submit">Search</button>
+                                                <input placeholder="Nhập để tìm kiếm..." name="vsearch" class="form-control me-4" type="search" aria-label="Search">
+                                                <button class="btn btn-outline-success me-4" type="submit">Tìm</button>
                                             </div>
                                         </form>
 
@@ -231,12 +231,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">End Date</th>
-                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Ngày bắt đầu</th>
+                                    <th scope="col">Ngày kết thúc</th>
+                                    <th scope="col">Số lượng </th>
                                     <th scope="col">Discount(%)</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Trạng thái</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -254,11 +254,11 @@
                                         <td>${vl.percent}</td>
                                         <td>
                                             <c:if test="${vl.is_active==1}">
-                                                <p style="color: green">Active</p>
+                                                <p style="color: green">Hoạt động</p>
 
                                             </c:if>
                                             <c:if test="${vl.is_active==0}">
-                                                <p style="color: red">Inactive</p>
+                                                <p style="color: red">Ngừng hoạt động</p>
 
                                             </c:if>
                                         </td>
