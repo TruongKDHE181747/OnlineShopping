@@ -117,7 +117,7 @@ public class MarketingFilter implements Filter {
                 res.sendRedirect(req.getContextPath()+"/management/marketingfilter.jsp");
             } else if(acc.getRole().getRole_id()==4) {
 
-                //Nothing happen => follow normal flow
+                //Nothing wrong happen => follow normal flow in the servlet, jsp 
                   chain.doFilter(request, response);  
             }
         }
