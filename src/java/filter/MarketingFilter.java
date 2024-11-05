@@ -116,34 +116,15 @@ public class MarketingFilter implements Filter {
             if(acc.getRole().getRole_id()!=4){
                 res.sendRedirect(req.getContextPath()+"/management/marketingfilter.jsp");
             } else if(acc.getRole().getRole_id()==4) {
-                String uri = req.getServletPath();
-                if(uri.endsWith("listpostmarketing")){
-                    res.sendRedirect(req.getContextPath()+"/management/listpostmarketing.jsp");
-                } else if(uri.endsWith("addpostmarketing.jsp")){
-                    res.sendRedirect(req.getContextPath()+"/management/addpostmarketing.jsp");
-                }else if(uri.endsWith("viewpostmarketing")){
-                    res.sendRedirect(req.getContextPath()+"/management/viewpostmarketing.jsp");
-                }else if(uri.endsWith("editpostmarketing")){
-                    res.sendRedirect(req.getContextPath()+"/management/editpostmarketing.jsp");
-                }
 
-                    
-                //res.sendRedirect(req.getContextPath()+req.getRequestURI());
+                //Nothing happen => follow normal flow
+                  chain.doFilter(request, response);  
             }
         }
         
         
 	Throwable problem = null;
-	try {
-	    chain.doFilter(request, response);
-	}
-	catch(Throwable t) {
-	    // If an exception is thrown somewhere down the filter chain,
-	    // we still want to execute our after processing, and then
-	    // rethrow the problem after that.
-	    problem = t;
-	    t.printStackTrace();
-	}
+	
 
 	doAfterProcessing(request, response);
 

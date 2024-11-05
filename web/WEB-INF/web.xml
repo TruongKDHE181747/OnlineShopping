@@ -42,15 +42,15 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>MarketingFilter</filter-name>
-        <url-pattern>/listpostmarketing</url-pattern>
-        <url-pattern>/addpostmarketing.jsp</url-pattern>
-        <url-pattern>/viewpostmarketing</url-pattern>
-        <url-pattern>/editpostmarketing</url-pattern>
+        <url-pattern>/management/listpostmarketing.jsp</url-pattern>
+        <url-pattern>/management/addpostmarketing.jsp</url-pattern>
+        <url-pattern>/management/viewpostmarketing.jsp</url-pattern>
+        <url-pattern>/management/editpostmarketing.jsp</url-pattern>
         <url-pattern>/productlist</url-pattern>
-        <url-pattern>/add-product.jsp</url-pattern>
+        <url-pattern>/management/add-product.jsp</url-pattern>
         <url-pattern>/viewproduct</url-pattern>
         <url-pattern>/editproduct</url-pattern>
-        <url-pattern>/addslider.jsp</url-pattern>
+        <url-pattern>/management/addslider.jsp</url-pattern>
         <url-pattern>/sliderlist</url-pattern>
     </filter-mapping>
     <filter-mapping>
