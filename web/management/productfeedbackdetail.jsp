@@ -99,16 +99,16 @@
                                     </div>
                                             <div class="col-sm-6">  
                                                   <div class="my-3 col-sm-6">
-                                    <label for="status" class="form-label">Status</label>
+                                    <label for="status" class="form-label">Trạng thái</label>
                                     <div class="form-check">
                                         <input value="1" id="status" name="status" type="radio" class="form-check-input"
                                                <c:if test="${pf.is_active == 1}"> checked</c:if>>
-                                               <label class="form-check-label" for="status">Active</label>
+                                               <label class="form-check-label" for="status">Hiện</label>
                                         </div>
                                         <div class="form-check">
                                             <input value="0" id="status" name="status" type="radio" class="form-check-input"
                                             <c:if test="${pf.is_active == 0}"> checked</c:if>>
-                                            <label class="form-check-label" for="status">Inactive</label>
+                                            <label class="form-check-label" for="status">Ẩn</label>
                                         </div>
                                     </div>
                                             </div>

@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Phản hồi sản phẩm</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -148,16 +148,16 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Product Feedback List</h5>
+                                    <h5 class="navbar-brand" >Danh sách phản hồi</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../productfeedbackfilter" method="get">
                                             <select name="filter">
                                                
-                                                <option value="product_id" selected >Sort by Product</option>
-                                              <option value="customer_id"<c:if test="${sessionScope.filter=='customer_id'}"> selected </c:if>>Sort by User</option>
-                                             <option value="rating"<c:if test="${sessionScope.filter=='rating'}"> selected </c:if>>Sort by rating</option> 
-                                           <option value="create_at"<c:if test="${sessionScope.filter=='create_at'}"> selected </c:if>>Sort by time</option> 
+                                                <option value="product_id" selected >Sắp xếp theo sản phẩm</option>
+                                              <option value="customer_id"<c:if test="${sessionScope.filter=='customer_id'}"> selected </c:if>>Sắp xếp theo người dùng</option>
+                                             <option value="rating"<c:if test="${sessionScope.filter=='rating'}"> selected </c:if>>Sắp xếp theo đánh giá</option> 
+                                           <option value="create_at"<c:if test="${sessionScope.filter=='create_at'}"> selected </c:if>>Mới nhất</option> 
                                         </select>
                                             <button class="btn btn-outline-success" type="submit"><i class="bi bi-filter"></i></button>
                                         </form>
@@ -172,13 +172,13 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
-                                      <th scope="col">Product Img</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col"> Rating</th>  
-                                    <th scope="col">Content</th>
-                                    <th scope="col"> User</th>
-                                   <th scope="col"> Time Created</th>
-                                    <th>Status</th>
+                                      <th scope="col">Ảnh sản phẩm</th>
+                                    <th scope="col">Tên sản phẩm</th>
+                                    <th scope="col"> Đánh giá</th>  
+                                    <th scope="col">Nội dung</th>
+                                    <th scope="col"> Người dùng</th>
+                                   <th scope="col"> Thời gian</th>
+                                    <th>Trạng thái</th>
                                     <th>Chi tiết</th>
                                     <th>Chỉnh sửa</th>
                                 </tr>
