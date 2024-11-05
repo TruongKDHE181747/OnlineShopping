@@ -185,13 +185,19 @@
         <jsp:include page="../common/js.jsp" />
 
 
+        <c:if test="${not empty sessionScope.cartError}">
+            <script>
+                                        alert('${sessionScope.cartError}');
+            </script>
 
+            <% session.removeAttribute("cartError"); %>
+        </c:if>
 
         <c:if test="${not empty sessionScope.noAddressError}">
             <script>
-                                        if (confirm('${sessionScope.noAddressError} Bạn có muốn tạo một địa chỉ ngay bây giờ không?')) {
-                                            window.location.href = 'address';
-                                        }
+                if (confirm('${sessionScope.noAddressError} Bạn có muốn tạo một địa chỉ ngay bây giờ không?')) {
+                    window.location.href = 'address';
+                }
             </script>
 
             <% session.removeAttribute("noAddressError"); %>

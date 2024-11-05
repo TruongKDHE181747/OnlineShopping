@@ -62,8 +62,10 @@ public class ShippingFee {
         String responseBody = responseBuilder.toString();
 
         JSONObject jsonResponse = new JSONObject(responseBody);
-
-        int total = jsonResponse.getJSONObject("data").getInt("total");
+        int total = 0;
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            total = jsonResponse.getJSONObject("data").getInt("total");
+        }
 
         return total;
     }

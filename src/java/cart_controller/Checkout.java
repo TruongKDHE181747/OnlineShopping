@@ -81,7 +81,7 @@ public class Checkout extends HttpServlet {
 
         if (address == null) {
             session.setAttribute("noAddressError",
-                    "No address found. Please add an address before checkout.");
+                    "Không tìm thấy địa chỉ. Thêm địa chỉ trước khi tiến hành thanh toán.");
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }
@@ -97,6 +97,13 @@ public class Checkout extends HttpServlet {
 
         int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(), weight);
 
+        if(shippingFee == 0){
+            session.setAttribute("cartError",
+                    "Đã có lỗi xảy ra khi tính chi phí vận chuyển. Vui lòng thử lại sau.");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
         request.setAttribute("ship", shippingFee);
 
         request.getRequestDispatcher("/common/checkout.jsp").forward(request, response);
