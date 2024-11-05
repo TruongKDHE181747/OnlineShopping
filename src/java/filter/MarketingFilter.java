@@ -116,7 +116,7 @@ public class MarketingFilter implements Filter {
             if(acc.getRole().getRole_id()!=4){
                 res.sendRedirect(req.getContextPath()+"/homeslider");
             } else if(acc.getRole().getRole_id()==4) {
-                res.sendRedirect(req.getContextPath()+"/listpostmarketing.jsp");
+                res.sendRedirect(req.getContextPath()+"/management/listpostmarketing.jsp");
                 
             }
         }
