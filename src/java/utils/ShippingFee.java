@@ -44,13 +44,10 @@ public class ShippingFee {
             os.write(requestBody.getBytes("UTF-8"));
         }
 
-        InputStream responseStream = connection.getInputStream();
-        Scanner scanner = new Scanner(new InputStreamReader(responseStream, "UTF-8")).useDelimiter("\\A");
-
-        
-        String jsonResponse = scanner.hasNext() ? scanner.next() : "";
-        scanner.close();
-        responseStream.close();
+        String jsonResponse;
+        try (InputStream responseStream = connection.getInputStream(); Scanner scanner = new Scanner(new InputStreamReader(responseStream, "UTF-8")).useDelimiter("\\A")) {
+            jsonResponse = scanner.hasNext() ? scanner.next() : "";
+        }
         
         JSONObject obj = new JSONObject(jsonResponse);
         
