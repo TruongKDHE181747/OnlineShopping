@@ -52,7 +52,7 @@ public class Contact extends HttpServlet {
        
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
-        String message = request.getParameter("message").substring(0, 2000);
+        String message = request.getParameter("message");
         
         
         Email em = new Email();
