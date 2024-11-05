@@ -152,8 +152,9 @@
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchslider" method="get">
-                                            <input placeholder="Search by  name,description,..." name="search" class="form-control me-2" type="search"  aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                            <input placeholder="Nhập tên hoặc mô tả" name="search" class="form-control me-2" type="search"  aria-label="Search">
+                                            <div style="width: 150px;height: 70px">
+                                                <button class="btn btn-outline-success" type="submit" style="width: 120px;height: 40px;">Tìm kiếm</button></div>
                                         </form>
                                     </div>
 
@@ -169,12 +170,12 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                      <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col"> Status</th>
-                                    <th scope="col" style="width: 14%">Action</th>
+                                    <th scope="col">No.</th>
+                                      <th scope="col">Tiêu đề</th>
+                                    <th scope="col">Mô tả</th>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col"> Trạng thái</th>
+                                    <th scope="col" style="width: 14%">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -195,11 +196,11 @@
                                     
                                     <td>
                                         <c:if test="${s.status==1}">
-                                            <p style="color: green">Active</p>
+                                            <p style="color: green">Hoạt động</p>
                                         
                                         </c:if>
                                                <c:if test="${s.status==0}">
-                                            <p style="color: red">Inactive</p>
+                                            <p style="color: red">Không hoạt động</p>
                                         
                                         </c:if>
                                         
@@ -215,7 +216,7 @@
                                                   
                                               
                                                 
-                                            <a href="../updateslider?sid=${s.id}&button=hide" onclick="return confirm('Hide this slider?')"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
+                                            <a href="../updateslider?sid=${s.id}&button=hide" onclick="return confirm('Ẩn slider này?')"><i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
                                             
                                         </div>
                                         </c:if>
@@ -228,7 +229,7 @@
                                                   
                                               
                                                 
-                                           <a href="../updateslider?sid=${s.id}&button=show" onclick="return confirm('Show this slider?')">
+                                           <a href="../updateslider?sid=${s.id}&button=show" onclick="return confirm('Hiện slider này?')">
     <i style="color: black;" class="bi bi-eye-fill"></i>
 </a>
 
@@ -239,7 +240,7 @@
                                             <a href="../updateslider?sid=${s.id}&button=edit"><i style="color: black;" class="bi bi-pencil-fill"></i></a>     
                                         </div>
                                          <div class="remove" style="background-color: orangered">
-                                            <a href="../deleteslider?sid=${s.id}" onclick="return confirm('Delete this slider?')"><i style="color: black;" class="bi bi-trash"></i></a>     
+                                            <a href="../deleteslider?sid=${s.id}" onclick="return confirm('Xoá slider?')"><i style="color: black;" class="bi bi-trash"></i></a>     
                                         </div>
                                     </td>
                                     

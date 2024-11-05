@@ -237,7 +237,7 @@
                                                   
                                               
                                                 
-                                         <i style="color: black;" class="bi bi-eye-slash-fill"></i>
+                                            <a href="../updateproductfeedback?button=hide&pfid=${s.feedback_id}">  <i style="color: black;" class="bi bi-eye-slash-fill"></i></a>
                                             
                                         </div>
                                         </c:if>
@@ -251,7 +251,7 @@
                                               
                                                 
                                            
-                                                    <i style="color: black;" class="bi bi-eye-fill"></i>
+                                            <a href="../updateproductfeedback?button=show&pfid=${s.feedback_id}">    <i style="color: black;" class="bi bi-eye-fill"></i></a> 
 
                                             
                                         </div>

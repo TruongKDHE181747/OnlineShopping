@@ -110,7 +110,7 @@ public class RefundPayment extends HttpServlet {
                 JSONObject obj = new JSONObject(responseVNPAY.toString());
                 if ("00".equals(obj.getString("vnp_ResponseCode"))) {
                     String vnp_TransactionStatus = obj.getString("vnp_TransactionStatus");
-                    int paymentStatus = "00".equals(vnp_TransactionStatus) ? 6 : ("05".equals(vnp_TransactionStatus) ? 5 : -1);
+                    int paymentStatus = "00".equals(vnp_TransactionStatus) ? 5 : ("05".equals(vnp_TransactionStatus) ? 5 : -1);
 
                     if (paymentStatus != -1) {
                         OrderDAO orderDAO = new OrderDAO();

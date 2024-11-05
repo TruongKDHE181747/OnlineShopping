@@ -433,7 +433,24 @@ public class ProductFeedbackDAO extends DBContext {
     }
     
     
-    
+       public void updateFeedbackStatus(ProductFeedback pf) {
+        String sql = """
+                     UPDATE [dbo].[Feedbacks]
+                        SET 
+                          is_active=?
+                      WHERE feedback_id = ? """;
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, pf.getIs_active());
+            ps.setInt(2, pf.getFeedback_id());
+           ps.executeUpdate();        
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductFeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
     
     
     

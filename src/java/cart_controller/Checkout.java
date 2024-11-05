@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import model.Cart;
@@ -147,7 +148,7 @@ public class Checkout extends HttpServlet {
 
             if (paymentMethod == 1 && totalAmount >= 5000000) {
                 session.setAttribute("totalAmountError", "* Phương thức thanh toán khi nhận hàng chỉ áp dụng với đơn hàng dưới 5.000.000đ.\\n* Quý khách vui lòng giảm giá trị đơn hàng hoặc chọn phương thức thanh toán khác để tiếp tục.\\n");
-                response.sendRedirect(request.getContextPath() +"/checkout");
+                response.sendRedirect(request.getContextPath() + "/checkout");
                 return;
             }
 
@@ -167,8 +168,8 @@ public class Checkout extends HttpServlet {
 
             Voucher voucher = voucherDAO.getVoucherbyId(intVoucherId);
 
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDateTime currentDate = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String currentDateString = currentDate.format(formatter);
 
             Order order = new Order(
@@ -202,8 +203,8 @@ public class Checkout extends HttpServlet {
             }
 
             //end insert Order
-            
             //insert Order Detail
+            boolean check = false;
             for (CartItem item : items) {
 
                 int unitPrice = item.getProduct().getPrice() - item.getProduct().getPrice() * item.getProduct().getDiscount() / 100;
@@ -221,9 +222,15 @@ public class Checkout extends HttpServlet {
                         unitPrice,
                         unitPrice * itemQuantity);
 
-                boolean check = orderDetailDAO.insertOrderDetail(od);
+                check = orderDetailDAO.insertOrderDetail(od);
 
                 //if insert success
+            }
+            for (CartItem item : items) {
+               
+                int productId = item.getProduct().getProduct_id();
+                int sizeId = item.getSize().getSize_id();
+                int itemQuantity = item.getQuantity();
                 if (check) {
 
                     session.removeAttribute("voucher");
@@ -239,10 +246,9 @@ public class Checkout extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/orderstatus?status=fail");
                     return;
                 }
-
             }
             //end insert
-            
+
             //remove from cart
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(Constants.COOKIE_CART)) {
@@ -251,7 +257,7 @@ public class Checkout extends HttpServlet {
                     break;
                 }
             }
-            
+
             //payment
             if (paymentMethod == 2) {
                 request.setAttribute("orderId", orderId);
