@@ -4,6 +4,7 @@
  */
 package utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,9 +20,8 @@ import org.json.JSONObject;
  */
 public class ShippingFee {
 
-    public static int caculateShippingFee(String wardCode, int districtId,int weight) throws IOException {
-        
-        
+    public static int caculateShippingFee(String wardCode, int districtId, int weight) throws IOException {
+
         String apiURL = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
 
         URL url = new URL(apiURL);
@@ -34,25 +34,37 @@ public class ShippingFee {
         connection.setDoOutput(true);
 
         String requestBody = new JSONObject()
-            .put("service_id", 53321)
-            .put("weight", weight)
-            .put("to_ward_code", wardCode)
-            .put("to_district_id", districtId)
-            .toString();
+                .put("service_id", 53321)
+                .put("weight", weight)
+                .put("to_ward_code", wardCode)
+                .put("to_district_id", districtId)
+                .toString();
 
         try (OutputStream os = connection.getOutputStream()) {
-            os.write(requestBody.getBytes("UTF-8"));
+            byte[] input = requestBody.getBytes("utf-8");
+            os.write(input, 0, input.length);
         }
 
-        String jsonResponse;
-        try (InputStream responseStream = connection.getInputStream(); Scanner scanner = new Scanner(new InputStreamReader(responseStream, "UTF-8")).useDelimiter("\\A")) {
-            jsonResponse = scanner.hasNext() ? scanner.next() : "";
+        int responseCode = connection.getResponseCode();
+
+        InputStream inputStream = responseCode >= 200 && responseCode < 300
+                ? connection.getInputStream()
+                : connection.getErrorStream();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
+        StringBuilder responseBuilder = new StringBuilder();
+        String responseLine;
+
+        while ((responseLine = reader.readLine()) != null) {
+            responseBuilder.append(responseLine.trim());
         }
-        
-        JSONObject obj = new JSONObject(jsonResponse);
-        
-        int total = obj.getJSONObject("data").getInt("total");
-        
+
+        String responseBody = responseBuilder.toString();
+
+        JSONObject jsonResponse = new JSONObject(responseBody);
+
+        int total = jsonResponse.getJSONObject("data").getInt("total");
+
         return total;
     }
 
