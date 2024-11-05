@@ -24,6 +24,46 @@ public class Email {
         int number = random.nextInt(999999);
         return String.format("%06d", number);
     }
+    
+    public boolean sendEmail(String toEmail,String subject,String body){
+        boolean test = false;
+        
+        String fromEmail = Constants.SENT_EMAIL;
+        String password = Constants.EMAIL_PASSWORD;
+
+        Properties pr = configEmail(new Properties());
+
+        Session session = Session.getInstance(pr, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+
+        });
+        //set email message detail
+        Message mess = new MimeMessage(session);
+        try {
+
+            mess.setHeader("Content-Type", "text/plain; charset=UTF-8");
+
+            mess.setFrom(new InternetAddress(fromEmail));
+
+            mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+
+            mess.setSubject(subject);
+            String htmlContent = body;
+
+            mess.setContent(htmlContent, "text/html; charset=UTF-8");
+            Transport.send(mess);
+            test = true;
+
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+        
+        return test;
+    }
+    
 
     //send email to user to verify account register
     public boolean sendVerifyEmail(User user) {
