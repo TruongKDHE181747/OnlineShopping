@@ -80,7 +80,7 @@ public class AddEditProductFeedback extends HttpServlet {
             throws ServletException, IOException {
 
         ProductFeedbackDAO pfDAO = new ProductFeedbackDAO();
-
+        ProductDAO productDAO = new ProductDAO();
         HttpSession sesion = request.getSession();
 
         User account = (User) sesion.getAttribute("account");
@@ -110,11 +110,18 @@ public class AddEditProductFeedback extends HttpServlet {
 
             if (pf == null) {
                 boolean check = pfDAO.insertFeedback(new ProductFeedback(customerId, oid, pid, review, fileName, rating));
+                
+                int newAvgRating = pfDAO.getAverageRatingOfProduct(pid);
+                
+                productDAO.updateProductRating(pid, newAvgRating);
 
                 sesion.setAttribute("feedbackMsg", check ? "Gửi đánh giá thành công." : "Gửi đánh giá thất bại.");
 
             } else {
-                boolean check =pfDAO.updateFeedback(new ProductFeedback(pf.getFeedback_id(), review, fileName, rating));
+                boolean check = pfDAO.updateFeedback(new ProductFeedback(pf.getFeedback_id(), review, fileName, rating));
+                int newAvgRating = pfDAO.getAverageRatingOfProduct(pid);
+                
+                productDAO.updateProductRating(pid, newAvgRating);
                 sesion.setAttribute("feedbackMsg", check ? "Sửa đánh giá thành công." : "Sửa đánh giá thất bại.");
             }
 

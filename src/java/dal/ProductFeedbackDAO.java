@@ -26,6 +26,29 @@ import model.User;
  * @author Dell
  */
 public class ProductFeedbackDAO extends DBContext {
+    
+    public int getAverageRatingOfProduct(int pid){
+        
+        String sql = """
+                     select AVG(rating)
+                      from Feedbacks
+                      where product_id = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, pid);
+
+           ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductFeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 
     public boolean updateFeedback(ProductFeedback pf) {
         String sql = """

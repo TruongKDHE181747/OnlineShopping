@@ -282,7 +282,13 @@
 
                                                 <div class="col-md-10">
                                                     <div style="padding: 0" class="blog__details__author__pic col-md-12">
-                                                        <img src="${pageContext.request.contextPath}/<%=productFeedback.getCustomer_img()%>" alt="">
+                                                        <%
+                                                        String profilePictureUrl = (String) productFeedback.getCustomer_img();
+                                    String profileImgSrc = profilePictureUrl != null && (profilePictureUrl.startsWith("http://") || profilePictureUrl.startsWith("https://")) 
+                                                            ? profilePictureUrl 
+                                                            : request.getContextPath() + "/" + profilePictureUrl;
+                                                        %>
+                                                        <img src="<%=profileImgSrc%>" alt="">
                                                         <strong><%=productFeedback.getCustomer_name()%></strong>
                                                     </div>
                                                     <div style="    margin-left: 12px;">

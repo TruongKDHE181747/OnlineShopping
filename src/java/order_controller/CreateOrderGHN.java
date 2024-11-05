@@ -69,7 +69,7 @@ public class CreateOrderGHN extends HttpServlet {
             JSONArray itemsArray = new JSONArray();
             for (OrderDetail item : orderDetailDAO.getOrderDetailByOrderId(orderId)) {
                 JSONObject itemObject = new JSONObject()
-                        .put("name", item.getProductName())
+                        .put("name", item.getProductName()+" "+item.getSizeName())
                         .put("quantity", item.getQuantity())
                         .put("price", item.getUnitPrice());
                 itemsArray.put(itemObject);

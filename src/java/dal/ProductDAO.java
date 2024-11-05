@@ -11,6 +11,28 @@ import java.util.logging.Logger;
 
 public class ProductDAO extends DBContext {
 
+    public boolean updateProductRating(int pid, int rating) {
+        String sql = """
+                     UPDATE [dbo].[Products]
+                        SET 
+                           [rated_star] = ?
+                      WHERE [product_id] = ?""";
+        PreparedStatement ps;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, rating);
+            ps.setInt(2, pid);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+
     public Product getProductById(int pid) {
 
         Product p = new Product();
@@ -31,7 +53,7 @@ public class ProductDAO extends DBContext {
                 int rated_star = rs.getInt("rated_star");
                 int brand_id = rs.getInt("brand_id");
                 int product_category_id = rs.getInt("product_category_id");
-                p= new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
+                p = new Product(product_id, product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,7 +175,6 @@ public class ProductDAO extends DBContext {
         return pList;
     }
 
-    
     public List<Product> getAllProductWithQuantity() {
         List<Product> pList = new ArrayList<>();
         String sql = "select * from Products where total_quantity > 0";
@@ -181,14 +202,14 @@ public class ProductDAO extends DBContext {
         }
         return pList;
     }
-    
+
     public List<Product> getAllRelatedProduct(String id) {
         List<Product> pList = new ArrayList<>();
-        String sql = "select top 3 * from Products\n" +
-                    "where product_category_id = (\n" +
-                    "select product_category_id from Products\n" +
-                    "where product_id = ?\n" +
-                    ") and product_id!=?;";
+        String sql = "select top 3 * from Products\n"
+                + "where product_category_id = (\n"
+                + "select product_category_id from Products\n"
+                + "where product_id = ?\n"
+                + ") and product_id!=?;";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -215,8 +236,7 @@ public class ProductDAO extends DBContext {
         }
         return pList;
     }
-    
-    
+
     public List<Product> getHotProduct() {
         List<Product> pList = new ArrayList<>();
         String sql = "select top 8 p.product_id, p.product_name,p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id, sum(od.TotalPrice) as TotalPrice\n"
@@ -249,18 +269,17 @@ public class ProductDAO extends DBContext {
         }
         return pList;
     }
-    
-    
+
     public List<Product> getAllHotProduct(String s) {
         List<Product> pList = new ArrayList<>();
-        String sql = "select p.product_id, p.product_name,p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id, sum(od.TotalPrice) as TotalPrice\n" +
-                    "from Products as p\n" +
-                    "left join Order_Details as od on p.product_id = od.product_id\n" +
-                    "left join Orders as o on od.order_id = o.order_id\n" +
-                    "and o.payment_status_id = 2\n" +
-                    "where p.product_id in ("+s+")\n" +
-                    "group by p.product_id, p.product_name, p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id\n" +
-                    "order by sum(od.TotalPrice) desc, p.product_id";
+        String sql = "select p.product_id, p.product_name,p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id, sum(od.TotalPrice) as TotalPrice\n"
+                + "from Products as p\n"
+                + "left join Order_Details as od on p.product_id = od.product_id\n"
+                + "left join Orders as o on od.order_id = o.order_id\n"
+                + "and o.payment_status_id = 2\n"
+                + "where p.product_id in (" + s + ")\n"
+                + "group by p.product_id, p.product_name, p.price, p.total_quantity, p.discount,p.description, p.thumbnail, p.is_active, p.rated_star,p.brand_id,p.product_category_id\n"
+                + "order by sum(od.TotalPrice) desc, p.product_id";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -314,12 +333,11 @@ public class ProductDAO extends DBContext {
         }
         return pList;
     }
-    
-    
+
     public List<Product> getRatingProduct() {
         List<Product> pList = new ArrayList<>();
-        String sql = "select * from Products where total_quantity > 0 \n" +
-                    "order by rated_star desc";
+        String sql = "select * from Products where total_quantity > 0 \n"
+                + "order by rated_star desc";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -405,7 +423,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     public void addProduct(Product p) {
         String sql = "insert into Products \n"
                 + "(product_name, price, total_quantity, discount, description, thumbnail, is_active, rated_star, brand_id, product_category_id)\n"
@@ -428,7 +446,7 @@ public class ProductDAO extends DBContext {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void updateProduct(Product p) {
         String sql = "update Products set \n"
                 + "product_name = ?, \n"
@@ -460,14 +478,14 @@ public class ProductDAO extends DBContext {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public List<Product> searchProduct(String s) {
         List<Product> list = new ArrayList<>();
         String sql = "select * from Products \n "
                 + "where product_name like ? and total_quantity > 0";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, "%"+s+"%");
+            pre.setString(1, "%" + s + "%");
             ResultSet rs = pre.executeQuery();
 
             while (rs.next()) {
@@ -490,7 +508,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     public Product getHighestId() {
         Product p = new Product();
         String sql = "select top 1 * from Products \n "

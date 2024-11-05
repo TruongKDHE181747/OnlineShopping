@@ -67,12 +67,12 @@
                                 </div>
                                 <div class="mb-3">
                                     Ảnh:<br/>
-                                    <input type="file" name="thumbnail">
+                                    <input type="file" name="thumbnail" required="">
                                 </div>
                                 <c:if test="${pf!=null}">
 
                                     <div class="mb-3" style="width: 150px;height: 200px">
-                                        <img src="${pf.thumbnail}" alt="img"/>
+                                        <img style="width: 100%;height: 100%" src="${pf.thumbnail}" alt="img"/>
                                     </div>
                                 </c:if>
 

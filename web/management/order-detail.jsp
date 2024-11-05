@@ -68,13 +68,13 @@
                             <p><strong>Ngày đặt hàng:</strong> ${order.orderedDate} </p>
                             <p><strong>Ngày nhận hàng:</strong> ${order.receiveDate != null ? order.receiveDate: '<span class="text-muted">Không có</span>'}</p>
                             <p><strong>Phương thức thanh toán:</strong> <span 
-                                                                        <c:if test="${order.paymentMethodId == 2}">class="badge-primary badge font-weight-bold"</c:if>
-                                                                        <c:if test="${order.paymentMethodId == 1}">class="badge-info badge font-weight-bold"</c:if>
-                                                                        > ${order.paymentMethodName}</span></p>
+                                    <c:if test="${order.paymentMethodId == 2}">class="badge-primary badge font-weight-bold"</c:if>
+                                    <c:if test="${order.paymentMethodId == 1}">class="badge-info badge font-weight-bold"</c:if>
+                                    > ${order.paymentMethodName}</span></p>
                             <p><strong>Trạng thái thanh toán:</strong> <span  <c:if test="${order.paymentStatusId == 1}">class="badge-warning badge font-weight-bold"</c:if>
                                                                                                                          <c:if test="${order.paymentStatusId == 2}">class="badge-success badge font-weight-bold"</c:if>
                                                                                                                          <c:if test="${order.paymentStatusId == 3}">class="badge-danger badge font-weight-bold"</c:if>
-                                                                               s                                          <c:if test="${order.paymentStatusId == 4}">class="badge-warning badge font-weight-bold"</c:if>
+                                                                                                                         s                                          <c:if test="${order.paymentStatusId == 4}">class="badge-warning badge font-weight-bold"</c:if>
                                                                                                                          <c:if test="${order.paymentStatusId == 5}">class="badge-info badge font-weight-bold"</c:if>
                                                                                                                          <c:if test="${order.paymentStatusId == 5}">class="badge-success badge font-weight-bold"</c:if>
                                                                                                                          >${order.paymentStatusName}</span></p>
@@ -172,7 +172,7 @@
 
                 <c:if test="${order.orderStatusId == 3}">
 
-                    <form action="${pageContext.request.contextPath}/" method="post" style="margin-left: 20px">
+                    <form action="${pageContext.request.contextPath}/doneorder" method="post" style="margin-left: 20px">
                         <input type="hidden" name="orderId" value="${order.orderId}">                      
                         <button type="submit" class="btn btn-success btn-lg" >
                             Đã nhận hàng
@@ -202,7 +202,7 @@
                     </form>
 
                 </c:if>
-                <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6}">
+                <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6 ||order.orderStatusId == 3}">
                     <button style="margin-left: 20px" onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg me-2" >
                         Hủy đơn hàng
                     </button>
