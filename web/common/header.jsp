@@ -78,16 +78,16 @@
                 </div>
             </div>
             <%
-            String mainpage = session.getAttribute("mainpage")+"";
-            if(mainpage.equals("null")) mainpage = "home";
+            
+            String currentPage = request.getRequestURI();
             %>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Trang chủ</a></li>
-                        <li class="<%=mainpage.equals("shop")?"active":""%>"><a href="<%=s%>/homeproduct">Sản phẩm</a></li>
-                        <li class="<%=mainpage.equals("blog")?"active":""%>"><a href="<%=s%>/hpostlist">Blogs</a></li>
-                        <li class="<%=mainpage.equals("contact")?"active":""%>"><a href="<%=s%>/common/contact.jsp">Liên hệ</a></li>
+                        <li class="<%=currentPage.contains("home.jsp")?"active":""%>"><a href="<%=s%>/homeslider">Trang chủ</a></li>
+                        <li class="<%=currentPage.contains("product.jsp")?"active":""%>"><a href="<%=s%>/homeproduct">Sản phẩm</a></li>
+                        <li class="<%=currentPage.contains("post.jsp")?"active":""%>"><a href="<%=s%>/hpostlist">Blogs</a></li>
+                        <li class="<%=currentPage.contains("contact")?"active":""%>"><a href="<%=s%>/contact">Liên hệ</a></li>
                     </ul>
                 </nav>
             </div>

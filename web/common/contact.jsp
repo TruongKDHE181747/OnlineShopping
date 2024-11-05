@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -27,9 +28,7 @@
 
     <body>
         <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+        
         <jsp:include page="../common/header.jsp" />
 
         <div class="map">
@@ -80,14 +79,8 @@
         <!-- Contact Section End -->
         <jsp:include page="../common/footer.jsp" />
 
-    <c:if test="${not empty sessionScope.contactMsg}">
-        <script>
-            alert('${sessionScope.contactMsg}');
-        </script>
-
-        <%session.removeAttribute("contactMsg");%>
-    </c:if>
-
+    
+    
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -99,6 +92,14 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    
+    <c:if test="${not empty sessionScope.contactMsg}">
+        <script>
+            alert('${sessionScope.contactMsg}');
+        </script>
+
+        <%session.removeAttribute("contactMsg");%>
+    </c:if>
 </body>
 
 </html>

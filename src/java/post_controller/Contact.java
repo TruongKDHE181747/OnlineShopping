@@ -49,15 +49,16 @@ public class Contact extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+       response.setContentType("text/html;charset=UTF-8");
+        
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
-        String message = request.getParameter("message").substring(0, 2000);
+        String message = request.getParameter("message");
         
         
         Email em = new Email();
         
-        boolean check = em.sendEmail(email, "THẮC MẮC", message);
+        boolean check = em.sendEmail("ducdmhe181735@fpt.edu.vn", "THAC MAC", "Từ: "+email+"<br>Nội dung: "+message);
         
         if(check){
             session.setAttribute("contactMsg", "Gửi thành công");

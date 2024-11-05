@@ -114,10 +114,21 @@ public class MarketingFilter implements Filter {
             res.sendRedirect(req.getContextPath()+"/login");
         } else {
             if(acc.getRole().getRole_id()!=4){
-                res.sendRedirect(req.getContextPath()+"/homeslider");
+                res.sendRedirect(req.getContextPath()+"/management/marketingfilter.jsp");
             } else if(acc.getRole().getRole_id()==4) {
-                res.sendRedirect(req.getContextPath()+"/management/listpostmarketing.jsp");
-                
+                String uri = req.getServletPath();
+                if(uri.endsWith("listpostmarketing")){
+                    res.sendRedirect(req.getContextPath()+"/management/listpostmarketing.jsp");
+                } else if(uri.endsWith("addpostmarketing.jsp")){
+                    res.sendRedirect(req.getContextPath()+"/management/addpostmarketing.jsp");
+                }else if(uri.endsWith("viewpostmarketing")){
+                    res.sendRedirect(req.getContextPath()+"/management/viewpostmarketing.jsp");
+                }else if(uri.endsWith("editpostmarketing")){
+                    res.sendRedirect(req.getContextPath()+"/management/editpostmarketing.jsp");
+                }
+
+                    
+                //res.sendRedirect(req.getContextPath()+req.getRequestURI());
             }
         }
         
