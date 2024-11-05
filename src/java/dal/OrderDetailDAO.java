@@ -17,6 +17,14 @@ import java.util.logging.Logger;
  */
 public class OrderDetailDAO extends DBContext {
 
+    public static void main(String[] args) {
+        OrderDetailDAO dao = new OrderDetailDAO();
+        
+        boolean check =dao.insertOrderDetail(new OrderDetail(10, 3, "", "", 1, 1, 356250, 356250));
+        
+        System.out.println(check);
+    }
+    
     public boolean insertOrderDetail(OrderDetail od) {
         String sql = """
                INSERT INTO [dbo].[Order_Details]

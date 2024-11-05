@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -832,7 +833,8 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
-    public List<SaleChart> getNumberOfOrderByMonth(int year){
+
+    public List<SaleChart> getNumberOfOrderByMonth(int year) {
         Map<String, Integer> months = new LinkedHashMap<>();
         months.put("Tháng 1", 1);
         months.put("Tháng 2", 2);
@@ -848,8 +850,8 @@ public class OrderDAO extends DBContext {
         months.put("Tháng 12", 12);
 
         List<SaleChart> sList = new ArrayList<>();
-        String sql="select count(order_id) as Total_number from Orders\n" +
-"                where Month(ordered_date) = ? and Year(ordered_date)=?";
+        String sql = "select count(order_id) as Total_number from Orders\n"
+                + "                where Month(ordered_date) = ? and Year(ordered_date)=?";
         for (Map.Entry<String, Integer> entry : months.entrySet()) {
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
@@ -870,7 +872,7 @@ public class OrderDAO extends DBContext {
         }
         return sList;
     }
-    
+
     public List<Order> getOrderByFilterDate(String startDate, String endDate) {
         List<Order> oList = new ArrayList<>();
         StringBuilder sql = new StringBuilder("""
@@ -934,80 +936,79 @@ public class OrderDAO extends DBContext {
 
         return oList;
     }
-    public List<SaleChart> getNumberStatusOrderByMonth(int month, int year){
-        List<SaleChart> sList= new ArrayList<>();
-        String sql="Select  os.order_status_name, count(order_id) as Total_Order\n" +
-"                from Order_Status as os\n" +
-"                right join Orders as o on os.order_status_id = o.order_status_id\n" +
-"                where Month(ordered_date) = ? and Year(ordered_date)=?\n" +
-"                group by os.order_status_id,os.order_status_name\n" +
-"                order by os.order_status_id";
-        try{
-            PreparedStatement pre= connection.prepareStatement(sql);
+
+    public List<SaleChart> getNumberStatusOrderByMonth(int month, int year) {
+        List<SaleChart> sList = new ArrayList<>();
+        String sql = "Select  os.order_status_name, count(order_id) as Total_Order\n"
+                + "                from Order_Status as os\n"
+                + "                right join Orders as o on os.order_status_id = o.order_status_id\n"
+                + "                where Month(ordered_date) = ? and Year(ordered_date)=?\n"
+                + "                group by os.order_status_id,os.order_status_name\n"
+                + "                order by os.order_status_id";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, month);
             pre.setInt(2, year);
-            ResultSet rs=pre.executeQuery();
-            while (rs.next()){
-                String name=rs.getString("order_status_name");
-                int value= rs.getInt("Total_Order");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("order_status_name");
+                int value = rs.getInt("Total_Order");
                 sList.add(new SaleChart(name, value));
             }
-        }catch (SQLException ex) {
-                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        return sList;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-    
-    
-    public int getTotalOrderInMonth(int month, int year){
+        return sList;
+    }
+
+    public int getTotalOrderInMonth(int month, int year) {
         int count = 0;
-        String sql="select count(order_id) as Total_number from Orders\n" +
-                    "where Month(ordered_date) = ? and Year(ordered_date)=?";
-        try{
-            PreparedStatement pre= connection.prepareStatement(sql);
+        String sql = "select count(order_id) as Total_number from Orders\n"
+                + "where Month(ordered_date) = ? and Year(ordered_date)=?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, month);
             pre.setInt(2, year);
-            ResultSet rs= pre.executeQuery();
-            while(rs.next()){
-                count=rs.getInt("Total_number");
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt("Total_number");
             }
-            
-        }catch (SQLException ex) {
-                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return count;
     }
-    public List<SaleChart> getTotalByBrandInMonth(int month, int year){
+
+    public List<SaleChart> getTotalByBrandInMonth(int month, int year) {
         List<SaleChart> sList = new ArrayList<>();
-        String sql="SELECT b.brand_name, COUNT(o.order_id) AS total_order\n" +
-                    "FROM Orders o\n" +
-                    "INNER JOIN Order_Details od ON o.order_id = od.order_id\n" +
-                    "INNER JOIN Products p ON od.product_id = p.product_id\n" +
-                    "INNER JOIN Brands b ON p.brand_id = b.brand_id\n" +
-                    "where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? \n" +
-                    "GROUP BY b.brand_name";
-                try {
-                PreparedStatement pre = connection.prepareStatement(sql);
-                pre.setInt(1, month); // Giá trị của tháng từ Map
-                pre.setInt(2, year);
-                ResultSet rs = pre.executeQuery();
+        String sql = "SELECT b.brand_name, COUNT(o.order_id) AS total_order\n"
+                + "FROM Orders o\n"
+                + "INNER JOIN Order_Details od ON o.order_id = od.order_id\n"
+                + "INNER JOIN Products p ON od.product_id = p.product_id\n"
+                + "INNER JOIN Brands b ON p.brand_id = b.brand_id\n"
+                + "where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? \n"
+                + "GROUP BY b.brand_name";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, month); // Giá trị của tháng từ Map
+            pre.setInt(2, year);
+            ResultSet rs = pre.executeQuery();
 
-                while (rs.next()) {
-                    String label = rs.getString("brand_name"); // Tên tháng làm nhãn
-                    int value = rs.getInt("total_order");
-                    SaleChart saleChart = new SaleChart(label, value); // Dùng label thay cho fdate
-                    sList.add(saleChart);
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            while (rs.next()) {
+                String label = rs.getString("brand_name"); // Tên tháng làm nhãn
+                int value = rs.getInt("total_order");
+                SaleChart saleChart = new SaleChart(label, value); // Dùng label thay cho fdate
+                sList.add(saleChart);
             }
-            
-        
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return sList;
     }
-    
+
     public boolean unsignSale(int orderId) {
         String sql = "UPDATE Orders SET salerId = null WHERE order_id = ?";
         try (PreparedStatement pre = connection.prepareStatement(sql)) {
@@ -1019,29 +1020,25 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
-    
-    
-    public List<SaleChart> getAmmountPerDay(LocalDate startDate, LocalDate endDate)
-    {
+
+    public List<SaleChart> getAmmountPerDay(LocalDate startDate, LocalDate endDate) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select Sum(total_amount) as totalamount\n" +
-                               "from Orders \n" +
-                                 
-                "where YEAR(ordered_date)=? AND MONTH(ordered_date)=? AND DAY(ordered_date)=? AND status_id=? ";
+        String sql = "select Sum(total_amount) as totalamount\n"
+                + "from Orders \n"
+                + "where YEAR(ordered_date)=? AND MONTH(ordered_date)=? AND DAY(ordered_date)=? AND status_id=? ";
 
-          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
-
+        int daybetween = (int) ChronoUnit.DAYS.between(startDate, endDate);
 
         for (int i = 0; i <= daybetween; i++) {
 
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
                 LocalDate date = startDate.plusDays(i);
-                pre.setString(1, date.getYear()+  "");
-         pre.setString(2, date.getMonthValue()+  "");
-             pre.setString(3, date.getDayOfMonth() +  "");
-             pre.setInt(4, 3);
+                pre.setString(1, date.getYear() + "");
+                pre.setString(2, date.getMonthValue() + "");
+                pre.setString(3, date.getDayOfMonth() + "");
+                pre.setInt(4, 3);
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
 
@@ -1054,28 +1051,26 @@ public class OrderDAO extends DBContext {
                 Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-            return sList;
+        return sList;
     }
-     public List<SaleChart> getTotalAmountByDay(LocalDate startDate, LocalDate endDate)
-    {
+
+    public List<SaleChart> getTotalAmountByDay(LocalDate startDate, LocalDate endDate) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select Sum(total_amount) as totalamount\n" +
-                               "from Orders \n" +
-                                 
-                "where ordered_date <= ? AND status_id= ? ";
+        String sql = "select Sum(total_amount) as totalamount\n"
+                + "from Orders \n"
+                + "where ordered_date <= ? AND status_id= ? ";
 
-          int daybetween= (int)ChronoUnit.DAYS.between(startDate, endDate);
-
+        int daybetween = (int) ChronoUnit.DAYS.between(startDate, endDate);
 
         for (int i = 0; i <= daybetween; i++) {
 
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
                 LocalDate date = startDate.plusDays(i);
-                 pre.setString(1, date + "");
-      
-             pre.setInt(2, 3);
+                pre.setString(1, date + "");
+
+                pre.setInt(2, 3);
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
 
@@ -1088,9 +1083,9 @@ public class OrderDAO extends DBContext {
                 Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-            return sList;
+        return sList;
     }
-    
+
     public boolean updateShippingCode(int orderId, String shipping_code) {
         String sql = """
                      UPDATE [dbo].[Orders]
@@ -1115,12 +1110,64 @@ public class OrderDAO extends DBContext {
 
     public static void main(String[] args) {
         OrderDAO odao = new OrderDAO();
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        List<SaleChart> o = odao.getTotalAmountByDay(LocalDate.parse("2024-09-01")   , LocalDate.now() );
-        System.out.println(o);
+//          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        List<SaleChart> o = odao.getTotalAmountByDay(LocalDate.parse("2024-09-01")   , LocalDate.now() );
+//        System.out.println(o);
+
+LocalDateTime currentDate = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String currentDateString = currentDate.format(formatter);
+        // Các giá trị cần thiết để tạo đối tượng Order
+        int customerId = 1;                      // ID của khách hàng
+        String orderedDate = currentDateString; // Ngày đặt hàng
+        String receiverName = "Nguyễn Văn A";    // Tên người nhận
+        String phone = "0123456789";              // Số điện thoại người nhận
+        String email = "nguyenvana@example.com"; // Email người nhận
+        String address = "123 Đường ABC";        // Địa chỉ giao hàng
+        String wardCode = "001";                  // Mã phường
+        String wardName = "Phường 1";             // Tên phường
+        int districtId = 1;                       // ID quận
+        String districtName = "Quận 1";           // Tên quận
+        int provinceId = 1;                       // ID tỉnh
+        String provinceName = "TP.HCM";           // Tên tỉnh
+        int totalPrice = 1000000;                 // Tổng giá tiền
+        int shippingFee = 50000;                  // Phí vận chuyển
+        int voucherId = 1;                        // ID voucher (nếu không có thì để 0)
+        int voucherPercent = 0;                   // Phần trăm giảm giá (nếu không có thì để 0)
+        int totalAmount = 950000;                  // Tổng số tiền sau khi giảm giá
+        int totalGram = 1000;                     // Tổng trọng lượng (gram)
+        int paymentMethodId = 1;                  // ID phương thức thanh toán
+        int paymentStatusId = 1;                  // ID trạng thái thanh toán
+        int orderStatusId = 1;                    // ID trạng thái đơn hàng
+
+        // Tạo đối tượng Order
+        Order newOrder = new Order(
+                customerId,
+                orderedDate,
+                receiverName,
+                phone,
+                email,
+                address,
+                wardCode,
+                wardName,
+                districtId,
+                districtName,
+                provinceId,
+                provinceName,
+                totalPrice,
+                shippingFee,
+                voucherId,
+                voucherPercent,
+                totalAmount,
+                totalGram,
+                paymentMethodId,
+                paymentStatusId,
+                orderStatusId
+        );
+
+        if(odao.insertOrder(newOrder)!= -1){
+            System.out.println("success");
+        }
+                
     }
 }
-    
-
-
-
