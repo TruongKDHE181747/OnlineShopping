@@ -9,6 +9,8 @@
 <%@page import="model.PostCategory"%>
 <%@page import="model.User"%>
 <%@page import="java.util.*" %>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -259,10 +261,11 @@
                             <tbody>
 
                                 <%
-                                
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                                 int i = 1;
                                 for (Post post : top3postmarketing) {
-                                
+                                String date1 = sdf.format(post.getCreated_at());
+                                String date2 = sdf.format(post.getModified_at());
                                 %>
                                 
                                 <!-- START Product item -->
@@ -273,8 +276,8 @@
                                         <img src="../<%=post.getThumbnail()%>">
                                     </td>
                                     <td><%=post.getAuthor_name()%></td>
-                                    <td><%=post.getCreated_at()%></td>
-                                    <td><%=post.getModified_at()%></td>
+                                    <td><%=date1%></td>
+                                    <td><%=date2%></td>
                                     <td>
                                         <%
                                         if(user.getUser_id()==post.getAuthor_id()){
