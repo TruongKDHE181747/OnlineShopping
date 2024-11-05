@@ -79,13 +79,7 @@
         <!-- Contact Section End -->
         <jsp:include page="../common/footer.jsp" />
 
-    <c:if test="${not empty sessionScope.contactMsg}">
-        <script>
-            alert('${sessionScope.contactMsg}');
-        </script>
-
-        <%session.removeAttribute("contactMsg");%>
-    </c:if>
+    
     
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
@@ -98,6 +92,14 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    
+    <c:if test="${not empty sessionScope.contactMsg}">
+        <script>
+            alert('${sessionScope.contactMsg}');
+        </script>
+
+        <%session.removeAttribute("contactMsg");%>
+    </c:if>
 </body>
 
 </html>
