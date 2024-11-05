@@ -409,7 +409,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h5 style="cursor: pointer" onclick="window.location.href = '../hproductdetail?proid=<%=product.getProduct_id()%>'"><%=product.getProduct_name()%></h5>
+                            <h5 style="cursor: pointer" onclick="window.location.href = '../hproductdetail?proid=<%=rproduct.getProduct_id()%>'"><%=rproduct.getProduct_name()%></h5>
 
                             <div class="rating">
                                 <%if(rproduct.getRated_star()<=0){
