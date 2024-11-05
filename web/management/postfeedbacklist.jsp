@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Phản hồi bài đăng</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -148,15 +148,15 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Post Feedback List</h5>
+                                    <h5 class="navbar-brand" >Danh sách phản hồi</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../postfeedbackpaging" method="get">
                                             <select name="filter">
-                                                <option value="post" >Sort by Post</option>
-                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Sort by User</option>
-                                              <option value="show"<c:if test="${sessionScope.filter=='show'}"> selected </c:if>>Only show active</option>
-                                                <option value="hidden"<c:if test="${sessionScope.filter=='hidden'}"> selected </c:if>>Only show hidden</option>
+                                                <option value="post" >Xếp theo bài đăng</option>
+                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Xếp theo người d</option>
+                                              <option value="show"<c:if test="${sessionScope.filter=='show'}"> selected </c:if>>Bình luận hiện</option>
+                                                <option value="hidden"<c:if test="${sessionScope.filter=='hidden'}"> selected </c:if>>Bình luận bị ẩn</option>
                                             </select>
                                             <button class="btn btn-outline-success" type="submit"><i class="bi bi-filter"></i></button>
                                         </form>
@@ -171,14 +171,14 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
-                                      <th scope="col">Post Title</th>
-                                    <th scope="col">Post Img</th>
-                                    <th scope="col">Content</th>
-                                    <th scope="col"> User</th>
-                                     <th scope="col"> Time Created</th>
+                                      <th scope="col">Tiêu đề</th>
+                                    <th scope="col">Ảnh bài đăng</th>
+                                    <th scope="col">Nội dung</th>
+                                    <th scope="col"> Người dùng</th>
+                                     <th scope="col"> Thời gian</th>
                                     <th>Status</th>
                                     
-                                    <th scope="col" style="width: 14%">Action</th>
+                                    <th scope="col" style="width: 14%">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -209,11 +209,11 @@
                                       <td>${s.time_create}</td>
                                       <td>
                                         <c:if test="${s.is_active==1}">
-                                            <p style="color: green">Active</p>
+                                            <p style="color: green">Hoạt động</p>
                                         
                                         </c:if>
                                                <c:if test="${s.is_active==0}">
-                                            <p style="color: red">Inactive</p>
+                                            <p style="color: red">Bị ẩn</p>
                                         
                                         </c:if>
                                         
