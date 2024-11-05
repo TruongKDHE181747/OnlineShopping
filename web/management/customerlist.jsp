@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Danh sách khách hàng</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -149,12 +149,13 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Customer List</h5>
+                                    <h5 class="navbar-brand" >Danh sách khách hàng</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../customerlist" method="get">
                                             <input placeholder="Search..." name="searchcustomer" class="form-control me-2" type="search"  aria-label="Search">
-                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                            <div style="width: 150;height: 80px"> 
+                                            <button class="btn btn-outline-success" type="submit" style="width: 109px;height: 38px;">Tìm kiếm</button></div>
                                         </form>
                                     </div>
 
@@ -167,12 +168,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-                                      <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
-                                    <th scope="col">Phone</th>
+                                      <th scope="col">Họ</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">SDT</th>
                                     <th scope="col"> Email</th>
-                                       <th scope="col"> Gender</th>
-                                      <th scope="col"> Date Of Birth</th>
+                                       <th scope="col"> Giới tính</th>
+                                      <th scope="col">Ngày sinh</th>
                                    
                                 </tr>
                             </thead>

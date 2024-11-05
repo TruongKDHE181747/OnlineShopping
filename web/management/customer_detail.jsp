@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit Car Page</title>
+        <title>Thông tin khách hàng</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!-- CSS Bootstrap -->
@@ -44,7 +44,7 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                    <h2>Customer ${s.first_name} ${s.last_name}</h2>
+                    <h2>Khách hàng ${s.first_name} ${s.last_name}</h2>
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
@@ -65,18 +65,18 @@
 
 
                             <div class="col-sm-6">
-                                <label for="title" class="form-label">First Name</label>
+                                <label for="title" class="form-label">Họ</label>
                                 <input disabled=""  value="${s.first_name}" name="title" type="text" class="form-control" id="title" required>
 
                             </div>
                             <div class="col-sm-6">
-                                <label for="title" class="form-label">Last Name</label>
+                                <label for="title" class="form-label">Tên</label>
                                 <input disabled=""  value="${s.last_name}" name="title" type="text" class="form-control" id="title" required>
 
                             </div>
 
                             <div class="my-3 col-sm-6">
-                                <label for="title" class="form-label">Phone</label>
+                                <label for="title" class="form-label">SDT</label>
                                 <input disabled=""  value="${s.phone}" name="title" type="text" class="form-control" id="title" required>
 
                             </div>
@@ -87,26 +87,26 @@
 
                             </div>
                             <div class="col-sm-6">
-                                <label for="title" class="form-label">Gender</label>
+                                <label for="title" class="form-label">Giới tính</label>
                                 <input disabled=""  value="<c:if test="${s.gender=='true'}">Male</c:if>  <c:if test="${s.gender=='false'}">Female</c:if>" name="title" type="text" class="form-control" id="title" required>
 
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="title" class="form-label">Date Of Birth</label>
+                                    <label for="title" class="form-label">Ngày sinh</label>
                                         <input disabled=""  value="${s.dob}" name="title" type="text" class="form-control" id="title" required>
 
                             </div>
                                
                                      <div class="my-3 col-sm-6">
-                                    <label for="status" class="form-label">Account Status</label>
+                                    <label for="status" class="form-label">Trạng thái tài khoản</label>
                                     <div class="form-check">
                                         <input disabled="" value="1" id="status" name="status" type="radio" class="form-check-input" <c:if test="${s.is_active=='true'}">checked=""</c:if>>
-                                        <label class="form-check-label" for="status">Activated</label>
+                                        <label class="form-check-label" for="status">Đã kích hoạt</label>
                                     </div>
                                     <div class="form-check">
                                         <input  disabled="" value="0" id="status" name="status" type="radio" class="form-check-input" <c:if test="${s.is_banned=='true'}">checked=""</c:if> >
-                                        <label class="form-check-label" for="status">Banned</label>
+                                        <label class="form-check-label" for="status">Bị cấm</label>
                                     </div>
                                 </div>
                                 
@@ -117,7 +117,7 @@
                         <!-- Error check Username and Password -->
 
 
-                        <a href="../customerlist">   <button class="w-100 btn btn-primary btn-lg" >Save</button></a>
+                        <a href="../customerlist">   <button class="w-100 btn btn-primary btn-lg" >Quay lại</button></a>
 
                     </div>
                 </div>
