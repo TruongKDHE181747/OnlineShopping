@@ -1026,7 +1026,7 @@ public class OrderDAO extends DBContext {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String sql = "select Sum(total_amount) as totalamount\n"
                 + "from Orders \n"
-                + "where YEAR(ordered_date)=? AND MONTH(ordered_date)=? AND DAY(ordered_date)=? AND status_id=? ";
+                + "where YEAR(ordered_date)=? AND MONTH(ordered_date)=? AND DAY(ordered_date)=? AND order_status_id=? ";
 
         int daybetween = (int) ChronoUnit.DAYS.between(startDate, endDate);
 
@@ -1038,7 +1038,7 @@ public class OrderDAO extends DBContext {
                 pre.setString(1, date.getYear() + "");
                 pre.setString(2, date.getMonthValue() + "");
                 pre.setString(3, date.getDayOfMonth() + "");
-                pre.setInt(4, 3);
+                pre.setInt(4, 4);
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
 
@@ -1059,7 +1059,7 @@ public class OrderDAO extends DBContext {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String sql = "select Sum(total_amount) as totalamount\n"
                 + "from Orders \n"
-                + "where ordered_date <= ? AND status_id= ? ";
+                + "where ordered_date <= ? AND order_status_id= ? ";
 
         int daybetween = (int) ChronoUnit.DAYS.between(startDate, endDate);
 
@@ -1070,7 +1070,7 @@ public class OrderDAO extends DBContext {
                 LocalDate date = startDate.plusDays(i);
                 pre.setString(1, date + "");
 
-                pre.setInt(2, 3);
+                pre.setInt(2, 4);
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
 
