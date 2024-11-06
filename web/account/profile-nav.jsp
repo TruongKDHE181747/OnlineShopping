@@ -33,7 +33,7 @@
 
             <!-- Profile picture upload button-->
             <form action="./uploadProfileImage" method="post" enctype="multipart/form-data">
-                <input style="margin-left: 40px;" type="file" name="profileImage" accept="image/*">                                 
+                <input style="margin-left: 40px;" type="file" name="profileImage" id="fileInput" accept="image/*">                                 
                 <button class="btn btn-dark mt-3" type="submit">Tải Lên</button>
             </form>
         </div>
@@ -59,3 +59,21 @@
         </div>
     </div>
 </div>
+<script>
+    function validateImage(file) {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (file && allowedTypes.includes(file.type)) {
+            return true;
+        } else {
+            alert("Hãy tải lên hình ảnh hợp lệ.");
+            fileInput.value = "";
+            return false;
+        }
+    }
+
+    const fileInput = document.getElementById('fileInput');
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        validateImage(file);
+    });
+</script>

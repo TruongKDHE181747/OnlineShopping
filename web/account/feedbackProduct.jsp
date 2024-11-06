@@ -67,8 +67,8 @@
                                 </div>
                                 <div class="mb-3">
                                     Ảnh:<br/>
-                                    <input type="file" name="thumbnail" required="">
-                                </div>
+                                    <input type="file" name="thumbnail" id="fileInput" accept="image/*" <c:if test="${pf==null}"> required=""</c:if>>
+                                    </div>
                                 <c:if test="${pf!=null}">
 
                                     <div class="mb-3" style="width: 150px;height: 200px">
@@ -126,6 +126,23 @@
                             document.getElementById('rating').value = ratingValue; // Set new rating in hidden input
                             updateStars(ratingValue); // Update the star colors
                         });
+                    });
+
+                    function validateImage(file) {
+                        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                        if (file && allowedTypes.includes(file.type)) {
+                            return true;
+                        } else {
+                            alert("Hãy tải lên hình ảnh hợp lệ.");
+                            fileInput.value = "";
+                            return false;
+                        }
+                    }
+
+                    const fileInput = document.getElementById('fileInput');
+                    fileInput.addEventListener('change', function () {
+                        const file = fileInput.files[0];
+                        validateImage(file);
                     });
 
         </script>

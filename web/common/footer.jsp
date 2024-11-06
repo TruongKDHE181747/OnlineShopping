@@ -26,7 +26,7 @@
                         <ul>
                             <li><a style="padding: 10px;
                                 border: 1px solid white;
-                                color: white;" href="../common/contact.jsp">Liên hệ</a></li>
+                                color: white;" href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
                         </ul>
                     </div>
                 </div>

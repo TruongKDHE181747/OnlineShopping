@@ -4,6 +4,7 @@
  */
 package profile_controller;
 
+import dal.OrderDAO;
 import dal.ProductDAO;
 import dal.ProductFeedbackDAO;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import model.Order;
 import model.Product;
 import model.ProductFeedback;
 import model.User;
@@ -41,11 +43,22 @@ public class AddEditProductFeedback extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         ProductFeedbackDAO pfDAO = new ProductFeedbackDAO();
         ProductDAO productDAO = new ProductDAO();
-
+        OrderDAO orderDAO =new OrderDAO();
+        
+        User account = (User) session.getAttribute("account");
         try {
             int oid = Integer.parseInt(request.getParameter("oid"));
+            
+            Order order = orderDAO.getOrderById(oid);
+            
+            if(account.getUser_id() != order.getCustomerId() || order.getOrderStatusId() != 4 ){
+                request.getRequestDispatcher("/account/feedbackProduct.jsp").forward(request, response);
+                return;
+            }
+            
             int pid = Integer.parseInt(request.getParameter("pid"));
 
             Product product = productDAO.getProductById(pid);
@@ -63,6 +76,7 @@ public class AddEditProductFeedback extends HttpServlet {
             request.getRequestDispatcher("/account/feedbackProduct.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
+            request.getRequestDispatcher("/account/feedbackProduct.jsp").forward(request, response);
         }
 
     }
@@ -110,9 +124,9 @@ public class AddEditProductFeedback extends HttpServlet {
 
             if (pf == null) {
                 boolean check = pfDAO.insertFeedback(new ProductFeedback(customerId, oid, pid, review, fileName, rating));
-                
+
                 int newAvgRating = pfDAO.getAverageRatingOfProduct(pid);
-                
+
                 productDAO.updateProductRating(pid, newAvgRating);
 
                 sesion.setAttribute("feedbackMsg", check ? "Gửi đánh giá thành công." : "Gửi đánh giá thất bại.");
@@ -120,7 +134,7 @@ public class AddEditProductFeedback extends HttpServlet {
             } else {
                 boolean check = pfDAO.updateFeedback(new ProductFeedback(pf.getFeedback_id(), review, fileName, rating));
                 int newAvgRating = pfDAO.getAverageRatingOfProduct(pid);
-                
+
                 productDAO.updateProductRating(pid, newAvgRating);
                 sesion.setAttribute("feedbackMsg", check ? "Sửa đánh giá thành công." : "Sửa đánh giá thất bại.");
             }
@@ -128,6 +142,7 @@ public class AddEditProductFeedback extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/productfeedback?oid=" + oid + "&pid=" + pid);
 
         } catch (NumberFormatException e) {
+            request.getRequestDispatcher("/account/feedbackProduct.jsp").forward(request, response);
         }
 
     }

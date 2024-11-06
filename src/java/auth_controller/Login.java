@@ -45,8 +45,27 @@ public class Login extends HttpServlet {
             }
                     
         }
+        HttpSession session = request.getSession();
         
-        request.getRequestDispatcher("/account/login.jsp").forward(request, response);
+        User account = (User) session.getAttribute("account");
+        
+        if(account == null){
+            request.getRequestDispatcher("/account/login.jsp").forward(request, response);
+            return;
+        }
+        
+        int roleId = account.getRole().getRole_id();
+        
+        switch (roleId) {
+            case 1 -> response.sendRedirect(request.getContextPath()+"/admindashboard");
+            case 2 -> response.sendRedirect(request.getContextPath()+"/salemanagerdashboard");
+            case 3 -> response.sendRedirect(request.getContextPath()+"/orderlist");
+            case 4 -> response.sendRedirect(request.getContextPath()+"/marketinghome");
+            default -> response.sendRedirect(request.getContextPath()+"/homeslider");
+        }
+        
+        
+        
     }
 
     /**
@@ -92,7 +111,17 @@ public class Login extends HttpServlet {
         
         session.setAttribute("account", user);
 
-        response.sendRedirect(request.getContextPath()+"/homeslider");
+        int roleId = user.getRole().getRole_id();
+        
+        switch (roleId) {
+            case 1 -> response.sendRedirect(request.getContextPath()+"/admindashboard");
+            case 2 -> response.sendRedirect(request.getContextPath()+"/salemanagerdashboard");
+            case 3 -> response.sendRedirect(request.getContextPath()+"/orderlist");
+            case 4 -> response.sendRedirect(request.getContextPath()+"/marketinghome");
+            default -> response.sendRedirect(request.getContextPath()+"/homeslider");
+        }
+                
+        
     }
 
     private void sendErrorMessage(String error, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
