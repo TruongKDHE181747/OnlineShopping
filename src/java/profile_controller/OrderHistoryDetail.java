@@ -46,19 +46,21 @@ public class OrderHistoryDetail extends HttpServlet {
 
             Order order = orderDAO.getOrderByCustomerIdAndOrderId(account.getUser_id(), orderId);
 
+            if(order == null){
+                request.getRequestDispatcher("/account/orderHistoryDetail.jsp").forward(request, response);
+                return;
+            }
+            
             request.setAttribute("order", order);
             
             List<OrderDetail> orderDetails = orderDetailDAO.getOrderDetailByOrderId(orderId);
             
             request.setAttribute("orderDetails", orderDetails);
-            
-            
-            
-            
+                       
             request.getRequestDispatcher("/account/orderHistoryDetail.jsp").forward(request, response);
             
         } catch (NumberFormatException e) {
-
+            request.getRequestDispatcher("/account/orderHistoryDetail.jsp").forward(request, response);
         }
 
     }

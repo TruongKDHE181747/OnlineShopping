@@ -75,8 +75,18 @@ public class LoginGoogle extends HttpServlet {
         User user = userDAO.loginGoogle(ggUser.getId());
 
         session.setAttribute("account", user);
+        
+        int roleId = user.getRole().getRole_id();
+        
+        switch (roleId) {
+            case 1 -> response.sendRedirect(request.getContextPath()+"/admindashboard");
+            case 2 -> response.sendRedirect(request.getContextPath()+"/salemanagerdashboard");
+            case 3 -> response.sendRedirect(request.getContextPath()+"/orderlist");
+            case 4 -> response.sendRedirect(request.getContextPath()+"/marketinghome");
+            default -> response.sendRedirect(request.getContextPath()+"/homeslider");
+        }
 
-        response.sendRedirect(request.getContextPath() + "/homeslider");
+        
 
     }
 

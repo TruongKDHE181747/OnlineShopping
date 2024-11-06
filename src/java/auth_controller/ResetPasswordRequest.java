@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import model.User;
@@ -32,7 +33,26 @@ public class ResetPasswordRequest extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/account/emailReset.jsp").forward(request, response);
+        
+        HttpSession session = request.getSession();
+        
+        User account = (User) session.getAttribute("account");
+        
+        if(account == null){
+            request.getRequestDispatcher("/account/emailReset.jsp").forward(request, response);
+            return;
+        }
+        
+        int roleId = account.getRole().getRole_id();
+        
+        switch (roleId) {
+            case 1 -> response.sendRedirect(request.getContextPath()+"/admindashboard");
+            case 2 -> response.sendRedirect(request.getContextPath()+"/salemanagerdashboard");
+            case 3 -> response.sendRedirect(request.getContextPath()+"/orderlist");
+            case 4 -> response.sendRedirect(request.getContextPath()+"/marketinghome");
+            default -> response.sendRedirect(request.getContextPath()+"/homeslider");
+        }
+        
     }
 
     /**

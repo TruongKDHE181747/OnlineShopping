@@ -35,7 +35,27 @@ public class Register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+        
+        HttpSession session = request.getSession();
+        
+        User account = (User) session.getAttribute("account");
+        
+        if(account == null){
+            request.getRequestDispatcher("/account/register.jsp").forward(request, response);
+            return;
+        }
+        
+        int roleId = account.getRole().getRole_id();
+        
+        switch (roleId) {
+            case 1 -> response.sendRedirect(request.getContextPath()+"/admindashboard");
+            case 2 -> response.sendRedirect(request.getContextPath()+"/salemanagerdashboard");
+            case 3 -> response.sendRedirect(request.getContextPath()+"/orderlist");
+            case 4 -> response.sendRedirect(request.getContextPath()+"/marketinghome");
+            default -> response.sendRedirect(request.getContextPath()+"/homeslider");
+        }
+        
+        
 
     }
 
