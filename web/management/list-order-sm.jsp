@@ -165,9 +165,10 @@
                                                 <% 
                                                     List<User> users = udao.getListUserByRoleId(3);
                                                     for (User u : users) { 
+                                                        String sname = u.getFirst_name() + " " + u.getLast_name();
                                                 %>
                                                 <option value="<%= u.getUser_id() %>" <%= sale.equals(String.valueOf(u.getUser_id())) ? "selected" : "" %>>
-                                                    <%= u.getFirst_name() + " " + u.getLast_name() %>
+                                                    <%= sname%>
                                                 </option>
                                                 <% } %>
                                             </select>
@@ -207,7 +208,7 @@
                                         double totalAmount = o.getTotalAmount();
                                         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
                                         String formattedAmount = formatter.format(totalAmount);
-                                        String saleName = user.getFirst_name() + user.getLast_name();
+                                        String saleName = user.getFirst_name() + " " + user.getLast_name();
                                 %>
                                 <tr>
 
