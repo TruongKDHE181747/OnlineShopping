@@ -70,7 +70,24 @@
                                     <input name="img" type="file" class="form-control" id="img">
                                     <img style="margin-top: 10px;width:  285px;height: 141px;" src="../${s.img}" alt="alt"/>
                                 </div>
+ <script>
+                                    function validateImage(file) {
+                                        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                                        if (file && allowedTypes.includes(file.type)) {
+                                            return true;
+                                        } else {
+                                            alert("Hãy tải lên hình ảnh hợp lệ.");
+                                            fileInput.value = "";
+                                            return false;
+                                        }
+                                    }
 
+                                    const fileInput = document.getElementById('img');
+                                    fileInput.addEventListener('change', function () {
+                                        const file = fileInput.files[0];
+                                        validateImage(file);
+                                    });
+                                </script>
 
                                 <div class="my-3 col-sm-6">
                                     <label for="status" class="form-label">Trạng thái</label>

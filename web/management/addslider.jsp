@@ -48,14 +48,14 @@
 
                 <div class="row g-5" style="justify-content: center;">
 
-                  
-                   
+
+
 
                     <div class="col-md-8">
                         <form class="needs-validation" action="../addslider" method="post" enctype="multipart/form-data">
                             <div class="row g-3">
-                               
-                            
+
+
                                 <div class="col-sm-6">
                                     <label for="title" class="form-label">Tiêu đề</label>
                                     <input  name="title" type="text" class="form-control" id="title" required>
@@ -63,9 +63,28 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="img" class="form-label"> Ảnh</label>
-                                    <input name="img" type="file" class="form-control" id="img">
-                                   
+                                    <input name="img" type="file" class="form-control" id="img" accept="image/*">
+
                                 </div>
+
+                                <script>
+                                    function validateImage(file) {
+                                        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                                        if (file && allowedTypes.includes(file.type)) {
+                                            return true;
+                                        } else {
+                                            alert("Hãy tải lên hình ảnh hợp lệ.");
+                                            fileInput.value = "";
+                                            return false;
+                                        }
+                                    }
+
+                                    const fileInput = document.getElementById('img');
+                                    fileInput.addEventListener('change', function () {
+                                        const file = fileInput.files[0];
+                                        validateImage(file);
+                                    });
+                                </script>
 
 
                                 <div class="my-3 col-sm-6">
@@ -79,23 +98,23 @@
                                         <label class="form-check-label" for="status">Ẩn</label>
                                     </div>
                                 </div>
-                                
-                              <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <label for="description" class="form-label">Mô tả</label>
-                                    <input   name="description" type="text" class="form-control" id="id" required>
+
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <label for="description" class="form-label">Mô tả</label>
+                                        <input   name="description" type="text" class="form-control" id="id" required>
+
+                                    </div>
+
+
 
                                 </div>
-                             
+
+                                <hr class="my-4">
+                                <!-- Error check Username and Password -->
 
 
-                            </div>
-
-                            <hr class="my-4">
-                            <!-- Error check Username and Password -->
-                            
-
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Lưu</button>
+                                <button class="w-100 btn btn-primary btn-lg" type="submit">Lưu</button>
                         </form>
                     </div>
                 </div>
