@@ -199,14 +199,15 @@
 
                                 <!-- START Order item -->
                                 <%
-                                    List<Order> oList = (ArrayList<Order>) session.getAttribute("orders");
+                                    List<Order> oList = (ArrayList<Order>) session.getAttribute("list-order");
                                     int i = 1;
                                     
                                     for (Order o : oList) {
-                                        User user = udao.getUserByRoleId(o.getSaleId());
+                                        User user = udao.getUserByUserId(o.getSaleId());
                                         double totalAmount = o.getTotalAmount();
                                         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
                                         String formattedAmount = formatter.format(totalAmount);
+                                        String saleName = user.getFirst_name() + user.getLast_name();
                                 %>
                                 <tr>
 
@@ -247,7 +248,7 @@
                                     <td class="<%= orderStatusClass %>"><%=o.getOrderStatusName()%></td>
 
 
-                                    <td><%= user.getFirst_name() + " " + user.getLast_name()%></td>
+                                    <td><%= saleName%></td>
 
                                     <%
                                         String contextPath = request.getContextPath();

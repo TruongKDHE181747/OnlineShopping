@@ -59,7 +59,7 @@ public class AssignOrder extends HttpServlet {
         session.setAttribute("end_date_order", endDate);
         
         String err = "";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         if ((beginDate.isEmpty() && !endDate.isEmpty()) || (!beginDate.isEmpty() && endDate.isEmpty())) {
             err = "Hãy nhập cả ngày bắt đầu và kết thúc";
@@ -70,7 +70,7 @@ public class AssignOrder extends HttpServlet {
             
             long diff = ChronoUnit.DAYS.between(begin, end);
             if (diff < 0) {
-                err = "Từ yyyy-MM-dd phải >= Đến yyyy-MM-dd";
+                err = "Từ dd-MM-yyyy phải >= Đến dd-MM-yyyy";
                 session.setAttribute("error_date", err);
             } else {
                 session.setAttribute("begin_date_order", beginDate);

@@ -792,9 +792,9 @@ public class UserDAO extends DBContext {
         }
     }
     
-    public User getUserByRoleId(int rid) {
+    public User getUserByUserId(int rid) {
         RoleDAO roleDAO = new RoleDAO();
-        String sql = "select * from Users where role_id = ?";
+        String sql = "select * from Users where user_id = ?";
         User user = null;
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
