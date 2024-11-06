@@ -40,7 +40,7 @@
     <jsp:include page="../common/header.jsp" />
     <body >
         <div class="row">
-            <jsp:include page="sale_header.jsp"/>
+            <jsp:include page="sm-panel.jsp"/>
 
             <div class="col-md-10" style="padding: 40px;">
 
