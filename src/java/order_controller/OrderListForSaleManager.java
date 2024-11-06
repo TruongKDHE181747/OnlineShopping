@@ -71,7 +71,7 @@ public class OrderListForSaleManager extends HttpServlet {
         session.setAttribute("end_date", endDate);
 
         String err = "";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if ((beginDate.isEmpty() && !endDate.isEmpty() && !sale.isEmpty()) || (!beginDate.isEmpty() && endDate.isEmpty() && !sale.isEmpty())) {
             err = "Hãy nhập cả ngày bắt đầu và kết thúc";

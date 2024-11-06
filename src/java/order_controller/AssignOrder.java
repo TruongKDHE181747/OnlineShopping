@@ -59,7 +59,7 @@ public class AssignOrder extends HttpServlet {
         session.setAttribute("end_date_order", endDate);
         
         String err = "";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if ((beginDate.isEmpty() && !endDate.isEmpty()) || (!beginDate.isEmpty() && endDate.isEmpty())) {
             err = "Hãy nhập cả ngày bắt đầu và kết thúc";

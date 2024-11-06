@@ -242,7 +242,7 @@
                                                 orderStatusClass = "text-success font-weight-bold";
                                                 break;
                                             default:
-                                                orderStatusClass = ""; // Default class if needed
+                                                orderStatusClass = "";
                                                 break;
                                         }
                                     %>
