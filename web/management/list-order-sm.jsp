@@ -5,6 +5,7 @@
 <%@page import="dal.PaymentStatusDAO"%>
 <%@page import="dal.UserDAO"%>
 <%@page import="java.util.*" %>
+<%@page import="java.text.NumberFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -129,7 +130,7 @@
     </head>
     <body>
         <div class="row">
-            <jsp:include page="../common/header.jsp" />
+            <jsp:include page="../common/headermanage.jsp" />
             <!-- START menu -->
             <jsp:include page="sm-header.jsp"/>
             <!-- END menu -->
@@ -203,6 +204,9 @@
                                     
                                     for (Order o : oList) {
                                         User user = udao.getUserByRoleId(o.getSaleId());
+                                        double totalAmount = o.getTotalAmount();
+                                        NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+                                        String formattedAmount = formatter.format(totalAmount);
                                 %>
                                 <tr>
 
@@ -212,7 +216,7 @@
 
                                     <td><%= o.getReceiverName()%></td>
 
-                                    <td><%= o.getTotalPrice()%></td>
+                                    <td><%= formattedAmount%></td>
 
                                     <%
                                         String orderStatusClass = "";
@@ -257,10 +261,10 @@
                                             </button>
                                         </form>
                                     </td>
-                                        <%
-                                            i++;
-                                            }
-                                        %>
+                                    <%
+                                        i++;
+                                        }
+                                    %>
 
                                 </tr>
                                 <!-- END Order item -->

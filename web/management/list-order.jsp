@@ -129,7 +129,7 @@
     </head>
     <body>
         <div class="row">
-            <jsp:include page="../common/header.jsp" />
+            <jsp:include page="../common/headermanage.jsp" />
             <!-- START menu -->
             <jsp:include page="sale_header.jsp"/>
             <!-- END menu -->
