@@ -148,7 +148,7 @@
 
 
                         <div class="row">
-                            <h3 class="text-center mb-4">Payment Method</h3>
+                            <h3 class="text-center mb-4">Phương thức thanh toán</h3>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="payment-option w-100">

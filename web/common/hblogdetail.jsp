@@ -161,7 +161,7 @@
                                         <%
                                             }
                                         %>
-                                        
+
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <%
@@ -174,7 +174,7 @@
                                         <%
                                             }
                                         %>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                                 <h4>Để lại bình luận</h4>
                                 <form action="../customerpostcomment">
                                     <div class="row">
-                                        
+
                                         <div class="col-lg-12 text-center">
                                             <textarea maxlength="500" required="" name="postcomment" placeholder="Comment"></textarea>
                                             <button type="submit" class="site-btn">Bình luận</button>
@@ -199,16 +199,24 @@
                             <div class="row" style="margin-top: 24px;">
                                 <div class="blog__details__option" style="width: 100%;">
                                     <div class="row">
-                                        
+
                                         <%
+                                        
                                         for (PostFeedback postFeedback : top3postfblist) {
                                         date = sdf.format(postFeedback.getModified_at());
         
+                    
+                                                    
+                                        String profilePictureUrl = (String) postFeedback.getProfile_picture_url();
+                                        String profileImgSrc = profilePictureUrl != null && (profilePictureUrl.startsWith("http://") || profilePictureUrl.startsWith("https://")) 
+                                                                ? profilePictureUrl 
+                                                                : request.getContextPath() + "/" + profilePictureUrl;
                                         %>
+
                                         <div class="col-md-12 row" style="margin: 5px 0;">
                                             <div class="blog__details__author col-md-12 row">
                                                 <div class="blog__details__author__pic col-md-2">
-                                                    <img src="../<%=postFeedback.getProfile_picture_url()%>" alt="">
+                                                    <img src="<%=profileImgSrc%>" alt="">
                                                 </div>
                                                 <div class="blog__details__author__text col-md-9">
                                                     <h5><%=postFeedback.getUsername()%></h5>
@@ -221,7 +229,7 @@
                                         <%
                                             }
                                         %>
-                                        
+
 
                                     </div>
                                     <div class="row">
@@ -261,13 +269,13 @@
                         </div>
                     </div>
                 </div>
-                        
-                        <%
-                        List<Post> relatedPostList = (List<Post>)session.getAttribute("relatedPostList");
+
+                <%
+                List<Post> relatedPostList = (List<Post>)session.getAttribute("relatedPostList");
                             
-                        %>
+                %>
                 <div class="row">
-                    
+
                     <%
                     for (Post post : relatedPostList) {
                     date = sdf.format(post.getModified_at());
@@ -286,14 +294,14 @@
                     <%
                         }
                     %>
-                    
-                    
+
+
                 </div>
             </div>
         </section>
         <!-- Latest Blog Section End -->
         <!-- Footer Section Begin -->
-       <jsp:include page="../common/footer.jsp" />
+        <jsp:include page="../common/footer.jsp" />
         <!-- Footer Section End -->
 
         <!-- Search Begin -->

@@ -158,7 +158,8 @@
                             </c:if>
                         </div>
                         <div class="cart__total">
-                            <h6>Tổng giỏ hàng</h6>
+                            <h4>Tổng giỏ hàng</h4>
+                            <hr>
                             <ul>
                                 <li style="font-weight: normal ">Tổng phụ <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                                     <c:set var="discountPercent" value="${0}" />
