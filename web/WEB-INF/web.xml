@@ -26,7 +26,28 @@
     </filter>
     <filter-mapping>
         <filter-name>MarketingFilterV2</filter-name>
-        <url-pattern></url-pattern>
+          <url-pattern>/management/updateslider.jsp</url-pattern>
+        <url-pattern>/customerlist</url-pattern>
+        <url-pattern>/management/customerlist.jsp</url-pattern>
+         <url-pattern>/management/customerdetail.jsp</url-pattern>
+         <url-pattern>/customerdetail</url-pattern>
+      <url-pattern>/postfeedbacklist</url-pattern>
+      <url-pattern>/postfeedbackpaging</url-pattern>
+ <url-pattern>/management/postfeedbacklist.jsp</url-pattern>
+<url-pattern>/management/productfeedbackpaging.jsp</url-pattern>
+<url-pattern>/management/productfeedbacklist.jsp</url-pattern>
+<url-pattern>/management/mktdashboard.jsp</url-pattern>
+<url-pattern>/mktdashboardfilter</url-pattern>
+<url-pattern>/markertingdashboard</url-pattern>
+<url-pattern>/marketinghome</url-pattern>
+<url-pattern>/management/common/home_marketing.jsp</url-pattern>
+<url-pattern>/productfeedbackdetail</url-pattern>
+<url-pattern>/management/productfeedbackdetail.jsp</url-pattern>
+<url-pattern>/voucher_controller/*</url-pattern>
+<url-pattern>/management/voucherlist.jsp</url-pattern>
+<url-pattern>/management/vouchersearch.jsp</url-pattern>
+<url-pattern>/management/addvoucher.jsp</url-pattern>
+<url-pattern>/management/detailvoucher.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SaleManagerFilter</filter-name>

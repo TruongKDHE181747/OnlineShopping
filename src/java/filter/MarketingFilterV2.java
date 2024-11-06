@@ -15,6 +15,10 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
@@ -102,16 +106,23 @@ public class MarketingFilterV2 implements Filter {
 	doBeforeProcessing(request, response);
 	
 	Throwable problem = null;
-	try {
-	    chain.doFilter(request, response);
-	}
-	catch(Throwable t) {
-	    // If an exception is thrown somewhere down the filter chain,
-	    // we still want to execute our after processing, and then
-	    // rethrow the problem after that.
-	    problem = t;
-	    t.printStackTrace();
-	}
+	  HttpServletRequest req = (HttpServletRequest)request;
+        HttpServletResponse res = (HttpServletResponse)response;
+        HttpSession session = req.getSession();
+        User acc = (User)session.getAttribute("account");
+        
+        if(acc==null){
+            res.sendRedirect(req.getContextPath()+"/login");
+        } else {
+            if(acc.getRole().getRole_id()!=4){
+                res.sendRedirect(req.getContextPath()+"/management/marketingfilter.jsp");
+            } else if(acc.getRole().getRole_id()==4) {
+
+                //Nothing wrong happen => follow normal flow in the servlet, jsp 
+                  chain.doFilter(request, response);  
+            }
+        }
+        
 
 	doAfterProcessing(request, response);
 
