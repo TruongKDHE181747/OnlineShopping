@@ -55,7 +55,18 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>CustomerFilter</filter-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/checkout</url-pattern>
+        <url-pattern>/addAddress</url-pattern>
+        <url-pattern>/productfeedback</url-pattern>
+        <url-pattern>/address</url-pattern>
+        <url-pattern>/deleteAddress</url-pattern>
+        <url-pattern>/orderHistory</url-pattern>
+        <url-pattern>/orderhistorydetail</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/setDefaultAddress</url-pattern>
+        <url-pattern>/updateAddress</url-pattern>
+        <url-pattern>/uploadProfileImage</url-pattern>
+        <url-pattern>/changePassword</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
