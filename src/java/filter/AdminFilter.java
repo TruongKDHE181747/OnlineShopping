@@ -114,23 +114,14 @@ public class AdminFilter implements Filter {
             res.sendRedirect(req.getContextPath()+"/login");
         } else {
             if(acc.getRole().getRole_id()!=1){
-                res.sendRedirect(req.getContextPath()+"/homeslider");
+                res.sendRedirect(req.getContextPath()+"/management/marketingfilter.jsp");
             } else if(acc.getRole().getRole_id()==1) {
-                res.sendRedirect(req.getContextPath()+"/management/admindasboard.jsp");
+                chain.doFilter(request, response); 
                 
             }
         }
 	Throwable problem = null;
-	try {
-	    chain.doFilter(request, response);
-	}
-	catch(Throwable t) {
-	    // If an exception is thrown somewhere down the filter chain,
-	    // we still want to execute our after processing, and then
-	    // rethrow the problem after that.
-	    problem = t;
-	    t.printStackTrace();
-	}
+	
 
 	doAfterProcessing(request, response);
 
