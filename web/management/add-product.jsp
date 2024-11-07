@@ -22,24 +22,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
         <jsp:include page="../common/css.jsp" />
-        <script>
-            function validateImage(file) {
-                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                if (file && allowedTypes.includes(file.type)) {
-                    return true;
-                } else {
-                    alert("Hãy tải lên hình ảnh hợp lệ.");
-                    fileInput.value = "";
-                    return false;
-                }
-            }
-
-            const fileInput = document.getElementById('fileInput');
-            fileInput.addEventListener('change', function () {
-                const file = fileInput.files[0];
-                validateImage(file);
-            });
-        </script>   
+          
     </head>
     <body>
         <jsp:include page="../common/header.jsp" />
@@ -87,7 +70,7 @@
 
                                 <div class="col-12">
                                     <label class="form-label">Thumbnail</label>
-                                    <input type="file" class="form-control" id="fileInput" name="img" required>
+                                    <input type="file" class="form-control fileInput" id="fileInput" name="img" required>
                                 </div>
 
                                 <%
@@ -95,7 +78,7 @@
                                 %>
                                 <div class="col-12">
                                     <label class="form-label">Ảnh <%=i%></label>
-                                    <input type="file" class="form-control" id="fileInput" name="img_<%=i%>" required>
+                                    <input type="file" class="form-control" id="fileInput<%=i%>" name="img_<%=i%>" required>
                                 </div>
                                 <%
                                     }
@@ -181,5 +164,39 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+            function validateImage(file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (file && allowedTypes.includes(file.type)) {
+                    return true;
+                } else {
+                    alert("Hãy tải lên hình ảnh hợp lệ.");
+                    fileInput.value = "";
+                    return false;
+                }
+            }
+
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function () {
+                const file = fileInput.files[0];
+                validateImage(file);
+            });
+            const fileInput1 = document.getElementById('fileInput1');
+            fileInput1.addEventListener('change', function () {
+                const file = fileInput1.files[0];
+                validateImage(file);
+            });
+            const fileInput2 = document.getElementById('fileInput2');
+            fileInput2.addEventListener('change', function () {
+                const file = fileInput2.files[0];
+                validateImage(file);
+            });
+            const fileInput3 = document.getElementById('fileInput3');
+            fileInput3.addEventListener('change', function () {
+                const file = fileInput3.files[0];
+                validateImage(file);
+            });
+        </script>
     </body>
 </html>
