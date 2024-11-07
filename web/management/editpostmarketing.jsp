@@ -169,9 +169,9 @@
                                             <input maxlength="500" value="<%=editpostmkt.getTitle()%>" name="posttitle" type="text" class="form-control" id="posttitle" required>
 
                                         </div>
-                                            <div class="col-sm-12">
-                                            <label for="image" class="form-label">Ảnh minh họa</label>
-                                            <input name="image" type="file" class="form-control" id="image">
+                                        <div class="col-sm-12">
+                                            <label class="form-label">Ảnh minh họa</label>
+                                            <input name="image" type="file" class="form-control" id="fileInput">
                                             <img style="margin-top: 10px;" src="../<%=editpostmkt.getThumbnail()%>" alt="alt"/>
                                         </div>
                                         <div class="col-sm-12">
@@ -190,17 +190,17 @@
                                                 <%
                                           for (PostCategory postCategory : postcategorylist) {
 
-                                          %>
-                                           <option <%=postCategory.getPost_category_id()==editpostmkt.getPost_category_id()?"selected":""%> value="<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></option>                                   
-                                          <%
-                                              }
-                                          %>
-                                               
+                                                %>
+                                                <option <%=postCategory.getPost_category_id()==editpostmkt.getPost_category_id()?"selected":""%> value="<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></option>                                   
+                                                <%
+                                                    }
+                                                %>
+
 
 
                                             </select>
                                         </div>
-                                          
+
                                         <div class="my-3 col-sm-6">
                                             <label for="available" class="form-label">Trạng thái</label>
                                             <div class="form-check">
@@ -243,6 +243,23 @@
             </div>
         </div>
 
+        <script>
+            function validateImage(file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (file && allowedTypes.includes(file.type)) {
+                    return true;
+                } else {
+                    alert("Hãy tải lên hình ảnh hợp lệ.");
+                    fileInput.value = "";
+                    return false;
+                }
+            }
 
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function () {
+                const file = fileInput.files[0];
+                validateImage(file);
+            });
+        </script>
     </body>
 </html>

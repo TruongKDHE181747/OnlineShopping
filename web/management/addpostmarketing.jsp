@@ -168,8 +168,8 @@
 
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="image" class="form-label">Ảnh minh họa</label>
-                                            <input name="image" type="file" class="form-control" id="image" required>
+                                            <label class="form-label">Ảnh minh họa</label>
+                                            <input name="image" type="file" class="form-control" id="fileInput" required>
 
                                         </div>
 
@@ -189,12 +189,12 @@
                                                 <%
                                           for (PostCategory postCategory : postcategorylist) {
 
-                                          %>
-                                           <option value="<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></option>                                   
-                                          <%
-                                              }
-                                          %>
-                                               
+                                                %>
+                                                <option value="<%=postCategory.getPost_category_id()%>"><%=postCategory.getPost_category_name()%></option>                                   
+                                                <%
+                                                    }
+                                                %>
+
 
 
                                             </select>
@@ -242,5 +242,23 @@
         </div>
 
 
+        <script>
+            function validateImage(file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (file && allowedTypes.includes(file.type)) {
+                    return true;
+                } else {
+                    alert("Hãy tải lên hình ảnh hợp lệ.");
+                    fileInput.value = "";
+                    return false;
+                }
+            }
+
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function () {
+                const file = fileInput.files[0];
+                validateImage(file);
+            });
+        </script>
     </body>
 </html>

@@ -74,8 +74,8 @@
                                 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="img" class="form-label">Profile Image</label>
-                                    <input name="img" type="file" class="form-control" id="img">
+                                    <label class="form-label">Profile Image</label>
+                                    <input name="img" type="file" class="form-control" id="fileInput">
                                 </div>
 
 
@@ -140,6 +140,23 @@
 
             </footer>
         </div>
+<script>
+            function validateImage(file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (file && allowedTypes.includes(file.type)) {
+                    return true;
+                } else {
+                    alert("Hãy tải lên hình ảnh hợp lệ.");
+                    fileInput.value = "";
+                    return false;
+                }
+            }
 
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function () {
+                const file = fileInput.files[0];
+                validateImage(file);
+            });
+        </script>
     </body>
 </html>

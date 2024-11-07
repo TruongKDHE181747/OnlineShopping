@@ -46,7 +46,7 @@
                 <div class="row g-5" style="justify-content: center;">
 
 
-                   
+
 
                     <div class="col-md-8">
                         <form class="needs-validation" action="../edituser" method="post" enctype="multipart/form-data">
@@ -73,8 +73,8 @@
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="profile_picture_url" class="form-label">Profile Image</label>
-                                    <input name="profile_picture_url" type="file" class="form-control" id="profile_picture_url">
+                                    <label class="form-label">Profile Image</label>
+                                    <input name="profile_picture_url" type="file" class="form-control" id="fileInput">
                                     <img style="margin-top: 10px; height: 100px;" 
                                          src="../${sessionScope.u.profile_picture_url}" 
                                          alt="Profile Image"/>
@@ -85,19 +85,19 @@
                                     <label for="gender" class="form-label">Gender</label>
                                     <div class="form-check">
                                         <input value="true" id="male" name="gender" type="radio" class="form-check-input"
-                                            <c:if test="${sessionScope.u.gender == true}">checked</c:if>>
-                                        <label class="form-check-label" for="male">Male</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input value="false" id="female" name="gender" type="radio" class="form-check-input"
+                                               <c:if test="${sessionScope.u.gender == true}">checked</c:if>>
+                                               <label class="form-check-label" for="male">Male</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input value="false" id="female" name="gender" type="radio" class="form-check-input"
                                             <c:if test="${sessionScope.u.gender == false}">checked</c:if>>
-                                        <label class="form-check-label" for="female">Female</label>
+                                            <label class="form-check-label" for="female">Female</label>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-sm-6">
-                                    <label for="phone" class="form-label">Phone number</label>
-                                    <input  value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" >
+                                    <div class="col-sm-6">
+                                        <label for="phone" class="form-label">Phone number</label>
+                                        <input  value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" >
 
                                 </div>
                                 <div class="col-sm-6">
@@ -111,23 +111,23 @@
 
                                 </div>
 
-                                 <div class="col-sm-6">
+                                <div class="col-sm-6">
                                     <label for="role" class="form-label">Role</label>
-                                        <select id="role" name="role" class="form-select">
-                                            <option value="admin" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>Admin</option>
-                                            <option value="sale manager" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>sale manager</option>
-                                            <option value="saler" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>saler</option>
-                                            <option value="marketer" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>marketer</option>
-                                            <option value="user" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>user</option>
+                                    <select id="role" name="role" class="form-select">
+                                        <option value="admin" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>Admin</option>
+                                        <option value="sale manager" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>sale manager</option>
+                                        <option value="saler" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>saler</option>
+                                        <option value="marketer" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>marketer</option>
+                                        <option value="user" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>user</option>
                                         </select>
-                                </div>  
-                                <input disabled="" value="${sessionScope.u.password}" name="password" type="hidden" class="form-control" id="password" >
+                                    </div>  
+                                    <input disabled="" value="${sessionScope.u.password}" name="password" type="hidden" class="form-control" id="password" >
 
                             </div>
 
                             <hr class="my-4">
                             <!-- Error check Username and Password -->
-                            
+
 
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
                         </form>
@@ -140,5 +140,23 @@
             </footer>
         </div>
 
+        <script>
+            function validateImage(file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (file && allowedTypes.includes(file.type)) {
+                    return true;
+                } else {
+                    alert("Hãy tải lên hình ảnh hợp lệ.");
+                    fileInput.value = "";
+                    return false;
+                }
+            }
+
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function () {
+                const file = fileInput.files[0];
+                validateImage(file);
+            });
+        </script>
     </body>
 </html>
