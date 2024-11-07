@@ -33,7 +33,7 @@ public class RemoveVoucher extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        session.removeAttribute("voucher");
+        session.removeAttribute("applyVoucher");
         String checkout = request.getParameter("isCheckout");
         boolean isCheckout = false;
         if (checkout != null) {

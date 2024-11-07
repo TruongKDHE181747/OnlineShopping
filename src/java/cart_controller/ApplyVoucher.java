@@ -46,8 +46,8 @@ public class ApplyVoucher extends HttpServlet {
         }
         Voucher voucher = dao.getVoucherbyCode(code);
 
-        if (voucher == null) {
-            session.setAttribute("voucherError", "Voucher is invalid !");
+        if (voucher == null || voucher.getIs_active() == 0) {
+            session.setAttribute("voucherError", "Mã giảm giá không hợp lệ !");
             if (isCheckout) {
                 response.sendRedirect(request.getContextPath() + "/checkout");
             } else {
@@ -60,38 +60,38 @@ public class ApplyVoucher extends HttpServlet {
         LocalDate endDate = LocalDate.parse(voucher.getEnd_date(), formatter);
         LocalDate currentDate = LocalDate.now();
         
-//        if(currentDate.isBefore(startDate)){
-//            session.setAttribute("voucherError", "Voucher is not yet valid !");
-//            if (isCheckout) {
-//                response.sendRedirect(request.getContextPath() + "/checkout");
-//            } else {
-//                response.sendRedirect(request.getContextPath() + "/cart");
-//            }
-//            return;
-//        }
-//        
-//        if(currentDate.isAfter(endDate)){
-//            session.setAttribute("voucherError", "Voucher has expired !");
-//            if (isCheckout) {
-//                response.sendRedirect(request.getContextPath() + "/checkout");
-//            } else {
-//                response.sendRedirect(request.getContextPath() + "/cart");
-//            }
-//            return;
-//        }
-//        
-//        if(voucher.getQuantity() <= 0){
-//            session.setAttribute("voucherError", "Voucher out of quantity !");
-//            if (isCheckout) {
-//                response.sendRedirect(request.getContextPath() + "/checkout");
-//            } else {
-//                response.sendRedirect(request.getContextPath() + "/cart");
-//            }
-//            return;
-//        }
+        if(currentDate.isBefore(startDate)){
+            session.setAttribute("voucherError", "Mã giảm giá chưa đến thời gian hiệu lực !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        
+        if(currentDate.isAfter(endDate)){
+            session.setAttribute("voucherError", "Mã giảm giá đã quá hạn !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
+        
+        if(voucher.getQuantity() <= 0){
+            session.setAttribute("voucherError", "Mã giảm giá đã hết !");
+            if (isCheckout) {
+                response.sendRedirect(request.getContextPath() + "/checkout");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/cart");
+            }
+            return;
+        }
         
                 
-        session.setAttribute("voucher", voucher);
+        session.setAttribute("applyVoucher", voucher);
         if (isCheckout) {
             response.sendRedirect(request.getContextPath() + "/checkout");
         } else {

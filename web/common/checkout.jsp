@@ -212,9 +212,9 @@
                                 <input type="hidden" name="isCheckout" value="true">
                                 <button type="submit">Áp dụng</button>
                             </form>
-                            <c:if test="${sessionScope.voucher!=null}">
+                            <c:if test="${sessionScope.applyVoucher!=null}">
                                 <div class="alert alert-secondary d-flex justify-content-between align-items-center" style="margin-top: 20px;">
-                                    <span>${sessionScope.voucher.voucher_name} - <fmt:formatNumber value="${sessionScope.voucher.percent}" type="number" minFractionDigits="0" maxFractionDigits="2" />%</span>
+                                    <span>${sessionScope.applyVoucher.voucher_name} - <fmt:formatNumber value="${sessionScope.applyVoucher.percent}" type="number" minFractionDigits="0" maxFractionDigits="2" />%</span>
                                     <button onclick="window.location.href = 'removeVoucher?isCheckout=true'" type="button" class="btn-close" aria-label="Close"></button>
                                 </div>
                             </c:if>
@@ -227,8 +227,8 @@
                                     <li style="font-weight: normal ">Tổng <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
 
                                     <c:set var="discountPercent" value="${0}"/>
-                                    <c:if test="${sessionScope.voucher!=null}">
-                                        <c:set var="discountPercent" value="${sessionScope.voucher.percent/100}"/>
+                                    <c:if test="${sessionScope.applyVoucher!=null}">
+                                        <c:set var="discountPercent" value="${sessionScope.applyVoucher.percent/100}"/>
                                         <li style="font-weight: normal" >Mã giảm giá
                                             <span class="text-reset">- <fmt:formatNumber value="${subtotal*discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                         </li>
@@ -243,7 +243,7 @@
                                 <form action="checkout" method="post">
                                     <input type="hidden" name="totalPrice" value="${subtotal}">
                                     <input type="hidden" name="shippingFee" value="${ship}">
-                                    <input type="hidden" name="voucherId" value="${sessionScope.voucher.voucher_id}">
+                                    <input type="hidden" name="voucherId" value="${sessionScope.applyVoucher.voucher_id}">
                                     <input type="hidden" name="totalAmount" value="${total}">
                                     <input id="selectedPaymentMethod" type="hidden" name="paymentMethod" value="1">
 

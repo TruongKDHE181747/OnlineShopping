@@ -150,9 +150,9 @@
                                 <input type="text" name="voucherCode" placeholder="Nhập mã giảm giá" maxlength="255">
                                 <button type="submit">Áp dụng</button>
                             </form>
-                            <c:if test="${sessionScope.voucher != null}">
+                            <c:if test="${sessionScope.applyVoucher != null}">
                                 <div class="alert alert-secondary d-flex justify-content-between align-items-center" style="margin-top: 20px;">
-                                    <span>${sessionScope.voucher.voucher_name} - <fmt:formatNumber value="${sessionScope.voucher.percent}" type="number" minFractionDigits="0" maxFractionDigits="2" />%</span>
+                                    <span>${sessionScope.applyVoucher.voucher_name} - <fmt:formatNumber value="${sessionScope.applyVoucher.percent}" type="number" minFractionDigits="0" maxFractionDigits="2" />%</span>
                                     <button onclick="window.location.href = 'removeVoucher'" type="button" class="btn-close" aria-label="Close"></button>
                                 </div>
                             </c:if>
@@ -163,8 +163,8 @@
                             <ul>
                                 <li style="font-weight: normal ">Tổng phụ <span class="text-reset"><fmt:formatNumber value="${subtotal}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></li>
                                     <c:set var="discountPercent" value="${0}" />
-                                    <c:if test="${sessionScope.voucher != null}">
-                                        <c:set var="discountPercent" value="${sessionScope.voucher.percent / 100}" />
+                                    <c:if test="${sessionScope.applyVoucher != null}">
+                                        <c:set var="discountPercent" value="${sessionScope.applyVoucher.percent / 100}" />
                                     <li style="font-weight: normal">Mã giảm giá
                                         <span class="text-reset">- <fmt:formatNumber value="${subtotal * discountPercent}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                     </li>
