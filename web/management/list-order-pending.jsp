@@ -131,7 +131,7 @@
         <div class="row">
             <jsp:include page="../common/headermanage.jsp" />
             <!-- START menu -->
-            <jsp:include page="sale_panel.jsp"/>
+            <jsp:include page="sale-panel.jsp"/>
             <!-- END menu -->
 
             <%

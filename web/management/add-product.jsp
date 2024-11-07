@@ -58,9 +58,9 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="discount" class="form-label">Discount(%)</label>
+                                    <label for="discount" class="form-label">Giảm giá(%)</label>
                                     <!-- Added step value for 1% increment -->
-                                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Nhập discount(%)" required min="0" max="100" step="5">
+                                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Nhập mức giảm giá(%)" required min="0" max="100" step="5">
                                 </div>
 
                                 <div class="col-12">
@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <label class="form-label">Thumbnail</label>
+                                    <label class="form-label">Ảnh bìa</label>
                                     <input type="file" class="form-control" id="fileInput" name="img" required>
                                 </div>
 

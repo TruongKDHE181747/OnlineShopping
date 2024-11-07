@@ -126,7 +126,7 @@
     </head>
     <body>
         <div class="row">
-            <jsp:include page="../common/header.jsp" />
+            <jsp:include page="../common/headermanage.jsp" />
             <!-- START menu -->
             <jsp:include page="marketing_header.jsp"/>
             <!-- END menu -->
@@ -167,7 +167,7 @@
                                     <th scope="col">Ảnh</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Giá(₫)</th>
-                                    <th scope="col">Discount(%)</th>
+                                    <th scope="col">Giảm giá(%)</th>
                                     <th scope="col">Xem</th>
                                 </tr>
                             </thead>

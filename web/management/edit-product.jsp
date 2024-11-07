@@ -27,24 +27,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
         <jsp:include page="../common/css.jsp" />
-        <script>
-            function validateImage(file) {
-                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                if (file && allowedTypes.includes(file.type)) {
-                    return true;
-                } else {
-                    alert("Hãy tải lên hình ảnh hợp lệ.");
-                    fileInput.value = "";
-                    return false;
-                }
-            }
-
-            const fileInput = document.getElementById('fileInput');
-            fileInput.addEventListener('change', function () {
-                const file = fileInput.files[0];
-                validateImage(file);
-            });
-        </script> 
     </head>
     <body class="bg-body-tertiary">
         <jsp:include page="../common/header.jsp" />
@@ -87,7 +69,7 @@
 
                                 <!-- Discount -->
                                 <div class="col-sm-6">
-                                    <label for="discount" class="form-label">Discount(%)</label>
+                                    <label for="discount" class="form-label">Giảm giá(%)</label>
                                     <input value="<%= p.getDiscount()%>" name="discount" type="number" class="form-control" id="discount" required min="0" max="100">
                                 </div>
 
@@ -99,7 +81,7 @@
 
                                 <!-- Image Upload -->
                                 <div class="col-3">
-                                    <label class="form-label">Thumbnail</label>
+                                    <label class="form-label">Ảnh bìa</label>
                                     <input type="file" class="form-control" id="fileInput" name="img">
                                     <img style="margin-top: 10px;width: 60%;" src="../<%= p.getThumbnail()%>" alt="alt" />
                                 </div>
@@ -198,5 +180,32 @@
                 </div>
             </main>
         </div>
+        <script>
+            function validateImage(file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (file && allowedTypes.includes(file.type)) {
+                    return true;
+                } else {
+                    alert("Hãy tải lên hình ảnh hợp lệ.");
+                    fileInputs.forEach(fileInput => {
+                        fileInput.value = "";
+                    });
+                    return false;
+                }
+            }
+
+            const fileInputs = document.querySelectorAll('#fileInput');
+
+            fileInputs.forEach(fileInput => {
+                fileInput.addEventListener('change', function () {
+                    const file = fileInput.files[0];
+                    if (file) {
+                        validateImage(file);
+                    }
+                });
+            });
+
+
+        </script>
     </body>
 </html>

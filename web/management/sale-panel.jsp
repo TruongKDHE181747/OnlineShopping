@@ -8,7 +8,7 @@
     <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="position: absolute; width: 100%; height: 100%; min-height: 600px">
         <hr>
             <ul class="nav nav-pills flex-column mb-auto">
-                    <li>
+                    <li class="nav-item">
                         <a href="../orderlist" class="nav-link text-white order-link <c:if test="${pageContext.request.requestURI.endsWith('list-order.jsp')}">active bg-secondary</c:if>">
                             <!-- Orders Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-check" viewBox="0 0 16 16">
