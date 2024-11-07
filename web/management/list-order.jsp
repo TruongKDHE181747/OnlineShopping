@@ -185,7 +185,8 @@
                                         <td>${status.index +1}</td>
                                         <td>${o.orderedDate}</td>
 
-                                        <td><fmt:formatNumber value="${o.totalAmount}" /></td>
+                                        <fmt:setLocale value="vi_VN" />
+                                        <td><fmt:formatNumber value="${o.totalAmount}"/></td>
                                         <td 
                                             <c:if test="${o.paymentMethodId == 2}">class="text-primary font-weight-bold"</c:if>
                                             <c:if test="${o.paymentMethodId == 1}">class="text-info font-weight-bold"</c:if>

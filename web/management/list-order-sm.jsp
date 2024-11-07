@@ -192,7 +192,6 @@
                                     <th scope="col">Tổng giá(₫)</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Sale đảm nhận</th>
-                                    <th scope="col">Xem</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -206,7 +205,8 @@
                                     for (Order o : oList) {
                                         User user = udao.getUserByUserId(o.getSaleId());
                                         double totalAmount = o.getTotalAmount();
-                                        NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+                                        Locale vietnameseLocale = new Locale("vi", "VN");
+                                        NumberFormat formatter = NumberFormat.getNumberInstance(vietnameseLocale);
                                         String formattedAmount = formatter.format(totalAmount);
                                         String saleName = user.getFirst_name() + " " + user.getLast_name();
                                 %>
@@ -255,14 +255,6 @@
                                         String contextPath = request.getContextPath();
                                         int orderId = o.getOrderId();
                                     %>
-                                    <td>
-                                        <form action="<%= contextPath %>/orderdetail" method="get">
-                                            <input type="hidden" name="orderId" value="<%= orderId %>">
-                                            <button class="btn btn-sm btn-dark">
-                                                <span class="fa fa-eye"></span>
-                                            </button>
-                                        </form>
-                                    </td>
                                     <%
                                         i++;
                                         }

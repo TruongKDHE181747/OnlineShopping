@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Product"%>
 <%@page import="java.util.*" %>
+<%@page import="java.text.NumberFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -178,6 +179,10 @@
                                     List<Product> pList = (ArrayList<Product>) session.getAttribute("product_list");
                                     int num = 1;
                                     for (Product p : pList) {
+                                        double price = p.getPrice();
+                                        Locale vietnameseLocale = new Locale("vi", "VN");
+                                        NumberFormat formatter = NumberFormat.getNumberInstance(vietnameseLocale);
+                                        String formattedAmount = formatter.format(price);
                                 %>
                                 <tr>
 
@@ -203,7 +208,7 @@
                                         %>   
                                     </td>
 
-                                    <td><%= p.getPrice()%></td>
+                                    <td><%= formattedAmount%></td>
 
                                     <td><%= p.getDiscount()%></td>
 
