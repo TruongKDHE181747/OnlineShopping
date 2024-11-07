@@ -181,7 +181,7 @@
             
 
             <!-- START menu -->
-            <jsp:include page="../common/header.jsp" />
+            <jsp:include page="../common/headermanage.jsp" />
               <jsp:include page="admin_header.jsp" />
 
             <!-- END menu -->

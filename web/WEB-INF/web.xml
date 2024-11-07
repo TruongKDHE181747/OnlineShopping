@@ -59,7 +59,17 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/management/adminuserlist.jsp</url-pattern>
+        <url-pattern>/management/admindasboard.jsp</url-pattern>
+        <url-pattern>/management/adminsearchuser.jsp</url-pattern>
+        <url-pattern>/management/adminclassficationuser.jsp</url-pattern>
+        <url-pattern>/management/settinglist.jsp</url-pattern>
+        <url-pattern>/management/addsettinglist.jsp</url-pattern>
+        <url-pattern>/management/adduserlist.jsp</url-pattern>
+        <url-pattern>/management/detailuser.jsp</url-pattern>
+        <url-pattern>/management/editsettingpost.jsp</url-pattern>
+        <url-pattern>/management/editsettingproduct.jsp</url-pattern>
+        <url-pattern>/admin_controller/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>MarketingFilter</filter-name>
