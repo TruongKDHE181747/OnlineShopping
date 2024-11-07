@@ -51,7 +51,9 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>SaleManagerFilter</filter-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/management/list-order-sm.jsp</url-pattern>
+        <url-pattern>/management/assign-order.jsp</url-pattern>
+        <url-pattern>/management/saledashboard.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>CustomerFilter</filter-name>
@@ -97,7 +99,8 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>SaleFilter</filter-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/management/list-order.jsp</url-pattern>
+        <url-pattern>/management/list-order-pending.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>sliderlist</servlet-name>

@@ -43,10 +43,10 @@ public class OrderList extends HttpServlet {
         OrderDAO odao = new OrderDAO();
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("account");
-        
-        
-        
-        String beginDate = request.getParameter("begindate");
+        if (user == null) {
+            request.getRequestDispatcher("login").forward(request, response);
+        } else {
+            String beginDate = request.getParameter("begindate");
         String endDate = request.getParameter("enddate");
 
         if (beginDate == null) {
@@ -91,6 +91,7 @@ public class OrderList extends HttpServlet {
 
         session.setAttribute("order_list", order);
         response.sendRedirect(request.getContextPath() + "/management/list-order.jsp");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
