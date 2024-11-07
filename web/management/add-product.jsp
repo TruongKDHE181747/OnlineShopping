@@ -22,6 +22,24 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
         <jsp:include page="../common/css.jsp" />
+        <script>
+            function validateImage(file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (file && allowedTypes.includes(file.type)) {
+                    return true;
+                } else {
+                    alert("Hãy tải lên hình ảnh hợp lệ.");
+                    fileInput.value = "";
+                    return false;
+                }
+            }
+
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', function () {
+                const file = fileInput.files[0];
+                validateImage(file);
+            });
+        </script>   
     </head>
     <body>
         <jsp:include page="../common/header.jsp" />
@@ -68,16 +86,16 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="img" class="form-label">Thumbnail</label>
-                                    <input type="file" class="form-control" id="img" name="img" required>
+                                    <label class="form-label">Thumbnail</label>
+                                    <input type="file" class="form-control" id="fileInput" name="img" required>
                                 </div>
 
                                 <%
                                     for (int i = 1; i <= 3; i++) {
                                 %>
                                 <div class="col-12">
-                                    <label for="img_<%=i%>" class="form-label">Ảnh <%=i%></label>
-                                    <input type="file" class="form-control" id="img_<%=i%>" name="img_<%=i%>" required>
+                                    <label class="form-label">Ảnh <%=i%></label>
+                                    <input type="file" class="form-control" id="fileInput" name="img_<%=i%>" required>
                                 </div>
                                 <%
                                     }
