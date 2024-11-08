@@ -115,7 +115,7 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homemarketing">Home</a></li>
+                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/marketinghome">Home</a></li>
                        
                         <li><a href="#">Quản lý</a>
                             <ul class="dropdown">
