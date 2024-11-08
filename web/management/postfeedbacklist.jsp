@@ -133,7 +133,7 @@
         
         <div class="row">
             <!-- START HEADER -->
-        <jsp:include page="../common/header.jsp" />
+        <jsp:include page="../common/headermanage.jsp"/>
               <jsp:include page="marketing_header.jsp" />
 
             <!-- END menu -->
@@ -154,9 +154,8 @@
                                         <form class="d-flex" role="search" action="../postfeedbackpaging" method="get">
                                             <select name="filter">
                                                 <option value="post" >Xếp theo bài đăng</option>
-                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Xếp theo người d</option>
-                                              <option value="show"<c:if test="${sessionScope.filter=='show'}"> selected </c:if>>Bình luận hiện</option>
-                                                <option value="hidden"<c:if test="${sessionScope.filter=='hidden'}"> selected </c:if>>Bình luận bị ẩn</option>
+                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Xếp theo người dùng</option>
+                                            
                                             </select>
                                             <button class="btn btn-outline-success" type="submit"><i class="bi bi-filter"></i></button>
                                         </form>
@@ -171,12 +170,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
-                                      <th scope="col">Tiêu đề</th>
+                                    <th scope="col" style="width:20%">Tiêu đề</th>
                                     <th scope="col">Ảnh bài đăng</th>
-                                    <th scope="col">Nội dung</th>
+                                    <th scope="col" style="width:20%">Nội dung</th>
                                     <th scope="col"> Người dùng</th>
                                      <th scope="col"> Thời gian</th>
-                                    <th>Status</th>
+                                    <th>Trạng thái</th>
                                     
                                     <th scope="col" style="width: 14%">Thao tác</th>
                                 </tr>
@@ -192,7 +191,7 @@
                                       <c:set var="no" value="${no+1}"></c:set>
                                   </td>
                                       <td>
-                                          <a href="../hpostdetail?bid=${s.post.post_id}">  ${s.post.title}</a> 
+                                          <a href="../hpostdetail?bid=${s.post.post_id}">${s.post.title}</a> 
                                   </td>
                                      <td class="product-img">
                                         
@@ -203,7 +202,7 @@
                                     <td>${s.review}</td>
                                       <td class="product-img">
                                         
-                                          <img src="../${s.user.profile_picture_url}" alt="alt"/ style="width: 100px;height: 103px">
+                                          <img src="../${s.user.profile_picture_url}" alt="alt"/ style="width: 100px;height: 103px"><br>
                                          ${s.user.first_name} ${s.user.last_name}
                                     </td>
                                       <td>${s.time_create}</td>

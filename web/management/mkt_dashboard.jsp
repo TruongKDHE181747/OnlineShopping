@@ -19,7 +19,7 @@
               crossorigin="anonymous">
         <jsp:include page="../common/css.jsp" />
     </head>
-    <jsp:include page="../common/header.jsp" />
+   <jsp:include page="../common/headermanage.jsp"/>
     <body>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
        
@@ -35,7 +35,7 @@
             
    
             
-            <div class="row col-md-10">
+            <div class="row col-md-10" style="padding-top: 30px;padding-left: 30px">
                 
 <!--                <div class="col-md-6">
                

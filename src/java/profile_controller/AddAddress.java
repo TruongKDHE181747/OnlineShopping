@@ -67,23 +67,39 @@ public class AddAddress extends HttpServlet {
             if (is_default != null && is_default.equals("On")) {
                 isDefaultAddress = true;
             }
-        
+
             if (!dao.checkDefaultAddress(user.getUser_id())) {
                 isDefaultAddress = true;
             }
 
             CustomerAddress customerAddress = new CustomerAddress(address, province_id, province_name, district_id, district_name, ward_code, ward_name, phone, reciever_name, isDefaultAddress, user.getUser_id());
 
-            if (!dao.checkAddressExist(customerAddress)) {
-                //Check if there are any default address existed
-                if (isDefaultAddress) {
-                    dao.updateAllDefaultToFalse(user.getUser_id());
-                }
-                dao.insertCustomerAddress(customerAddress);
+            //Check if there are any default address existed
+            if (dao.checkAddressExist(customerAddress)) {
+                session.setAttribute("addressMsg", "Thêm địa chỉ thất bại do địa chỉ đã bị trùng.");
+                response.sendRedirect(request.getContextPath() + "/address");
+                return;
+            }
+
+            if (isDefaultAddress) {
+                boolean checkUpdateAllDefault = dao.updateAllDefaultToFalse(user.getUser_id());
+
+                if (!checkUpdateAllDefault) {
+                    session.setAttribute("addressMsg", "Thêm địa chỉ thất bại. Vui lòng thử lại.");
+                    response.sendRedirect(request.getContextPath() + "/address");
+                    return;
+                }            
+            }
+
+            boolean check = dao.insertCustomerAddress(customerAddress);
+
+            if (check) {
+                session.setAttribute("addressMsg", "Thêm địa chỉ thành công.");
+            } else {
+                session.setAttribute("addressMsg", "Thêm địa chỉ thất bại. Vui lòng thử lại.");
             }
 
             response.sendRedirect(request.getContextPath() + "/address");
-
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/address");
         }

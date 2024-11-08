@@ -115,21 +115,21 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homeslider">Home</a></li>
+                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/homemarketing">Home</a></li>
                        
-                        <li><a href="#">Manage</a>
+                        <li><a href="#">Quản lý</a>
                             <ul class="dropdown">
-                                <li><a href="../customerlist">Customers</a></li>
+                                <li><a href="../customerlist">Khách hàng</a></li>
                                 <li><a href="../sliderlist">Sliders</a></li>
-                                <li><a href="../listpostmarketing">Post</a></li>
-                                <li><a href="../postfeedbacklist">Post Feedback</a></li>
-                                <li><a href="../productlist">Products</a></li>
-                                <li><a href="#">Product Feedback</a></li>
-                                <li><a href="../voucherlist">Vouchers</a></li>
+                                <li><a href="../listpostmarketing">Bài đăng</a></li>
+                                <li><a href="../postfeedbacklist">Phản hồi bài đăng</a></li>
+                                <li><a href="../productlist">Sản phẩm</a></li>
+                                <li><a href="#">Phản hồi sản phẩm</a></li>
+                                <li><a href="../voucherlist">Phiếu giảm giá</a></li>
                             </ul>
                         </li>
-                         <li><a href="../markertingdashboard">DashBoard</a></li>
-                        <li><a href="#">Contacts</a></li>
+                         <li><a href="../markertingdashboard">Thống kê</a></li>
+                       
                         
                     </ul>
                 </nav>
@@ -141,13 +141,9 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option row" style="padding: 22px 0;">
                     <div class="col-md-10">
-                        <form class="d-flex" role="search" action="<%=s%>/homeproductsearch">
-                            <input maxlength="500" value="<%=pname%>" class="form-control me-2" name="pname" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit" style="margin-left: 10px;">Search</button>
-                        </form>
+                       
 
                     </div>
-                            <div style="display: flex; align-items: center;padding: 0;width: 100%" class="col-md-2"><a href="<%=s%>/cart"><img style="width: 25px"  src="<%=s%>/common/img/icon/cart.png" alt=""> <span style="font-weight: bold;width: 100%;text-align: center;padding-right: 8px">${sessionScope.cartSize != null ? sessionScope.cartSize :0}</span></a></div>
 
 
 
@@ -175,7 +171,7 @@
                                 <div class="hero__text">                        
                                     <h2 style="color: white;"><%=slider.getTitle()%></h2>
                                     <p style="color: white;"><%=slider.getDescription()%></p>
-                                    <a href="../sliderlist" class="primary-btn">Manage Slider <span class="arrow_right"></span></a>
+                                    <a href="../sliderlist" class="primary-btn">Quản lý Slider <span class="arrow_right"></span></a>
 
                                 </div>
                             </div>
@@ -217,7 +213,7 @@
                        <ul class="filter__controls">
     <li class="">
         <a class="button" href="../productlist">
-            <button type="button" class="btn " style="width: 285px;height: 38px;background-color: black;color: white">Manage products</button>
+            <button type="button" class="btn " style="width: 285px;height: 38px;background-color: black;color: white">Quản lý sản phẩm</button>
 
         </a>
     </li>
@@ -242,62 +238,16 @@
 
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="../<%=product.getThumbnail()%>">                        
-                                <%
-                                if(product.getDiscount()!=0){
-                                %>
-                                <span style="background-color: black; color: white;" class="label">-<%=product.getDiscount()%>%</span>
-                                <% }%>
+                               
                                 <ul class="product__hover">
 
-                                    <li><a href="../hproductdetail?proid=<%=product.getProduct_id()%>"><img src="img/icon/search.png" alt=""></a></li>
+                                    <li><img src="img/icon/search.png" alt=""></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
                                 <h6><%=product.getProduct_name()%></h6>
-                                <a href="#" class="add-cart">+ Add To Cart</a>
-                                <div class="rating">
-                                    <%if(product.getRated_star()<=0){
-                                    %>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <% } else if(product.getRated_star()<=1){%>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <% } else if(product.getRated_star()<=2){  %>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <%} else if(product.getRated_star()<=3){%>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <%} else if(product.getRated_star()<=4){%>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <%} else { %>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <%}%>
-                                </div>
-                                <h5><%=cmoney%> 
-
-                                </h5>
+                               
+                                                             
                                 <div class="product__color__select">
                                     <label for="pc-1">
                                         <input type="radio" id="pc-1">
@@ -354,7 +304,7 @@
                             <div class="blog__item__text">
                                 <span><img src="img/icon/calendar.png" alt=""> <%=post.getModified_at()%></span>
                                 <h5><%=post.getTitle()%></h5>
-                                <a href="../hpostdetail?bid=<%=post.getPost_id()%>">Read More</a>
+                            
                             </div>
                         </div>
                     </div>

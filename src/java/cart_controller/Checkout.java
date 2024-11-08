@@ -99,7 +99,7 @@ public class Checkout extends HttpServlet {
 
         if(shippingFee == 0){
             session.setAttribute("cartError",
-                    "Đã có lỗi xảy ra khi tính chi phí vận chuyển đến khu vực của bạn. Vui lòng thử lại sau.");
+                    "Hiện tại đơn vị vận chuyển chưa hỗ trợ giao hàng khu vực của bạn. Vui lòng thử lại sau.");
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }

@@ -234,6 +234,14 @@
         <jsp:include page="../common/footer.jsp" />
         <!-- Bootstrap JS with Popper.js -->
 
+        <c:if test="${not empty sessionScope.addressMsg}">
+            <script>
+                alert('${sessionScope.addressMsg}');
+            </script>
+
+            <% session.removeAttribute("addressMsg"); %>
+        </c:if>
+        
         <script>
             function confirmDelete(addressId) {
                 if (confirm("Bạn có chắc chắn muốn xóa địa chỉ này không?")) {
