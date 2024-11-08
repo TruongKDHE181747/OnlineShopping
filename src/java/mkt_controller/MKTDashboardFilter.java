@@ -131,7 +131,7 @@ public class MKTDashboardFilter extends HttpServlet {
         
         
     }
-      
+      session.setAttribute("mkt_de", loi);
          response.sendRedirect(request.getContextPath()+"/management/mkt_dashboard.jsp");
     }
 
