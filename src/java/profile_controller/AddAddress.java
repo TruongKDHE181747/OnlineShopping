@@ -82,13 +82,8 @@ public class AddAddress extends HttpServlet {
             }
 
             if (isDefaultAddress) {
-                boolean checkUpdateAllDefault = dao.updateAllDefaultToFalse(user.getUser_id());
+                dao.updateAllDefaultToFalse(user.getUser_id());
 
-                if (!checkUpdateAllDefault) {
-                    session.setAttribute("addressMsg", "Thêm địa chỉ thất bại. Vui lòng thử lại.");
-                    response.sendRedirect(request.getContextPath() + "/address");
-                    return;
-                }            
             }
 
             boolean check = dao.insertCustomerAddress(customerAddress);
