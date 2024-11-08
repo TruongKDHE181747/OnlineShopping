@@ -93,18 +93,27 @@ public class Checkout extends HttpServlet {
         for (CartItem item : items) {
             int sid = item.getSize().getSize_id();
             int pid = item.getProduct().getProduct_id();
-            weight += (productSizeDAO.getWeightOfEachSize(sid, pid) * item.getQuantity());
+            int itemQuantity = item.getQuantity();
+
+            weight += (productSizeDAO.getWeightOfEachSize(sid, pid) * itemQuantity);
+
+            int itemStock = productSizeDAO.getQuantityOfEachSize(sid, pid);
+
+            if (itemQuantity > itemStock) {
+                response.sendRedirect(request.getContextPath() + "/updateCart");
+                return;
+            }
         }
 
         int shippingFee = ShippingFee.caculateShippingFee(address.getWard_code(), address.getDistrict_id(), weight);
 
-        if(shippingFee == 0){
+        if (shippingFee == 0) {
             session.setAttribute("cartError",
                     "Hiện tại đơn vị vận chuyển chưa hỗ trợ giao hàng khu vực của bạn. Vui lòng thử lại sau.");
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }
-        
+
         request.setAttribute("ship", shippingFee);
 
         request.getRequestDispatcher("/common/checkout.jsp").forward(request, response);
@@ -167,17 +176,16 @@ public class Checkout extends HttpServlet {
             }
             int weight = 0;
             for (CartItem item : items) {
-                
-                int sid= item.getSize().getSize_id();
+
+                int sid = item.getSize().getSize_id();
                 int pid = item.getProduct().getProduct_id();
                 int itemQuantity = item.getQuantity();
-                
+
                 weight += productSizeDAO.getWeightOfEachSize(sid, pid) * itemQuantity;
-                
-                
+
                 int itemStock = productSizeDAO.getQuantityOfEachSize(sid, pid);
-                
-                if(itemQuantity > itemStock){
+
+                if (itemQuantity > itemStock) {
                     response.sendRedirect(request.getContextPath() + "/updateCart");
                     return;
                 }
@@ -233,7 +241,6 @@ public class Checkout extends HttpServlet {
                 int productId = item.getProduct().getProduct_id();
                 int sizeId = item.getSize().getSize_id();
                 int itemQuantity = item.getQuantity();
-                
 
                 OrderDetail od = new OrderDetail(
                         orderId,
@@ -250,7 +257,7 @@ public class Checkout extends HttpServlet {
                 //if insert success
             }
             for (CartItem item : items) {
-               
+
                 int productId = item.getProduct().getProduct_id();
                 int sizeId = item.getSize().getSize_id();
                 int itemQuantity = item.getQuantity();
@@ -264,7 +271,7 @@ public class Checkout extends HttpServlet {
                     int stock = productSizeDAO.getQuantityOfEachSize(sizeId, productId);
 
                     productSizeDAO.updateQuantityOfEachSize(sizeId, productId, stock - itemQuantity);
-                    
+
                     productDAO.updateTotalQuantity(productId);
 
                 } else {
