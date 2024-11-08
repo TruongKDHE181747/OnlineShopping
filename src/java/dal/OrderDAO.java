@@ -1091,6 +1091,28 @@ pre.setInt(1, date.getYear());
         }
         return sList;
     }
+    
+    public boolean updateReceivedDate(int orderId, String receiveDate) {
+        String sql = """
+                     UPDATE [dbo].[Orders]
+                          SET 
+                             [receive_date] = ?                       
+                        WHERE order_id = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, receiveDate);
+            ps.setInt(2, orderId);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean updateShippingCode(int orderId, String shipping_code) {
         String sql = """

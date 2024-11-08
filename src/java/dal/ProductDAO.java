@@ -10,7 +10,54 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProductDAO extends DBContext {
+    
+    public int getTotalQuantity(int pid){
+        String sql = "select SUM(quantity) from Product_Size where product_id = ?";
+        
+        try {
+            PreparedStatement ps =connection.prepareStatement(sql);
+            ps.setInt(1, pid);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                return rs.getInt(1);
+            }       
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+        
+    }
 
+    public boolean updateTotalQuantity(int pid) {
+        
+        int totalQuantity = getTotalQuantity(pid);
+        
+        if(totalQuantity == 0){
+            return false;
+        }
+        String sql = """
+                     UPDATE [dbo].[Products]
+                         SET 
+                            [total_quantity] = ?
+                       WHERE product_id = ?""";
+        PreparedStatement ps;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, totalQuantity);
+            ps.setInt(2, pid);
+
+            int n = ps.executeUpdate();
+
+            return n > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+    
     public boolean updateProductRating(int pid, int rating) {
         String sql = """
                      UPDATE [dbo].[Products]

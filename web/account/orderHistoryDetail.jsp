@@ -63,7 +63,7 @@
                         </div>
                         <div class="card-body">     
                             <p><strong>Ngày đặt hàng:</strong> ${order.orderedDate} </p>
-                            <p><strong>Ngày nhận hàng:</strong> ${order.receiveDate != null ? order.receiveDate: '<span class="text-muted">Không có</span>'}</p>
+                            <p><strong>Ngày nhận hàng (dự kiến):</strong> ${order.receiveDate != null ? order.receiveDate: '<span class="text-muted">Không có</span>'}</p>
                             <p><strong>Phương thức thanh toán:</strong> <span 
                                                                         <c:if test="${order.paymentMethodId == 2}">class="badge-primary badge font-weight-bold"</c:if>
                                                                         <c:if test="${order.paymentMethodId == 1}">class="badge-info badge font-weight-bold"</c:if>

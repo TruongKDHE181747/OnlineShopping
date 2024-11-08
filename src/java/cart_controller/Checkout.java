@@ -7,6 +7,7 @@ package cart_controller;
 import dal.CustomerAddressDAO;
 import dal.OrderDAO;
 import dal.OrderDetailDAO;
+import dal.ProductDAO;
 import dal.ProductSizeDAO;
 import dal.VoucherDAO;
 import jakarta.servlet.ServletException;
@@ -128,6 +129,7 @@ public class Checkout extends HttpServlet {
         OrderDAO orderDAO = new OrderDAO();
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
         ProductSizeDAO productSizeDAO = new ProductSizeDAO();
+        ProductDAO productDAO = new ProductDAO();
 
         String txt = "";
         for (Cookie cookie : cookies) {
@@ -165,7 +167,20 @@ public class Checkout extends HttpServlet {
             }
             int weight = 0;
             for (CartItem item : items) {
-                weight += productSizeDAO.getWeightOfEachSize(item.getSize().getSize_id(), item.getProduct().getProduct_id()) * item.getQuantity();
+                
+                int sid= item.getSize().getSize_id();
+                int pid = item.getProduct().getProduct_id();
+                int itemQuantity = item.getQuantity();
+                
+                weight += productSizeDAO.getWeightOfEachSize(sid, pid) * itemQuantity;
+                
+                
+                int itemStock = productSizeDAO.getQuantityOfEachSize(sid, pid);
+                
+                if(itemQuantity > itemStock){
+                    response.sendRedirect(request.getContextPath() + "/updateCart");
+                    return;
+                }
             }
 
             if (weight == 0) {
@@ -218,6 +233,7 @@ public class Checkout extends HttpServlet {
                 int productId = item.getProduct().getProduct_id();
                 int sizeId = item.getSize().getSize_id();
                 int itemQuantity = item.getQuantity();
+                
 
                 OrderDetail od = new OrderDetail(
                         orderId,
@@ -240,7 +256,7 @@ public class Checkout extends HttpServlet {
                 int itemQuantity = item.getQuantity();
                 if (check) {
 
-                    session.removeAttribute("voucher");
+                    session.removeAttribute("applyVoucher");
                     if (intVoucherId != 1) {
                         voucherDAO.updateVoucherQuantity(intVoucherId, voucher.getQuantity() - 1);
                     }
@@ -248,6 +264,8 @@ public class Checkout extends HttpServlet {
                     int stock = productSizeDAO.getQuantityOfEachSize(sizeId, productId);
 
                     productSizeDAO.updateQuantityOfEachSize(sizeId, productId, stock - itemQuantity);
+                    
+                    productDAO.updateTotalQuantity(productId);
 
                 } else {
                     response.sendRedirect(request.getContextPath() + "/orderstatus?status=fail");
