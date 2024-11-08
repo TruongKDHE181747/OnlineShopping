@@ -154,9 +154,8 @@
                                         <form class="d-flex" role="search" action="../postfeedbackpaging" method="get">
                                             <select name="filter">
                                                 <option value="post" >Xếp theo bài đăng</option>
-                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Xếp theo người d</option>
-                                              <option value="show"<c:if test="${sessionScope.filter=='show'}"> selected </c:if>>Bình luận hiện</option>
-                                                <option value="hidden"<c:if test="${sessionScope.filter=='hidden'}"> selected </c:if>>Bình luận bị ẩn</option>
+                                                <option value="user"<c:if test="${sessionScope.filter=='user'}"> selected </c:if>>Xếp theo người dùng</option>
+                                            
                                             </select>
                                             <button class="btn btn-outline-success" type="submit"><i class="bi bi-filter"></i></button>
                                         </form>
@@ -176,7 +175,7 @@
                                     <th scope="col">Nội dung</th>
                                     <th scope="col"> Người dùng</th>
                                      <th scope="col"> Thời gian</th>
-                                    <th>Status</th>
+                                    <th>Trạng thái</th>
                                     
                                     <th scope="col" style="width: 14%">Thao tác</th>
                                 </tr>
