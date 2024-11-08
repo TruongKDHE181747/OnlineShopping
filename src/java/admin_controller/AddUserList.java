@@ -84,7 +84,7 @@ public class AddUserList extends HttpServlet {
             }
         }
         if(!phone.matches(PHONE_REGEX)){
-            error="Số điện thoại phải chứa 10 chữ số hoặc hơn";
+            error="Số điện thoại phải chứa 10 chữ số ";
         }
         
         

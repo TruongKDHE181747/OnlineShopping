@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input  value="" name="email" type="text" class="form-control" id="email" required>
+                                    <input  value="" name="email" type="email" class="form-control" id="email" required>
 
                                 </div>
                                 <div class="col-sm-6">

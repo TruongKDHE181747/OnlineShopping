@@ -26,6 +26,7 @@ import utils.Email;
  *
  * @author 84983
  */
+
 @WebServlet(name="EditUser", urlPatterns={"/edituser"})
 @MultipartConfig(maxFileSize = 16177215)
 public class EditUser extends HttpServlet {
@@ -37,6 +38,7 @@ public class EditUser extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String PHONE_REGEX = "^\\d{10}$";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -69,12 +71,34 @@ public class EditUser extends HttpServlet {
           img = "profile_img/"+fileName; 
         }
         User oldu=userDAO.getUserById(user_id);
+        boolean checkExistUsername = userDAO.checkExistUsername(username);
+        boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
+        boolean checkExistPhone=userDAO.checkExistPhone(phone);
+        String error="";
         
+        if(checkExistUsername&&!username.equals(oldu.getUsername())){
+            error="Tên tài khoản đã tồn tại!";
+        }else{
+            if(checkExistEmail&&!userEmail.equals(oldu.getEmail())){
+                error="Email đã tồn tại!";
+            }else if(checkExistPhone&&!phone.equals(oldu.getPhone())){
+                error="Số điện thoại đã tồn tại!";
+            }
+        }
+        if(!phone.matches(PHONE_REGEX)){
+            error="Số điện thoại phải chứa 10 chữ số ";
+        }
+        if(error.length()>0){
+            session.setAttribute("error", error);
+            response.sendRedirect(request.getContextPath()+"/management/detailuser.jsp");
+        }else{
         Role role=rdao.getRolebyname(rolename);
-        
         User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, img, true, false, role);
         userDAO.edituser(newu);
-        response.sendRedirect("adminuser");
+        response.sendRedirect("adminuser");}
+        Role role=rdao.getRolebyname(rolename);
+        
+       
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input  value="${sessionScope.u.email}" name="email" type="text" class="form-control" id="email" >
+                                    <input  value="${sessionScope.u.email}" name="email" type="email" class="form-control" id="email" >
 
                                 </div>
                                 <div class="col-sm-6">
@@ -114,11 +114,11 @@
                                 <div class="col-sm-6">
                                     <label for="role" class="form-label">Chức vụ</label>
                                     <select id="role" name="role" class="form-select">
-                                        <option value="admin" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>quản trị viên</option>
-                                        <option value="sale manager" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>quản lý bán hàng</option>
-                                        <option value="saler" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>nhân viên bán hàng</option>
-                                        <option value="marketer" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>nhân viên marketing</option>
-                                        <option value="user" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>người dùng</option>
+                                        <option value="quản trị viên" <c:if test="${sessionScope.u.role.role_id == 1}">selected</c:if>>quản trị viên</option>
+                                        <option value="quản lý bán hàng" <c:if test="${sessionScope.u.role.role_id == 2}">selected</c:if>>quản lý bán hàng</option>
+                                        <option value="nhân viên bán hàng" <c:if test="${sessionScope.u.role.role_id == 3}">selected</c:if>>nhân viên bán hàng</option>
+                                        <option value="nhân viên marketing" <c:if test="${sessionScope.u.role.role_id == 4}">selected</c:if>>nhân viên marketing</option>
+                                        <option value="người dùng" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>người dùng</option>
                                         
                                         </select>
                                     </div>  
@@ -128,7 +128,11 @@
 
                             <hr class="my-4">
                             <!-- Error check Username and Password -->
-
+                            <div style="text-align: left;
+                                        color: red;
+                                        margin-left: 5px;">
+                                <h5>${sessionScope.error}</h5><br>
+                             </div>
 
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Lưu</button>
                         </form>
