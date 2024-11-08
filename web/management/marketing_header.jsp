@@ -9,6 +9,15 @@
         <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
+                    <a href="../marketinghome" class="nav-link text-white home-link" aria-current="page">
+                            <!-- Dashboard Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                                <path d="M8 .5l-6 6h1v8a1 1 0 0 0 1 1h3v-5h2v5h3a1 1 0 0 0 1-1v-8h1l-6-6z"/>
+                            </svg>
+                            Trang chủ
+                        </a>
+                    </li>
+                <li class="nav-item">
                     <a href="../markertingdashboard" class="nav-link text-white home-link <c:if test="${pageContext.request.requestURI.endsWith('mkt_dashboard.jsp')}">active bg-secondary</c:if>" aria-current="page">
                             <!-- Dashboard Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">

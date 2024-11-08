@@ -164,7 +164,7 @@
 
                                         <div class="col-sm-6">
                                             <label for="posttitle" class="form-label">Tiêu đề</label>
-                                            <input maxlength="500" name="posttitle" type="text" class="form-control" id="posttitle" required>
+                                            <input maxlength="50" name="posttitle" type="text" class="form-control" id="posttitle" required>
 
                                         </div>
                                         <div class="col-sm-6">

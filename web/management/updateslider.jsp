@@ -62,7 +62,7 @@
                                 <input type="text" hidden="" value="${s.img}" name="currentimg">
                                 <div class="col-sm-6">
                                     <label for="title" class="form-label">Tiêu đề</label>
-                                    <input  value="${s.title}" name="title" type="text" class="form-control" id="title" required>
+                                    <input maxlength="50" value="${s.title}" name="title" type="text" class="form-control" id="title" required>
 
                                 </div>
                                 <div class="col-sm-6">
@@ -106,7 +106,7 @@
                                     <div class="row g-3">
                                         <div class="col-sm-6">
                                             <label for="description" class="form-label">Mô tả</label>
-                                            <input  value="${s.description}" name="description" type="text" class="form-control" id="id" required>
+                                            <input maxlength="200" value="${s.description}" name="description" type="text" class="form-control" id="id" required>
 
                                     </div>
 

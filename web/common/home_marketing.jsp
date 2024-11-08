@@ -92,8 +92,8 @@
                                 <a href="<%=s%>/register">Sign up</a>                      
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
-                                <a href="#">Hello ${sessionScope.account.username}</a>
-                                <a href="<%=s%>/logout">Logout</a>                      
+                                <a href="#">${sessionScope.account.username}</a>
+                                <a href="<%=s%>/logout">Đăng xuất</a>                      
                             </c:if>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="<%=s%>/homeslider"><img src="<%=s%>/common/img/logo.png" alt=""></a>
+                    <a href="<%=s%>/marketinghome"><img src="<%=s%>/common/img/logo.png" alt=""></a>
                 </div>
             </div>
             <%
@@ -115,7 +115,7 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/marketinghome">Home</a></li>
+                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/marketinghome">Trang chủ</a></li>
                        
                         <li><a href="#">Quản lý</a>
                             <ul class="dropdown">
@@ -124,7 +124,7 @@
                                 <li><a href="../listpostmarketing">Bài đăng</a></li>
                                 <li><a href="../postfeedbacklist">Phản hồi bài đăng</a></li>
                                 <li><a href="../productlist">Sản phẩm</a></li>
-                                <li><a href="#">Phản hồi sản phẩm</a></li>
+                                <li><a href="../productfeedbackpaging">Phản hồi sản phẩm</a></li>
                                 <li><a href="../voucherlist">Phiếu giảm giá</a></li>
                             </ul>
                         </li>

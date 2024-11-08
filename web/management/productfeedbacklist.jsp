@@ -173,7 +173,7 @@
                                 <tr>
                                     <th scope="col">No.</th>
                                       <th scope="col">Ảnh sản phẩm</th>
-                                    <th scope="col">Tên sản phẩm</th>
+                                      <th scope="col" style="width: 20%;">Tên sản phẩm</th>
                                     <th scope="col"> Đánh giá</th>  
                                     <th scope="col">Nội dung</th>
                                     <th scope="col"> Người dùng</th>
@@ -276,7 +276,7 @@
                     <!-- START PAGE -->
                                               
                     <div style="display: flex;
-                                justify-content: center;">
+                                justify-content: center;margin: 10px;">
                         
                         <nav aria-label="Page navigation example">
                         <ul class="pagination">
