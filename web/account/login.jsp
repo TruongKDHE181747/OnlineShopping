@@ -37,7 +37,7 @@
                                     <!-- Nhập tên người dùng -->
                                     <div class="form-floating mb-3">
                                         <input maxlength="50" type="text" name="username" class="form-control" id="userInput" placeholder="Tên người dùng" value="${requestScope.username!=null?requestScope.username:''}" required>
-                                        <label for="userInput">Tên người dùng</label>
+                                        <label for="userInput">Tên tài khoản</label>
                                     </div>
 
                                     <!-- Nhập mật khẩu -->

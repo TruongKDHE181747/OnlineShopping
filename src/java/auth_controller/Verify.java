@@ -53,7 +53,7 @@ public class Verify extends HttpServlet {
 
 //        fail to send email
             if (!checkSendMail) {
-                String errorMessage = "Cannot sent email!";
+                String errorMessage = "Không thể gửi mail!";
                 request.setAttribute("error", errorMessage);
                 request.getRequestDispatcher("/account/register.jsp").forward(request, response);
                 return;
@@ -61,13 +61,14 @@ public class Verify extends HttpServlet {
 
             request.setAttribute("userId", userId);
 
+            request.getRequestDispatcher("/account/verify.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath()+"/login");
-            return;
+            
         }
         
         
-        request.getRequestDispatcher("/account/verify.jsp").forward(request, response);
+        
     }
 
     /**

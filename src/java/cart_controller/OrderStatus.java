@@ -35,6 +35,7 @@ public class OrderStatus extends HttpServlet {
         String status = request.getParameter("status");
         
         if(status == null){
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
         

@@ -59,19 +59,27 @@ public class ChangePassword extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         if (!currentPassword.equals(user.getPassword())) {
-            request.setAttribute("error", "Current password is incorrect!");
+            request.setAttribute("error", "Sai mật khẩu hiện tại!");
             request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
             return;
         }
         
         if (newPassword.isBlank()) {
-            request.setAttribute("error", "Password could not be blank!");
+            request.setAttribute("error", "Mật khẩu không thể để trống!");
             request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
             return;
         }
+        
+        if (newPassword.equals(currentPassword)) {
+            request.setAttribute("error", "Mật khẩu mới không thể trùng với mật khẩu hiện tại!");
+            request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
+            return;
+        }
+        
+        
 
         if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("error", "New password and confirm password do not match!");
+            request.setAttribute("error", "Mật khẩu và xác nhận mật khẩu không khớp!");
             request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
             return;
         }
@@ -79,10 +87,10 @@ public class ChangePassword extends HttpServlet {
         boolean checkUpdatePassword = userDAO.updatePassword(user.getEmail(), newPassword);
 
         if (checkUpdatePassword) {
-            request.setAttribute("success", "Your password has been successfully updated.");
+            request.setAttribute("success", "Thay đổi mật khẩu thành công.");
             request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
         } else {
-            request.setAttribute("error", "An error occurred while changing your password. Please try again later.");
+            request.setAttribute("error", "Đã có lỗi xảy ra khi đổi mật khẩu. Vui lòng thử lại sau.");
             request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
         }
     }

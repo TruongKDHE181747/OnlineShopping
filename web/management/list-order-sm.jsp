@@ -6,6 +6,7 @@
 <%@page import="dal.UserDAO"%>
 <%@page import="java.util.*" %>
 <%@page import="java.text.NumberFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html>
 <html>
@@ -200,21 +201,25 @@
                                 <!-- START Order item -->
                                 <%
                                     List<Order> oList = (ArrayList<Order>) session.getAttribute("list-order");
+                                    Locale vietnameseLocale = new Locale("vi", "VN");
+                                    NumberFormat formatter = NumberFormat.getNumberInstance(vietnameseLocale);
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                                     int i = 1;
                                     
                                     for (Order o : oList) {
                                         User user = udao.getUserByUserId(o.getSaleId());
+                                        
                                         double totalAmount = o.getTotalAmount();
-                                        Locale vietnameseLocale = new Locale("vi", "VN");
-                                        NumberFormat formatter = NumberFormat.getNumberInstance(vietnameseLocale);
                                         String formattedAmount = formatter.format(totalAmount);
                                         String saleName = user.getFirst_name() + " " + user.getLast_name();
+                                        
+                                        String date = sdf.format(new SimpleDateFormat("yyyy-MM-dd").parse(o.getOrderedDate().toString()));
                                 %>
                                 <tr>
 
                                     <td><%= i%></td>
 
-                                    <td><%= o.getOrderedDate()%></td>
+                                    <td><%= date%></td>
 
                                     <td><%= o.getReceiverName()%></td>
 

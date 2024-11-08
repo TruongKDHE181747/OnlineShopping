@@ -47,7 +47,7 @@ public class PaymentStatus extends HttpServlet {
         boolean isValidSignature = verifySignature(request);
 
         if (!isValidSignature) {
-            response.getWriter().print("Invalid signature !");
+            response.getWriter().print("Sai chữ kí !");
             return;
         }
 

@@ -42,7 +42,14 @@ public class SetDefaultAddress extends HttpServlet {
 
             dao.updateAllDefaultToFalse(user.getUser_id());
 
-            dao.setDefaultAddress(addressId);
+            boolean check = dao.setDefaultAddress(addressId);
+            
+            
+            if (check) {
+                session.setAttribute("addressMsg", "Đặt địa chỉ mặc định thành công.");
+            } else {
+                session.setAttribute("addressMsg", "Đặt địa chỉ mặc định thất bại. Vui lòng thử lại.");
+            }
 
             response.sendRedirect(request.getContextPath() + "/address");
         } catch (NumberFormatException e) {

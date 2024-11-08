@@ -80,5 +80,13 @@
         <jsp:include page="../common/footer.jsp" />
         <!-- Bootstrap JS with Popper.js -->
         <jsp:include page="../common/js.jsp" />
+        
+        <c:if test="${not empty sessionScope.profileMsg}">
+            <script>
+                alert('${sessionScope.profileMsg}');
+            </script>
+
+            <% session.removeAttribute("profileMsg"); %>
+        </c:if>
     </body>
 </html>

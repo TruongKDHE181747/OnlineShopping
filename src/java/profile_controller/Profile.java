@@ -85,7 +85,9 @@ public class Profile extends HttpServlet {
 
         User profile = new User(account.getUser_id(), firstname, lastname, phone, gender, dob);
 
-        userDAO.updateUserProfile(profile);
+        boolean check = userDAO.updateUserProfile(profile);
+        
+        session.setAttribute("profileMsg", check ? "Cập nhật thông tin thành công." : "Cập nhật thông tin thất bại.");
 
         response.sendRedirect(request.getContextPath() + "/profile");
     }
