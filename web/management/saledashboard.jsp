@@ -37,7 +37,7 @@
 
 
     </head>
-    <jsp:include page="../common/header.jsp" />
+    <jsp:include page="../common/headermanage.jsp" />
     <body >
         <div class="row">
             <jsp:include page="sm-panel.jsp"/>

@@ -5,7 +5,7 @@
 
 <!-- START Sales menu -->
 <div class="col-md-2">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="position: absolute; width: 100%; height: 100%; min-height: 600px">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="position: absolute; width: 100%; height: 100%; min-height: 700px">
         <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
