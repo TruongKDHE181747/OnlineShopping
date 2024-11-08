@@ -39,6 +39,12 @@ public class SetPasswordRequest extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         User account = (User) session.getAttribute("account");
+        
+        if(account == null){
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+                
 
         String resetCode = em.getRandom();
 
@@ -48,7 +54,7 @@ public class SetPasswordRequest extends HttpServlet {
         
         em.sendResetPassEmail(user);
 
-        request.setAttribute("success", "Check your email for the reset password link.");
+        request.setAttribute("success", "Kiểm tra email của bạn để nhận liên kết đặt mật khẩu");
 
         request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);
     }

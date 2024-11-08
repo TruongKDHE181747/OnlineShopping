@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -32,12 +33,19 @@ public class DeleteAddress extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         try {
             CustomerAddressDAO dao = new CustomerAddressDAO();
 
             int addressId = Integer.parseInt(request.getParameter("addressId"));
 
-            dao.deleteAddress(addressId);
+            boolean check = dao.deleteAddress(addressId);
+            
+            if (check) {
+                session.setAttribute("addressMsg", "Xóa địa chỉ thành công.");
+            } else {
+                session.setAttribute("addressMsg", "Xóa địa chỉ thất bại. Vui lòng thử lại.");
+            }
 
         } catch (NumberFormatException e) {
         }

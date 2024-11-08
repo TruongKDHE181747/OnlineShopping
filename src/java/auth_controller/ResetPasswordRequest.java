@@ -75,6 +75,7 @@ public class ResetPasswordRequest extends HttpServlet {
         ArrayList<User> users = userDAO.getUsers("select * from Users where email = '" + email + "' and reset_password_code = '" + resetCode + "'");
 
         if (users.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 

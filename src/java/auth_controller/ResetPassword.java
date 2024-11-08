@@ -45,9 +45,9 @@ public class ResetPassword extends HttpServlet {
 
         if (user != null) {
             em.sendResetPassEmail(user);
-            request.setAttribute("success", "Check your email for the reset password link.");
+            request.setAttribute("success", "Kiểm tra email của bạn để nhận liên kết đặt lại mật khẩu.");
         } else {
-            request.setAttribute("error", "Email could not be found!");
+            request.setAttribute("error", "Không tìm thấy email!");
         }
 
         request.getRequestDispatcher("/account/emailReset.jsp").forward(request, response);
@@ -75,13 +75,13 @@ public class ResetPassword extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         if (newPassword.isBlank()) {
-            request.setAttribute("error", "Password could not be blank!");
+            request.setAttribute("error", "Mật khẩu không thể trống!");
             request.getRequestDispatcher("/account/resetPassword.jsp").forward(request, response);
             return;
         }
         
         if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("error", "Password and Confirm password are not matched!");
+            request.setAttribute("error", "Mật khẩu và xác nhận mật khẩu không khớp!");
             request.getRequestDispatcher("/account/resetPassword.jsp").forward(request, response);
             return;
         }
@@ -91,7 +91,7 @@ public class ResetPassword extends HttpServlet {
         }
 
         if (account != null) {
-            request.setAttribute("success", "Set password successfully.");
+            request.setAttribute("success", "Đặt lại mật khẩu thành công.");
             request.getRequestDispatcher("/account/changePassword.jsp").forward(request, response);        
         } else {
             response.sendRedirect(request.getContextPath() + "/login");

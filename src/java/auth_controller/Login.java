@@ -90,18 +90,18 @@ public class Login extends HttpServlet {
         User user = userDAO.login(username, password);
 
         if (user == null) {
-            sendErrorMessage("Invalid username or password!", request, response);
+            sendErrorMessage("Tài khoản và mật khẩu không hợp lệ!", request, response);
             return;
         }
 
         if (user.isIs_banned()) {
-            sendErrorMessage("Your account is suspended!", request, response);
+            sendErrorMessage("Tài khoản của bạn đã bị khóa!", request, response);
             return;
         }
 
         if (!user.isIs_active()) {
-            String activationLink = "<br><a href='" + request.getContextPath() + "/verify?userId=" + user.getUser_id() + "'>Click here to activate your account</a>";
-            sendErrorMessage("Your account is not activated!" + activationLink, request, response);
+            String activationLink = "<br><a href='" + request.getContextPath() + "/verify?userId=" + user.getUser_id() + "'>Ấn vào đây để kích hoạt tài khoản</a>";
+            sendErrorMessage("Tài khoản chưa được kích hoạt!" + activationLink, request, response);
             return;
         }
         

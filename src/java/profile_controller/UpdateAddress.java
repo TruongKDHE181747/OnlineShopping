@@ -90,12 +90,28 @@ public class UpdateAddress extends HttpServlet {
             CustomerAddress customerAddress = new CustomerAddress(addressId, address, province_id, province_name, district_id, district_name, ward_code, ward_name, phone, reciever_name, isDefaultAddress, user.getUser_id());
 
             //Check if duplicate address
-            if (!dao.checkAddressExist(customerAddress, addressId)) {
+            if (dao.checkAddressExist(customerAddress, addressId)) {
+                session.setAttribute("addressMsg", "Cập nhật địa chỉ thất bại do địa chỉ đã bị trùng.");
+                response.sendRedirect(request.getContextPath() + "/address");
+                return;
+            }
 
-                if (isDefaultAddress) {
-                    dao.updateAllDefaultToFalse(user.getUser_id());
+            if (isDefaultAddress) {
+                boolean checkUpdateAllDefault = dao.updateAllDefaultToFalse(user.getUser_id());
+
+                if (!checkUpdateAllDefault) {
+                    session.setAttribute("addressMsg", "Cập nhật địa chỉ thất bại. Vui lòng thử lại.");
+                    response.sendRedirect(request.getContextPath() + "/address");
+                    return;
                 }
-                dao.updateAddress(customerAddress);
+            }
+
+            boolean check = dao.updateAddress(customerAddress);
+
+            if (check) {
+                session.setAttribute("addressMsg", "Cập nhật địa chỉ thành công.");
+            } else {
+                session.setAttribute("addressMsg", "Cập nhật địa chỉ thất bại. Vui lòng thử lại.");
             }
 
             response.sendRedirect(request.getContextPath() + "/address");

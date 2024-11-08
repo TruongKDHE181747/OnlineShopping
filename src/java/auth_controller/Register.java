@@ -90,22 +90,22 @@ public class Register extends HttpServlet {
         boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
 
         if(username.isBlank()|| password.isBlank()){
-            sendErrorMessage("Username and password could not be blank!", request, response);
+            sendErrorMessage("Tài khoản và mật khẩu không thể trống!", request, response);
             return;
         }
         
         if (checkExistUsername) {
-            sendErrorMessage("Username is existed!", request, response);
+            sendErrorMessage("Tên tài khoản đã tồn tại!", request, response);
             return;
         }
 
         if (checkExistEmail) {
-            sendErrorMessage("Email is existed!", request, response);
+            sendErrorMessage("Địa chỉ email đã tồn tại!", request, response);
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            sendErrorMessage("Password and Confirm password are not matched!", request, response);
+            sendErrorMessage("Mật khẩu và xác nhận mật khẩu không khớp!", request, response);
             return;
         }
 
@@ -119,7 +119,7 @@ public class Register extends HttpServlet {
         Integer userId = userDAO.insertUser(newUser);
 
         if (userId == null) {
-            sendErrorMessage("Register fail!", request, response);
+            sendErrorMessage("Đăng kí thất bại!", request, response);
             return;
         }
 
