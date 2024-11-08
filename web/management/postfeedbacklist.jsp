@@ -170,9 +170,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
-                                      <th scope="col">Tiêu đề</th>
+                                    <th scope="col" style="width:20%">Tiêu đề</th>
                                     <th scope="col">Ảnh bài đăng</th>
-                                    <th scope="col">Nội dung</th>
+                                    <th scope="col" style="width:20%">Nội dung</th>
                                     <th scope="col"> Người dùng</th>
                                      <th scope="col"> Thời gian</th>
                                     <th>Trạng thái</th>
@@ -202,7 +202,7 @@
                                     <td>${s.review}</td>
                                       <td class="product-img">
                                         
-                                          <img src="../${s.user.profile_picture_url}" alt="alt"/ style="width: 100px;height: 103px">
+                                          <img src="../${s.user.profile_picture_url}" alt="alt"/ style="width: 100px;height: 103px"><br>
                                          ${s.user.first_name} ${s.user.last_name}
                                     </td>
                                       <td>${s.time_create}</td>
