@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Danh sách tài khoản</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -224,15 +224,15 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Username</th>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tên tài khoản</th>
                                     <th scope="col">Họ</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Số điện thoại</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Giới tính</th>
                                     <th scope="col">Chức vụ</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -265,12 +265,12 @@
                                             </div>
                                             <c:if test="${!ul.is_banned}">
                                                 <div class="remove" style="background-color: red">
-                                                    <a onclick="return confirm('Do you want to ban this account')" href="../banacc?status=true&uid=${ul.user_id}"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                                    <a onclick="return confirm('Bạn có chắc muốn ẩn tài khoản này không?')" href="../banacc?status=true&uid=${ul.user_id}"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
                                                 </div>
                                             </c:if>
                                             <c:if test="${ul.is_banned}">
                                                 <div class="remove" style="background-color: green">
-                                                    <a onclick="return confirm('Do you want to show this account')" href="../banacc?status=false&uid=${ul.user_id}"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                                    <a onclick="return confirm('Bạn có chắc muốn hiện tài khoản này không?')" href="../banacc?status=false&uid=${ul.user_id}"><i style="color: white;" class="fa fa-eye"></i></a>     
                                                 </div>
                                             </c:if>
                                         </td>

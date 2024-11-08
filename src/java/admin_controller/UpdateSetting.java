@@ -42,10 +42,10 @@ public class UpdateSetting extends HttpServlet {
         String pname=request.getParameter("pname");
         int status=Integer.parseInt(request.getParameter("status"));
         int pid=Integer.parseInt(request.getParameter("pid"));
-        if(classification.equals("product")){
+        if(classification.equals("Sản phẩm")){
             ProductCategory pd=new ProductCategory(pid, pname, status);
             pdao.updateProductCategory(pd);
-        }else if(classification.equals("post")){
+        }else if(classification.equals("Bài đăng")){
             PostCategories pc= new PostCategories(pid, pname, status);
             pcdao.updatePostCategory(pc);
         }

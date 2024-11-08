@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit Car Page</title>
+        <title>Thông tin cài đặt</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!-- CSS Bootstrap -->
@@ -31,7 +31,7 @@
                 <a href="../settinglist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <i style="margin-right: 10px;
                        font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
-                    <span class="fs-4">Back to home</span>
+                    <span class="fs-4">Quay lại</span>
                 </a>                
             </header>
         </div>
@@ -41,7 +41,7 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                    <h2>Edit Setting</h2>
+                    <h2>Thông tin cài đặt</h2>
                 </div>
                 <div class="row g-5" style="justify-content: center;">
 
@@ -54,7 +54,7 @@
                                 
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6">
-                                    <label for="pname" class="form-label"> Name</label>
+                                    <label for="pname" class="form-label"> Tên</label>
                                     <input value="${sessionScope.pd.product_category_name}" name="pname" type="text" class="form-control" id="pname" required>
                                     
                                     
@@ -62,7 +62,7 @@
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6">
-                                    <label for="classification">Classification:</label>
+                                    <label for="classification">Phân loại:</label>
                                     <input value="${sessionScope.type}"name="classification" type="text" class="form-control" id="classification" disabled="">
 
                                     </select>
@@ -71,16 +71,16 @@
                                <div class="col-sm-3"></div>
                                <div class="col-sm-3"></div>
                                 <div class="my-3 col-sm-6">
-                                    <label for="status" class="form-label">Status</label>
+                                    <label for="status" class="form-label">Trạng thái</label>
                                     <div class="form-check">
                                         <input value="1" id="status" name="status" type="radio" class="form-check-input"
                                                <c:if test="${sessionScope.pd.is_active ==1}">checked</c:if>>
-                                        <label class="form-check-label" for="status">Show</label>
+                                        <label class="form-check-label" for="status">Hiện</label>
                                     </div>
                                     <div class="form-check">
                                         <input value="0" id="status1" name="status" type="radio" class="form-check-input"
                                         <c:if test="${sessionScope.pd.is_active == 0}">checked</c:if>>
-                                        <label class="form-check-label" for="status1">Hidden</label>
+                                        <label class="form-check-label" for="status1">Ẩn</label>
                                     </div>
                                     
                                 </div>
@@ -97,7 +97,7 @@
                             <!-- Error check Username and Password -->
                             
 
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Lưu</button>
                         </form>
                     </div>
                 </div>

@@ -54,12 +54,12 @@ public class AddVoucher extends HttpServlet {
 
         if (startDate.isAfter(endDate)) {
             // Start date is before end date
-            error="Start date must be before end date";
+            error="Ngày kết thúc phải lớn hơn ngày bắt đầu";
         }
         
         Voucher vo=vdao.getVoucherbyCode(code);
         if(vo !=null){
-            error="Voucher code already has existed!";
+            error="Mã giảm giá đã tồn tại!";
         }
         if(error.length()>0){
                 session.setAttribute("error", error);

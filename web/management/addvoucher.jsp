@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Detail user Page</title>
+        <title>Thêm mã giảm giá</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!-- CSS Bootstrap -->
@@ -30,7 +30,7 @@
                 <a href="../voucherlist" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <i style="margin-right: 10px;
                        font-size: 24px;" class="bi bi-arrow-90deg-left"></i>
-                    <span class="fs-4">Back</span>
+                    <span class="fs-4">Quay lại</span>
                 </a>                
             </header>
         </div>
@@ -40,7 +40,7 @@
             <main>
                 <div class="py-5 text-center" >
                     <img class="d-block mx-auto mb-4" src="img/user.png" alt="" width="72">
-                    <h2>Add voucher </h2>
+                    <h2>Thêm mã giảm giá</h2>
                 </div>
 
                 <div class="row g-5" style="justify-content: center;">
@@ -54,51 +54,51 @@
                                 
 
                                 <div class="col-sm-6">
-                                    <label for="voucher_name" class="form-label">Name</label>
+                                    <label for="voucher_name" class="form-label">Tên</label>
                                     <input  value="" name="voucher_name" type="text" class="form-control" id="voucher_name" required>
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="description" class="form-label">Description</label>
+                                    <label for="description" class="form-label">Mô tả</label>
                                     <input  value="" name="description" type="text" class="form-control" id="description" required>
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="start_date" class="form-label">Start date</label>
+                                    <label for="start_date" class="form-label">Ngày bắt đầu</label>
                                     <input  value="" name="start_date" type="date" class="form-control" id="start_date" required>
 
                                 </div>
                                 <div class="col-sm-6">
-                                      <label for="end_date" class="form-label">End date</label>
+                                      <label for="end_date" class="form-label">Ngày kết thúc</label>
                                     <input value="" name="end_date" type="date" class="form-control" id="end_date" required>
                                 
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="quantity" class="form-label">Quantity</label>
+                                    <label for="quantity" class="form-label">Số lượng</label>
                                     <input name="quantity" type="number" min="0" class="form-control" id="quantity" required>
                                 </div>
 
 
                                 <div class="col-sm-6">
-                                    <label for="percent" class="form-label">Discount(%)</label>
+                                    <label for="percent" class="form-label">Giảm giá(%)</label>
                                     <input  value="" name="percent" type="number" min="0" max="100" class="form-control" id="percent" required>
 
                                 </div>
                                 
                                 <div class="col-sm-6">
-                                    <label for="code" class="form-label">Voucher code</label>
+                                    <label for="code" class="form-label">Mã giảm giá</label>
                                     <input value="" name="code" type="text"  class="form-control" id="code" required>
                                 </div>
                                 
                                 <div class="my-3 col-sm-6">
-                                    <label for="status" class="form-label">Status</label>
+                                    <label for="status" class="form-label">Trạng thái</label>
                                     <div class="form-check">
                                         <input value="1" id="status" name="status" type="radio" class="form-check-input">
-                                        <label class="form-check-label" for="status">Active</label>
+                                        <label class="form-check-label" for="status">Hoạt động</label>
                                     </div>
                                     <div class="form-check">
                                         <input value="0" id="status1" name="status" type="radio" class="form-check-input">
-                                        <label class="form-check-label" for="status1">Inactive</label>
+                                        <label class="form-check-label" for="status1">Ngừng hoạt động</label>
                                     </div>
                                     
                                 </div>
@@ -113,7 +113,7 @@
                                 <h5>${sessionScope.error}</h5><br>
                              </div>
 
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Save</button>
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Lưu</button>
                         </form>
                     </div>
                 </div>

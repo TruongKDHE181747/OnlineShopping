@@ -19,7 +19,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
                                 <path d="M8 .5l-6 6h1v8a1 1 0 0 0 1 1h3v-5h2v5h3a1 1 0 0 0 1-1v-8h1l-6-6z"/>
                             </svg>
-                            Dashboard
+                            Bảng điều khiển
                         </a>
                     </li>
                     <li>
@@ -29,7 +29,7 @@
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.216 7A6.992 6.992 0 0 1 8 14a6.992 6.992 0 0 1 5.216 1H2.784zM8 15a7 7 0 0 0-6.71 5h13.42A7 7 0 0 0 8 15z"/>
                             </svg>
 
-                            Danh sách người dùng
+                            Danh sách tài khoản
                         </a>
                     </li>
                     <li>

@@ -41,9 +41,10 @@ public class VoucherStatus extends HttpServlet {
         int status=Integer.parseInt(request.getParameter("status"));
         String mes="";
         LocalDate endDate = LocalDate.parse(voucher.getEnd_date());
+        LocalDate startDate =LocalDate.parse(voucher.getStart_date());
         LocalDate today = LocalDate.now();
-        if(endDate.isBefore(today) || endDate.isEqual(today)){
-            mes="This voucher has expired. You must change end date to use it";
+        if(endDate.isBefore(today) || startDate.isAfter(today)){
+            mes="Mã giảm giá đã hết hạn hoặc chưa đến hạn sử dụng, hãy cập nhập lại ngày để sửa đổi trạng thái";
             
         }
         if(mes.length()>0){
