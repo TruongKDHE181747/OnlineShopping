@@ -801,9 +801,9 @@ pre.setInt(1, date.getYear());
         months.put("Tháng 12", 12);
 
         List<SaleChart> sList = new ArrayList<>();
-        String sql = "select sum(total_price) as Total_Price "
+        String sql = "select sum(total_amount) as Total_Price "
                 + "from Orders "
-                + "where Month(ordered_date) = ? and Year(ordered_date)=?";
+                + "where Month(ordered_date) = ? and Year(ordered_date)=? and order_status_id = 4";
 
         for (Map.Entry<String, Integer> entry : months.entrySet()) {
             try {
@@ -857,7 +857,7 @@ pre.setInt(1, date.getYear());
 
         List<SaleChart> sList = new ArrayList<>();
         String sql = "select count(order_id) as Total_number from Orders\n"
-                + "                where Month(ordered_date) = ? and Year(ordered_date)=?";
+                + "                where Month(ordered_date) = ? and Year(ordered_date)=? and order_status_id = 4";
         for (Map.Entry<String, Integer> entry : months.entrySet()) {
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
@@ -988,13 +988,13 @@ pre.setInt(1, date.getYear());
 
     public List<SaleChart> getTotalByBrandInMonth(int month, int year) {
         List<SaleChart> sList = new ArrayList<>();
-        String sql = "SELECT b.brand_name, COUNT(o.order_id) AS total_order\n"
-                + "FROM Orders o\n"
-                + "INNER JOIN Order_Details od ON o.order_id = od.order_id\n"
-                + "INNER JOIN Products p ON od.product_id = p.product_id\n"
-                + "INNER JOIN Brands b ON p.brand_id = b.brand_id\n"
-                + "where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? \n"
-                + "GROUP BY b.brand_name";
+        String sql = "SELECT b.brand_name, Sum(od.quantity) AS total_order\n" +
+"                FROM Orders o\n" +
+"                INNER JOIN Order_Details od ON o.order_id = od.order_id\n" +
+"                INNER JOIN Products p ON od.product_id = p.product_id\n" +
+"                INNER JOIN Brands b ON p.brand_id = b.brand_id\n" +
+"                where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? and o.order_status_id=4\n" +
+"                GROUP BY b.brand_name";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, month); // Giá trị của tháng từ Map
