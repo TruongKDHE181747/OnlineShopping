@@ -133,7 +133,7 @@
         
         <div class="row">
             <!-- START HEADER -->
-        <jsp:include page="../common/header.jsp" />
+     <jsp:include page="../common/headermanage.jsp"/>
               <jsp:include page="marketing_header.jsp" />
 
             <!-- END menu -->
