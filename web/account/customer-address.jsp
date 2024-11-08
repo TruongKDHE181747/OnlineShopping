@@ -108,9 +108,9 @@
                                                         <p class="text-success text-small">Địa chỉ mặc định</p>
                                                     </c:if>
                                                     <p class="card-text">
-                                                        <div>Tên: ${o.receiver_name}</div>
-                                                        <div>Số điện thoại: ${o.phone}</div>
-                                                        <div>Địa chỉ: ${o.address}, ${o.ward_name}, ${o.district_name}, ${o.province_name}</div>
+                                                    <div>Tên: ${o.receiver_name}</div>
+                                                    <div>Số điện thoại: ${o.phone}</div>
+                                                    <div>Địa chỉ: ${o.address}, ${o.ward_name}, ${o.district_name}, ${o.province_name}</div>
                                                     </p>
 
                                                 </div>
@@ -136,7 +136,7 @@
                                                     <c:if test="${!o.is_default}">
                                                         <button style="width: 80px" onclick="confirmDelete(${o.customer_addresses_id})" class="btn btn-sm btn-outline-danger"><span class="fa-trash fa"></span></button>
                                                         <button style="width: fit-content" onclick="window.location.href = 'setDefaultAddress?addressId=${o.customer_addresses_id}'" class="btn btn-sm btn-outline-success">Đặt làm mặc định</button>
-                                                        </c:if>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </c:forEach>
@@ -241,7 +241,7 @@
 
             <% session.removeAttribute("addressMsg"); %>
         </c:if>
-        
+
         <script>
             function confirmDelete(addressId) {
                 if (confirm("Bạn có chắc chắn muốn xóa địa chỉ này không?")) {
@@ -256,8 +256,8 @@
                 $('#addressForm').attr('action', 'addAddress');
                 $('#addressId').val('');
                 $('#submitButton').text('Thêm');
-                $('#receiver_name').val('');
-                $('#phone').val('');
+                $('#receiver_name').val('${sessionScope.account.first_name}' + ' ' + '${sessionScope.account.last_name}');
+                $('#phone').val('${sessionScope.account.phone}');
                 $('#province').val('');
                 $('#district').val('');
                 $('#ward').val('');
