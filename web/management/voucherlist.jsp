@@ -188,7 +188,7 @@
             <div class="col-md-10" style="padding: 40px;">
 
 
-
+                <c:set var="id" value="${(sessionScope.curentpage-1)*5+1}"></c:set>
                 <!-- START products -->
 
                 <div class="product">
@@ -246,7 +246,7 @@
                                 <!-- START Product item -->
                                 <c:forEach var="vl" items="${sessionScope.vlist}">
                                     <tr>
-                                        <th scope="row">${vl.voucher_id}</th>
+                                        <td>${id}<c:set var="id" value="${id+1}"></c:set></td>
                                         <td>${vl.voucher_name}</td>
                                         <fmt:parseDate value="${vl.start_date}" pattern="yyyy-MM-dd" var="parsedStartDate" />
                                         <fmt:parseDate value="${vl.end_date}" pattern="yyyy-MM-dd" var="parsedEndDate" />

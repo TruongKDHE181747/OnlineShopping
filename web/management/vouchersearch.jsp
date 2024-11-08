@@ -184,7 +184,7 @@
 
             <!-- END HEADER -->
 
-
+            <c:set var="id" value="1"></c:set>
             <div class="col-md-10" style="padding: 40px;">
 
 
@@ -246,7 +246,7 @@
                                 <!-- START Product item -->
                                 <c:forEach var="vl" items="${sessionScope.svlist}">
                                     <tr>
-                                        <th scope="row">${vl.voucher_id}</th>
+                                        <td>${id}<c:set var="id" value="${id+1}"></c:set></td>
                                         <td>${vl.voucher_name}</td>
                                         <td>${vl.start_date}</td>
                                         <td>${vl.end_date}</td>

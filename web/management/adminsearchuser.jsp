@@ -187,7 +187,7 @@
             <div class="col-md-10" style="padding: 40px;">
 
 
-
+                <c:set var="id" value="1"></c:set>
                 <!-- START products -->
 
                 <div class="product">
@@ -241,7 +241,7 @@
                                 <!-- START Product item -->
                                 <c:forEach var="ul" items="${sessionScope.ulist}">
                                     <tr>
-                                        <th scope="row">${ul.user_id}</th>
+                                        <td>${id}<c:set var="id" value="${id+1}"></c:set></td>
                                         <td>${ul.username}</td>
                                         <td>${ul.first_name}</td>
                                         <td>${ul.last_name}</td>
