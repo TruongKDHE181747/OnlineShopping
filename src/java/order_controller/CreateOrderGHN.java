@@ -128,8 +128,12 @@ public class CreateOrderGHN extends HttpServlet {
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
                 String shippingCode = jsonResponse.getJSONObject("data").getString("order_code");
+                String receiveDate = jsonResponse.getJSONObject("data").getString("expected_delivery_time");
+                                
                 orderDAO.updateShippingCode(orderId, shippingCode);
+                orderDAO.updateReceivedDate(orderId, receiveDate);
                 orderDAO.updateOrderStatus(orderId, 3);
+                
                 session.setAttribute("notify", "Tạo đơn vận chuyển thành công. Mã vận đơn: " + shippingCode);
                 response.sendRedirect(request.getContextPath() + "/orderdetail?orderId=" + orderId);
 
