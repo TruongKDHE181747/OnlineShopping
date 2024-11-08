@@ -191,7 +191,7 @@
                                       <c:set var="no" value="${no+1}"></c:set>
                                   </td>
                                       <td>
-                                          <a href="../hpostdetail?bid=${s.post.post_id}">${s.post.title}</a> 
+                                          ${s.post.title}
                                   </td>
                                      <td class="product-img">
                                         

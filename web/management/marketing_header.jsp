@@ -32,7 +32,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16">
                                 <path d="M15 8a1 1 0 0 0 0-2h-4a1 1 0 0 0 0 2h4zM8 5a1 1 0 0 0 0-2H5a1 1 0 0 0 0 2h3zM8 10a1 1 0 0 0 0-2H5a1 1 0 0 0 0 2h3zM3 8a1 1 0 0 0 0-2H1a1 1 0 0 0 0 2h2z"/>
                             </svg>
-                            Thanh trượt
+                            Sliders
                         </a>
                     </li>
                     <li>
@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../productfeedbackpaging" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('productfeedback')}">active bg-secondary</c:if>">
+                        <a href="../productfeedbackpaging" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('productfeedbacklist.jsp')}">active bg-secondary</c:if>">
                             <!-- Product Feedback Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
                                 <path d="M1 0h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3l-2 2V1a1 1 0 0 1 1-1z"/>
@@ -63,7 +63,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../postfeedbacklist" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('postfeedback')}">active bg-secondary</c:if>">
+                        <a href="../postfeedbacklist" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('postfeedbacklist.jsp')}">active bg-secondary</c:if>">
                             <!-- Post Feedback Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
                                 <path d="M0 3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2l-1 1V3z"/>
