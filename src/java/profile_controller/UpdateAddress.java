@@ -97,13 +97,8 @@ public class UpdateAddress extends HttpServlet {
             }
 
             if (isDefaultAddress) {
-                boolean checkUpdateAllDefault = dao.updateAllDefaultToFalse(user.getUser_id());
+                dao.updateAllDefaultToFalse(user.getUser_id());
 
-                if (!checkUpdateAllDefault) {
-                    session.setAttribute("addressMsg", "Cập nhật địa chỉ thất bại. Vui lòng thử lại.");
-                    response.sendRedirect(request.getContextPath() + "/address");
-                    return;
-                }
             }
 
             boolean check = dao.updateAddress(customerAddress);
