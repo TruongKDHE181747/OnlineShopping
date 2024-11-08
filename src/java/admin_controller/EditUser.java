@@ -69,6 +69,8 @@ public class EditUser extends HttpServlet {
         filePart.write(uploadPath + File.separator + fileName);
 
           img = "profile_img/"+fileName; 
+        }else{
+            img = "profile_img/default.jpg";
         }
         User oldu=userDAO.getUserById(user_id);
         boolean checkExistUsername = userDAO.checkExistUsername(username);
