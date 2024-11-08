@@ -253,6 +253,16 @@ public class VoucherDAO extends DBContext {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void updateStatus3(){
+        try{
+            String sql ="UPDATE Voucher SET is_active = 0 WHERE quantity=0";
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.executeUpdate();
+            
+        }catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 //    public static void main(String[] args) {
 //        VoucherDAO vdao = new VoucherDAO();
 //        Voucher vlist = vdao.getVoucherbyId(1);

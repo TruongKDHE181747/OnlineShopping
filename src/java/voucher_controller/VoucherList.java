@@ -39,10 +39,10 @@ public class VoucherList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session= request.getSession();
         VoucherDAO vdao= new VoucherDAO();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         //update sql
-        vdao.updateStatus();
-        vdao.updateStatus2();
+        vdao.updateStatus(); // change status to inactive if end date < current date or start date >current date
+        vdao.updateStatus2(); // change status to active when start date <= curent date 
+        vdao.updateStatus3(); // change status to inctive when quantity =0 
         List<Voucher> list= vdao.getAllVoucher();
         List<Voucher> vlist= vdao.getVoucherPaging(1);
 //        for (Voucher voucher : vlist) {
