@@ -277,7 +277,7 @@
                                             <div class="product__item row" style="margin: 24px 0;">
 
                                                 <div style="height: 120px" class="product__item__pic col-md-2">
-                                                    <img style="width: 100%;height: 100%" src="${pageContext.request.contextPath}/<%=productFeedback.getThumbnail()%>" alt="img"/>
+                                                    <img style="width: 100%;height: 100%;" src="${pageContext.request.contextPath}/<%=productFeedback.getThumbnail()%>" alt="img"/>
                                                 </div>
 
                                                 <div class="col-md-10">
@@ -288,7 +288,7 @@
                                                             ? profilePictureUrl 
                                                             : request.getContextPath() + "/" + profilePictureUrl;
                                                         %>
-                                                        <img src="<%=profileImgSrc%>" alt="">
+                                                        <img style="margin: 0px 10px 10px 0px;" src="<%=profileImgSrc%>" alt="">
                                                         <strong><%=productFeedback.getCustomer_name()%></strong>
                                                     </div>
                                                     <div style="    margin-left: 12px;">
