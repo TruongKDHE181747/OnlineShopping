@@ -100,6 +100,7 @@ public class Checkout extends HttpServlet {
             int itemStock = productSizeDAO.getQuantityOfEachSize(sid, pid);
 
             if (itemQuantity > itemStock) {
+                session.setAttribute("cartError", "Vui lòng cập nhật lại giỏ hàng");
                 response.sendRedirect(request.getContextPath() + "/updateCart");
                 return;
             }
@@ -186,6 +187,7 @@ public class Checkout extends HttpServlet {
                 int itemStock = productSizeDAO.getQuantityOfEachSize(sid, pid);
 
                 if (itemQuantity > itemStock) {
+                    session.setAttribute("cartError", "Vui lòng cập nhật lại giỏ hàng");
                     response.sendRedirect(request.getContextPath() + "/updateCart");
                     return;
                 }
