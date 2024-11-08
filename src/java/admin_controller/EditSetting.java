@@ -42,13 +42,17 @@ public class EditSetting extends HttpServlet {
         ProductCategoryDAO pdao= new ProductCategoryDAO();
         String type=request.getParameter("type");
         int pid=Integer.parseInt(request.getParameter("pid"));
-        session.setAttribute("type", type);
+        String typename;
         if(type.equals("product")){
             ProductCategory pd=pdao.getProductCategories(pid);
+            typename="Sản phẩm";
             session.setAttribute("pd", pd);
+            session.setAttribute("type", typename);
             response.sendRedirect(request.getContextPath()+"/management/editsettingproduct.jsp");
         }else if(type.equals("post")){
             PostCategories pc=pcdao.getPostCategories(pid);
+            typename="Bài đăng";
+            session.setAttribute("type", typename);
             session.setAttribute("pc", pc);
             response.sendRedirect(request.getContextPath()+"/management/editsettingpost.jsp");
         }

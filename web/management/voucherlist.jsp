@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Mã giảm giá</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -230,14 +230,14 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
+                                    <th scope="col">STT</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Ngày bắt đầu</th>
                                     <th scope="col">Ngày kết thúc</th>
                                     <th scope="col">Số lượng </th>
-                                    <th scope="col">Discount(%)</th>
+                                    <th scope="col">Giảm giá(%)</th>
                                     <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -270,12 +270,12 @@
                                             </div>
                                             <c:if test="${vl.is_active==1}">
                                                 <div class="remove" style="background-color: red">
-                                                    <a onclick="return confirm('Do you want to hide this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=0"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                                    <a onclick="return confirm('Bạn có chắc muốn ẩn mã này?')" href="../voucherstatus?vid=${vl.voucher_id}&status=0"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
                                                 </div>
                                             </c:if>
                                             <c:if test="${vl.is_active==0}">
                                                 <div class="remove" style="background-color: green">
-                                                    <a onclick="return confirm('Do you want to show this voucher')" href="../voucherstatus?vid=${vl.voucher_id}&status=1"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                                    <a onclick="return confirm('Bạn có chắc muốn hiện cài đặt này')" href="../voucherstatus?vid=${vl.voucher_id}&status=1"><i style="color: white;" class="fa fa-eye"></i></a>     
                                                 </div>
                                             </c:if>
                                         </td>

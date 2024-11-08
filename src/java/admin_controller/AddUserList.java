@@ -75,16 +75,16 @@ public class AddUserList extends HttpServlet {
         String error="";
         
         if(checkExistUsername){
-            error="Username is existed!";
+            error="Tên tài khoản đã tồn tại!";
         }else{
             if(checkExistEmail){
-                error="Email is existed!";
+                error="Email đã tồn tại!";
             }else if(checkExistPhone){
-                error="Phone number is existed";
+                error="Số điện thoại đã tồn tại!";
             }
         }
         if(!phone.matches(PHONE_REGEX)){
-            error="Phone number must have 10 digits number";
+            error="Số điện thoại phải chứa 10 chữ số hoặc hơn";
         }
         
         

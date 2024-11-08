@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import model.Voucher;
 
@@ -36,12 +39,19 @@ public class VoucherList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session= request.getSession();
         VoucherDAO vdao= new VoucherDAO();
-        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         //update sql
         vdao.updateStatus();
-        
+        vdao.updateStatus2();
         List<Voucher> list= vdao.getAllVoucher();
         List<Voucher> vlist= vdao.getVoucherPaging(1);
+//        for (Voucher voucher : vlist) {
+//            
+//            voucher.setStart_date(sdf.format(voucher.getStart_date()));
+//            voucher.setEnd_date(sdf.format(voucher.getEnd_date())) ;
+//            vlist.add(voucher);
+//            
+//        }
         session.setAttribute("curentpage", 1);
         session.setAttribute("vlist", vlist);
         session.setAttribute("npage", getNumberOfPage(list.size(), 5));

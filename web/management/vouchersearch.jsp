@@ -230,14 +230,14 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
+                                    <th scope="col">STT</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Ngày bắt đầu</th>
                                     <th scope="col">Ngày kết thúc</th>
                                     <th scope="col">Số lượng</th>
-                                    <th scope="col">Discount(%)</th>
+                                    <th scope="col">Giảm giá(%)</th>
                                     <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>

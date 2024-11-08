@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <title>Danh sách cài đặt</title>
         <link rel="icon" href="img/webLogo.jpg" type="image/x-icon" />
         <!-- CSS Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -226,11 +226,11 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
+                                    <th scope="col">STT</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Phân loại</th>
                                     <th scope="col">Trạng thái</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -245,11 +245,11 @@
                                     <td>Sản phẩm</td>
                                     <td>
                                     <c:if test="${pl.is_active==1}">
-                                            <p style="color: green">Hoạt động</p>
+                                            <p style="color: green">Hiện</p>
                                         
                                         </c:if>
                                                <c:if test="${pl.is_active==0}">
-                                            <p style="color: red">Ngừng hoạt động</p>
+                                            <p style="color: red">Ẩn</p>
                                         
                                         </c:if></td>
                                     <td>
@@ -259,12 +259,12 @@
                                         </div>
                                         <c:if test="${pl.is_active==1}">
                                             <div class="remove" style="background-color: red">
-                                            <a onclick="return confirm('Do you want to hide this setting')" href="../changestatus?pdid=${pl.product_category_id}&button=hide&type=product"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                            <a onclick="return confirm('Bạn có chắc muốn ẩn cài đặt này?')" href="../changestatus?pdid=${pl.product_category_id}&button=hide&type=product"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
                                         </div>
                                         </c:if>
                                         <c:if test="${pl.is_active==0}">
                                         <div class="remove" style="background-color: green">
-                                            <a onclick="return confirm('Do you want to show this setting')" href="../changestatus?pdid=${pl.product_category_id}&button=show&type=product"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                            <a onclick="return confirm('Bạn có chắc muốn hiện cài đặt này?')" href="../changestatus?pdid=${pl.product_category_id}&button=show&type=product"><i style="color: white;" class="fa fa-eye"></i></a>     
                                         </div>
                                         </c:if>
                                     </td>
@@ -279,11 +279,11 @@
                                     <td>Bài đăng</td>
                                     <td>
                                     <c:if test="${p.is_active==1}">
-                                            <p style="color: green">Hoạt động</p>
+                                            <p style="color: green">Hiện</p>
                                         
                                         </c:if>
                                                <c:if test="${p.is_active==0}">
-                                            <p style="color: red">Ngừng hoạt động</p>
+                                            <p style="color: red">Ẩn</p>
                                         
                                         </c:if></td>
                                     <td>
@@ -293,12 +293,12 @@
                                         </div>
                                         <c:if test="${p.is_active==1}">
                                         <div class="remove" style="background-color: red">
-                                            <a onclick="return confirm('Do you want to hide this setting')" href="../changestatus?pdid=${p.post_category_id}&button=hide&type=post"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
+                                            <a onclick="return confirm('Bạn có chắc muốn ẩn cài đặt này?')" href="../changestatus?pdid=${p.post_category_id}&button=hide&type=post"><i style="color: white;" class="fa fa-eye-slash"></i></a>     
                                         </div>
                                         </c:if>
                                         <c:if test="${p.is_active==0}">
                                         <div class="remove"style="background-color: green">
-                                            <a onclick="return confirm('Do you want to show this setting')" href="../changestatus?pdid=${p.post_category_id}&button=show&type=post"><i style="color: white;" class="fa fa-eye"></i></a>     
+                                            <a onclick="return confirm('Bạn có chắc muốn hiện cài đặt này?')" href="../changestatus?pdid=${p.post_category_id}&button=show&type=post"><i style="color: white;" class="fa fa-eye"></i></a>     
                                         </div>
                                         </c:if>
                                     </td>

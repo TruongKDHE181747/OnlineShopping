@@ -43,12 +43,12 @@ public class SearchVoucher extends HttpServlet {
         String sql="SELECT * FROM Voucher where is_active=1";
         String error="";
         if((begindate.length()!=0 && enddate.length()==0) || (begindate.length()==0 && enddate.length()!=0)){
-            error = "Please input both From and To";
+            error = "Xin hãy nhập đầy đủ ngày để tìm";
         }else if(begindate.length()!=0 && enddate.length()!=0){
             LocalDate begin=LocalDate.parse(begindate);
             LocalDate end=LocalDate.parse(enddate);
             if(begin.isAfter(end)){
-                error="To must be before From";
+                error="Ngày 'Từ' phải nhỏ hơn ngày 'đến' ";
             }else{
                 sql+="and start_date >= '"+begin+"' AND end_date <= '"+end+"'";
             }
