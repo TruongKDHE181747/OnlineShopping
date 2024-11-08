@@ -133,7 +133,7 @@
         
         <div class="row">
             <!-- START HEADER -->
-        <jsp:include page="../common/header.jsp" />
+        <jsp:include page="../common/headermanage.jsp"/>
               <jsp:include page="marketing_header.jsp" />
 
             <!-- END menu -->
@@ -192,7 +192,7 @@
                                       <c:set var="no" value="${no+1}"></c:set>
                                   </td>
                                       <td>
-                                          <a href="../hpostdetail?bid=${s.post.post_id}">  ${s.post.title}</a> 
+                                          <a href="../hpostdetail?bid=${s.post.post_id}">${s.post.title}</a> 
                                   </td>
                                      <td class="product-img">
                                         

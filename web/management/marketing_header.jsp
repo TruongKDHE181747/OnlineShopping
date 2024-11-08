@@ -5,7 +5,7 @@
 
 <!-- START menu -->
 <div class="col-md-2">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="position: absolute; width: 100%; height: 100%; min-height: 600px">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="position: absolute; width: 100%; height: 100%; min-height: 800px">
         <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('productfeedback')}">active bg-secondary</c:if>">
+                        <a href="../productfeedbackpaging" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('productfeedback')}">active bg-secondary</c:if>">
                             <!-- Product Feedback Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
                                 <path d="M1 0h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3l-2 2V1a1 1 0 0 1 1-1z"/>
