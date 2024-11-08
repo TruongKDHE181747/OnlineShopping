@@ -1,5 +1,6 @@
 
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,8 +48,8 @@
         </style>
     </head>
     <body>
-        <%@include file="../common/header.jsp" %>
-
+       <jsp:include page="../common/headermanage.jsp"/>
+       
         <div class="container mt-5">
             <button class="btn btn-dark" onclick="goBack()">
                 <i class="fa fa-arrow-left me-2"></i> Back
