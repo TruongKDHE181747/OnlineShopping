@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -248,8 +248,10 @@
                                     <tr>
                                         <th scope="row">${vl.voucher_id}</th>
                                         <td>${vl.voucher_name}</td>
-                                        <td>${vl.start_date}</td>
-                                        <td>${vl.end_date}</td>
+                                        <fmt:parseDate value="${vl.start_date}" pattern="yyyy-MM-dd" var="parsedStartDate" />
+                                        <fmt:parseDate value="${vl.end_date}" pattern="yyyy-MM-dd" var="parsedEndDate" />
+                                        <td><fmt:formatDate value="${parsedStartDate}" pattern="dd/MM/yyyy" /></td>
+                                        <td><fmt:formatDate value="${parsedEndDate}" pattern="dd/MM/yyyy" /></td>
                                         <td>${vl.quantity}</td>
                                         <td>${vl.percent}</td>
                                         <td>
