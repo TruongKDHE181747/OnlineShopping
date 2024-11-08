@@ -90,9 +90,6 @@ public class OrderListForSaleManager extends HttpServlet {
                 session.setAttribute("sale", sale);
                 session.removeAttribute("error_sm");
             }
-        } else if (!beginDate.isEmpty() && !endDate.isEmpty() && sale.isEmpty()) {
-            err = "Hãy chọn tên Sale";
-            session.setAttribute("error_sm", err);
         } else {
             session.setAttribute("begin_date", beginDate);
             session.setAttribute("end_date", endDate);

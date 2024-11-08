@@ -183,7 +183,8 @@
                                 <c:forEach items="${sessionScope.pending_order}" var="o" varStatus="status">
                                     <tr>
                                         <td>${status.index +1}</td>
-                                        <td>${o.orderedDate}</td>
+                                        <fmt:parseDate value="${o.orderedDate}" pattern="yyyy-MM-dd" var="parsedDate" />
+                                        <td><fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" /></td>
 
                                         <fmt:setLocale value="vi_VN" />
                                         <td><fmt:formatNumber value="${o.totalAmount}"/></td>
