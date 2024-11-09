@@ -62,7 +62,7 @@ public class AddVoucher extends HttpServlet {
             error="Mã giảm giá đã tồn tại!";
         }
         if(error.length()>0){
-                session.setAttribute("error", error);
+                session.setAttribute("er", error);
                 response.sendRedirect(request.getContextPath()+"/management/addvoucher.jsp");
             }else{
         vdao.addVoucher(new Voucher(0, voucher_name, description, start_date, end_date, quantity, percent, status, code));

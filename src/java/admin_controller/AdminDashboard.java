@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import model.FeedbackChart;
 import model.SaleChart;
 
 /**
@@ -45,7 +46,7 @@ public class AdminDashboard extends HttpServlet {
         OrderDAO odao= new OrderDAO();
         
         List<SaleChart> monthChart= odao.getRevenueAccumulateByMonth(year);
-        List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth(year);
+        List<FeedbackChart> monthOrder= odao.getTotalRatingByBrandInMonth(month, year);
         List<SaleChart> monthStatus= odao.getNumberStatusOrderByMonth(month,year);
         List<SaleChart> mmonthBrand= odao.getTotalByBrandInMonth(month,year);
         int totalOrder = odao.getTotalOrderInMonth(month, year);

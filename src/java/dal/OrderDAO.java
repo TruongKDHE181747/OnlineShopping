@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Brand;
+import model.FeedbackChart;
 import model.SaleChart;
 import model.User;
 
@@ -1205,7 +1206,33 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
+    
+    public List<FeedbackChart> getTotalRatingByBrandInMonth(int month, int year) {
+        List<FeedbackChart> sList = new ArrayList<>();
+        String sql = "select b.brand_name, AVG(f.rating * 1.0) as average from Feedbacks f \n" +
+                        "join Orders o on f.order_id=o.order_id \n" +
+                        "join Products p on f.product_id=p.product_id\n" +
+                        "join Brands b on b.brand_id=p.brand_id\n" +
+                        "where Month(o.ordered_date) =? and YEAR(o.ordered_date)=? and o.order_status_id=4\n" +
+                        "group by b.brand_name";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, month); // Giá trị của tháng từ Map
+            pre.setInt(2, year);
+            ResultSet rs = pre.executeQuery();
 
+            while (rs.next()) {
+                String label = rs.getString("brand_name"); // Tên tháng làm nhãn
+                float value = rs.getFloat("average");
+                FeedbackChart fChart = new FeedbackChart(label, value); // Dùng label thay cho fdate
+                sList.add(fChart);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sList;
+    }
     public static void main(String[] args) {
         OrderDAO odao = new OrderDAO();
 //          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

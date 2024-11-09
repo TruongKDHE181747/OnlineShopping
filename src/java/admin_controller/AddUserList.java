@@ -89,7 +89,7 @@ public class AddUserList extends HttpServlet {
         
         
         if(error.length()>0){
-            session.setAttribute("error", error);
+            session.setAttribute("e", error);
             response.sendRedirect(request.getContextPath()+"/management/adduserlist.jsp");
         }else{
       User u= new User(0, username, password, firstname, lastname, phone, email, true, dob, null, null, null, img, true, false, r);

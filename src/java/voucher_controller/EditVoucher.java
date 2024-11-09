@@ -62,7 +62,7 @@ public class EditVoucher extends HttpServlet {
         }
         
         if(error.length()>0){
-                session.setAttribute("error", error);
+                session.setAttribute("err", error);
                 response.sendRedirect(request.getContextPath()+"/management/detailvoucher.jsp");
             }else{
         vdao.editVoucher(new Voucher(voucher_id, voucher_name, description, start_date, end_date, quantity, percent, status,code));
