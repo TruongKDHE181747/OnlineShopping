@@ -564,12 +564,12 @@ public class OrderDAO extends DBContext {
     public List<SaleChart> getNumberOfOrderByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select count(order_id) as Total_number from Orders\n"
-                + "where ordered_date = ?";
+        String sql = "select count(order_id) as Total_number from Orders\n" +
+"where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=?";
 
         if (saleId != 0) {
             sql = "select count(order_id) as Total_number from Orders\n"
-                    + "where ordered_date = ? and salerid = " + saleId;
+                    + "where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=? and salerid = " + saleId;
         }
 
         for (int i = 0; i <= days; i++) {
@@ -577,7 +577,9 @@ public class OrderDAO extends DBContext {
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
                 LocalDate date = startDate.plusDays(i);
-                pre.setString(1, date + "");
+                pre.setInt(1, date.getYear());
+                pre.setInt(2, date.getMonthValue());
+                pre.setInt(3, date.getDayOfMonth());
 
                 ResultSet rs = pre.executeQuery();
                 while (rs.next()) {
@@ -599,14 +601,14 @@ public class OrderDAO extends DBContext {
     public List<SaleChart> getTotalRevenueByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select sum(total_price) as Total_Price \n"
-                + "from Orders\n"
-                + "where ordered_date = ?";
+        String sql = "select sum(total_amount) as Total_Price\n" +
+                    "from Orders\n" +
+                    "where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=? and order_status_id = 4";
 
         if (saleId != 0) {
-            sql = "select sum(total_price) as Total_Price \n"
+            sql = "select sum(total_amount) as Total_Price \n"
                     + "from Orders\n"
-                    + "where ordered_date = ? and salerid = " + saleId;
+                    + "where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=? and order_status_id = 4 and salerid = " + saleId;
         }
 
         for (int i = 0; i <= days; i++) {
@@ -614,8 +616,12 @@ public class OrderDAO extends DBContext {
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
                 LocalDate date = startDate.plusDays(i);
-                pre.setString(1, date + "");
-
+//                pre.setString(1, date.getYear() + "");
+//                pre.setString(2, date.getMonth()+ "");
+//                pre.setString(3, date.getDayOfMonth()+ "");
+pre.setInt(1, date.getYear());
+            pre.setInt(2, date.getMonthValue());
+            pre.setInt(3, date.getDayOfMonth());
                 ResultSet rs = pre.executeQuery();
 
                 while (rs.next()) {
@@ -637,14 +643,14 @@ public class OrderDAO extends DBContext {
     public List<SaleChart> getRevenueAccumulateByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select sum(total_price) as Total_Price \n"
-                + "from Orders\n"
-                + "where ordered_date <= ?";
+        String sql = "select sum(total_amount) as Total_Price\n" +
+                    "from Orders\n" +
+                    "where ordered_date <= ? and order_status_id = 4";
 
         if (saleId != 0) {
-            sql = "select sum(total_price) as Total_Price \n"
+            sql = "select sum(total_amount) as Total_Price \n"
                     + "from Orders\n"
-                    + "where ordered_date <= ? and salerid = " + saleId;
+                    + "where ordered_date <= ? and order_status_id = 4 and salerid = " + saleId;
         }
 
         for (int i = 0; i <= days; i++) {
@@ -843,9 +849,9 @@ public class OrderDAO extends DBContext {
         months.put("Tháng 12", 12);
 
         List<SaleChart> sList = new ArrayList<>();
-        String sql = "select sum(total_price) as Total_Price "
+        String sql = "select sum(total_amount) as Total_Price "
                 + "from Orders "
-                + "where Month(ordered_date) = ? and Year(ordered_date)=?";
+                + "where Month(ordered_date) = ? and Year(ordered_date)=? and order_status_id = 4";
 
         for (Map.Entry<String, Integer> entry : months.entrySet()) {
             try {
@@ -899,7 +905,7 @@ public class OrderDAO extends DBContext {
 
         List<SaleChart> sList = new ArrayList<>();
         String sql = "select count(order_id) as Total_number from Orders\n"
-                + "                where Month(ordered_date) = ? and Year(ordered_date)=?";
+                + "                where Month(ordered_date) = ? and Year(ordered_date)=? and order_status_id = 4";
         for (Map.Entry<String, Integer> entry : months.entrySet()) {
             try {
                 PreparedStatement pre = connection.prepareStatement(sql);
@@ -1030,13 +1036,13 @@ public class OrderDAO extends DBContext {
 
     public List<SaleChart> getTotalByBrandInMonth(int month, int year) {
         List<SaleChart> sList = new ArrayList<>();
-        String sql = "SELECT b.brand_name, COUNT(o.order_id) AS total_order\n"
-                + "FROM Orders o\n"
-                + "INNER JOIN Order_Details od ON o.order_id = od.order_id\n"
-                + "INNER JOIN Products p ON od.product_id = p.product_id\n"
-                + "INNER JOIN Brands b ON p.brand_id = b.brand_id\n"
-                + "where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? \n"
-                + "GROUP BY b.brand_name";
+        String sql = "SELECT b.brand_name, Sum(od.quantity) AS total_order\n" +
+"                FROM Orders o\n" +
+"                INNER JOIN Order_Details od ON o.order_id = od.order_id\n" +
+"                INNER JOIN Products p ON od.product_id = p.product_id\n" +
+"                INNER JOIN Brands b ON p.brand_id = b.brand_id\n" +
+"                where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? and o.order_status_id=4\n" +
+"                GROUP BY b.brand_name";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, month); // Giá trị của tháng từ Map

@@ -92,8 +92,8 @@
                                 <a href="<%=s%>/register">Sign up</a>                      
                             </c:if>
                             <c:if test="${sessionScope.account ne null}">
-                                <a href="#">Hello ${sessionScope.account.username}</a>
-                                <a href="<%=s%>/logout">Logout</a>                      
+                                <a href="#">${sessionScope.account.username}</a>
+                                <a href="<%=s%>/logout">Đăng xuất</a>                      
                             </c:if>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="<%=s%>/homeslider"><img src="<%=s%>/common/img/logo.png" alt=""></a>
+                    <a href="<%=s%>/marketinghome"><img src="<%=s%>/common/img/logo.png" alt=""></a>
                 </div>
             </div>
             <%
@@ -115,7 +115,7 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/marketinghome">Home</a></li>
+                        <li class="<%=mainpage.equals("home")?"active":""%>"><a href="<%=s%>/marketinghome">Trang chủ</a></li>
                        
                         <li><a href="#">Quản lý</a>
                             <ul class="dropdown">
@@ -124,7 +124,7 @@
                                 <li><a href="../listpostmarketing">Bài đăng</a></li>
                                 <li><a href="../postfeedbacklist">Phản hồi bài đăng</a></li>
                                 <li><a href="../productlist">Sản phẩm</a></li>
-                                <li><a href="#">Phản hồi sản phẩm</a></li>
+                                <li><a href="../productfeedbackpaging">Phản hồi sản phẩm</a></li>
                                 <li><a href="../voucherlist">Phiếu giảm giá</a></li>
                             </ul>
                         </li>
@@ -323,60 +323,7 @@
         <!-- Latest Blog Section End -->
 
         <!-- Footer Section Begin -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="footer__about">
-                            <div class="footer__logo">
-                                <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                            </div>
-                            <p>The customer is at the heart of our unique business model, which includes design.</p>
-                            <a href="#"><img src="img/payment.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Clothing Store</a></li>
-                                <li><a href="#">Trending Shoes</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Sale</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>Shopping</h6>
-                            <ul>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Delivary</a></li>
-                                <li><a href="#">Return & Exchanges</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                        <div class="footer__widget">
-                            <h6>NewLetter</h6>
-                            <div class="footer__newslatter">
-                                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Your email">
-                                    <button type="submit"><span class="icon_mail_alt"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <jsp:include page="../common/footer.jsp" />
         <!-- Footer Section End -->
 
         <!-- Search Begin -->

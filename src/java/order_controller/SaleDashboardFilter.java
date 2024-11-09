@@ -69,11 +69,11 @@ public class SaleDashboardFilter extends HttpServlet {
                 
             } else {
         List<SaleChart> sList = odao.getSucsessOnTotalOrder(sid, beginDate, diff);
-        int totalOrder = odao.getTotalOrder(-1, beginDate, diff);
+        int totalOrder = odao.getTotalOrder(sid, beginDate, diff);
         List<SaleChart> orderByDayList = odao.getNumberOfOrderByDay(sid, beginDate, diff);
         List<SaleChart> revenueByDayList = odao.getTotalRevenueByDay(sid, beginDate, diff);
         List<SaleChart> revenueAccumulateByDayList = odao.getRevenueAccumulateByDay(sid, beginDate, diff);
-        
+
         
         session.setAttribute("sotoChart", sList);
         session.setAttribute("orderByDayList", orderByDayList);

@@ -82,7 +82,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Đơn hàng theo tháng</h5>
+                                        <h5 class="card-title">Số đơn hàng thành công trong tháng</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
@@ -106,7 +106,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card flex-fill w-100">
                                     <div class="card-header">
-                                        <h5 class="card-title">Tổng số sản phẩm theo nhãn hàng</h5>
+                                        <h5 class="card-title">Tổng số sản phẩm theo nhãn hàng trong tháng ${sessionScope.month}/${sessionScope.year}</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">

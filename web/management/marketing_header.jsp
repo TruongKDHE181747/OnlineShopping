@@ -9,6 +9,15 @@
         <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
+                    <a href="../marketinghome" class="nav-link text-white home-link" aria-current="page">
+                            <!-- Dashboard Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                                <path d="M8 .5l-6 6h1v8a1 1 0 0 0 1 1h3v-5h2v5h3a1 1 0 0 0 1-1v-8h1l-6-6z"/>
+                            </svg>
+                            Trang chủ
+                        </a>
+                    </li>
+                <li class="nav-item">
                     <a href="../markertingdashboard" class="nav-link text-white home-link <c:if test="${pageContext.request.requestURI.endsWith('mkt_dashboard.jsp')}">active bg-secondary</c:if>" aria-current="page">
                             <!-- Dashboard Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
@@ -72,7 +81,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../voucherlist" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('voucherlist')}">active bg-secondary</c:if>">
+                        <a href="../voucherlist" class="nav-link text-white contract-link <c:if test="${pageContext.request.requestURI.endsWith('voucherlist.jsp')|| pageContext.request.requestURI.endsWith('vouchersearch.jsp')}">active bg-secondary</c:if>">
                         <!-- Voucher Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-perforated" viewBox="0 0 16 16">
                             <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5v.637c-.295.094-.5.378-.5.713 0 .335.205.619.5.713v2.574c-.295.094-.5.378-.5.713 0 .335.205.619.5.713v.637a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5v-.637c.295-.094.5-.378.5-.713 0-.335-.205-.619-.5-.713V6.863c.295-.094.5-.378.5-.713 0-.335-.205-.619-.5-.713V4.5zm1 0v.201c.758.087 1.339.747 1.339 1.548 0 .8-.581 1.46-1.34 1.547v.41c.758.087 1.339.747 1.339 1.548 0 .8-.581 1.46-1.34 1.547v.201a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-.201a1.611 1.611 0 0 1 0-3.095v-.41a1.611 1.611 0 0 1 0-3.095V4.5a.5.5 0 0 0-.5-.5h-13a.5.5 0 0 0-.5.5z"/>

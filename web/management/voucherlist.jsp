@@ -299,7 +299,7 @@
                         <!-- START PAGE -->
 
                         <div style="display: flex;
-                             justify-content: center;">
+                             justify-content: center;margin: 10px;">
 
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
