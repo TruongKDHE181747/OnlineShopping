@@ -200,23 +200,12 @@
 
 
         <script>
-
-
-
-
-
-
-
             function cancelOrder(orderId, methodId, payStatus) {
 
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", "cancelorder", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-
                 xhr.send("orderId=" + orderId + "&methodId=" + methodId + "&payStatus=" + payStatus);
-
-
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         alert("Hủy đơn hàng thành công !");

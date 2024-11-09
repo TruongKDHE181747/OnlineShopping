@@ -5,6 +5,10 @@
 package cart_controller;
 
 import dal.OrderDAO;
+import dal.OrderDetailDAO;
+import dal.ProductDAO;
+import dal.ProductSizeDAO;
+import dal.VoucherDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +21,12 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import model.Order;
+import model.OrderDetail;
+import model.ProductSize;
+import model.Voucher;
 import utils.ConfigVNPAY;
 
 /**
@@ -38,8 +47,13 @@ public class PaymentStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         OrderDAO orderDAO = new OrderDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        ProductSizeDAO productSizeDAO = new ProductSizeDAO();
+        VoucherDAO voucherDAO = new VoucherDAO();
+        ProductDAO productDAO = new ProductDAO();
+
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
         long vnp_Amount = Long.parseLong(request.getParameter("vnp_Amount")) / 100;
         String vnp_PayDate = request.getParameter("vnp_PayDate");
@@ -60,6 +74,29 @@ public class PaymentStatus extends HttpServlet {
         } else {
             orderDAO.updatePaymentStatus(vnp_TxnRef, 3);
             orderDAO.updateOrderStatus(vnp_TxnRef, 5);
+
+            int oid = orderDAO.getOrderIdByVNP(vnp_TxnRef);
+
+            List<OrderDetail> listDetail = orderDetailDAO.getOrderDetailByOrderId(oid);
+
+            for (OrderDetail od : listDetail) {
+                int sid = od.getSizeId();
+                int pid = od.getProductId();
+                int quantity = od.getQuantity();
+                ProductSize ps = productSizeDAO.getProductSize(sid, pid);
+                productSizeDAO.updateSizeProduct(sid, pid, ps.getQuantity() + quantity);
+
+                productDAO.updateTotalQuantity(pid);
+
+            }
+
+            Order order = orderDAO.getOrderById(oid);
+            int voucherId = order.getVoucherId();
+            if (voucherId != 1) {
+                Voucher voucher = voucherDAO.getVoucherbyId(voucherId);
+                voucherDAO.updateVoucherQuantity(voucherId, voucher.getQuantity() + 1);
+            }
+
             request.getRequestDispatcher("/common/payment-fail.jsp").forward(request, response);
         }
 

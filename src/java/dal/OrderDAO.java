@@ -28,6 +28,28 @@ import model.User;
  */
 public class OrderDAO extends DBContext {
 
+    public int getOrderIdByVNP(String vnp_TxnRef) {
+        String sql = """
+                     select order_id
+                     from Orders
+                     where vnp_TxnRef = ?""";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, vnp_TxnRef);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+
+    }
+
     public Order getOrderBySaleIdAndOrderId(int sid, int ordId) {
         String sql = """
                      select o.*,pm.payment_method_name,ps.payment_status_name,os.order_status_name
@@ -427,7 +449,7 @@ public class OrderDAO extends DBContext {
 
         return oList;
     }
-    
+
     public Order getOrder(int oid) {
         Order order = new Order();
         String sql = "select * from Orders "
@@ -464,7 +486,7 @@ public class OrderDAO extends DBContext {
                 String shippingCode = rs.getString("shipping_code");
                 int saleId = rs.getInt("salerId");
                 String receiveDate = rs.getString("receive_date");
-                order = new Order(oid,cid, orderedDate,receiveDate, receiverName, phone, email, address,
+                order = new Order(oid, cid, orderedDate, receiveDate, receiverName, phone, email, address,
                         wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee,
                         voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate,
                         paymentStatusId, orderStatusId, shippingCode, saleId);
@@ -564,8 +586,8 @@ public class OrderDAO extends DBContext {
     public List<SaleChart> getNumberOfOrderByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select count(order_id) as Total_number from Orders\n" +
-"where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=?";
+        String sql = "select count(order_id) as Total_number from Orders\n"
+                + "where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=?";
 
         if (saleId != 0) {
             sql = "select count(order_id) as Total_number from Orders\n"
@@ -601,9 +623,9 @@ public class OrderDAO extends DBContext {
     public List<SaleChart> getTotalRevenueByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select sum(total_amount) as Total_Price\n" +
-                    "from Orders\n" +
-                    "where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=? and order_status_id = 4";
+        String sql = "select sum(total_amount) as Total_Price\n"
+                + "from Orders\n"
+                + "where Year(ordered_date) =? and MONTH(ordered_date)=? and DAY(ordered_date)=? and order_status_id = 4";
 
         if (saleId != 0) {
             sql = "select sum(total_amount) as Total_Price \n"
@@ -619,9 +641,9 @@ public class OrderDAO extends DBContext {
 //                pre.setString(1, date.getYear() + "");
 //                pre.setString(2, date.getMonth()+ "");
 //                pre.setString(3, date.getDayOfMonth()+ "");
-pre.setInt(1, date.getYear());
-            pre.setInt(2, date.getMonthValue());
-            pre.setInt(3, date.getDayOfMonth());
+                pre.setInt(1, date.getYear());
+                pre.setInt(2, date.getMonthValue());
+                pre.setInt(3, date.getDayOfMonth());
                 ResultSet rs = pre.executeQuery();
 
                 while (rs.next()) {
@@ -643,9 +665,9 @@ pre.setInt(1, date.getYear());
     public List<SaleChart> getRevenueAccumulateByDay(int saleId, LocalDate startDate, long days) {
         List<SaleChart> sList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sql = "select sum(total_amount) as Total_Price\n" +
-                    "from Orders\n" +
-                    "where ordered_date <= ? and order_status_id = 4";
+        String sql = "select sum(total_amount) as Total_Price\n"
+                + "from Orders\n"
+                + "where ordered_date <= ? and order_status_id = 4";
 
         if (saleId != 0) {
             sql = "select sum(total_amount) as Total_Price \n"
@@ -1036,13 +1058,13 @@ pre.setInt(1, date.getYear());
 
     public List<SaleChart> getTotalByBrandInMonth(int month, int year) {
         List<SaleChart> sList = new ArrayList<>();
-        String sql = "SELECT b.brand_name, Sum(od.quantity) AS total_order\n" +
-"                FROM Orders o\n" +
-"                INNER JOIN Order_Details od ON o.order_id = od.order_id\n" +
-"                INNER JOIN Products p ON od.product_id = p.product_id\n" +
-"                INNER JOIN Brands b ON p.brand_id = b.brand_id\n" +
-"                where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? and o.order_status_id=4\n" +
-"                GROUP BY b.brand_name";
+        String sql = "SELECT b.brand_name, Sum(od.quantity) AS total_order\n"
+                + "                FROM Orders o\n"
+                + "                INNER JOIN Order_Details od ON o.order_id = od.order_id\n"
+                + "                INNER JOIN Products p ON od.product_id = p.product_id\n"
+                + "                INNER JOIN Brands b ON p.brand_id = b.brand_id\n"
+                + "                where Month(o.ordered_date) = ? and Year(o.ordered_date)= ? and o.order_status_id=4\n"
+                + "                GROUP BY b.brand_name";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, month); // Giá trị của tháng từ Map
@@ -1139,7 +1161,7 @@ pre.setInt(1, date.getYear());
         }
         return sList;
     }
-    
+
     public boolean updateReceivedDate(int orderId, String receiveDate) {
         String sql = """
                      UPDATE [dbo].[Orders]
@@ -1190,9 +1212,9 @@ pre.setInt(1, date.getYear());
 //        List<SaleChart> o = odao.getTotalAmountByDay(LocalDate.parse("2024-09-01")   , LocalDate.now() );
 //        System.out.println(o);
 
-LocalDateTime currentDate = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String currentDateString = currentDate.format(formatter);
+        LocalDateTime currentDate = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentDateString = currentDate.format(formatter);
         // Các giá trị cần thiết để tạo đối tượng Order
         int customerId = 1;                      // ID của khách hàng
         String orderedDate = currentDateString; // Ngày đặt hàng
@@ -1241,9 +1263,9 @@ LocalDateTime currentDate = LocalDateTime.now();
                 orderStatusId
         );
 
-        if(odao.insertOrder(newOrder)!= -1){
+        if (odao.insertOrder(newOrder) != -1) {
             System.out.println("success");
         }
-                
+
     }
 }

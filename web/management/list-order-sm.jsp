@@ -211,7 +211,7 @@
                                         
                                         double totalAmount = o.getTotalAmount();
                                         String formattedAmount = formatter.format(totalAmount);
-                                        String saleName = user.getFirst_name() + " " + user.getLast_name();
+                                        String saleName = user != null ?  user.getFirst_name()  + " " + user.getLast_name() : "Không có";
                                         
                                         String date = sdf.format(new SimpleDateFormat("yyyy-MM-dd").parse(o.getOrderedDate().toString()));
                                 %>
