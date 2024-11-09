@@ -850,7 +850,7 @@ public class UserDAO extends DBContext {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setInt(1, rid);
             ResultSet rs = pre.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 int user_id = rs.getInt(1);
                 String username = rs.getString(2);
                 String password = rs.getString(3);
