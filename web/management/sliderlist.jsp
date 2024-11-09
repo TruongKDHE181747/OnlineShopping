@@ -148,11 +148,11 @@
                         <div>
                             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                                 <div class="container-fluid">
-                                    <h5 class="navbar-brand" >Sliders List</h5>
+                                    <h5 class="navbar-brand" >Danh sách Sliders</h5>
 
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchslider" method="get">
-                                            <input placeholder="Nhập tên hoặc mô tả" name="search" class="form-control me-2" type="search"  aria-label="Search">
+                                            <input maxlength="500" placeholder="Nhập tên hoặc mô tả" name="search" class="form-control me-2" type="search"  aria-label="Search">
                                             <div style="width: 150px;height: 70px">
                                                 <button class="btn btn-outline-success" type="submit" style="width: 120px;height: 40px;">Tìm kiếm</button></div>
                                         </form>

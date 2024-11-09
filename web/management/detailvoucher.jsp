@@ -60,12 +60,12 @@
 
                                 <div class="col-sm-6">
                                     <label for="voucher_name" class="form-label">Tên</label>
-                                    <input  value="${sessionScope.voucher.voucher_name}" name="voucher_name" type="text" class="form-control" id="voucher_name" required>
+                                    <input maxlength="50" value="${sessionScope.voucher.voucher_name}" name="voucher_name" type="text" class="form-control" id="voucher_name" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="description" class="form-label">Mô tả</label>
-                                    <input  value="${sessionScope.voucher.description}" name="description" type="text" class="form-control" id="description" required>
+                                    <input maxlength="50" value="${sessionScope.voucher.description}" name="description" type="text" class="form-control" id="description" required>
 
                                 </div>
                                    
@@ -92,7 +92,7 @@
 
                                 <div class="col-sm-6">
                                     <label for="code" class="form-label">Mã giảm giá</label>
-                                    <input value="${sessionScope.voucher.voucher_code}" name="code" type="text" class="form-control" id="code" required>
+                                    <input maxlength="50" value="${sessionScope.voucher.voucher_code}" name="code" type="text" class="form-control" id="code" required>
                                 </div>
                                 
                                 

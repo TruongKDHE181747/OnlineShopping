@@ -48,7 +48,7 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="name" class="form-label">Tên sản phẩm</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm" required>
+                                    <input maxlength="50" type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm" required>
                                 </div>
 
                                 <div class="col-sm-6">
@@ -65,7 +65,7 @@
 
                                 <div class="col-12">
                                     <label for="description" class="form-label">Mô tả</label>
-                                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
+                                    <textarea maxlength="500" class="form-control" id="description" name="description" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
                                 </div>
 
                                 <div class="col-12">

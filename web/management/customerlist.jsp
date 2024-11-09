@@ -155,7 +155,7 @@
 
                                         <div class="" id="navbarSupportedContent">
                                             <form class="d-flex" role="search" action="../customerlist" method="get">
-                                                <input placeholder="Search..." name="searchcustomer" class="form-control me-2" type="search"  aria-label="Search">
+                                                <input maxlength="500" placeholder="Tìm kiếm..." name="searchcustomer" class="form-control me-2" type="search"  aria-label="Search">
                                                 <div style="width: 150;height: 80px"> 
                                                     <button class="btn btn-outline-success" type="submit" style="width: 109px;height: 38px;">Tìm kiếm</button></div>
                                             </form>

@@ -58,7 +58,7 @@
                                 <!-- Product Name -->
                                 <div class="col-sm-6">
                                     <label for="productname" class="form-label">Tên sản phẩm</label>
-                                    <input value="<%= p.getProduct_name()%>" name="productname" type="text" class="form-control" id="productname" required>
+                                    <input value="<%= p.getProduct_name()%>" maxlength="50" name="productname" type="text" class="form-control" id="productname" required>
                                 </div>
 
                                 <!-- Price -->
@@ -76,7 +76,7 @@
                                 <!-- Description -->
                                 <div class="col-12">
                                     <label for="description" class="form-label">Mô tả</label>
-                                    <textarea class="form-control" id="description" name="description" rows="3"><%= p.getDescription() %></textarea>
+                                    <textarea maxlength="500" class="form-control" id="description" name="description" rows="3"><%= p.getDescription() %></textarea>
                                 </div>
 
                                 <!-- Image Upload -->
