@@ -18,6 +18,33 @@ import model.Voucher;
  * @author 84983
  */
 public class VoucherDAO extends DBContext {
+    
+     public List<Voucher> getAvailableVoucher() {
+        List<Voucher> vlist = new ArrayList<>();
+        String sql = "select * from Voucher where is_active = 1";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int voucher_id = rs.getInt("voucher_id");
+                String voucher_name = rs.getString("voucher_name");
+                String description = rs.getString("description");
+                String start_date = rs.getString("start_date");
+                String end_date = rs.getString("end_date");
+                int quantity = rs.getInt("quantity");
+                int percent = rs.getInt("percent");
+                int is_active = rs.getInt("is_active");
+                String voucher_code = rs.getString("voucher_code");
+                Voucher v = new Voucher(voucher_id, voucher_name, description, start_date, end_date, quantity, percent, is_active, voucher_code);
+                vlist.add(v);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vlist;
+
+    }
+    
 
     public boolean updateVoucherQuantity(int voucherId, int quantity) {
         String sql = """

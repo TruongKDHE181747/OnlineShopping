@@ -34,9 +34,37 @@
         </section>
         <!-- Breadcrumb Section End -->
 
+
+
         <!-- Start your project here -->
-        <section class="shopping-cart spad">
+        <section style="margin: 50px 0px">
             <div class="container">
+                <c:if test="${not empty requestScope.availableVouchers}">
+
+                    <div class="voucher-scroll mb-4 row">
+                        <div class="d-flex">
+                            <c:forEach var="v" items="${availableVouchers}">
+                                <div class="voucher-item me-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${v.voucher_name}</h5>
+                                            <p class="card-text mb-1 small text-muted">Giảm giá ${v.percent}%</p>
+                                            <fmt:parseDate value="${v.start_date}" var="start" pattern="yyyy-MM-dd"/>
+                                            <fmt:parseDate value="${v.end_date}" var="end" pattern="yyyy-MM-dd"/>
+                                            <p class="card-text small text-muted">HSD: <fmt:formatDate value="${start}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${end}" pattern="dd/MM/yyyy"/></p>
+                                            <button class="btn btn-outline-dark btn-sm copy-btn" data-voucher="${v.voucher_code}">
+                                                <i class="bi bi-clipboard me-1"></i> Lấy mã
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+
+
+
                 <c:if test="${not empty sessionScope.cartQuantityError}">
 
 
@@ -185,10 +213,26 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <jsp:include page="../common/js.jsp" />
 
+        <script>
+                                        document.querySelectorAll('.copy-btn').forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const code = this.getAttribute('data-voucher');
+                                                navigator.clipboard.writeText(code).then(() => {
+                                                    const originalText = this.innerHTML;
+                                                    this.innerHTML = 'Đã sao chép';
+                                                    this.classList.add('btn-success');
+                                                    setTimeout(() => {
+                                                        this.innerHTML = originalText;
+                                                        this.classList.remove('btn-success');
+                                                    }, 2000);
+                                                });
+                                            });
+                                        });
+        </script>
 
         <c:if test="${not empty sessionScope.cartError}">
             <script>
-                                        alert('${sessionScope.cartError}');
+                alert('${sessionScope.cartError}');
             </script>
 
             <% session.removeAttribute("cartError"); %>
