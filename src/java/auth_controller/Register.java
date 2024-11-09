@@ -138,7 +138,7 @@ public class Register extends HttpServlet {
     }
 
     private void sendErrorMessage(String error, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("error", error);
+        request.setAttribute("registerError", error);
         request.getRequestDispatcher("/account/register.jsp").forward(request, response);
     }
 

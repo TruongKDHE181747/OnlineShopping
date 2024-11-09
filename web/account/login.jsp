@@ -27,9 +27,9 @@
                             <div class="card-body">
                                 <!-- Tiêu đề đăng nhập -->
                                 <h2 class="text-center mb-4">Đăng Nhập</h2>
-                                <c:if test="${error != null}">
+                                <c:if test="${loginError != null}">
                                     <div class="alert alert-danger" >
-                                        ${error}
+                                        ${loginError}
                                     </div>
                                 </c:if> 
                                 <!-- Form -->

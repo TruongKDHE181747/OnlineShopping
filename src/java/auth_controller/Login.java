@@ -125,7 +125,7 @@ public class Login extends HttpServlet {
     }
 
     private void sendErrorMessage(String error, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("error", error);
+        request.setAttribute("loginError", error);
         request.getRequestDispatcher("/account/login.jsp").forward(request, response);
     }
     

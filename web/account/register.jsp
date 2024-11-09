@@ -25,9 +25,9 @@
                             <div class="card-body">
                                 <!-- Tiêu đề Đăng ký -->
                                 <h2 class="text-center mb-4">Đăng Ký</h2>
-                                <c:if test="${error != null}">
+                                <c:if test="${registerError != null}">
                                     <div class="alert alert-danger">
-                                        ${error}
+                                        ${registerError}
                                     </div>
                                 </c:if>
                                 <!-- Form -->
