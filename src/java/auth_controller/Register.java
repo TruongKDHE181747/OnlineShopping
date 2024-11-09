@@ -108,6 +108,15 @@ public class Register extends HttpServlet {
             sendErrorMessage("Mật khẩu và xác nhận mật khẩu không khớp!", request, response);
             return;
         }
+        if(dob.isEmpty()){
+            dob = null;
+        }
+        if(firstname.isBlank()){
+            firstname = null;
+        }
+        if(lastname.isBlank()){
+            lastname = null;
+        }
 
 //        generate verify code 
         String verificationCode = mail.getRandom();

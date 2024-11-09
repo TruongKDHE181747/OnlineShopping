@@ -36,7 +36,7 @@
                                     <div class="row mb-4">
                                         <div class="col-md-12">
                                             <div class="form-floating">
-                                                <input type="text" name="username" class="form-control" id="username" placeholder="Tên người dùng" required maxlength="50">
+                                                <input type="text" name="username" class="form-control" id="username" value="${param.username}" placeholder="Tên người dùng" required maxlength="50">
                                                 <label for="username">Tên người dùng</label>
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <div class="form-floating">
-                                            <input type="email" name="email" class="form-control" id="email" placeholder="Địa chỉ email" required maxlength="255">
+                                            <input type="email" name="email" class="form-control" id="email" value="${param.email}" placeholder="Địa chỉ email" required maxlength="255">
                                             <label for="email">Địa chỉ email</label>
                                         </div>
                                     </div>
@@ -65,13 +65,13 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Tên" maxlength="50">
+                                                <input type="text" name="firstname" class="form-control" value="${param.firstname}"  id="firstName" placeholder="Tên" maxlength="50">
                                                 <label for="firstName">Tên</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Họ" maxlength="50">
+                                                <input type="text" name="lastname" class="form-control" value="${param.lastname}" id="lastName" placeholder="Họ" maxlength="50">
                                                 <label for="lastName">Họ</label>
                                             </div>
                                         </div>
@@ -86,14 +86,14 @@
                                                 <label class="form-check-label" for="male">Nam</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="female" value="false" required>
+                                                <input class="form-check-input" type="radio" name="gender" id="female" ${param.gender == false ? 'checked':''} value="false" required>
                                                 <label class="form-check-label" for="female">Nữ</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input type="date" name="dob" class="form-control" id="dob">
+                                                <input type="date" name="dob" class="form-control" value="${param.dob}" id="dob">
                                                 <label for="dob">Ngày sinh</label>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
                                     <div class="row mb-4">
                                         <div>
                                             <div class="form-floating">
-                                                <input type="tel" name="phone" pattern="\d{10}" title="Số điện thoại phải có đúng 10 chữ số" class="form-control" id="phone" placeholder="Số điện thoại" required maxlength="15">
+                                                <input type="tel" name="phone" pattern="\d{10}" value="${param.phone}" title="Số điện thoại phải có đúng 10 chữ số" class="form-control" id="phone" placeholder="Số điện thoại" required maxlength="15">
                                                 <label for="phone">Số điện thoại</label>
                                             </div>
                                         </div>
