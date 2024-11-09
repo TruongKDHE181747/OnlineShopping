@@ -59,17 +59,17 @@
 
                                 <div class="col-sm-6">
                                     <label for="username" class="form-label">Tên tài khoản</label>
-                                    <input  value="${sessionScope.u.username}" name="username" type="text" class="form-control" id="username" >
+                                    <input disabled="" value="${sessionScope.u.username}" name="username" type="text" class="form-control" id="username" >
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="first_name" class="form-label">Họ</label>
-                                    <input  value="${sessionScope.u.first_name}" name="first_name" type="text" class="form-control" id="first_name" >
+                                    <input maxlength="50" value="${sessionScope.u.first_name}" name="first_name" type="text" class="form-control" id="first_name" >
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="last_name" class="form-label">Tên</label>
-                                    <input  value="${sessionScope.u.last_name}" name="last_name" type="text" class="form-control" id="last_name" >
+                                    <input maxlength="50" value="${sessionScope.u.last_name}" name="last_name" type="text" class="form-control" id="last_name" >
 
                                 </div>
                                 <div class="col-sm-6">
@@ -97,12 +97,12 @@
 
                                     <div class="col-sm-6">
                                         <label for="phone" class="form-label">Số điện thoại</label>
-                                        <input  value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" >
+                                        <input maxlength="20" value="${sessionScope.u.phone}" name="phone" type="text" class="form-control" id="phone" >
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input  value="${sessionScope.u.email}" name="email" type="email" class="form-control" id="email" >
+                                    <input maxlength="50" value="${sessionScope.u.email}" name="email" type="email" class="form-control" id="email" >
 
                                 </div>
                                 <div class="col-sm-6">

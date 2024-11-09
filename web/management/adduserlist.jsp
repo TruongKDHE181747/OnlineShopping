@@ -55,22 +55,22 @@
 
                                 <div class="col-sm-6">
                                     <label for="username" class="form-label">Tên tài khoản</label>
-                                    <input  value="" name="username" type="text" class="form-control" id="username" required>
+                                    <input maxlength="50"  value="" name="username" type="text" class="form-control" id="username" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="first_name" class="form-label">Họ</label>
-                                    <input  value="" name="first_name" type="text" class="form-control" id="first_name" required>
+                                    <input maxlength="50"  value="" name="first_name" type="text" class="form-control" id="first_name" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="last_name" class="form-label">Tên</label>
-                                    <input  value="" name="last_name" type="text" class="form-control" id="last_name" required>
+                                    <input maxlength="50"  value="" name="last_name" type="text" class="form-control" id="last_name" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                       <label for="password" class="form-label">Mật khẩu</label>
-                                    <input value="" name="password" type="text" class="form-control" id="password" required="">
+                                      <input maxlength="50" value="" type="password" name="password" type="text" class="form-control" id="password" required="">
                                 
                                 </div>
                                 <div class="col-sm-6">
@@ -95,12 +95,12 @@
 
                                 <div class="col-sm-6">
                                     <label for="phone" class="form-label">Số điện thoại</label>
-                                    <input  value="" name="phone" type="text" class="form-control" id="phone" required>
+                                    <input maxlength="20" value="" name="phone" type="tel" class="form-control" id="phone" required>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input  value="" name="email" type="email" class="form-control" id="email" required>
+                                    <input maxlength="50" value="" name="email" type="email" class="form-control" id="email" required>
 
                                 </div>
                                 <div class="col-sm-6">
