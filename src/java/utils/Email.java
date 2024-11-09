@@ -5,6 +5,8 @@
 package utils;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.Random;
 import javax.mail.Authenticator;
@@ -16,6 +18,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
+import model.Order;
 import model.User;
 
 public class Email {
@@ -184,6 +187,81 @@ public class Email {
                     + "                        </td>\n"
                     + "                    </tr>\n"
                     + "                </table>\n"
+                    + "            </td>\n"
+                    + "        </tr>\n"
+                    + "    </table>";
+
+            mess.setContent(htmlContent, "text/html; charset=UTF-8");
+
+            Transport.send(mess);
+            test = true;
+
+        } catch (MessagingException | UnsupportedEncodingException ex) {
+            ex.printStackTrace();
+        }
+
+        return test;
+    }
+
+    public boolean sendNotifyShippingOrder(Order order) {
+        boolean test = false;
+
+        String toEmail = order.getEmail();
+        String fromEmail = Constants.SENT_EMAIL;
+        String password = Constants.EMAIL_PASSWORD;
+
+        Properties pr = configEmail(new Properties());
+
+        Session session = Session.getInstance(pr, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+
+        });
+        //set email message detail
+        Message mess = new MimeMessage(session);
+        try {
+
+            mess.setHeader("Content-Type", "text/html; charset=UTF-8");
+
+            mess.setFrom(new InternetAddress(fromEmail));
+
+            mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+
+            String subject = MimeUtility.encodeText("Đơn hàng của bạn đang được giao!", "UTF-8", "B");
+            mess.setSubject(subject);
+
+            String receiveDateString = order.getReceiveDate();
+            String orderDateString = order.getOrderedDate();
+            
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+            LocalDateTime receiveDate = LocalDateTime.parse(receiveDateString, inputFormatter);
+            LocalDateTime orderDate = LocalDateTime.parse(orderDateString, inputFormatter);
+            
+            String formattedReceiveDate = receiveDate.format(outputFormatter);
+            String formattedOrderDate = orderDate.format(outputFormatter);
+
+            String htmlContent = "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color: #f0f0f0; padding: 20px;\">\n"
+                    + "        <tr>\n"
+                    + "            <td>\n"
+                    + "                <h1 style=\"color: #4a4a4a; text-align: center;\">Đơn hàng của bạn đang được giao!</h1>\n"
+                    + "                <p style=\"text-align: center;\">Xin chào " + order.getReceiverName() + ",</p>\n"
+                    + "                <p>Chúng tôi rất vui mừng thông báo rằng đơn hàng được đặt lúc: " + formattedOrderDate + "  của bạn hiện đang được giao đến. Dưới\n"
+                    + "                    đây là chi tiết:</p>\n"
+                    + "                <ul style=\"background-color: #ffffff; padding: 15px; border-radius: 5px;\">\n"
+                    + "                    <li>Ngày giao hàng dự kiến: " + formattedReceiveDate + "</li>\n"
+                    + "                    <li>Địa chỉ giao hàng: " + order.getAddress() + ", " + order.getWardName() + ", " + order.getDistrictName() + ", " + order.getProvinceName() + "</li>\n"
+                    + "                    <li>Mã vận đơn: " + order.getShippingCode() + "</li>\n"
+                    + "                </ul>\n"
+                    + "\n"
+                    + "\n"
+                    + "                <p>Cảm ơn bạn đã mua sắm cùng chúng tôi!</p>\n"
+                    + "                <p style=\"text-align: center; margin-top: 20px; font-size: 0.8em; color: #666;\">\n"
+                    + "                    Đây là tin nhắn tự động, vui lòng không trả lời email này.\n"
+                    + "                </p>\n"
                     + "            </td>\n"
                     + "        </tr>\n"
                     + "    </table>";

@@ -6,6 +6,7 @@ package order_controller;
 
 import dal.OrderDAO;
 import dal.OrderDetailDAO;
+import dal.ProductDAO;
 import dal.ProductSizeDAO;
 import dal.VoucherDAO;
 import jakarta.servlet.ServletException;
@@ -45,6 +46,7 @@ public class CancelOrder extends HttpServlet {
             OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
             ProductSizeDAO productSizeDAO = new ProductSizeDAO();
             VoucherDAO voucherDAO = new VoucherDAO();
+            ProductDAO productDAO = new ProductDAO();
 
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             int methodId = Integer.parseInt(request.getParameter("methodId"));
@@ -64,6 +66,8 @@ public class CancelOrder extends HttpServlet {
                 int quantity = od.getQuantity();
                 ProductSize ps = productSizeDAO.getProductSize(sid, pid);
                 productSizeDAO.updateSizeProduct(sid, pid, ps.getQuantity() + quantity);
+                
+                productDAO.updateTotalQuantity(pid);
 
             }
 

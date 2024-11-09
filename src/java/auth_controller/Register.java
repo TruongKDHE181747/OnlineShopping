@@ -113,7 +113,7 @@ public class Register extends HttpServlet {
         String verificationCode = mail.getRandom();
 
 //        initialize user with customer role(id = 5)
-        User newUser = new User(username, password, firstname, lastname, phone, userEmail, gender, dob, verificationCode, null, null, null, false, false, new Role(5));
+        User newUser = new User(username, password, firstname, lastname, phone, userEmail, gender, dob, verificationCode, null, null, "profile_img/default.jpg", false, false, new Role(5));
 
 //        insert to database
         Integer userId = userDAO.insertUser(newUser);

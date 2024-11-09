@@ -22,8 +22,10 @@ import java.net.URL;
 import model.Order;
 import model.OrderDetail;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import utils.Constants;
+import utils.Email;
 
 /**
  *
@@ -134,6 +136,10 @@ public class CreateOrderGHN extends HttpServlet {
                 orderDAO.updateReceivedDate(orderId, receiveDate);
                 orderDAO.updateOrderStatus(orderId, 3);
                 
+                Email em = new Email();
+                Order od = orderDAO.getOrder(orderId);
+                em.sendNotifyShippingOrder(od);
+                
                 session.setAttribute("notify", "Tạo đơn vận chuyển thành công. Mã vận đơn: " + shippingCode);
                 response.sendRedirect(request.getContextPath() + "/orderdetail?orderId=" + orderId);
 
@@ -144,8 +150,9 @@ public class CreateOrderGHN extends HttpServlet {
 
             }
 
-        } catch (Exception ex) {
-
+        } catch (IOException | JSONException ex) {
+            session.setAttribute("notify", "Tạo đơn vận chuyển thất bại.");
+            response.sendRedirect(request.getContextPath() + "/orderdetail?orderId=" + orderId);
         }
     }
 

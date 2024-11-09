@@ -45,7 +45,8 @@
                             <c:forEach items="${list}" var="o" varStatus="status">
                                 <tr>
                                     <td>${status.index +1}</td>
-                                    <td>${o.orderedDate}</td>
+                                    <fmt:parseDate value="${o.orderedDate}" pattern="yyyy-MM-dd HH:mm:ss" var="orderDate" />
+                                    <td><fmt:formatDate value="${orderDate}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
                                     <td><fmt:formatNumber value="${o.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></td>
                                     <td 
                                         <c:if test="${o.paymentMethodId == 2}">class="text-primary font-weight-bold"</c:if>

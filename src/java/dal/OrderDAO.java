@@ -427,6 +427,54 @@ public class OrderDAO extends DBContext {
 
         return oList;
     }
+    
+    public Order getOrder(int oid) {
+        Order order = new Order();
+        String sql = "select * from Orders "
+                + "where order_id=?";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, oid);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int cid = rs.getInt("customer_id");
+                String orderedDate = rs.getString("ordered_date");
+                String receiverName = rs.getString("receiver_name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String wardCode = rs.getString("ward_code");
+                String wardName = rs.getString("ward_name");
+                int districtId = rs.getInt("district_id");
+                String districtName = rs.getString("district_name");
+                int provinceId = rs.getInt("province_id");
+                String provinceName = rs.getString("province_name");
+                int totalPrice = rs.getInt("total_price");
+                int shippingFee = rs.getInt("shipping_fee");
+                int voucherId = rs.getInt("voucher_id");
+                int voucherPercent = rs.getInt("voucher_percent");
+                int totalAmount = rs.getInt("total_amount");
+                int totalGram = rs.getInt("total_gram");
+                int paymentMethodId = rs.getInt("payment_method_id");
+                String vnpTxnRef = rs.getString("vnp_TxnRef");
+                String vnpCreateDate = rs.getString("vnp_CreateDate");
+                int paymentStatusId = rs.getInt("payment_status_id");
+                int orderStatusId = rs.getInt("order_status_id");
+                String shippingCode = rs.getString("shipping_code");
+                int saleId = rs.getInt("salerId");
+                String receiveDate = rs.getString("receive_date");
+                order = new Order(oid,cid, orderedDate,receiveDate, receiverName, phone, email, address,
+                        wardCode, wardName, districtId, districtName, provinceId, provinceName, totalPrice, shippingFee,
+                        voucherId, voucherPercent, totalAmount, totalGram, paymentMethodId, vnpTxnRef, vnpCreateDate,
+                        paymentStatusId, orderStatusId, shippingCode, saleId);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return order;
+    }
 
     public Order getOrderById(int oid) {
         Order order = new Order();

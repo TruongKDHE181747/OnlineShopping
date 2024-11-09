@@ -65,9 +65,14 @@
                             <h5 class="mb-0 text-white">Thông tin đơn hàng</h5>
                         </div>
                         <div class="card-body">     
-                            <p><strong>Ngày đặt hàng:</strong> ${order.orderedDate} </p>
-                            <p><strong>Ngày nhận hàng (dự kiến):</strong> ${order.receiveDate != null ? order.receiveDate: '<span class="text-muted">Không có</span>'}</p>
-                            <p><strong>Phương thức thanh toán:</strong> <span 
+
+                            <fmt:parseDate value="${order.orderedDate}" pattern="yyyy-MM-dd HH:mm:ss" var="orderDate" />
+                            <p><strong>Ngày đặt hàng:</strong> <fmt:formatDate value="${orderDate}" pattern="dd/MM/yyyy HH:mm:ss" /> </p>
+                            <fmt:parseDate value="${order.receiveDate}" pattern="yyyy-MM-dd HH:mm:ss" var="receiveDate" />
+                            <p><strong>Ngày nhận hàng (dự kiến):</strong> 
+                                <c:if test="${order.receiveDate != null}"><fmt:formatDate value="${receiveDate}" pattern="dd/MM/yyyy HH:mm:ss" /></c:if>
+                                <c:if test="${order.receiveDate == null}"><span class="text-muted">Không có</span></c:if></p>
+                                <p><strong>Phương thức thanh toán:</strong> <span 
                                     <c:if test="${order.paymentMethodId == 2}">class="badge-primary badge font-weight-bold"</c:if>
                                     <c:if test="${order.paymentMethodId == 1}">class="badge-info badge font-weight-bold"</c:if>
                                     > ${order.paymentMethodName}</span></p>

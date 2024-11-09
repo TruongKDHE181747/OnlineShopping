@@ -101,6 +101,12 @@
         <filter-name>SaleFilter</filter-name>
         <url-pattern>/management/list-order.jsp</url-pattern>
         <url-pattern>/management/list-order-pending.jsp</url-pattern>
+        <url-pattern>/orderdetail</url-pattern>
+        <url-pattern>/createorderghn</url-pattern>
+        <url-pattern>/cancelorder</url-pattern>
+        <url-pattern>/refundpayment</url-pattern>
+        <url-pattern>/doneorder</url-pattern>
+        <url-pattern>/updateorderstatus</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>sliderlist</servlet-name>
