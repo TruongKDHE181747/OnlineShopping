@@ -5,8 +5,10 @@
 package utils;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 import javax.mail.Authenticator;
@@ -234,13 +236,13 @@ public class Email {
 
             String receiveDateString = order.getReceiveDate();
             String orderDateString = order.getOrderedDate();
-            
+
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
             DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
             LocalDateTime receiveDate = LocalDateTime.parse(receiveDateString, inputFormatter);
             LocalDateTime orderDate = LocalDateTime.parse(orderDateString, inputFormatter);
-            
+
             String formattedReceiveDate = receiveDate.format(outputFormatter);
             String formattedOrderDate = orderDate.format(outputFormatter);
 
@@ -259,6 +261,80 @@ public class Email {
                     + "\n"
                     + "\n"
                     + "                <p>Cảm ơn bạn đã mua sắm cùng chúng tôi!</p>\n"
+                    + "                <p style=\"text-align: center; margin-top: 20px; font-size: 0.8em; color: #666;\">\n"
+                    + "                    Đây là tin nhắn tự động, vui lòng không trả lời email này.\n"
+                    + "                </p>\n"
+                    + "            </td>\n"
+                    + "        </tr>\n"
+                    + "    </table>";
+
+            mess.setContent(htmlContent, "text/html; charset=UTF-8");
+
+            Transport.send(mess);
+            test = true;
+
+        } catch (MessagingException | UnsupportedEncodingException ex) {
+            ex.printStackTrace();
+        }
+
+        return test;
+    }
+
+    public boolean sendNotifyCancelOrder(Order order) {
+        boolean test = false;
+
+        String toEmail = order.getEmail();
+        String fromEmail = Constants.SENT_EMAIL;
+        String password = Constants.EMAIL_PASSWORD;
+
+        Properties pr = configEmail(new Properties());
+
+        Session session = Session.getInstance(pr, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+
+        });
+        //set email message detail
+        Message mess = new MimeMessage(session);
+        try {
+
+            mess.setHeader("Content-Type", "text/html; charset=UTF-8");
+
+            mess.setFrom(new InternetAddress(fromEmail));
+
+            mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+
+            String subject = MimeUtility.encodeText("Đơn hàng của bạn đã bị hủy !", "UTF-8", "B");
+            mess.setSubject(subject);
+
+            String orderDateString = order.getOrderedDate();
+
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+            LocalDateTime orderDate = LocalDateTime.parse(orderDateString, inputFormatter);
+
+            String formattedOrderDate = orderDate.format(outputFormatter);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            String today = formatter.format(date);
+
+            String htmlContent = "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color: #f0f0f0; padding: 20px;\">\n"
+                    + "        <tr>\n"
+                    + "            <td>\n"
+                    + "                <h1 style=\"color: #4a4a4a; text-align: center;\">Đơn hàng của bạn đã bị hủy</h1>\n"
+                    + "                <p style=\"text-align: center;\">Xin chào " + order.getReceiverName() + ",</p>\n"
+                    + "                <p>Chúng tôi rất tiếc phải thông báo rằng đơn hàng của bạn đã bị hủy. Dưới đây là chi tiết:</p>\n"
+                    + "                <ul style=\"background-color: #ffffff; padding: 15px; border-radius: 5px;\">\n"
+                    + "                    <li>Ngày đặt hàng: " + formattedOrderDate + "</li>\n"
+                    + "                    <li>Ngày hủy: " + today + "</li>\n"
+                    + "                </ul>\n"
+                    + "                <p>Nếu bạn không yêu cầu hủy đơn hàng này hoặc có bất kỳ câu hỏi nào, vui lòng liên hệ ngay với đội ngũ hỗ trợ khách hàng của chúng tôi.</p>\n"
+                    + "                <p>Nếu đã thanh toán cho đơn hàng này, số tiền sẽ được hoàn trả vào phương thức thanh toán ban đầu của bạn trong vòng 3-5 ngày làm việc.</p>\n"
+                    + "                <p>Chúng tôi xin lỗi vì bất kỳ sự bất tiện nào có thể gây ra. Chúng tôi đánh giá cao sự ủng hộ của bạn và hy vọng sẽ phục vụ bạn tốt hơn trong tương lai.</p>\n"
                     + "                <p style=\"text-align: center; margin-top: 20px; font-size: 0.8em; color: #666;\">\n"
                     + "                    Đây là tin nhắn tự động, vui lòng không trả lời email này.\n"
                     + "                </p>\n"

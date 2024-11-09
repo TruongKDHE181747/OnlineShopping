@@ -51,6 +51,7 @@ public class DoneOrder extends HttpServlet {
 
             response.sendRedirect(request.getContextPath() + "/orderdetail?orderId=" + orderId);
         } catch (NumberFormatException e) {
+            
         }
     }
 

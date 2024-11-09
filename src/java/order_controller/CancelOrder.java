@@ -20,6 +20,7 @@ import model.Order;
 import model.OrderDetail;
 import model.ProductSize;
 import model.Voucher;
+import utils.Email;
 
 /**
  *
@@ -53,6 +54,10 @@ public class CancelOrder extends HttpServlet {
             int payStatus = Integer.parseInt(request.getParameter("payStatus"));
 
             orderDAO.updateOrderStatus(orderId, 5);
+            
+            Email em = new Email();
+            
+            em.sendNotifyCancelOrder(orderDAO.getOrder(orderId));
 
             if (methodId == 2 && payStatus == 2) {
                 orderDAO.updatePaymentStatus(orderId, 4);

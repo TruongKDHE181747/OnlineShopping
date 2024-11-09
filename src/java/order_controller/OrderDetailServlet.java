@@ -57,6 +57,7 @@ public class OrderDetailServlet extends HttpServlet {
             
             request.getRequestDispatcher("/management/order-detail.jsp").forward(request, response);
         } catch (NumberFormatException e) {
+             request.getRequestDispatcher("/management/order-detail.jsp").forward(request, response);
         }
 
     }
