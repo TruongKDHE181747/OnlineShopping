@@ -51,7 +51,7 @@ public class UserPaging extends HttpServlet {
             UserDAO udao=new UserDAO();
             List<User> ulist=udao.getUserPaging(p);
         
-       session.setAttribute("m", "");
+       
             session.setAttribute("ulist", ulist);
         session.setAttribute("curentpage", p);
         response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");}

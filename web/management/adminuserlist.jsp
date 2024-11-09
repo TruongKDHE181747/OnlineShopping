@@ -285,11 +285,20 @@
                         </table>
 
                         <!-- START PAGE -->
-                        <div style="text-align: left;
-                             color: red;
-                             margin-left: 5px;">
-                            <h5>${sessionScope.m}</h5><br>
-                        </div>
+                        <% 
+                            String m = (String) session.getAttribute("m");
+                            if (m != null) {
+                            %>
+                            <div style="text-align: left;
+                                 color: red;
+                                 margin-left: 5px;">
+                                <h5> <%= m%></h5><br>
+                            </div>
+                            <%
+                                    // Xóa thông báo lỗi sau khi hiển thị
+                                    session.removeAttribute("m");
+                                }
+                            %>
                         <div style="display: flex;
                              justify-content: center;">
 
