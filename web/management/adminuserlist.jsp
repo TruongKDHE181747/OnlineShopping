@@ -207,7 +207,7 @@
                                     </div>
                                     <div class="" id="navbarSupportedContent">
                                         <form class="d-flex" role="search" action="../searchuser">
-                                            <input placeholder="Nhập để tìm kiếm..." name="usersearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                            <input maxlength="500" placeholder="Nhập để tìm kiếm..." name="usersearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Tìm</button>
                                         </form>
                                     </div>
