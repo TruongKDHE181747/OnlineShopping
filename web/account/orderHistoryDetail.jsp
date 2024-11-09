@@ -68,18 +68,18 @@
                             <p><strong>Ngày nhận hàng (dự kiến):</strong> 
                                 <c:if test="${order.receiveDate != null}"><fmt:formatDate value="${receiveDate}" pattern="dd/MM/yyyy HH:mm:ss" /></c:if>
                                 <c:if test="${order.receiveDate == null}"><span class="text-muted">Không có</span></c:if></p>
-                            
-                            <p><strong>Phương thức thanh toán:</strong> <span 
-                                                                        <c:if test="${order.paymentMethodId == 2}">class="badge-primary badge font-weight-bold"</c:if>
-                                                                        <c:if test="${order.paymentMethodId == 1}">class="badge-info badge font-weight-bold"</c:if>
-                                                                        > ${order.paymentMethodName}</span></p>
+
+                                <p><strong>Phương thức thanh toán:</strong> <span 
+                                    <c:if test="${order.paymentMethodId == 2}">class="badge-primary badge font-weight-bold"</c:if>
+                                    <c:if test="${order.paymentMethodId == 1}">class="badge-info badge font-weight-bold"</c:if>
+                                    > ${order.paymentMethodName}</span></p>
                             <p><strong>Trạng thái thanh toán:</strong> <span  <c:if test="${order.paymentStatusId == 1}">class="badge-warning badge font-weight-bold"</c:if>
-                                                                                                                     <c:if test="${order.paymentStatusId == 2}">class="badge-success badge font-weight-bold"</c:if>
-                                                                                                                     <c:if test="${order.paymentStatusId == 3}">class="badge-danger badge font-weight-bold"</c:if>
-                                                                                                                     <c:if test="${order.paymentStatusId == 4}">class="badge-warning badge font-weight-bold"</c:if>
-                                                                                                                     <c:if test="${order.paymentStatusId == 5}">class="badge-info badge font-weight-bold"</c:if>
-                                                                                                                     <c:if test="${order.paymentStatusId == 5}">class="badge-success badge font-weight-bold"</c:if>
-                                                                                                                     >${order.paymentStatusName}</span></p>
+                                                                                                                         <c:if test="${order.paymentStatusId == 2}">class="badge-success badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 3}">class="badge-danger badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 4}">class="badge-warning badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 5}">class="badge-info badge font-weight-bold"</c:if>
+                                                                                                                         <c:if test="${order.paymentStatusId == 5}">class="badge-success badge font-weight-bold"</c:if>
+                                                                                                                         >${order.paymentStatusName}</span></p>
                             <p ><strong>Mã giao dịch VNPAY:</strong> ${order.vnpTxnRef != null ? order.vnpTxnRef: '<span class="text-muted">Không có</span>'}</p>
                             <p ><strong>Mã vận đơn:</strong> ${order.shippingCode != null ? order.shippingCode: '<span class="text-muted">Không có</span>'} </p>
                             <p><strong>Tổng tiền:</strong> <span class="badge badge-pink"><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" /></span></p>
@@ -186,7 +186,7 @@
             </div>
             <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6}">
                 <div class="text-right mt-4 mb-5">
-                    <button onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
+                    <button id="cancelButton" onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg" aria-label="Hủy đơn hàng">
                         Hủy đơn hàng
                     </button>                   
                 </div>
@@ -201,7 +201,7 @@
 
         <script>
             function cancelOrder(orderId, methodId, payStatus) {
-
+                document.getElementById('cancelButton').disabled = true;
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", "cancelorder", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

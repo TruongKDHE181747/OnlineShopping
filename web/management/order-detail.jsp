@@ -209,7 +209,7 @@
 
                 </c:if>
                 <c:if test="${order.orderStatusId == 1 || order.orderStatusId == 2 || order.orderStatusId == 6 ||order.orderStatusId == 3}">
-                    <button style="margin-left: 20px" onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg me-2" >
+                    <button id="cancelButton" style="margin-left: 20px" onclick="cancelOrder(${order.orderId},${order.paymentMethodId},${order.paymentStatusId})" type="button" class="btn btn-danger btn-lg me-2" >
                         Hủy đơn hàng
                     </button>
                 </c:if>
@@ -236,7 +236,7 @@
 
         <script>
             function cancelOrder(orderId, methodId, payStatus) {
-
+                document.getElementById('cancelButton').disabled = true;
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", "cancelorder", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

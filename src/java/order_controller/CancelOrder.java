@@ -57,7 +57,7 @@ public class CancelOrder extends HttpServlet {
             
             Email em = new Email();
             
-            em.sendNotifyCancelOrder(orderDAO.getOrder(orderId));
+            
 
             if (methodId == 2 && payStatus == 2) {
                 orderDAO.updatePaymentStatus(orderId, 4);
@@ -82,6 +82,8 @@ public class CancelOrder extends HttpServlet {
                 Voucher voucher = voucherDAO.getVoucherbyId(voucherId);
                 voucherDAO.updateVoucherQuantity(voucherId, voucher.getQuantity() + 1);
             }
+            
+            em.sendNotifyCancelOrder(orderDAO.getOrder(orderId));
 
         } catch (NumberFormatException e) {
         }
