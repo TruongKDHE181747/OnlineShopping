@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
@@ -36,8 +37,18 @@ public class BanAcc extends HttpServlet {
         UserDAO udao= new UserDAO();
         boolean is_banned= Boolean.parseBoolean(request.getParameter("status"));
         int uid= Integer.parseInt(request.getParameter("uid"));
+        User checkU = udao.getUserById(uid);
+        String m="";
+        if(checkU.getRole().getRole_id() == 1){
+            m="Bạn không thể ẩn người này";
+            session.setAttribute("m", m);
+         response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
+
+        }else{
         udao.banAcc(uid, is_banned);
+        session.setAttribute("m", "");
         response.sendRedirect("adminuser");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
