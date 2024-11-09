@@ -421,7 +421,7 @@ public class UserDAO extends DBContext {
         
         
             String sql = "select * from Users\n" +
-                        "where role_id in (2,3)";
+                        "where role_id in (3)";
 
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
