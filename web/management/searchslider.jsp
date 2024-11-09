@@ -139,7 +139,7 @@
 
             <div class="col-md-10" style="padding: 40px;">
                 
-
+ <c:set var="no" value="1"></c:set>
                 
                 <!-- START products -->
                 <div class="product">
@@ -182,7 +182,9 @@
                                 <!-- START Product item -->
                                 <c:forEach var="s" items="${sessionScope.searchslider}">
                                 <tr>
-                                    <th scope="row">${s.id}</th>
+                                    <th scope="row">${no}</th>
+                                     <c:set var="no" value="${no+1}"></c:set>
+
                                       <td>${s.title}</td>
                                     <td>${s.description}</td>
                                     <td class="product-img">
