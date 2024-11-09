@@ -174,6 +174,8 @@
                             }],
                                     yAxes: [{
                                     ticks: {
+                                        min:0,
+                                        maxTicksLimit:10,
                                     stepSize: 500
                                     },
                                             display: true,
