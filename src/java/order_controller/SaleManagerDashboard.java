@@ -57,11 +57,11 @@ public class SaleManagerDashboard extends HttpServlet {
 
         OrderDAO odao = new OrderDAO();
         UserDAO udao = new UserDAO();
-        List<SaleChart> sList = odao.getSucsessOnTotalOrder(0, poDate, 7);
-        int totalOrder = odao.getTotalOrder(0, poDate, 7);
-        List<SaleChart> orderByDayList = odao.getNumberOfOrderByDay(0, poDate, 7);
-        List<SaleChart> revenueByDayList = odao.getTotalRevenueByDay(0, poDate, 7);
-        List<SaleChart> revenueAccumulateByDayList = odao.getRevenueAccumulateByDay(0, poDate, 7);
+        List<SaleChart> sList = odao.getSucsessOnTotalOrder(0, daybefore, 7);
+        int totalOrder = odao.getTotalOrder(0, daybefore, 7);
+        List<SaleChart> orderByDayList = odao.getNumberOfOrderByDay(0, daybefore, 7);
+        List<SaleChart> revenueByDayList = odao.getTotalRevenueByDay(0, daybefore, 7);
+        List<SaleChart> revenueAccumulateByDayList = odao.getRevenueAccumulateByDay(0, daybefore, 7);
         List<User> salerList = udao.getAllSaler();
         
         session.setAttribute("sotoChart", sList);
@@ -74,8 +74,8 @@ public class SaleManagerDashboard extends HttpServlet {
         Reset(session);
         
        
-        session.setAttribute("sadbegin", pobegin);
-        session.setAttribute("sadend", poend);
+        session.setAttribute("sadbegin", daybefore);
+        session.setAttribute("sadend", today);
         response.sendRedirect(request.getContextPath()+"/management/saledashboard.jsp");
     } 
     
