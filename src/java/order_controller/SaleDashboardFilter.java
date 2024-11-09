@@ -53,7 +53,7 @@ public class SaleDashboardFilter extends HttpServlet {
         }
         String loi ="";
         if((pobegin.length()!=0 && poend.length()==0) || (pobegin.length()==0 && poend.length()!=0)){
-            loi = "Please input both From and To";
+            loi = "Hãy nhập đủ cả 2 ngày bắt đầu và kết thúc";
             session.setAttribute("sdloi", loi);
             
         } else if(pobegin.length()!=0 && poend.length()!=0){
@@ -64,7 +64,7 @@ public class SaleDashboardFilter extends HttpServlet {
             
             long diff = ChronoUnit.DAYS.between(beginDate, endDate);
             if(diff<0){
-                loi = "To Date must be >= From Date";
+                loi = "Ngày bắt đầu phải trước ngày kết thúc";
                 session.setAttribute("sdloi", loi);
                 
             } else {
