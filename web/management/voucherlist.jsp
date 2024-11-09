@@ -209,7 +209,7 @@
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <input placeholder="Nhập để tìm kiếm..." name="vsearch" class="form-control me-4" type="search" aria-label="Search">
+                                                <input maxlength="500" placeholder="Nhập để tìm kiếm..." name="vsearch" class="form-control me-4" type="search" aria-label="Search">
                                                 <button class="btn btn-outline-success me-4" type="submit">Tìm</button>
                                             </div>
                                         </form>

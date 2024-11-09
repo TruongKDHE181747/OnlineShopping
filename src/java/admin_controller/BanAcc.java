@@ -41,10 +41,14 @@ public class BanAcc extends HttpServlet {
         String m="";
         if(checkU.getRole().getRole_id() == 1){
             m="Bạn không thể ẩn người này";
+            
+
+        }
+        if(m.length()>0){
             session.setAttribute("m", m);
          response.sendRedirect(request.getContextPath()+"/management/adminuserlist.jsp");
-
-        }else{
+        }
+        else{
         udao.banAcc(uid, is_banned);
         session.setAttribute("m", "");
         response.sendRedirect("adminuser");
