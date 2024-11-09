@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.FeedbackChart;
 import model.SaleChart;
 
 /**
@@ -39,7 +40,7 @@ public class AdminDashboardFilter extends HttpServlet {
         HttpSession session=request.getSession();
         OrderDAO odao= new OrderDAO();
         List<SaleChart> monthChart= odao.getRevenueAccumulateByMonth(chooseyear);
-        List<SaleChart> monthOrder= odao.getNumberOfOrderByMonth(chooseyear);
+        List<FeedbackChart> monthOrder= odao.getTotalRatingByBrandInMonth(choosemonth, chooseyear);
         List<SaleChart> monthStatus= odao.getNumberStatusOrderByMonth(choosemonth,chooseyear);
         List<SaleChart> mmonthBrand= odao.getTotalByBrandInMonth(choosemonth,chooseyear);
         int totalOrder = odao.getTotalOrderInMonth(choosemonth, chooseyear);

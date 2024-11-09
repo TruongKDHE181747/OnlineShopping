@@ -219,9 +219,7 @@
                                         </a>
                                     </div>
 
-                                    <div style="color: red; margin-left: 20px;">
-                                        ${sessionScope.messe}
-                                    </div>
+                                    
                                 </div>
                             </nav>
 

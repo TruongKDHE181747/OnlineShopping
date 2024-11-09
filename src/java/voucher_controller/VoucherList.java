@@ -41,7 +41,7 @@ public class VoucherList extends HttpServlet {
         VoucherDAO vdao= new VoucherDAO();
         //update sql
         vdao.updateStatus(); // change status to inactive if end date < current date or start date >current date
-        vdao.updateStatus2(); // change status to active when start date <= curent date 
+//        vdao.updateStatus2(); // change status to active when start date <= curent date 
         vdao.updateStatus3(); // change status to inctive when quantity =0 
         List<Voucher> list= vdao.getAllVoucher();
         List<Voucher> vlist= vdao.getVoucherPaging(1);

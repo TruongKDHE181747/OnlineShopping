@@ -57,11 +57,11 @@ public class SearchVoucher extends HttpServlet {
             sql+="and voucher_name like '%"+vsearch+"%'";
         }
         if(error.length()>0){
-            session.setAttribute("messe", error);
+            session.setAttribute("mes", error);
         }else{
         List<Voucher> vlist =vdao.searchVoucher(sql);
         session.setAttribute("svlist", vlist);
-        session.setAttribute("messe", "");
+        session.setAttribute("mes", "");
         }
         response.sendRedirect(request.getContextPath()+"/management/vouchersearch.jsp");
     } 

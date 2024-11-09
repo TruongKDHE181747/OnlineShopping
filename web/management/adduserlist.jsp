@@ -124,11 +124,20 @@
 
                             <hr class="my-4">
                             <!-- Error check Username and Password -->
+                            <% 
+                            String e = (String) session.getAttribute("e");
+                            if (e != null) {
+                            %>
                             <div style="text-align: left;
-                                        color: red;
-                                        margin-left: 5px;">
-                                <h5>${sessionScope.error}</h5><br>
-                             </div>
+                                 color: red;
+                                 margin-left: 5px;">
+                                <h5> <%= e%></h5><br>
+                            </div>
+                            <%
+                                    // Xóa thông báo lỗi sau khi hiển thị
+                                    session.removeAttribute("e");
+                                }
+                            %>
 
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Lưu</button>
                         </form>

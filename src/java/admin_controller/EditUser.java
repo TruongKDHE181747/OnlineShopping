@@ -57,7 +57,7 @@ public class EditUser extends HttpServlet {
         String phone = request.getParameter("phone");
         String rolename=request.getParameter("role");
         String password=request.getParameter("password");
-        
+        User oldu=userDAO.getUserById(user_id);
         Part filePart = request.getPart("profile_picture_url"); 
        
         String fileName = filePart.getSubmittedFileName();
@@ -70,9 +70,9 @@ public class EditUser extends HttpServlet {
 
           img = "profile_img/"+fileName; 
         }else{
-            img = "profile_img/default.jpg";
+            img = oldu.getProfile_picture_url();
         }
-        User oldu=userDAO.getUserById(user_id);
+        
         boolean checkExistUsername = userDAO.checkExistUsername(username);
         boolean checkExistEmail = userDAO.checkExistEmail(userEmail);
         boolean checkExistPhone=userDAO.checkExistPhone(phone);
@@ -91,7 +91,7 @@ public class EditUser extends HttpServlet {
             error="Số điện thoại phải chứa 10 chữ số ";
         }
         if(error.length()>0){
-            session.setAttribute("error", error);
+            session.setAttribute("erro", error);
             response.sendRedirect(request.getContextPath()+"/management/detailuser.jsp");
         }else{
         Role role=rdao.getRolebyname(rolename);

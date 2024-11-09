@@ -82,7 +82,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Số đơn hàng thành công trong tháng</h5>
+                                        <h5 class="card-title">Trung bình đánh giá sản phẩm trong tháng</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
@@ -94,7 +94,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Tổng số đơn hàng trong tháng ${sessionScope.month}/${sessionScope.year}: ${sessionScope.totalOrder}</h5>
+                                        <h5 class="card-title">Tổng số đơn hàng trong tháng: ${sessionScope.totalOrder}</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
@@ -106,7 +106,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="card flex-fill w-100">
                                     <div class="card-header">
-                                        <h5 class="card-title">Tổng số sản phẩm theo nhãn hàng trong tháng ${sessionScope.month}/${sessionScope.year}</h5>
+                                        <h5 class="card-title">Tổng số sản phẩm theo nhãn hàng trong tháng</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart">
@@ -196,7 +196,7 @@
                         data: {
                         labels: [<c:forEach items="${sessionScope.monthOrder}" var="mo">"${mo.label}",</c:forEach>],
                                 datasets: [{
-                                label: "Số lượng đơn hàng",
+                                label: "Đánh giá: ",
                                         backgroundColor: window.theme.primary,
                                         borderColor: window.theme.primary,
                                         hoverBackgroundColor: window.theme.primary,
