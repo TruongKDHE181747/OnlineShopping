@@ -67,6 +67,11 @@ public class GoogleUser {
         this.picture = picture;
     }
 
+    @Override
+    public String toString() {
+        return "GoogleUser{" + "id=" + id + ", email=" + email + ", given_name=" + given_name + ", family_name=" + family_name + ", picture=" + picture + '}';
+    }
+
     
     
 }

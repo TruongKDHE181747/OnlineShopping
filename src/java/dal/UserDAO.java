@@ -295,7 +295,7 @@ public class UserDAO extends DBContext {
 
         return check;
     }
-
+    
     public Integer insertUser(User user) {
         Integer userId = null;
         String sql = """

@@ -46,12 +46,13 @@ public class LoginGoogle extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         String code = request.getParameter("code");
-        if(code == null || code.isEmpty()){
+        if (code == null || code.isEmpty()) {
             response.sendRedirect("login");
             return;
         }
         String accessToken = getToken(code);
         GoogleUser ggUser = getUserInfo(accessToken);
+     
 
         //user with this googleId not exist, insert new user
         if (!userDAO.checkExistGoogleId(ggUser.getId())) {
@@ -75,23 +76,32 @@ public class LoginGoogle extends HttpServlet {
         User user = userDAO.loginGoogle(ggUser.getId());
 
         session.setAttribute("account", user);
-        
-        int roleId = user.getRole().getRole_id();
-        
-        switch (roleId) {
-            case 1 -> response.sendRedirect(request.getContextPath()+"/admindashboard");
-            case 2 -> response.sendRedirect(request.getContextPath()+"/salemanagerdashboard");
-            case 3 -> response.sendRedirect(request.getContextPath()+"/orderlist");
-            case 4 -> response.sendRedirect(request.getContextPath()+"/marketinghome");
-            default -> response.sendRedirect(request.getContextPath()+"/homeslider");
+
+        if (user == null) {
+            request.setAttribute("loginError", "Đã có lỗi xảy ra.");
+            request.getRequestDispatcher("/account/login.jsp").forward(request, response);
+            return;
         }
 
-        
+        int roleId = user.getRole().getRole_id();
+
+        switch (roleId) {
+            case 1 ->
+                response.sendRedirect(request.getContextPath() + "/admindashboard");
+            case 2 ->
+                response.sendRedirect(request.getContextPath() + "/salemanagerdashboard");
+            case 3 ->
+                response.sendRedirect(request.getContextPath() + "/orderlist");
+            case 4 ->
+                response.sendRedirect(request.getContextPath() + "/marketinghome");
+            default ->
+                response.sendRedirect(request.getContextPath() + "/homeslider");
+        }
 
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
-        
+
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
                 .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
                         .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
