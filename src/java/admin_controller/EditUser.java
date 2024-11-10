@@ -46,7 +46,12 @@ public class EditUser extends HttpServlet {
         
         RoleDAO rdao= new RoleDAO();
         UserDAO userDAO = new UserDAO();
-        int user_id=(int) session.getAttribute("userid");
+        int user_id = 0;
+            try {
+                user_id = (int) session.getAttribute("userid");
+            } catch (Exception e) {
+                e.printStackTrace(); // handle potential casting issue
+            }
         String username = request.getParameter("username");
         String userEmail = request.getParameter("email");
         String firstname = request.getParameter("first_name");
@@ -95,7 +100,7 @@ public class EditUser extends HttpServlet {
             response.sendRedirect(request.getContextPath()+"/management/detailuser.jsp");
         }else{
         Role role=rdao.getRolebyname(rolename);
-        User newu=new User(user_id, username, password, firstname, lastname, phone, userEmail, gender, dob, null, null, null, img, true, false, role);
+        User newu=new User(user_id, oldu.getUsername(), oldu.getPassword(), firstname, lastname, phone, userEmail, gender, dob, null, null, null, img, true, false, role);
         userDAO.edituser(newu);
         response.sendRedirect("adminuser");}
         Role role=rdao.getRolebyname(rolename);
