@@ -110,7 +110,7 @@
                                     <input  value="${sessionScope.u.dob}" name="dob" type="date" class="form-control" id="dob" >
 
                                 </div>
-
+                        <c:if test="${sessionScope.u.role.role_id!=1}">
                                 <div class="col-sm-6">
                                     <label for="role" class="form-label">Chức vụ</label>
                                     <select id="role" name="role" class="form-select">
@@ -121,7 +121,9 @@
                                         <option value="người dùng" <c:if test="${sessionScope.u.role.role_id == 5}">selected</c:if>>người dùng</option>
                                         
                                         </select>
-                                    </div>  
+                                    </div> 
+                                        
+                        </c:if>
                                     <input disabled="" value="${sessionScope.u.password}" name="password" type="hidden" class="form-control" id="password" >
 
                             </div>
