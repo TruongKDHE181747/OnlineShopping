@@ -55,7 +55,7 @@
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6">
                                     <label for="pname" class="form-label"> Tên</label>
-                                    <input value="${sessionScope.pd.product_category_name}" name="pname" type="text" class="form-control" id="pname" required>
+                                    <input maxlength="50" value="${sessionScope.pd.product_category_name}" name="pname" type="text" class="form-control" id="pname" required>
                                     
                                     
                                 </div>

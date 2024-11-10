@@ -54,7 +54,7 @@
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6">
                                     <label for="name" class="form-label"> Tên</label>
-                                    <input name="name" type="text" class="form-control" id="name" required>
+                                    <input maxlength="50" name="name" type="text" class="form-control" id="name" required>
 
                                 </div>
                                 <div class="col-sm-3"></div>
